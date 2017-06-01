@@ -5,20 +5,21 @@ package comp3350.degree_planner.objects;
  */
 
 public class ScienceCourse extends Course {
+    private int courseNumber;
     private String description;
-    private TermType[] termsOffered;
+    private int departmentId;
 
-    public ScienceCourse(String name, String creditHours, CourseType type, String description, TermType[] termsOffered) {
-        super(name, creditHours, type);
+    public ScienceCourse(int id, String name, double creditHours, int departmentId,
+                         int courseNumber, String description) {
+        super(id, name, creditHours);
+        this.departmentId = departmentId;
+        this.courseNumber = courseNumber;
         this.description = description;
-        this.termsOffered = termsOffered;
     }
+
+    public int getCourseNumber() { return courseNumber; }
 
     public String getDescription() {
         return description;
-    }
-
-    public TermType[] getTermsOffered() {
-        return termsOffered;
     }
 }

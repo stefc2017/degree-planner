@@ -5,29 +5,29 @@ package comp3350.degree_planner.objects;
  */
 
 public class Degree {
+    private int id;
     private String name;
-    private String creditHours;
-    private ScienceCourse[] requiredCourses;
+    private double creditHours;
+    private double majorCreditHours;
     private double gpaRequired;
 
-    public Degree(String name, String creditHours, ScienceCourse[] requiredCourses, double gpaRequired) {
+    public Degree(int id, String name, double creditHours, double majorCreditHours, double gpaRequired) {
+        this.id = id;
         this.name = name;
         this.creditHours = creditHours;
-        this.requiredCourses = requiredCourses;
+        this.majorCreditHours = majorCreditHours;
         this.gpaRequired = gpaRequired;
     }
 
-    public String getName() {
-        return name;
-    }
+    public int getId() { return id; }
 
-    public String getCreditHours() {
+    public String getName() { return name; }
+
+    public double getCreditHours() {
         return creditHours;
     }
 
-    public ScienceCourse[] getRequiredCourses() {
-        return requiredCourses;
-    }
+    public double getMajorCreditHours() { return majorCreditHours; }
 
     public double getGpaRequired() {
         return gpaRequired;

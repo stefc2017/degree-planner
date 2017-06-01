@@ -4,26 +4,24 @@ package comp3350.degree_planner.objects;
  * Created by Kaleigh on 2017-05-31.
  */
 
-public class Course {
-    private String name;
-    private String creditHours;
-    private CourseType type;
+public abstract class Course {
+    private int id;
+    private String name;            // e.g. Introductory Computer Science I
+    private double creditHours;
 
-    public Course(String name, String creditHours, CourseType type) {
+    public Course(int id, String name, double creditHours) {
+        this.id = id;
         this.name = name;
         this.creditHours = creditHours;
-        this.type = type;
     }
+
+    public int getId() { return id; }
 
     public String getName() {
         return name;
     }
 
-    public String getCreditHours() {
+    public double getCreditHours() {
         return creditHours;
-    }
-
-    public CourseType getType() {
-        return type;
     }
 }

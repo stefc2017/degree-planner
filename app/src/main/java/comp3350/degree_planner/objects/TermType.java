@@ -5,6 +5,15 @@ package comp3350.degree_planner.objects;
  */
 
 public class TermType {
-    private String season;      // May be Fall, Winter, Summer
     private int id;
+    private String season;      // May be Fall, Winter, Summer
+
+    public TermType(int id, String season) {
+        this.id = id;
+        this.season = season;
+    }
+
+    public int getId() { return id; }
+
+    public String getSeason() { return season; }
 }

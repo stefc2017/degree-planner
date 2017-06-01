@@ -5,19 +5,19 @@ package comp3350.degree_planner.objects;
  */
 
 public class CourseType {
-    private String name;
     private int id;
+    private String name;
 
-    public CourseType(String name, int id) {
-        this.name = name;
+    public CourseType(int id, String name) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
+        this.name = name;
     }
 
     public int getId() {
         return id;
+    }
+
+    public String getName() {
+        return name;
     }
 }

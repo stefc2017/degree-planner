@@ -12,8 +12,12 @@ package comp3350.degree_planner.objects;
  */
 
 public class UserDefinedCourse extends Course{
+    private String fullAbbreviation;    // Department abbreviation and course number
 
-    public UserDefinedCourse(String name, String creditHours, CourseType type) {
-        super(name, creditHours, type);
+    public UserDefinedCourse(int id, String name, double creditHours, String fullAbbreviation) {
+        super(id, name, creditHours);
+        this.fullAbbreviation = fullAbbreviation;
     }
+
+    public String getFullAbbreviation() { return fullAbbreviation; }
 }

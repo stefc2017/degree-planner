@@ -5,52 +5,35 @@ package comp3350.degree_planner.objects;
  */
 
 public class Student {
-    private String name;
+    private int id;
     private int studentNumber;
+    private String name;
     private String email;
     private String password;        // Make password a hash?
-    private double gpa;
+    private int degreeId;
 
-    private Course[] coursesPassed;
-    private Course[] coursesFailed;
-    private DegreePlan degreePlan;
-
-    public Student(String name, int studentNumber, String email, String password) {
-        this.name = name;
+    public Student(int id, int studentNumber, String name, String email, String password, int degreeId) {
+        this.id = id;
         this.studentNumber = studentNumber;
+        this.name = name;
         this.email = email;
         this.password = password;
+        this.degreeId = degreeId;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getStudentNumber() { return  studentNumber; }
 
     public String getName() {
         return name;
-    }
-
-    public int getStudentNumber() {
-        return studentNumber;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public double getGpa() {
-        return gpa;
-    }
-
-    public Course[] getCoursesPassed() {
-        return coursesPassed;
-    }
-
-    public Course[] getCoursesFailed() {
-        return coursesFailed;
-    }
-
-    public DegreePlan getDegreePlan() {
-        return degreePlan;
-    }
+    public String getPassword() { return password; }
 }

@@ -5,13 +5,17 @@ package comp3350.degree_planner.objects;
  */
 
 public class RatingType {
+    private int id;
     private String typeName;
     private int value;
 
-    public RatingType(String typeName, int value) {
+    public RatingType(int id, String typeName, int value) {
+        this.id = id;
         this.typeName = typeName;
         this.value = value;
     }
+
+    public int getId() { return id; }
 
     public String getTypeName() {
         return typeName;
