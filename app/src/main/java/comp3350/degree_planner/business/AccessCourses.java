@@ -16,7 +16,7 @@ public class AccessCourses
 		dataAccess = (DataAccessStub) Services.getDataAccess();
 	}
 
-    public String getCourses(List<Course> courses)
+    public String getCourses()
     {
         return null;
     }
