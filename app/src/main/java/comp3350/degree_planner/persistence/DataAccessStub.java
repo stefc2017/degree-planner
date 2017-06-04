@@ -259,5 +259,136 @@ public class DataAccessStub {
         return coursesTaken;
     }//end getCoursesTaken
 
+    /**
+     * getCoursesCanTake
+     * @param studentNumber: the student number of the student. We want to get all the courses that this student
+     *                       has not taken but has the preRequisites to take
+     * @return: an arraylist of all the courses the student has the preRequisites for.
+     **/
+    public ArrayList<Course> getCoursesCanTake(int studentNumber){
+        ArrayList<Course> coursesNotTaken = getCoursesNotTaken(studentNumber); //get the courses that student has not taken yet
+        ArrayList<Course> coursesCanTake = new ArrayList<Course>(); //will contain the courses the student can take
+        int numOfCoursesNotTaken = coursesNotTaken.size(); //number of courses that the student has not taken
+        Course currentCourse;
 
+        for(int i = 0; i < numOfCoursesNotTaken; i++){
+            currentCourse = coursesNotTaken.get(i);
+
+            if(hasPrerequisites(studentNumber, currentCourse.getName())){ //if the student has all preRequisites for the course
+                coursesCanTake.add(currentCourse);
+            }//end if
+
+        }//end for
+
+        return coursesCanTake;
+    }//end getCoursesCanTake
+
+    /**
+     * hasPrerequisites
+     * @param studentNumber: the student number of the student we want to check if they have all preReqs to take the
+     *                       course with courseName given as a parameter
+     * @param courseName: the name of the course we want to see if the student has all preReqs for it
+     * @return: an arraylist of all prerequisites of the course given as a parameter
+     **/
+    public boolean hasPrerequisites(int studentNumber, String courseName){
+        ArrayList<CourseResult> coursesTaken = getCoursesTaken(studentNumber); //the courses the student has taken
+        Course course = findCourse(courseName); //the course we want to get the preRequisites of
+        ArrayList<Course> coursePreReqs = null; //the preReqs for the course
+        boolean hasPreReqs = true; //initially- we have all preReqs say if there is no preRequisites
+        Course currentPreReq; //the current preReq, used for in the while loop
+        int outer_index = 0; //index for the outer while loop
+        int inner_index; //index for the inner while loop
+        int preReqId; //the id of the prerequisite
+
+        if(course != null){ //if the course was found
+            coursePreReqs = getAllPrerequisites(course); //gets all the preRequisites of the course
+
+            //determine if all prereqs were taken
+
+            while( hasPreReqs && outer_index < coursePreReqs.size()){ //goes through each preReq Course
+                currentPreReq = coursePreReqs.get(outer_index);
+
+                if(currentPreReq != null){
+                    preReqId = currentPreReq.getId();
+                    inner_index = 0; //initialize inner_index to 0
+
+                    while( hasPreReqs && inner_index < coursesTaken.size() && preReqId !=
+                            (coursesTaken.get(inner_index)).getCourseId()){ //goes through each course that the student has taken
+                        inner_index++;
+                    }//end while
+
+                    if(inner_index >= coursesTaken.size()){ //if we searched through all the courses the student has taken but they
+                        hasPreReqs = false;                   //don't have the prerequisite.
+                    }//end if
+                }//end if
+
+                outer_index++;
+            }//end while
+
+        }//end if
+        return hasPreReqs;
+    }//end hasPrerequisites
+
+    /**
+     * getAllPrerequisites
+     * @param course: the course we want to get all the prerequisites of
+     * @return: an arraylist of all prerequisites of the course given as a parameter
+     **/
+    public ArrayList<Course> getAllPrerequisites(Course course){
+        ArrayList<Course> prerequisites = new ArrayList<Course>();
+        int numberOfCoursePrereqs = coursePrerequisites.size(); //the number of prerequisites
+        int courseId = course.getId(); //the course number of the course object
+        Course currentCourse; //to keep track of the current course
+
+        for(int i = 0; i < numberOfCoursePrereqs; i++){
+            if((coursePrerequisites.get(i)).getCourseId() == courseId){ //if this is a prerequisite for the course
+                currentCourse = findCourse((coursePrerequisites.get(i)).getPreReqCourseId()); //get the course
+                prerequisites.add(currentCourse); //add the course to the list of prerequisites
+            }//end if
+        }//end for
+
+        return prerequisites;
+    }//end getAllPrerequisites
+
+    /**
+     * findCourse
+     * @param courseId: given the course Id, find that course
+     * @return: the course with the id specified as the parameter
+     **/
+    public Course findCourse(int courseId){
+        int numberOfCourses = courses.size(); //the number of all courses
+        Course course = null; //the course we will return
+        int index = 0; //index for searching
+
+        while(index < numberOfCourses && (courses.get(index)).getId() != courseId){
+            index++;
+        }//end while
+
+        if(index < numberOfCourses && (courses.get(index)).getId() == courseId){ //we found the course
+            course = courses.get(index);
+        }//end if
+
+        return course;
+    }//end findCourse
+
+    /**
+     * findCourse
+     * @param courseName: given the course name, find that course
+     * @return: the course with the name specified as the parameter
+     **/
+    public Course findCourse(String courseName){
+        int numberOfCourses = courses.size(); //the number of all courses
+        Course course = null; //the course we will return
+        int index = 0; //index for searching
+
+        while(index < numberOfCourses && !((courses.get(index)).getName()).equals(courseName)){
+            index++;
+        }//end while
+
+        if(index < numberOfCourses && ((courses.get(index)).getName()).equals(courseName)){ //we found the course
+            course = courses.get(index);
+        }//end if
+
+        return course;
+    }//end findCourse
 }
