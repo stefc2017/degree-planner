@@ -8,9 +8,16 @@ public class Main {
 
     public static void main(String[] args)
     {
-        Services.createDataAccess();
-        Services.closeDataAccess();
-
         System.out.println("All done");
     }
+
+    public static void startUp()
+	{
+		Services.createDataAccess();
+	}
+
+	public static void shutDown()
+	{
+		Services.closeDataAccess();
+	}
 }
