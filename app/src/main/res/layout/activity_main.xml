@@ -1,55 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/snail_lg"
+    android:fadingEdge="horizontal"
+    android:orientation="vertical"
+    tools:context="comp3350.degree_planner.presentation.MainActivity">
+
+    <View
+        android:id="@+id/spacer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context="comp3350.degree_planner.presentation.MainActivity">
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="150dp"
-            android:gravity="center|bottom"
-            android:orientation="horizontal">
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="180dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:columnCount="3"
+        android:rowCount="1">
 
-            <Button
-                android:id="@+id/buttonDegrees"
-                android:layout_width="98dp"
-                android:layout_height="138dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="5dp"
-                android:layout_weight="0.18"
-                android:text="@string/degreeInfo"
-                android:textSize="12sp"
-                tools:layout_editor_absoluteX="64dp"
-                tools:layout_editor_absoluteY="260dp"
-                android:onClick="buttonDegreesOnClick"/>
+        <Button
+            android:id="@+id/buttonDegrees"
+            android:layout_width="150dp"
+            android:layout_height="138dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/colorPrimary"
+            android:fadingEdge="horizontal"
+            android:onClick="buttonDegreesOnClick"
+            android:text="@string/degreeInfo"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/buttonCoursePlan"
-                android:layout_width="98dp"
-                android:layout_height="138dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_weight="0.18"
-                android:text="@string/coursePlan"
-                android:textSize="12sp"
-                tools:layout_editor_absoluteX="64dp"
-                tools:layout_editor_absoluteY="260dp" />
+        <Button
+            android:id="@+id/buttonCoursePlan"
+            android:layout_width="135dp"
+            android:layout_height="138dp"
+            android:background="@color/colorLightGreen"
+            android:text="@string/coursePlan"
+            android:textColor="?attr/actionModeSplitBackground"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/buttonProgress"
-                android:layout_width="98dp"
-                android:layout_height="138dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="15dp"
-                android:layout_weight="0.18"
-                android:text="@string/progress"
-                android:textSize="12sp"
-                tools:layout_editor_absoluteX="64dp"
-                tools:layout_editor_absoluteY="260dp" />
-        </LinearLayout>
-    </LinearLayout>
+        <Button
+            android:id="@+id/buttonProgress"
+            android:layout_width="135dp"
+            android:layout_height="138dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/colorAccent"
+            android:text="@string/progress"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </GridLayout>
+</LinearLayout>
 
