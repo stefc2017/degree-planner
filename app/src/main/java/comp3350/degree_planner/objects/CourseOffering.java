@@ -12,4 +12,12 @@ public class CourseOffering {
         this.courseId = courseId;
         this.termTypeId = termTypeId;
     }
+
+    public int getCourseId() {
+        return courseId;
+    }
+
+    public int getTermTypeId() {
+        return termTypeId;
+    }
 }

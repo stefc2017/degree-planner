@@ -189,4 +189,83 @@ public class DataAccessStub {
 
         return crByStudentId;
     }
+
+    public boolean addToCoursePlan (int courseId, int studentId, int termTypeId, int year) {
+        coursePlans.add(new CoursePlan(courseId, studentId, termTypeId, year));
+        //Error checking?
+        return true;
+    }
+
+    public boolean removeFromCoursePlan (int coursePlanId) {
+        boolean removeSuccessful = false;
+
+        for (int i = 0; i<coursePlans.size(); i++) {
+            if (coursePlans.get(i).getId() == coursePlanId) {
+                coursePlans.remove(i);
+                removeSuccessful = true;
+                break;
+            }
+        }
+
+        return removeSuccessful;
+    }
+
+    public boolean moveCourse (int coursePlanId, int newTermTypeId, int newYear) {
+        CoursePlan coursePlan;
+        CourseOffering currCourseOffering;
+        boolean validTerm = false;
+        boolean moveSuccessful = false;
+
+        for (int i = 0; i<coursePlans.size(); i++) {
+            coursePlan = coursePlans.get(i);
+            if (coursePlan.getId() == coursePlanId) {
+                //Checking that term entered is a term that the course is typically offered in?
+                for (int j = 0; j<courseOfferings.size(); j++) {
+                    currCourseOffering = courseOfferings.get(j);
+                    if (currCourseOffering.getCourseId() == coursePlan.getCourseId() && currCourseOffering.getTermTypeId() == newTermTypeId) {
+                        validTerm = true;
+                        break;
+                    }
+                }
+
+                if (validTerm) {
+                    coursePlan.setTermTypeId(newTermTypeId);
+                    coursePlan.setYear(newYear);
+                    moveSuccessful = true;
+                    break;
+                }
+            }
+        }
+
+        return moveSuccessful;
+    }
+//    private ArrayList<CourseOffering> getCourseOfferingsByCourseId (int courseId) {
+//        ArrayList<CourseOffering> result = new ArrayList<CourseOffering>();
+//        CourseOffering currCourseOffering;
+//
+//        for (int i = 0; i<courseOfferings.size(); i++) {
+//            currCourseOffering = courseOfferings.get(i);
+//
+//            if (currCourseOffering.getCourseId() == courseId) {
+//                result.add(currCourseOffering);
+//            }
+//        }
+//
+//        return result;
+//    }
+
+    public ArrayList<CoursePlan> getCoursePlanByStudentId (int studentId) {
+        ArrayList<CoursePlan> result = new ArrayList<CoursePlan>();
+        CoursePlan currCoursePlan;
+
+        for (int i = 0; i<coursePlans.size(); i++) {
+            currCoursePlan = coursePlans.get(i);
+
+            if (currCoursePlan.getStudentId() == studentId) {
+                result.add(currCoursePlan);
+            }
+        }
+
+        return result;
+    }
 }
