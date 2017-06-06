@@ -178,7 +178,7 @@ public class DataAccessStub {
     public ArrayList<Course> getCoursesNotTaken(int studentNumber){
         ArrayList<Course> coursesNotTaken; //the list of courses that the student has not taken
         ArrayList<Course> allCourses = getAllCourses(); //the list of all courses offered
-        ArrayList<CourseResult> coursesTaken = getCoursesTaken(studentNumber); //the list of courses taken
+        ArrayList<CourseResult> coursesTaken = getCourseResultsByStudentId(studentNumber); //the list of courses taken
                                                                                //by the student
         int numCoursesTaken = coursesTaken.size(); //number of courses taken
         int index = -1; //whether or not the course the student took is a course in the list
@@ -188,7 +188,7 @@ public class DataAccessStub {
         for(int j = 0; j < numCoursesTaken; j++){
             numberOfCourses = allCourses.size();
 
-            if(getCourse(coursesTaken.get(j), numberOfCourses) != null){
+            if(getCourse(coursesTaken.get(j), allCourses) != null){
                 currentCourse = getCourse(coursesTaken.get(j), allCourses);
                 index = allCourses.indexOf(currentCourse);
 
@@ -206,7 +206,7 @@ public class DataAccessStub {
     /**
      * getCourse
      * @param courseResult: a CourseList that we want to convert to a Course object
-     * @param numOfCourses: the total number of courses
+     * @param allCourses: an arraylist of all the courses in the database
      * @return a Course Object
      **/
     public Course getCourse(CourseResult courseResult, ArrayList<Course> allCourses){
@@ -215,11 +215,11 @@ public class DataAccessStub {
         int numberOfCourses = allCourses.size();
         int index = 0;
 
-        while(index < numOfCourses && (allCourses.get(index)).getId() != courseId){
+        while(index < numberOfCourses && (allCourses.get(index)).getId() != courseId){
             index++;
         }//end while
 
-        if(index < numOfCourses && (allCourses.get(index)).getId() == courseId){
+        if(index < numberOfCourses && (allCourses.get(index)).getId() == courseId){
             course = allCourses.get(index);
         }//end if
 
@@ -233,32 +233,6 @@ public class DataAccessStub {
     public ArrayList<Course> getAllCourses(){
         return courses;
     }//end getAllCourses
-
-    /**
-     * getCoursesTaken
-     * @param studentNumber: The student number of the student we want to search for and get the
-     *                       courses they have not taken yet.
-     * @return: The courses the student has taken.
-     */
-    public ArrayList<CourseResult> getCoursesTaken(int studentNumber){
-        ArrayList<CourseResult> coursesTaken = new ArrayList<CourseResult>(); //the courses the student has taken
-        ArrayList<CourseResult> coursesResults = courseResults; //the courses that have a student and a grade attached to them
-        int coursesResultsLength = coursesResults.size();
-        CourseResult currentCourse; //the current course we are determing if the student took it
-        int currentStudentId; //the student number with the associated current course
-
-        for(int i = 0; i < coursesResultsLength; i++){
-            currentCourse = coursesResults.get(i);
-            currentStudentId = currentCourse.getStudentId();
-
-            if(studentNumber == currentStudentId){ //if the course was taken by this student
-                coursesTaken.add(currentCourse);
-            }//end if
-
-        }//end for
-
-        return coursesTaken;
-    }//end getCoursesTaken
 
     /**
      * getCoursesCanTake
@@ -292,7 +266,7 @@ public class DataAccessStub {
      * @return: an arraylist of all prerequisites of the course given as a parameter
      **/
     public boolean hasPrerequisites(int studentNumber, String courseName){
-        ArrayList<CourseResult> coursesTaken = getCoursesTaken(studentNumber); //the courses the student has taken
+        ArrayList<CourseResult> coursesTaken = getCourseResultsByStudentId(studentNumber); //the courses the student has taken
         Course course = findCourse(courseName); //the course we want to get the preRequisites of
         ArrayList<Course> coursePreReqs = null; //the preReqs for the course
         boolean hasPreReqs = true; //initially- we have all preReqs say if there is no preRequisites
@@ -343,7 +317,7 @@ public class DataAccessStub {
 
         for(int i = 0; i < numberOfCoursePrereqs; i++){
             if((coursePrerequisites.get(i)).getCourseId() == courseId){ //if this is a prerequisite for the course
-                currentCourse = findCourse((coursePrerequisites.get(i)).getPreReqCourseId()); //get the course
+                currentCourse = findCourse((coursePrerequisites.get(i)).getPrereqCourseId()); //get the course
                 prerequisites.add(currentCourse); //add the course to the list of prerequisites
             }//end if
         }//end for
@@ -452,14 +426,12 @@ public class DataAccessStub {
      */
     public ArrayList<CourseResult> getCourseResultsByStudentId (int studentId) {
         ArrayList<CourseResult> crByStudentId = new ArrayList<CourseResult>();
-        Iterator<CourseResult> crIterator = courseResults.iterator();
         CourseResult currCR;
 
-        while (crIterator.hasNext()) {
-            currCR = crIterator.next();
-
+        for (int i = 0; i<courseResults.size(); i++) {
+            currCR = courseResults.get(i);
             if (currCR.getStudentId() == studentId) {
-                crByStudentId.add (currCR);
+                crByStudentId.add(currCR);
             }
         }
 
