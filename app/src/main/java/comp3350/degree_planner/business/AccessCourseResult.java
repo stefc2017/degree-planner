@@ -19,10 +19,10 @@ public class AccessCourseResult {
         dataAccess = (DataAccessStub) Services.getDataAccess();
     }
 
-    public AccessCourseResult (DataAccessStub dataAccess) {
-        this.dataAccess = dataAccess;
-        dataAccess.open();
-    }
+//    public AccessCourseResult (DataAccessStub dataAccess) {
+//        this.dataAccess = dataAccess;
+//        dataAccess.open();
+//    }
 
     public ArrayList<CourseResult> getCourseResultsByStudentId (int studentId) {
         return dataAccess.getCourseResultsByStudentId(studentId);

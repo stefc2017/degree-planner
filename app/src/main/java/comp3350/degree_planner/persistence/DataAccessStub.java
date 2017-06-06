@@ -2,6 +2,7 @@ package comp3350.degree_planner.persistence;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Date;
 
 import comp3350.degree_planner.objects.*;
 
@@ -190,10 +191,73 @@ public class DataAccessStub {
         return crByStudentId;
     }
 
-    public boolean addToCoursePlan (int courseId, int studentId, int termTypeId, int year) {
-        coursePlans.add(new CoursePlan(courseId, studentId, termTypeId, year));
-        //Error checking?
-        return true;
+    public boolean addToCoursePlan (int studentId, int courseId, int termTypeId, int year) {
+        boolean addSuccessful = false;
+
+        if (checkCoursePlanInput (true, studentId, courseId, termTypeId, year)) {
+            coursePlans.add(new CoursePlan(courseId, studentId, termTypeId, year));
+            addSuccessful = true;
+        }
+
+        return addSuccessful;
+    }
+
+    private boolean checkCoursePlanInput (boolean isAdd, int studentId, int courseId, int termTypeId, int year) {
+        boolean validCourseId = false;
+        boolean validStudentId = false;
+        boolean validTermTypeId = false;
+        boolean validTerm = false;
+        boolean courseNotAlreadyPassed = false;
+
+        //Check for duplicates? - allow for now
+
+        if (isAdd) {
+            //Does a student with the entered studentId exist?
+            for (int i = 0; i < students.size(); i++) {
+                if (students.get(i).getId() == studentId) {
+                    validStudentId = true;
+                    break;
+                }
+            }
+
+            if (validStudentId) {
+                //Does a course with the entered courseId exist?
+                for (int i = 0; i<courses.size(); i++) {
+                    if (courses.get(i).getId() == courseId) {
+                        validCourseId = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        //Previous check either passed or not required
+        if (!isAdd || validCourseId) {
+            //Does a term type with the entered termTypeId exist?
+            for (int i = 0; i<termTypes.size(); i++) {
+                if (termTypes.get(i).getId() == termTypeId) {
+                    validTermTypeId = true;
+                    break;
+                }
+            }
+
+            if (validTermTypeId) {
+                //Is the course historically offered in this term?
+                for (int i = 0; i<courseOfferings.size(); i++) {
+                    if (courseOfferings.get(i).getCourseId() == courseId && courseOfferings.get(i).getTermTypeId() == termTypeId) {
+                        validTerm = true;
+                        break;
+                    }
+                }
+
+                if (validTerm) {
+                    //TODO: Has the student already taken and passed this course?
+                    //TODO: check year
+                }
+            }
+        }
+
+        return courseNotAlreadyPassed;
     }
 
     public boolean removeFromCoursePlan (int coursePlanId) {
@@ -219,16 +283,7 @@ public class DataAccessStub {
         for (int i = 0; i<coursePlans.size(); i++) {
             coursePlan = coursePlans.get(i);
             if (coursePlan.getId() == coursePlanId) {
-                //Checking that term entered is a term that the course is typically offered in?
-                for (int j = 0; j<courseOfferings.size(); j++) {
-                    currCourseOffering = courseOfferings.get(j);
-                    if (currCourseOffering.getCourseId() == coursePlan.getCourseId() && currCourseOffering.getTermTypeId() == newTermTypeId) {
-                        validTerm = true;
-                        break;
-                    }
-                }
-
-                if (validTerm) {
+                if (checkCoursePlanInput(false, coursePlan.getStudentId(), coursePlan.getCourseId(), newTermTypeId, newYear)) {
                     coursePlan.setTermTypeId(newTermTypeId);
                     coursePlan.setYear(newYear);
                     moveSuccessful = true;
@@ -239,20 +294,6 @@ public class DataAccessStub {
 
         return moveSuccessful;
     }
-//    private ArrayList<CourseOffering> getCourseOfferingsByCourseId (int courseId) {
-//        ArrayList<CourseOffering> result = new ArrayList<CourseOffering>();
-//        CourseOffering currCourseOffering;
-//
-//        for (int i = 0; i<courseOfferings.size(); i++) {
-//            currCourseOffering = courseOfferings.get(i);
-//
-//            if (currCourseOffering.getCourseId() == courseId) {
-//                result.add(currCourseOffering);
-//            }
-//        }
-//
-//        return result;
-//    }
 
     public ArrayList<CoursePlan> getCoursePlanByStudentId (int studentId) {
         ArrayList<CoursePlan> result = new ArrayList<CoursePlan>();
