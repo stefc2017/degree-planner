@@ -12,4 +12,8 @@ public class CoursePrerequisite {
         this.courseId = courseId;
         this.prereqCourseId = prereqCourseId;
     }
+
+    public int getCourseId(){ return courseId; }
+
+    public int getPrereqCourseId(){ return prereqCourseId; }
 }
