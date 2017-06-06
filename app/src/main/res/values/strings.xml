@@ -1,7 +1,3 @@
 <resources>
-    <string name="app_name">Degree Planner</string>
-    <string name="degreeInfo">Degree Information</string>
-    <string name="coursePlan">Course Planning</string>
-    <string name="progress">View Progress</string>
-    <string name="degreePageTitle">Undergraduate Degrees</string>
+    <string name="app_name">degree-planner</string>
 </resources>
