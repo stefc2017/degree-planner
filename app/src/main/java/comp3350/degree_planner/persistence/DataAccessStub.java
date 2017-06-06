@@ -1,6 +1,7 @@
 package comp3350.degree_planner.persistence;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import comp3350.degree_planner.objects.*;
 
@@ -42,10 +43,10 @@ public class DataAccessStub {
 
     public void open() {
         ScienceCourse tempScienceCourse;    // Used to hold a science course so it can be added
-        // to both the ScienceCourse and Course arrays
+                                            // to both the ScienceCourse and Course arrays
         UserDefinedCourse tempUserDefinedCourse;    // Used to hold a user defined course so it can
-        // be added to both the ScienceCourse and
-        // Course arrays
+                                                    // be added to both the ScienceCourse and
+                                                    // Course arrays
 
         // Create Types
 
@@ -131,7 +132,7 @@ public class DataAccessStub {
 
         courseResults = new ArrayList<CourseResult>();
         courseResults.add(new CourseResult(1, 1, 1, 1));
-        courseResults.add(new CourseResult(1, 1, 1, 2));
+        courseResults.add(new CourseResult(2, 1, 1, 2));
 
         // Create Course Offerings
 
@@ -391,4 +392,77 @@ public class DataAccessStub {
 
         return course;
     }//end findCourse
+
+    /**
+     * getAllDegrees
+     * @return: All the degrees that are offered.
+     **/
+    public ArrayList<Degree> getAllDegrees(){
+        return degrees;
+    }//end getAllDegrees
+
+    /**
+     * getDegreeByName
+     * @param degreeName: The name of the degree you want to find information about.
+     * @return: The degree with the name given as a parameter or null if that degree does not exist.
+     **/
+    public Degree getDegreeByName(String degreeName){
+        ArrayList<Degree> allDegrees = degrees; //all degrees offered
+        int numberOfDegrees = allDegrees.size(); //number of degrees offered
+        Degree degree = null;
+        int index = 0; //index to loop through degrees
+
+        while(index < numberOfDegrees && !((allDegrees.get(index)).getName()).equals(degreeName)){
+            index++;
+        }//end while
+
+        if(index < numberOfDegrees && ((allDegrees.get(index)).getName()).equals(degreeName)){
+            degree = allDegrees.get(index); //get the degree with the name given as a parameter
+        }//end if
+
+        return degree;
+    }//end getDegreeByName
+
+    /**
+     * getDegreeById
+     * @param degreeId: The id number of the degree you want to find.
+     * @return: The degree with the id given as the parameter.
+     **/
+    public Degree getDegreeById(int degreeId){
+        ArrayList<Degree> allDegrees = degrees; //all degrees offered
+        int numberOfDegrees = allDegrees.size(); //number of degrees offered
+        Degree degree = null;
+        int index = 0; //index to loop through degrees
+
+        while(index < numberOfDegrees && (allDegrees.get(index)).getId() != degreeId){
+            index++;
+        }//end while
+
+        if(index < numberOfDegrees && (allDegrees.get(index)).getId() == degreeId){
+            degree = allDegrees.get(index); //get the degree with the id given as a parameter
+        }//end if
+
+        return degree;
+    }//end getDegreeById
+
+    /*
+     * Created by Tiffany Jiang on 2017-06-04
+     *
+     * Returns a list of course results for the specified student
+     */
+    public ArrayList<CourseResult> getCourseResultsByStudentId (int studentId) {
+        ArrayList<CourseResult> crByStudentId = new ArrayList<CourseResult>();
+        Iterator<CourseResult> crIterator = courseResults.iterator();
+        CourseResult currCR;
+
+        while (crIterator.hasNext()) {
+            currCR = crIterator.next();
+
+            if (currCR.getStudentId() == studentId) {
+                crByStudentId.add (currCR);
+            }
+        }
+
+        return crByStudentId;
+    }
 }
