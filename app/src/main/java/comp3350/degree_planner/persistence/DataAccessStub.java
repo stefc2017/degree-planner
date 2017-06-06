@@ -169,6 +169,58 @@ public class DataAccessStub {
         System.out.println("Closed stub database.");
     }
 
+    /**
+     * getAllDegrees
+     * @return: All the degrees that are offered.
+     **/
+    public ArrayList<Degree> getAllDegrees(){
+        return degrees;
+    }//end getAllDegrees
+
+    /**
+     * getDegreeByName
+     * @param degreeName: The name of the degree you want to find information about.
+     * @return: The degree with the name given as a parameter or null if that degree does not exist.
+     **/
+    public Degree getDegreeByName(String degreeName){
+        ArrayList<Degree> allDegrees = degrees; //all degrees offered
+        int numberOfDegrees = allDegrees.size(); //number of degrees offered
+        Degree degree = null;
+        int index = 0; //index to loop through degrees
+
+        while(index < numberOfDegrees && !((allDegrees.get(index)).getName()).equals(degreeName)){
+            index++;
+        }//end while
+
+        if(index < numberOfDegrees && ((allDegrees.get(index)).getName()).equals(degreeName)){
+            degree = allDegrees.get(index); //get the degree with the name given as a parameter
+        }//end if
+
+        return degree;
+    }//end getDegreeByName
+
+    /**
+     * getDegreeById
+     * @param degreeId: The id number of the degree you want to find.
+     * @return: The degree with the id given as the parameter.
+     **/
+    public Degree getDegreeById(int degreeId){
+        ArrayList<Degree> allDegrees = degrees; //all degrees offered
+        int numberOfDegrees = allDegrees.size(); //number of degrees offered
+        Degree degree = null;
+        int index = 0; //index to loop through degrees
+
+        while(index < numberOfDegrees && (allDegrees.get(index)).getId() != degreeId){
+            index++;
+        }//end while
+
+        if(index < numberOfDegrees && (allDegrees.get(index)).getId() == degreeId){
+            degree = allDegrees.get(index); //get the degree with the id given as a parameter
+        }//end if
+
+        return degree;
+    }//end getDegreeById
+
     /*
      * Created by Tiffany Jiang on 2017-06-04
      *
