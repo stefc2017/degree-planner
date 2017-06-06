@@ -23,7 +23,11 @@ public class CourseResult {
 
     public int getId() { return id; }
 
-    public int getStudentId() {
+    public int getStudentId(){
         return studentId;
-    }
+    }//end getStudentId
+
+    public int getCourseId(){
+        return courseId;
+    }//end getCourseId
 }
