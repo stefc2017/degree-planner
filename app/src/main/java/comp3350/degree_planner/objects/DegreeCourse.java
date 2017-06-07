@@ -18,4 +18,7 @@ public class DegreeCourse {
         this.courseId = courseId;
         this.courseTypeId = courseTypeId;
     }
+
+    public int getDegreeId(){ return degreeId; }
+    public int getCourseId(){ return courseId; }
 }

@@ -437,4 +437,80 @@ public class DataAccessStub {
 
         return crByStudentId;
     }
+
+    /*
+        Created by Matthew Provencher on 2017-06-06
+
+        Returns a list of courses taken by a given student
+     */
+    public ArrayList<Course> getCoursesTaken( int studentId ){
+        ArrayList<Course> coursesTaken = new ArrayList<Course>;
+        ArrayList<CourseResult> crByStudentId = getCourseResultsByStudentId( studentId );
+
+        for( CourseResult result : crByStudentId ){
+            coursesTaken.add( findCourse( result.getCourseId() ));
+        }
+
+        return coursesTaken;
+    }
+
+    /*
+        Created by Matthew Provencher on 2017-06-06
+
+        Returns a list of degree required courses student has taken
+    */
+    public ArrayList<Course> getDegreeCoursesTaken( int studentId, int degreeId ){
+        ArrayList<Course> coursesTaken = getCoursesTaken( studentId );
+        ArrayList<Course> degreeCourses = getDegreeCourses( degreeId );
+        ArrayList<Course> takenDegreeCourses = new ArrayList<Course>;
+
+        for( Course degreeCourse : degreeCourses ){
+            if( coursesTaken.contains( degreeCourse ) ){
+                takenDegreeCourses.add( degreeCourse );
+            }
+        }
+    }
+
+    /*
+        Created by Matthew Provencher on 2017-06-06
+
+        Returns a list of courses required by a degree
+    */
+    public ArrayList<Course> getDegreeCourses( int degreeId ) {
+        ArrayList<Course> reqCourseList = new ArrayList<Course>;
+
+        for( DegreeCourse course : degreeCourses ){
+            if( course.getDegreeId() == degreeId ){
+                reqCourseList.add( findCourse( course.getCourseId() ) );
+            }
+        }
+
+        return reqCourseList;
+    }
+
+    /*
+        Created by Matthew Provencher on 2017-06-06
+
+        Returns a list of required degree courses that a given student can take
+    */
+    public ArrayList<Course> getEligibleRequiredCourse( int studentNum, int degreeId ){
+        ArrayList<Course> coursesTaken = getCoursesTaken( studentNum );
+        ArrayList<Course> degreeCourses = getDegreeCourses( degreeId );
+        ArrayList<Course> notTakenDegreeCourses = new ArrayList<Course>;
+        ArrayList<Course> eligibleDegreeCourses = new ArrayList<Course>;
+
+        for( Course degreeCourse : degreeCourses ){
+            if( !(coursesTaken.contains( degreeCourse )) ){
+                notTakenDegreeCourses.add( degreeCourse );
+            }
+        }
+
+        for( Course course : notTakenDegreeCourses ){
+            if( hasPrerequisites( studentNum, course.getName() ) ){
+                eligibleDegreeCourses.add( course );
+            }
+        }
+
+        return eligibleDegreeCourses;
+    }
 }
