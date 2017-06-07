@@ -2,6 +2,7 @@ package comp3350.degree_planner.persistence;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import comp3350.degree_planner.objects.*;
 
@@ -188,5 +189,20 @@ public class DataAccessStub {
         }
 
         return crByStudentId;
+    }
+
+    public ArrayList<CourseOffering> getCourseOfferingsByTerm(TermType term, List<CourseOffering> courseOfferings) {
+
+        ArrayList<CourseOffering> courseOfferingsByTermList = new ArrayList<CourseOffering>();
+
+        for (int i = 0; i < courseOfferings.size(); i++) {
+            if (term.getId() == courseOfferings.get(i).getTermTypeId()) {
+                //Adds course offering based on courseID from COurseOfferings and matching TermID
+                courseOfferingsByTermList.add(courseOfferings.get(i).getCourseId(), new CourseOffering(term.getId(), 1));
+            }
+        }
+
+
+        return courseOfferingsByTermList;
     }
 }
