@@ -1,6 +1,5 @@
 package comp3350.degree_planner.business;
 import java.util.ArrayList;
-import java.util.List;
 import comp3350.degree_planner.application.Services;
 import comp3350.degree_planner.objects.Degree;
 import comp3350.degree_planner.persistence.DataAccessStub;

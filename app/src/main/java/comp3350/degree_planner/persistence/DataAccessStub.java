@@ -1,5 +1,6 @@
 package comp3350.degree_planner.persistence;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -177,7 +178,7 @@ public class DataAccessStub {
      **/
     public ArrayList<Course> getCoursesNotTaken(int studentNumber){
         ArrayList<Course> coursesNotTaken; //the list of courses that the student has not taken
-        ArrayList<Course> allCourses = getAllCourses(); //the list of all courses offered
+        ArrayList<Course> allCourses = new ArrayList<Course>(); //the list of all courses offered
         ArrayList<CourseResult> coursesTaken = getCourseResultsByStudentId(studentNumber); //the list of courses taken
                                                                                //by the student
         int numCoursesTaken = coursesTaken.size(); //number of courses taken
@@ -185,6 +186,7 @@ public class DataAccessStub {
         int numberOfCourses; //the total number of courses offered
         Course currentCourse; //the current course
 
+        getAllCourses(allCourses);
         for(int j = 0; j < numCoursesTaken; j++){
             numberOfCourses = allCourses.size();
 
@@ -228,10 +230,11 @@ public class DataAccessStub {
 
     /**
      * getAllCourses
-     * @return: An arrayList of all the courses offered
+     * @param allCourses: the course list to be filled
      **/
-    public ArrayList<Course> getAllCourses(){
-        return courses;
+    public String getAllCourses(ArrayList<Course> allCourses){
+        allCourses.addAll(courses);
+        return null;
     }//end getAllCourses
 
     /**
