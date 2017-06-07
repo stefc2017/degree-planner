@@ -478,10 +478,11 @@ public class DataAccessStub {
         Returns a list of courses required by a degree
     */
     public ArrayList<Course> getDegreeCourses( int degreeId ) {
+    	final int REQUIRED_COURSE = 1;
         ArrayList<Course> reqCourseList = new ArrayList<Course>();
 
         for( DegreeCourse course : degreeCourses ){
-            if( course.getDegreeId() == degreeId ){
+            if( course.getDegreeId() == degreeId && course.getDegreeCourseTypeId() == REQUIRED_COURSE){
                 reqCourseList.add( findCourse( course.getCourseId() ) );
             }
         }
