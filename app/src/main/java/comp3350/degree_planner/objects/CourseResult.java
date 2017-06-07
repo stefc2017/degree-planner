@@ -2,7 +2,8 @@ package comp3350.degree_planner.objects;
 
 /**
  * Created by Kaleigh on 2017-05-31.
- * Modified by Tiffany on 2017-06-04
+ * Modified by Tiffany on 2017-06-04.
+ * Modified by Kaleigh on 2017-06-07.
  *
  * A CourseResult is a simple object that holds a grade for a course completed as
  * well as the student who completed it, as IDs.
@@ -25,9 +26,11 @@ public class CourseResult {
 
     public int getStudentId(){
         return studentId;
-    }//end getStudentId
+    }
 
     public int getCourseId(){
         return courseId;
-    }//end getCourseId
+    }
+
+    public int getGradeId() { return gradeId; }
 }
