@@ -1,0 +1,38 @@
+package comp3350.degree_planner.tests.objects;
+
+import junit.framework.TestCase;
+
+import org.junit.Test;
+
+import comp3350.degree_planner.objects.Student;
+
+/**
+ * This class is used to test all of the behaviours of a
+ * Student object.
+ */
+
+public class StudentTest extends TestCase {
+
+    /*
+     * testConstructor
+     *
+     * Tests that the arguments given are assigned to the correct instance
+     * variables by creating a Student.
+     */
+
+    @Test
+    public void testConstructor() {
+        System.out.println("\nStarting Student Test: constructor");
+
+        Student s = new Student(1, 1234567, "Test Student", "email@ex.com", "pa55word", 23);
+        assertNotNull(s);
+        assertEquals("ID was assigned incorrectly", 1, s.getId());
+        assertEquals("Student Number was assigned incorrectly", 1234567, s.getStudentNumber());
+        assertEquals("Name was assigned incorrectly", "Test Student", s.getName());
+        assertEquals("Email was assigned incorrectly", "email@ex.com", s.getEmail());
+        assertEquals("Password was assigned incorrectly", "pa55word", s.getPassword());
+        assertEquals("Degree ID was assigned incorrectly", 23, s.getDegreeId());
+
+        System.out.println("\nFinished Student Test: constructor");
+    }
+}
