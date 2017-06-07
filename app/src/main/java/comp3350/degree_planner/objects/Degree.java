@@ -2,6 +2,11 @@ package comp3350.degree_planner.objects;
 
 /**
  * Created by Kaleigh on 2017-05-31.
+ * Modified by Kaleigh on 2017-06-07.
+ *
+ * A Degree is any science degree offered at the University of
+ * Manitoba. A Degree object only contains basic information
+ * about the degree; required courses are stored separately.
  */
 
 public class Degree {

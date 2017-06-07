@@ -2,6 +2,10 @@ package comp3350.degree_planner.objects;
 
 /**
  * Created by Kaleigh on 2017-05-31.
+ * Modified by Kaleigh on 2017-06-07.
+ *
+ * A Grade Type is used to store possible letter grades as well
+ * as how many points a letter grade is worth.
  */
 
 public class GradeType {
