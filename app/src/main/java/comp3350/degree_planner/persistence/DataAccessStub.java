@@ -14,7 +14,7 @@ import comp3350.degree_planner.objects.*;
  * Much of the code is based on code from the sample project, srsys.
  */
 
-public class DataAccessStub {
+public class DataAccessStub implements DataAccess {
     private ArrayList<Course> courses;
     private ArrayList<CourseOffering> courseOfferings;
     private ArrayList<CoursePlan> coursePlans;

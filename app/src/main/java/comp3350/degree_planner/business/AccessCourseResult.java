@@ -10,16 +10,17 @@ import java.util.ArrayList;
 
 import comp3350.degree_planner.application.Services;
 import comp3350.degree_planner.objects.CourseResult;
+import comp3350.degree_planner.persistence.DataAccess;
 import comp3350.degree_planner.persistence.DataAccessStub;
 
 public class AccessCourseResult {
-    private DataAccessStub dataAccess;
+    private DataAccess dataAccess;
 
     public AccessCourseResult () {
         dataAccess = (DataAccessStub) Services.getDataAccess();
     }
 
-    public AccessCourseResult (DataAccessStub dataAccess) {
+    public AccessCourseResult (DataAccess dataAccess) {
         this.dataAccess = dataAccess;
         dataAccess.open();
     }
