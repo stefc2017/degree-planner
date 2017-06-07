@@ -198,7 +198,7 @@ public class DataAccessStub {
         for (int i = 0; i < courseOfferings.size(); i++) {
             if (term.getId() == courseOfferings.get(i).getTermTypeId()) {
                 //Adds course offering based on courseID from COurseOfferings and matching TermID
-                courseOfferingsByTermList.add(courseOfferings.get(i).getCourseId(), courseOfferings.get(i));
+                courseOfferingsByTermList.add(courseOfferings.get(i));
             }
         }
 
