@@ -1,7 +1,6 @@
 package comp3350.degree_planner.persistence;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import comp3350.degree_planner.objects.*;
 
@@ -20,7 +19,7 @@ public class DataAccessStub {
     private ArrayList<CoursePlan> coursePlans;
     private ArrayList<CoursePrerequisite> coursePrerequisites;
     private ArrayList<CourseResult> courseResults;
-    private ArrayList<CourseType> courseTypes;
+    private ArrayList<DegreeCourseType> degreeCourseTypes;
     private ArrayList<Degree> degrees;
     private ArrayList<DegreeCourse> degreeCourses;
     private ArrayList<Department> departments;
@@ -50,9 +49,9 @@ public class DataAccessStub {
 
         // Create Types
 
-        courseTypes = new ArrayList<CourseType>();
-        courseTypes.add(new CourseType(1, "Required"));
-        courseTypes.add(new CourseType(2, "Elective for Major"));
+        degreeCourseTypes = new ArrayList<DegreeCourseType>();
+        degreeCourseTypes.add(new DegreeCourseType(1, "Required"));
+        degreeCourseTypes.add(new DegreeCourseType(2, "Elective for Major"));
 
         termTypes = new ArrayList<TermType>();
         termTypes.add(new TermType(1, "Fall"));

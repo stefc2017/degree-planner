@@ -2,6 +2,10 @@ package comp3350.degree_planner.objects;
 
 /**
  * Created by Kaleigh on 2017-05-31.
+ * Modified by Kaleigh on 2017-06-07.
+ *
+ * A Student represents any student using the app. Students may
+ * have a degree they want to work towards.
  */
 
 public class Student {
@@ -9,7 +13,7 @@ public class Student {
     private int studentNumber;
     private String name;
     private String email;
-    private String password;        // Make password a hash?
+    private String password;
     private int degreeId;
 
     public Student(int id, int studentNumber, String name, String email, String password, int degreeId) {
@@ -21,9 +25,7 @@ public class Student {
         this.degreeId = degreeId;
     }
 
-    public int getId() {
-        return id;
-    }
+    public int getId() { return id; }
 
     public int getStudentNumber() { return  studentNumber; }
 
@@ -36,4 +38,6 @@ public class Student {
     }
 
     public String getPassword() { return password; }
+
+    public int getDegreeId() { return degreeId; }
 }
