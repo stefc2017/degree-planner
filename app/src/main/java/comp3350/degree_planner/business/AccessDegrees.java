@@ -1,4 +1,5 @@
 package comp3350.degree_planner.business;
+import java.util.ArrayList;
 import java.util.List;
 import comp3350.degree_planner.application.Services;
 import comp3350.degree_planner.objects.Degree;
@@ -16,20 +17,12 @@ public class AccessDegrees {
         dataAccess = (DataAccessStub) Services.getDataAccess();
     }
 
-    public String getDegrees(List<Degree> degrees)
+    public String getDegrees(ArrayList<Degree> degrees)
     {
-        String result = null;
-
-        if(degrees != null) {
-            degrees.clear();
-            degrees.add(new Degree(1, "Computer Science Major", 120.0, 81.0, 2.0));
-        }
-        return result;
+        return dataAccess.getAllDegrees(degrees);
     }
 
     public Degree getDegreeById(int degreeId){
-        Degree d = null;
-        if(degreeId == 1){d = new Degree(1, "Computer Science Major", 120.0, 81.0, 2.0);}
-        return d;
+        return dataAccess.getDegreeById(degreeId);
     }
 }

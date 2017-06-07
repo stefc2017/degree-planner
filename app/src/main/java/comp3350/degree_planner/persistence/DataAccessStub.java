@@ -371,8 +371,9 @@ public class DataAccessStub {
      * getAllDegrees
      * @return: All the degrees that are offered.
      **/
-    public ArrayList<Degree> getAllDegrees(){
-        return degrees;
+    public String getAllDegrees(ArrayList<Degree> allDegrees){
+        allDegrees.addAll(degrees);
+        return null;
     }//end getAllDegrees
 
     /**
