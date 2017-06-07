@@ -1,6 +1,5 @@
 package comp3350.degree_planner.persistence;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Iterator;
 
