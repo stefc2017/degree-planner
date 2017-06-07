@@ -29,7 +29,6 @@ public class DegreesActivity extends Activity {
 
         accessDegrees = new AccessDegrees();
         degreeList = new ArrayList<Degree>();
-        
         degreeList = accessDegrees.getAllDegrees();
         if(degreeList != null){
             degreeListAdapter = new ArrayAdapter<Degree>(this, android.R.layout.simple_list_item_1, android.R.id.text1, degreeList){
