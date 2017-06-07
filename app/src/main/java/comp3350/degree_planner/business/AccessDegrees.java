@@ -18,7 +18,7 @@ public class AccessDegrees {
 
     public ArrayList<Degree> getAllDegrees()
     {
-        return dataAccess.getAllDegrees(degrees);
+        return dataAccess.getAllDegrees();
     }
 
     public Degree getDegreeById(int degreeId)
