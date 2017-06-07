@@ -191,7 +191,7 @@ public class DataAccessStub {
         return crByStudentId;
     }
 
-    public ArrayList<CourseOffering> getCourseOfferingsByTerm(TermType term, List<CourseOffering> courseOfferings) {
+    public ArrayList<CourseOffering> getCourseOfferingsByTerm(TermType term) {
 
         ArrayList<CourseOffering> courseOfferingsByTermList = new ArrayList<CourseOffering>();
 
