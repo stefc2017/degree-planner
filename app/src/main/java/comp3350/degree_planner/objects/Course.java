@@ -2,6 +2,10 @@ package comp3350.degree_planner.objects;
 
 /**
  * Created by Kaleigh on 2017-05-31.
+ * Modified by Kaleigh on 2017-06-07.
+ *
+ * A Course represents a course offered by the University of Manitoba;
+ * each course has a name and a number of credit hours associated with it.
  */
 
 public abstract class Course {

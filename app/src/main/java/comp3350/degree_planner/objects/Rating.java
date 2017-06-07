@@ -2,8 +2,11 @@ package comp3350.degree_planner.objects;
 
 /**
  * Created by Kaleigh on 2017-05-31.
+ * Modified by Kaleigh on 2017-06-07.
  *
  * A student may give a Rating to a course once they have completed it.
+ * A rating includes a rating type (giving a numeric value) as well as
+ * a comment.
  */
 
 public class Rating {
@@ -22,6 +25,12 @@ public class Rating {
     }
 
     public int getId() { return id; }
+
+    public int getStudentId() { return studentId; }
+
+    public int getCourseId() { return courseId; }
+
+    public int getRatingTypeId() { return ratingTypeId; }
 
     public String getComment() {
         return comment;

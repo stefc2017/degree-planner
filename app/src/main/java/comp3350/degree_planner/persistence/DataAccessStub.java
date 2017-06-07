@@ -1,7 +1,6 @@
 package comp3350.degree_planner.persistence;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import comp3350.degree_planner.objects.*;
 
@@ -20,7 +19,7 @@ public class DataAccessStub {
     private ArrayList<CoursePlan> coursePlans;
     private ArrayList<CoursePrerequisite> coursePrerequisites;
     private ArrayList<CourseResult> courseResults;
-    private ArrayList<CourseType> courseTypes;
+    private ArrayList<DegreeCourseType> degreeCourseTypes;
     private ArrayList<Degree> degrees;
     private ArrayList<DegreeCourse> degreeCourses;
     private ArrayList<Department> departments;
@@ -50,9 +49,9 @@ public class DataAccessStub {
 
         // Create Types
 
-        courseTypes = new ArrayList<CourseType>();
-        courseTypes.add(new CourseType(1, "Required"));
-        courseTypes.add(new CourseType(2, "Elective for Major"));
+        degreeCourseTypes = new ArrayList<DegreeCourseType>();
+        degreeCourseTypes.add(new DegreeCourseType(1, "Required"));
+        degreeCourseTypes.add(new DegreeCourseType(2, "Elective for Major"));
 
         termTypes = new ArrayList<TermType>();
         termTypes.add(new TermType(1, "Fall"));
@@ -439,5 +438,84 @@ public class DataAccessStub {
         }
 
         return crByStudentId;
+    }
+
+    /*
+        Created by Matthew Provencher on 2017-06-06
+
+        Returns a list of courses taken by a given student
+     */
+    public ArrayList<Course> getCoursesTaken( int studentId ){
+        ArrayList<Course> coursesTaken = new ArrayList<Course>();
+        ArrayList<CourseResult> crByStudentId = getCourseResultsByStudentId( studentId );
+
+        for( CourseResult result : crByStudentId ){
+            coursesTaken.add( findCourse( result.getCourseId() ));
+        }
+
+        return coursesTaken;
+    }
+
+    /*
+        Created by Matthew Provencher on 2017-06-06
+
+        Returns a list of degree required courses student has taken
+    */
+    public ArrayList<Course> getDegreeCoursesTaken( int studentId, int degreeId ){
+        ArrayList<Course> coursesTaken = getCoursesTaken( studentId );
+        ArrayList<Course> degreeCourses = getDegreeCourses( degreeId );
+        ArrayList<Course> takenDegreeCourses = new ArrayList<Course>();
+
+        for( Course degreeCourse : degreeCourses ){
+            if( coursesTaken.contains( degreeCourse ) ){
+                takenDegreeCourses.add( degreeCourse );
+            }
+        }
+
+        return takenDegreeCourses;
+    }
+
+    /*
+        Created by Matthew Provencher on 2017-06-06
+
+        Returns a list of courses required by a degree
+    */
+    public ArrayList<Course> getDegreeCourses( int degreeId ) {
+    	final int REQUIRED_COURSE = 1;
+        ArrayList<Course> reqCourseList = new ArrayList<Course>();
+
+        for( DegreeCourse course : degreeCourses ){
+            if( course.getDegreeId() == degreeId && course.getDegreeCourseTypeId() == REQUIRED_COURSE){
+                reqCourseList.add( findCourse( course.getCourseId() ) );
+            }
+        }
+
+        return reqCourseList;
+    }
+
+    /*
+        Created by Matthew Provencher on 2017-06-06
+
+        Returns a list of required degree courses that a given student can take
+    */
+    public ArrayList<Course> getEligibleRequiredCourse( int studentNum, int degreeId ){
+        ArrayList<Course> coursesTaken = getCoursesTaken( studentNum );
+        ArrayList<Course> degreeCourses = getDegreeCourses( degreeId );
+        ArrayList<Course> notTakenDegreeCourses = new ArrayList<Course>();
+        ArrayList<Course> eligibleDegreeCourses = new ArrayList<Course>();
+
+        for( Course degreeCourse : degreeCourses ){
+            if( !(coursesTaken.contains( degreeCourse )) ){
+                notTakenDegreeCourses.add( degreeCourse );
+            }
+        }
+
+        for( Course course : notTakenDegreeCourses ){
+            if( hasPrerequisites( studentNum, course.getName() ) ){
+                eligibleDegreeCourses.add( course );
+            }
+        }
+
+        return eligibleDegreeCourses;
     }
 }
