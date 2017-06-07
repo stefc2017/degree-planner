@@ -1,6 +1,8 @@
 package comp3350.degree_planner.persistence;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import comp3350.degree_planner.objects.*;
 
@@ -448,6 +450,23 @@ public class DataAccessStub implements DataAccess {
         return crByStudentId;
     }
 
+    //By F.D.
+    //Returns list of courses fy selected term
+    public ArrayList<CourseOffering> getCourseOfferingsByTerm(TermType term) {
+
+        ArrayList<CourseOffering> courseOfferingsByTermList = new ArrayList<CourseOffering>();
+
+        for (int i = 0; i < courseOfferings.size(); i++) {
+            if (term.getId() == courseOfferings.get(i).getTermTypeId()) {
+                //Adds course offering based on courseID from COurseOfferings and matching TermID
+                courseOfferingsByTermList.add(courseOfferings.get(i));
+            }
+        }
+
+
+        return courseOfferingsByTermList;
+    }
+  
     /*
      * Created by Tiffany Jiang on 2017-06-07
      *
@@ -542,12 +561,13 @@ public class DataAccessStub implements DataAccess {
 
         Returns a list of courses required by a degree
     */
-    public ArrayList<Course> getDegreeCourses(int degreeId) {
+    public ArrayList<Course> getDegreeCourses( int degreeId ) {
+        final int REQUIRED_COURSE = 1;
         ArrayList<Course> reqCourseList = new ArrayList<Course>();
 
-        for (DegreeCourse course : degreeCourses) {
-            if (course.getDegreeId() == degreeId) {
-                reqCourseList.add(findCourse(course.getCourseId()));
+        for( DegreeCourse course : degreeCourses ){
+            if( course.getDegreeId() == degreeId && course.getDegreeCourseTypeId() == REQUIRED_COURSE){
+                reqCourseList.add( findCourse( course.getCourseId() ) );
             }
         }
 
