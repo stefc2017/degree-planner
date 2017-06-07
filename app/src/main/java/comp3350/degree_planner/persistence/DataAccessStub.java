@@ -478,7 +478,7 @@ public class DataAccessStub {
         Returns a list of courses required by a degree
     */
     public ArrayList<Course> getDegreeCourses( int degreeId ) {
-    	final int REQUIRED_COURSE = 1;
+        final int REQUIRED_COURSE = 1;
         ArrayList<Course> reqCourseList = new ArrayList<Course>();
 
         for( DegreeCourse course : degreeCourses ){
