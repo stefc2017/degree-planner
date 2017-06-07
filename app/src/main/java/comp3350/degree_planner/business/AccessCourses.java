@@ -32,6 +32,10 @@ public class AccessCourses {
     {
 		return dataAccess.getDegreeCourses(degreeId);
     }
+
+	public ArrayList<CourseOffering> getCourseOfferingsByTerm(TermType term){
+		return dataAccess.getCourseOfferingsByTerm(term);
+	}
 }
 
 
