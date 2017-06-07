@@ -16,12 +16,13 @@ public class AccessDegrees {
         dataAccess = (DataAccessStub) Services.getDataAccess();
     }
 
-    public String getDegrees(ArrayList<Degree> degrees)
+    public ArrayList<Degree> getAllDegrees()
     {
         return dataAccess.getAllDegrees(degrees);
     }
 
-    public Degree getDegreeById(int degreeId){
+    public Degree getDegreeById(int degreeId)
+    {
         return dataAccess.getDegreeById(degreeId);
     }
 }

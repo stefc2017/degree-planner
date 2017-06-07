@@ -36,7 +36,7 @@ public class DegreeInfoActivity extends Activity {
         accessDegrees = new AccessDegrees();
         courseList = new ArrayList<Course>();
 
-        String result = accessCourses.getCourses(degreeId, courseList);
+        courseList = accessCourses.getDegreeCourses(degreeId);
         Degree currDegree = accessDegrees.getDegreeById(degreeId);
 
         if(currDegree != null){
@@ -48,7 +48,7 @@ public class DegreeInfoActivity extends Activity {
             degGPA.setText("GPA " + currDegree.getGpaRequired() + "");
         }
 
-        if(result == null){
+        if(courseList != null){
             courseListAdapter = new ArrayAdapter<Course>(this, android.R.layout.simple_list_item_1, android.R.id.text1, courseList){
                 @Override
                 public View getView(int position, View convertView, ViewGroup parent) {
