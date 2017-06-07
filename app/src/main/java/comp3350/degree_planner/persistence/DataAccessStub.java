@@ -444,7 +444,7 @@ public class DataAccessStub {
         Returns a list of courses taken by a given student
      */
     public ArrayList<Course> getCoursesTaken( int studentId ){
-        ArrayList<Course> coursesTaken = new ArrayList<Course>;
+        ArrayList<Course> coursesTaken = new ArrayList<Course>();
         ArrayList<CourseResult> crByStudentId = getCourseResultsByStudentId( studentId );
 
         for( CourseResult result : crByStudentId ){
@@ -462,13 +462,15 @@ public class DataAccessStub {
     public ArrayList<Course> getDegreeCoursesTaken( int studentId, int degreeId ){
         ArrayList<Course> coursesTaken = getCoursesTaken( studentId );
         ArrayList<Course> degreeCourses = getDegreeCourses( degreeId );
-        ArrayList<Course> takenDegreeCourses = new ArrayList<Course>;
+        ArrayList<Course> takenDegreeCourses = new ArrayList<Course>();
 
         for( Course degreeCourse : degreeCourses ){
             if( coursesTaken.contains( degreeCourse ) ){
                 takenDegreeCourses.add( degreeCourse );
             }
         }
+
+        return takenDegreeCourses;
     }
 
     /*
@@ -477,7 +479,7 @@ public class DataAccessStub {
         Returns a list of courses required by a degree
     */
     public ArrayList<Course> getDegreeCourses( int degreeId ) {
-        ArrayList<Course> reqCourseList = new ArrayList<Course>;
+        ArrayList<Course> reqCourseList = new ArrayList<Course>();
 
         for( DegreeCourse course : degreeCourses ){
             if( course.getDegreeId() == degreeId ){
@@ -496,8 +498,8 @@ public class DataAccessStub {
     public ArrayList<Course> getEligibleRequiredCourse( int studentNum, int degreeId ){
         ArrayList<Course> coursesTaken = getCoursesTaken( studentNum );
         ArrayList<Course> degreeCourses = getDegreeCourses( degreeId );
-        ArrayList<Course> notTakenDegreeCourses = new ArrayList<Course>;
-        ArrayList<Course> eligibleDegreeCourses = new ArrayList<Course>;
+        ArrayList<Course> notTakenDegreeCourses = new ArrayList<Course>();
+        ArrayList<Course> eligibleDegreeCourses = new ArrayList<Course>();
 
         for( Course degreeCourse : degreeCourses ){
             if( !(coursesTaken.contains( degreeCourse )) ){
