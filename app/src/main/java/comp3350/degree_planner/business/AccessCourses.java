@@ -2,8 +2,18 @@ package comp3350.degree_planner.business;
 import java.util.List;
 import comp3350.degree_planner.application.Services;
 import comp3350.degree_planner.objects.Course;
+
 import comp3350.degree_planner.objects.ScienceCourse;
 import comp3350.degree_planner.persistence.DataAccessStub;
+
+
+import comp3350.degree_planner.objects.CourseOffering;
+import comp3350.degree_planner.objects.ScienceCourse;
+import comp3350.degree_planner.objects.TermType;
+import comp3350.degree_planner.persistence.DataAccessStub;
+
+import static android.support.v7.widget.AppCompatDrawableManager.get;
+
 
 public class AccessCourses {
 	private DataAccessStub dataAccess;
@@ -32,4 +42,22 @@ public class AccessCourses {
 		}
 		return result;
     }
+
+	public String getCourseOfferings(TermType term, List<CourseOffering> courseOfferings){
+		final int COMP_SCI_ID = 1;
+		String temp=null;
+		//ArrayList<CourseOfferingsByTerm> courseOfferingsByTermList;
+
+		for (int i=0;i<courseOfferings.size();i++){
+			if (term.getId()==courseOfferings.get(i).getTermTypeId()){
+				courseOfferings.clear();
+				courseOfferings.add(1,new CourseOffering(term.getId(),1));
+			}
+		}
+
+
+		return temp;
+	}
+
+
 }
