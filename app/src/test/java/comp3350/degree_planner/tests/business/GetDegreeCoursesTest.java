@@ -1,8 +1,8 @@
 package comp3350.degree_planner.tests.business;
-import junit.framework.TestCase;
 
+import static org.junit.Assert.*;
 import org.junit.Before;
-
+import org.junit.Test;
 import java.util.ArrayList;
 
 import comp3350.degree_planner.business.AccessCourses;
@@ -21,7 +21,7 @@ import comp3350.degree_planner.persistence.DataAccessStub;
  * Unit tests for getting required course for a degree
  */
 
-public class GetDegreeCoursesTest extends TestCase {
+public class GetDegreeCoursesTest {
     private AccessCourses degreeReqCourses;
 
     // Sets up test data with the entries we need for all tests below
@@ -110,12 +110,14 @@ public class GetDegreeCoursesTest extends TestCase {
         testData.open();
     }// end setUp
 
+    @Test
     public void testInvalidDegreeId(){
         System.out.println("\nStarting Get Degree Courses Test: Invalid degree Id");
         assertEquals("Course list should be empty when degreeId is invalid", 0, degreeReqCourses.getDegreeCourses(-5).size());
         System.out.println("Finished Get Degree Courses Test: Invalid degree Id");
     }
 
+    @Test
     public void testValidDegreeId(){
         System.out.println("\nStarting Get Degree Courses Test: Valid degree Id");
         String[] expectedCourses = {"Introductory Computer Science I", "Introductory Computer Science II"};
