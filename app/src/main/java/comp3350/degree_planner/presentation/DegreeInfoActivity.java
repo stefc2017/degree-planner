@@ -10,6 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import comp3350.degree_planner.R;
+import comp3350.degree_planner.application.Services;
 import comp3350.degree_planner.business.AccessCourses;
 import comp3350.degree_planner.business.AccessDegrees;
 import comp3350.degree_planner.objects.Course;
@@ -32,8 +33,8 @@ public class DegreeInfoActivity extends Activity {
         Bundle b = getIntent().getExtras();
         int degreeId = b.getInt("degreeId");
 
-        accessCourses = new AccessCourses();
-        accessDegrees = new AccessDegrees();
+        accessCourses = new AccessCourses(Services.getDataAccess());
+        accessDegrees = new AccessDegrees(Services.getDataAccess());
         courseList = new ArrayList<Course>();
 
 
