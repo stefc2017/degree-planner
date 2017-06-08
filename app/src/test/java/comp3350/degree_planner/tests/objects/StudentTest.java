@@ -1,6 +1,6 @@
 package comp3350.degree_planner.tests.objects;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 
@@ -11,7 +11,7 @@ import comp3350.degree_planner.objects.Student;
  * Student object.
  */
 
-public class StudentTest extends TestCase {
+public class StudentTest {
 
     /*
      * testConstructor
@@ -33,6 +33,6 @@ public class StudentTest extends TestCase {
         assertEquals("Password was assigned incorrectly", "pa55word", s.getPassword());
         assertEquals("Degree ID was assigned incorrectly", 23, s.getDegreeId());
 
-        System.out.println("\nFinished Student Test: constructor");
+        System.out.println("Finished Student Test: constructor");
     }
 }
