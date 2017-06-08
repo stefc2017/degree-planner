@@ -5,4 +5,11 @@ package comp3350.degree_planner.tests.business;
  */
 
 public class RemoveFromCoursePlanTest {
+    public void testRemoveInvalidData() {
+        assertTrue (testAccessCoursePlan.removeFromCoursePlan(-1));
+    }
+
+    public void testRemoveValidData() {
+        assertTrue(testAccessCoursePlan.removeFromCoursePlan(1));
+    }
 }
