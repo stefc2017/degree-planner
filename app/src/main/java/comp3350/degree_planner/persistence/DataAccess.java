@@ -45,6 +45,8 @@ public interface DataAccess {
 
     ArrayList<CourseResult> getCourseResultsByStudentId(int studentId);
 
+    ArrayList<CourseOffering> getAllCourseOfferings();
+
     int getFailingGradeId();
 
     Course getCourseById(int courseId);
