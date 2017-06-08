@@ -7,6 +7,8 @@ import comp3350.degree_planner.tests.business.AddToCoursePlanTest;
 import comp3350.degree_planner.tests.business.GetCompletedCoursesTest;
 import comp3350.degree_planner.tests.business.MoveCourseTest;
 import comp3350.degree_planner.tests.business.RemoveFromCoursePlanTest;
+import comp3350.degree_planner.tests.business.GetDegreeCoursesTest;
+import comp3350.degree_planner.tests.business.GetDegreesTest;
 import comp3350.degree_planner.tests.objects.CourseOfferingTest;
 import comp3350.degree_planner.tests.objects.CoursePlanTest;
 import comp3350.degree_planner.tests.objects.CoursePrerequisiteTest;
@@ -35,7 +37,9 @@ import comp3350.degree_planner.tests.objects.UserDefinedCourseTest;
         AddToCoursePlanTest.class,
         MoveCourseTest.class,
         RemoveFromCoursePlanTest.class,
-
+        GetDegreeCoursesTest.class,
+        GetDegreesTest.class,
+  
         CourseOfferingTest.class,
         CoursePlanTest.class,
         CoursePrerequisiteTest.class,
