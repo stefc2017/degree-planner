@@ -4,7 +4,12 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 import comp3350.degree_planner.tests.business.GetCompletedCoursesTest;
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/master
+=======
+import comp3350.degree_planner.tests.business.GetDegreeCoursesTest;
+import comp3350.degree_planner.tests.business.GetDegreesTest;
+>>>>>>> master
 import comp3350.degree_planner.tests.objects.CourseOfferingTest;
 import comp3350.degree_planner.tests.objects.CoursePlanTest;
 import comp3350.degree_planner.tests.objects.CoursePrerequisiteTest;
