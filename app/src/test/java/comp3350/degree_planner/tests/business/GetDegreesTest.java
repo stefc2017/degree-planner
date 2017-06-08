@@ -1,9 +1,8 @@
 package comp3350.degree_planner.tests.business;
 
-import junit.framework.TestCase;
-
+import static org.junit.Assert.*;
 import org.junit.Before;
-
+import org.junit.Test;
 import java.util.ArrayList;
 
 import comp3350.degree_planner.business.AccessDegrees;
@@ -18,7 +17,7 @@ import comp3350.degree_planner.persistence.DataAccessStub;
  * Unit tests for getting degrees
  */
 
-public class GetDegreesTest extends TestCase {
+public class GetDegreesTest {
     private AccessDegrees degrees;
 
     // Sets up test data with the entries we need for all tests below
@@ -63,6 +62,7 @@ public class GetDegreesTest extends TestCase {
         testData.open();
     }// end setUp
 
+    @Test
     public void testGetAllDegrees() {
         System.out.println("\nStarting Get Degrees Test: Get all available degree programs");
         assertNotNull("Degree list should not be null", degrees.getAllDegrees());
@@ -71,6 +71,7 @@ public class GetDegreesTest extends TestCase {
         System.out.println("Finished Get Degrees Test: Get all available degree programs");
     }
 
+    @Test
     public void testGetDegreeByInvalidDegreeId() {
         System.out.println("\nStarting Get Degrees Test: Get degree by invalid degree Id");
         assertNull("Returned Degree should be null when degreeId is invalid", degrees.getDegreeById(-5));
@@ -78,6 +79,7 @@ public class GetDegreesTest extends TestCase {
 
     }
 
+    @Test
     public void testGetDegreeByValidDegreeId(){
         System.out.println("\nStarting Get Degrees Test: Get degree by valid degree Id");
         assertNotNull("Returned Degree should not be null", degrees.getDegreeById(1));

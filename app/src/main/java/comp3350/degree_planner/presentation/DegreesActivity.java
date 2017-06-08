@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import comp3350.degree_planner.R;
+import comp3350.degree_planner.application.Services;
 import comp3350.degree_planner.business.AccessDegrees;
 import comp3350.degree_planner.objects.Degree;
 
@@ -27,7 +28,7 @@ public class DegreesActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_degrees);
 
-        accessDegrees = new AccessDegrees();
+        accessDegrees = new AccessDegrees(Services.getDataAccess());
         degreeList = new ArrayList<Degree>();
         degreeList = accessDegrees.getAllDegrees();
         if(degreeList != null){
