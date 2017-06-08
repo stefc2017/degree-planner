@@ -59,6 +59,8 @@ public class GetCompletedCoursesTest {
                 ScienceCourse tempScienceCourse;
                 UserDefinedCourse tempUserDefinedCourse;
 
+                // Create Types
+
                 degreeCourseTypes = new ArrayList<DegreeCourseType>();
                 degreeCourseTypes.add(new DegreeCourseType(1, "Required"));
                 degreeCourseTypes.add(new DegreeCourseType(2, "Elective for Major"));

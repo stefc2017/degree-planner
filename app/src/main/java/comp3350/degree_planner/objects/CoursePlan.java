@@ -15,15 +15,13 @@ public class CoursePlan {
     private int studentId;
     private int termTypeId;
     private int year;
-    public static int idCount = 0;
 
-    public CoursePlan(int courseId, int studentId, int termTypeId, int year) {
+    public CoursePlan(int id, int courseId, int studentId, int termTypeId, int year) {
+        this.id = id;
         this.courseId = courseId;
         this.studentId = studentId;
         this.termTypeId = termTypeId;
         this.year = year;
-        id = idCount;
-        idCount++;
     }
 
     public int getCourseId() { return courseId; }
