@@ -55,7 +55,7 @@ Additional Packages:
   -- Splash - shows startup screen
 
 - comp3350.degree_planner.tests
-  contain unit tests for methods / classes in the above packages
+  contains unit tests for methods / classes in the above packages
   each test package corresponds to the package of the same name (above)
   also contains AllTests.java, which can be used to run all unit tests
 
@@ -81,4 +81,17 @@ Major Features:
   -- CreditHours.java
   -- DataAccessStub.getCoursesTaken
   -- DataAccessStub.getDegreeCoursesTaken
+  This feature is not reachable in the current UI.
+  
+- Plan Courses for Future Terms
+  Processing for modifying a student's course plans and determining courses they are eligible to take
+  Implemented in:
+  -- AccessCoursePlan.java
+  -- DataAccessStub.addToCoursePlan
+  -- DataAccessStub.removeFromCoursePlan
+  -- DataAccessStub.moveCourse
+  -- AccessCourses.getAllCourseOfferings
+  -- DataAccessStub.getAllCourseOfferings
+  -- AccessCourses.getCourseOfferingsByTerm
+  -- DataAccessStub.getCourseOfferingsByTerm
   This feature is not reachable in the current UI.
