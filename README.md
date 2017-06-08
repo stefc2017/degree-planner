@@ -64,7 +64,7 @@ Major Features:
 - View Degree Requirements
   The user can view specific requirements for a degree, including required courses
   Implemented in:
-  -- DegreeInfoActivity
+  -- DegreeInfoActivity.java
   -- AccessCourses.getDegreeCourses
   -- DataAccessStub.getDegreeCourses
   -- AccessDegrees.getDegreeById
@@ -78,3 +78,7 @@ Major Features:
   -- DataAccessStub.getCourseResultByStudentId
   -- DataAccessStub.getCourseById
   -- DataAccessStub.getDepartmentById
+  -- CreditHours.java
+  -- DataAccessStub.getCoursesTaken
+  -- DataAccessStub.getDegreeCoursesTaken
+  This feature is not reachable in the current UI.
