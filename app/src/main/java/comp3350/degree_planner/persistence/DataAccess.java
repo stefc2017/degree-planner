@@ -48,6 +48,8 @@ public interface DataAccess {
 
     Course getCourseById(int courseId);
 
+    ArrayList<CourseOffering> getAllCourseOfferings();
+
     ArrayList<CourseOffering> getCourseOfferingsByTerm(TermType type);
 
     Department getDepartmentById(int departmentId);

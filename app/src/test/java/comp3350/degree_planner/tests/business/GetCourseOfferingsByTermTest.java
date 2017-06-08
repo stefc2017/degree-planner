@@ -1,20 +1,14 @@
 package comp3350.degree_planner.tests.business;
 
-import junit.framework.TestCase;
+//import junit.framework.TestCase;
 
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
 
 import comp3350.degree_planner.business.AccessCourses;
-import comp3350.degree_planner.business.AccessDegrees;
-import comp3350.degree_planner.objects.Course;
-import comp3350.degree_planner.objects.Degree;
-import comp3350.degree_planner.objects.DegreeCourse;
-import comp3350.degree_planner.objects.DegreeCourseType;
-import comp3350.degree_planner.objects.ScienceCourse;
-import comp3350.degree_planner.objects.UserDefinedCourse;
 import comp3350.degree_planner.persistence.DataAccess;
 import comp3350.degree_planner.persistence.DataAccessStub;
 import comp3350.degree_planner.objects.CourseOffering;
@@ -35,7 +29,7 @@ public class GetCourseOfferingsByTermTest {
 
                     @Override
                     public void open() {
-                        // Create Degrees
+                        // Create Course Offerings
 
                         courseOfferings = new ArrayList<CourseOffering>();
                         courseOfferings.add(new CourseOffering(1, 1));
@@ -49,7 +43,7 @@ public class GetCourseOfferingsByTermTest {
                         courseOfferings.add(new CourseOffering(4, 3));
                     }
 
-
+                    @Override
                     public ArrayList<CourseOffering> getAllCourseOfferings() {
                         return courseOfferings;
                     }
@@ -78,25 +72,25 @@ public class GetCourseOfferingsByTermTest {
     @Test
     public void testGetAllCourseOfferings() {
         System.out.println("\nStarting Get All Course Offerings: Get all available course offerings");
-        assertNotNull("Course Offerings list should not be null", courseOfferings.getAll);
-        assertEquals("Degree list should have size one", 1, degrees.getAllDegrees().size());
-        assertEquals("Wrong degree in degree list", "Computer Science Major", degrees.getAllDegrees().get(0).getName());
-        System.out.println("Finished Get Degrees Test: Get all available degree programs");
+        assertNotNull("Course Offerings list should not be null", courseOfferings.getAllCourseOfferings());
+        assertEquals("Course Offerings list should have size nine", 9, courseOfferings.getAllCourseOfferings().size());
+        System.out.println("Finished Get Course Offerings Test: Get all available course offerings");
     }
 
     @Test
-    public void testGetDegreeByInvalidDegreeId() {
-        System.out.println("\nStarting Get Degrees Test: Get degree by invalid degree Id");
-        assertNull("Returned Degree should be null when degreeId is invalid", degrees.getDegreeById(-5));
-        System.out.println("Finished Get Degrees Test: Get degree by invalid degree Id");
+    public void testGetCourseOfferingsByInvalidTerm() {
+        System.out.println("\nStarting Get Course Offerings Test: Get degree by invalid Term vals");
+        assertNull("Returned CourseOfferingsByTerm list should be null when TermId is invalid", courseOfferings.getCourseOfferingsByTerm(new TermType(4,"ImaginativeTerm")));
+        assertNull("Returned CourseOfferingsByTerm list should be null when Term is null", courseOfferings.getCourseOfferingsByTerm(null));
+
+        System.out.println("Finished Get Degrees Test: Get degree by invalid Term vals");
 
     }
 
     @Test
-    public void testGetDegreeByValidDegreeId(){
-        System.out.println("\nStarting Get Degrees Test: Get degree by valid degree Id");
-        assertNotNull("Returned Degree should not be null", degrees.getDegreeById(1));
-        assertEquals("Wrong degree returned", "Computer Science Major", degrees.getDegreeById(1).getName());
-        System.out.println("Finished Get Degrees Test: Get degree by valid degree Id");
+    public void testGetDegreeByValidTerm(){
+        System.out.println("\nStarting Get Course Offerings Test: Get degree by valid Term");
+        assertNotNull("Returned Course Offerings list should not be null", courseOfferings.getCourseOfferingsByTerm(new TermType(1,"Fall")));//A little bit of a hack, has to take from dataStub in the future
+        System.out.println("Finished Get Course Offerings Test: Get Course Offerings by valid Term");
     }
 }

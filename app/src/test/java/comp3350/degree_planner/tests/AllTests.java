@@ -1,11 +1,14 @@
 package comp3350.degree_planner.tests;
 
+
+import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 import comp3350.degree_planner.tests.business.GetCompletedCoursesTest;
 
 
+import comp3350.degree_planner.tests.business.GetCourseOfferingsByTermTest;
 import comp3350.degree_planner.tests.business.GetDegreeCoursesTest;
 import comp3350.degree_planner.tests.business.GetDegreesTest;
 import comp3350.degree_planner.tests.objects.CourseOfferingTest;
@@ -37,6 +40,7 @@ import comp3350.degree_planner.tests.business.GetDegreesTest;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
         GetCompletedCoursesTest.class,
+        GetCourseOfferingsByTermTest.class,
         GetDegreeCoursesTest.class,
         GetDegreesTest.class,
   
@@ -62,6 +66,7 @@ public class AllTests {
 
     private static void testBusiness() {
         suite.addTestSuite(GetCompletedCoursesTest.class);
+        suite.addTestSuite(GetCourseOfferingsByTermTest.class);
         suite.addTestSuite(GetDegreeCoursesTest.class);
         suite.addTestSuite(GetDegreesTest.class);
     }
