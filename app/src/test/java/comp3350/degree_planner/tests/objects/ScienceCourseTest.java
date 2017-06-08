@@ -1,6 +1,6 @@
 package comp3350.degree_planner.tests.objects;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.*;
 import org.junit.Test;
 
 import comp3350.degree_planner.objects.ScienceCourse;
@@ -10,7 +10,7 @@ import comp3350.degree_planner.objects.ScienceCourse;
  * ScienceCourse object.
  */
 
-public class ScienceCourseTest extends TestCase {
+public class ScienceCourseTest {
 
     /*
      * testConstructor
@@ -22,6 +22,8 @@ public class ScienceCourseTest extends TestCase {
 
     @Test
     public void testConstructor() {
+        final double DELTA = 0;
+
         System.out.println("\nStarting ScienceCourse Test: constructor");
 
         ScienceCourse sc = new ScienceCourse(123, "Test Name", 3.0, 456, 1111,
@@ -29,12 +31,12 @@ public class ScienceCourseTest extends TestCase {
         assertNotNull(sc);
         assertEquals("ID was assigned incorrectly", 123, sc.getId());
         assertEquals("Name was assigned incorrectly", "Test Name", sc.getName());
-        assertEquals("Credit Hours was assigned incorrectly", 3.0, sc.getCreditHours());
+        assertEquals("Credit Hours was assigned incorrectly", 3.0, sc.getCreditHours(), DELTA);
         assertEquals("Department ID was assigned incorrectly", 456, sc.getDepartmentId());
         assertEquals("Course Number was assigned incorrectly", 1111, sc.getCourseNumber());
         assertEquals("Description was assigned incorrectly",
                 "This is a test course", sc.getDescription());
 
-        System.out.println("\nFinished ScienceCourse Test: constructor");
+        System.out.println("Finished ScienceCourse Test: constructor");
     }
 }

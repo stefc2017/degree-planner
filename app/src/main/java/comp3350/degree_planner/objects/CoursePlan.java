@@ -38,7 +38,6 @@ public class CoursePlan {
         return id;
     }
 
-    //Setters
     public void setTermTypeId (int termTypeId) {
         this.termTypeId = termTypeId;
     }

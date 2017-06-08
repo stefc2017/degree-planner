@@ -1,6 +1,6 @@
 package comp3350.degree_planner.tests.objects;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 
@@ -11,7 +11,7 @@ import comp3350.degree_planner.objects.CoursePrerequisite;
  * CoursePrerequisite object.
  */
 
-public class CoursePrerequisiteTest extends TestCase {
+public class CoursePrerequisiteTest {
 
     /*
      * testConstructor
@@ -29,6 +29,6 @@ public class CoursePrerequisiteTest extends TestCase {
         assertEquals("Course ID was assigned incorrectly", 2, cp.getCourseId());
         assertEquals("Prerequisite Course ID was assigned incorrectly", 1, cp.getPrereqCourseId());
 
-        System.out.println("\nFinished CoursePrerequisite Test: constructor");
+        System.out.println("Finished CoursePrerequisite Test: constructor");
     }
 }

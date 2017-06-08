@@ -1,20 +1,18 @@
 package comp3350.degree_planner.business;
 
-import java.util.ArrayList;
-
-import comp3350.degree_planner.application.Services;
-import comp3350.degree_planner.objects.CoursePlan;
-import comp3350.degree_planner.persistence.DataAccessStub;
+import comp3350.degree_planner.persistence.DataAccess;
 
 /**
  * Created by Tiffany Jiang on 2017-06-04.
+ *
+ * Modifications to course plan
  */
 
 public class AccessCoursePlan {
-    private DataAccessStub dataAccess;
+    private DataAccess dataAccess;
 
-    public AccessCoursePlan () {
-        dataAccess = (DataAccessStub) Services.getDataAccess();
+    public AccessCoursePlan(DataAccess dataAccess) {
+        this.dataAccess = dataAccess;
     }
 
     public boolean addToCoursePlan(int courseId, int studentId, int termTypeId, int year) {
@@ -29,7 +27,7 @@ public class AccessCoursePlan {
         return dataAccess.moveCourse(coursePlanId, newTermTypeId, newYear);
     }
 
-    public ArrayList<CoursePlan> getCoursePlanByStudentId (int studentId) {
-        return dataAccess.getCoursePlanByStudentId(studentId);
-    }
+//    public ArrayList<CoursePlan> getCoursePlanByStudentId (int studentId) {
+//        return dataAccess.getCoursePlanByStudentId(studentId);
+//    }
 }

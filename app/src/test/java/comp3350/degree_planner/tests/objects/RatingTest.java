@@ -1,6 +1,6 @@
 package comp3350.degree_planner.tests.objects;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 
@@ -11,7 +11,7 @@ import comp3350.degree_planner.objects.Rating;
  * Rating object.
  */
 
-public class RatingTest extends TestCase {
+public class RatingTest {
 
     /*
      * testConstructor
@@ -32,6 +32,6 @@ public class RatingTest extends TestCase {
         assertEquals("Rating Type ID was assigned incorrectly", 4, r.getRatingTypeId());
         assertEquals("Comment was assigned incorrectly", "Test Comment", r.getComment());
 
-        System.out.println("\nFinished Rating Test: constructor");
+        System.out.println("Finished Rating Test: constructor");
     }
 }

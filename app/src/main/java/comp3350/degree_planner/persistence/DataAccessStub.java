@@ -602,10 +602,17 @@ public class DataAccessStub implements DataAccess {
         return eligibleDegreeCourses;
     }
 
-    public boolean addToCoursePlan (int studentId, int courseId, int termTypeId, int year) {
+
+    /*
+     * Created by Tiffany Jiang on 2017-06-07
+     *
+     * Returns the Department object with the specified id, or null if no such department exists
+     */
+    public boolean addToCoursePlan (int courseId, int studentId, int termTypeId, int year) {
         boolean addSuccessful = false;
 
-        if (checkCoursePlanInput (true, studentId, courseId, termTypeId, year)) {
+        if (isValidStudentId(studentId) && isValidCourseId(courseId) && isValidTermTypeId(termTypeId)
+                && courseOffered(courseId, termTypeId)) {
             coursePlans.add(new CoursePlan(courseId, studentId, termTypeId, year));
             addSuccessful = true;
         }
@@ -613,62 +620,81 @@ public class DataAccessStub implements DataAccess {
         return addSuccessful;
     }
 
-    private boolean checkCoursePlanInput (boolean isAdd, int studentId, int courseId, int termTypeId, int year) {
-        boolean validCourseId = false;
+    private boolean isValidStudentId (int studentId) {
         boolean validStudentId = false;
+
+        //Does a student with the entered studentId exist?
+        for (int i = 0; i < students.size(); i++) {
+            if (students.get(i).getId() == studentId) {
+                validStudentId = true;
+                break;
+            }
+        }
+
+        return validStudentId;
+    }
+
+    private boolean isValidCourseId (int courseId) {
+        boolean validCourseId = false;
+
+        //Does a course with the entered courseId exist?
+        for (int i = 0; i<courses.size(); i++) {
+            if (courses.get(i).getId() == courseId) {
+                validCourseId = true;
+                break;
+            }
+        }
+
+        return validCourseId;
+    }
+
+    private boolean isValidTermTypeId (int termTypeId) {
         boolean validTermTypeId = false;
+
+        //Does a term type with the entered termTypeId exist?
+        for (int i = 0; i<termTypes.size(); i++) {
+            if (termTypes.get(i).getId() == termTypeId) {
+                validTermTypeId = true;
+                break;
+            }
+        }
+
+        return validTermTypeId;
+    }
+
+    private boolean courseOffered (int courseId, int termTypeId) {
         boolean validTerm = false;
-        boolean courseNotAlreadyPassed = false;
 
-        //Check for duplicates? - allow for now
-
-        if (isAdd) {
-            //Does a student with the entered studentId exist?
-            for (int i = 0; i < students.size(); i++) {
-                if (students.get(i).getId() == studentId) {
-                    validStudentId = true;
-                    break;
-                }
+        //Is the course historically offered in this term?
+        for (int i = 0; i<courseOfferings.size(); i++) {
+            if (courseOfferings.get(i).getCourseId() == courseId && courseOfferings.get(i).getTermTypeId() == termTypeId) {
+                validTerm = true;
+                break;
             }
+        }
 
-            if (validStudentId) {
-                //Does a course with the entered courseId exist?
-                for (int i = 0; i<courses.size(); i++) {
-                    if (courses.get(i).getId() == courseId) {
-                        validCourseId = true;
-                        break;
-                    }
+        return validTerm;
+    }
+
+    public boolean moveCourse (int coursePlanId, int newTermTypeId, int newYear) {
+        CoursePlan coursePlan;
+        CourseOffering currCourseOffering;
+        boolean validTerm = false;
+        boolean moveSuccessful = false;
+
+        for (int i = 0; i<coursePlans.size(); i++) {
+            coursePlan = coursePlans.get(i);
+            if (coursePlan.getId() == coursePlanId) {
+                if (isValidTermTypeId(newTermTypeId) && courseOffered(coursePlan.getCourseId(), newTermTypeId)) {
+                    coursePlan.setTermTypeId(newTermTypeId);
+                    coursePlan.setYear(newYear);
+                    moveSuccessful = true;
+                    break;
                 }
             }
         }
 
-        //Previous check either passed or not required
-        if (!isAdd || validCourseId) {
-            //Does a term type with the entered termTypeId exist?
-            for (int i = 0; i<termTypes.size(); i++) {
-                if (termTypes.get(i).getId() == termTypeId) {
-                    validTermTypeId = true;
-                    break;
-                }
-            }
-
-            if (validTermTypeId) {
-                //Is the course historically offered in this term?
-                for (int i = 0; i<courseOfferings.size(); i++) {
-                    if (courseOfferings.get(i).getCourseId() == courseId && courseOfferings.get(i).getTermTypeId() == termTypeId) {
-                        validTerm = true;
-                        break;
-                    }
-                }
-
-                if (validTerm) {
-                    //TODO: Has the student already taken and passed this course?
-                    //TODO: check year
-                }
-            }
-        }
-
-        return courseNotAlreadyPassed;
+        return moveSuccessful;
     }
 
     public boolean removeFromCoursePlan (int coursePlanId) {
@@ -685,39 +711,18 @@ public class DataAccessStub implements DataAccess {
         return removeSuccessful;
     }
 
-    public boolean moveCourse (int coursePlanId, int newTermTypeId, int newYear) {
-        CoursePlan coursePlan;
-        CourseOffering currCourseOffering;
-        boolean validTerm = false;
-        boolean moveSuccessful = false;
-
-        for (int i = 0; i<coursePlans.size(); i++) {
-            coursePlan = coursePlans.get(i);
-            if (coursePlan.getId() == coursePlanId) {
-                if (checkCoursePlanInput(false, coursePlan.getStudentId(), coursePlan.getCourseId(), newTermTypeId, newYear)) {
-                    coursePlan.setTermTypeId(newTermTypeId);
-                    coursePlan.setYear(newYear);
-                    moveSuccessful = true;
-                    break;
-                }
-            }
-        }
-
-        return moveSuccessful;
-    }
-
-    public ArrayList<CoursePlan> getCoursePlanByStudentId (int studentId) {
-        ArrayList<CoursePlan> result = new ArrayList<CoursePlan>();
-        CoursePlan currCoursePlan;
-
-        for (int i = 0; i<coursePlans.size(); i++) {
-            currCoursePlan = coursePlans.get(i);
-
-            if (currCoursePlan.getStudentId() == studentId) {
-                result.add(currCoursePlan);
-            }
-        }
-
-        return result;
-    }
+//    public ArrayList<CoursePlan> getCoursePlanByStudentId (int studentId) {
+//        ArrayList<CoursePlan> result = new ArrayList<CoursePlan>();
+//        CoursePlan currCoursePlan;
+//
+//        for (int i = 0; i<coursePlans.size(); i++) {
+//            currCoursePlan = coursePlans.get(i);
+//
+//            if (currCoursePlan.getStudentId() == studentId) {
+//                result.add(currCoursePlan);
+//            }
+//        }
+//
+//        return result;
+//    }
 }

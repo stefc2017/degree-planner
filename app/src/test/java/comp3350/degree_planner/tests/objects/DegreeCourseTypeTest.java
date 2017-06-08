@@ -1,6 +1,6 @@
 package comp3350.degree_planner.tests.objects;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 
@@ -11,7 +11,7 @@ import comp3350.degree_planner.objects.DegreeCourseType;
  * DegreeCourseType object.
  */
 
-public class DegreeCourseTypeTest extends TestCase {
+public class DegreeCourseTypeTest {
 
     /*
      * testConstructor
@@ -29,6 +29,6 @@ public class DegreeCourseTypeTest extends TestCase {
         assertEquals("ID was assigned incorrectly", 12, dct.getId());
         assertEquals("Name was assigned incorrectly", "Test Type", dct.getName());
 
-        System.out.println("\nFinished DegreeCourseType Test: constructor");
+        System.out.println("Finished DegreeCourseType Test: constructor");
     }
 }

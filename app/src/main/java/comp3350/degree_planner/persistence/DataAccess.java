@@ -9,7 +9,7 @@ import comp3350.degree_planner.objects.Department;
 
 /**
  * Created by Tiffany Jiang on 2017-06-06.
- * <p>
+ *
  * Interface for data access
  */
 
@@ -55,4 +55,10 @@ public interface DataAccess {
     ArrayList<Course> getDegreeCourses(int degreeId);
 
     ArrayList<Course> getEligibleRequiredCourse(int studentNum, int degreeId);
+
+    boolean addToCoursePlan (int courseId, int studentId, int termTypeId, int year);
+
+    boolean moveCourse (int coursePlanId, int newTermTypeId, int newYear);
+
+    boolean removeFromCoursePlan (int coursePlanId);
 }
