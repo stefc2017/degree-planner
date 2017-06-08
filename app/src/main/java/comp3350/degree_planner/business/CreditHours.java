@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import comp3350.degree_planner.application.Services;
 import comp3350.degree_planner.objects.Course;
-import comp3350.degree_planner.persistence.DataAccessStub;
+import comp3350.degree_planner.persistence.DataAccess;
 
 /**
  * Created by Matt on 6/4/2017.
@@ -13,9 +13,10 @@ import comp3350.degree_planner.persistence.DataAccessStub;
  */
 
 public class CreditHours {
-    private DataAccessStub dataAccess;
+    private DataAccess dataAccess;
 
-    public CreditHours() { dataAccess = (DataAccessStub) Services.getDataAccess(); }
+    public CreditHours() { dataAccess = Services.getDataAccess(); }
+    public CreditHours( DataAccess dataAccess ){ this.dataAccess = dataAccess; }
 
     public int calculateCreditHours( ArrayList<Course> courses ){
         int cHours = 0;
