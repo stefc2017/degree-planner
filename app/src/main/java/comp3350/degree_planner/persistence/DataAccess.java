@@ -3,6 +3,7 @@ package comp3350.degree_planner.persistence;
 import java.util.ArrayList;
 
 import comp3350.degree_planner.objects.Course;
+import comp3350.degree_planner.objects.CoursePlan;
 import comp3350.degree_planner.objects.CourseOffering;
 import comp3350.degree_planner.objects.CourseResult;
 import comp3350.degree_planner.objects.Degree;
@@ -60,9 +61,11 @@ public interface DataAccess {
 
     ArrayList<Course> getEligibleRequiredCourse(int studentNum, int degreeId);
 
-    boolean addToCoursePlan (int courseId, int studentId, int termTypeId, int year);
+    int addToCoursePlan (int courseId, int studentId, int termTypeId, int year);
 
     boolean moveCourse (int coursePlanId, int newTermTypeId, int newYear);
 
     boolean removeFromCoursePlan (int coursePlanId);
+
+    CoursePlan getCoursePlanById (int coursePlanId);
 }

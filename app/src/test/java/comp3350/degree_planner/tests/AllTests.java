@@ -3,7 +3,10 @@ package comp3350.degree_planner.tests;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
+import comp3350.degree_planner.tests.business.AddToCoursePlanTest;
 import comp3350.degree_planner.tests.business.GetCompletedCoursesTest;
+import comp3350.degree_planner.tests.business.MoveCourseTest;
+import comp3350.degree_planner.tests.business.RemoveFromCoursePlanTest;
 import comp3350.degree_planner.tests.business.GetDegreeCoursesTest;
 import comp3350.degree_planner.tests.business.GetDegreesTest;
 import comp3350.degree_planner.tests.objects.CourseOfferingTest;
@@ -25,12 +28,15 @@ import comp3350.degree_planner.tests.objects.UserDefinedCourseTest;
 /**
  * Created by Tiffany Jiang on 2017-06-04.
  *
- * Runs all unit tests
+ * Runs all unit tests. Add all tests you want to run in the SuiteClasses below (in order)
  */
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
         GetCompletedCoursesTest.class,
+        AddToCoursePlanTest.class,
+        MoveCourseTest.class,
+        RemoveFromCoursePlanTest.class,
         GetDegreeCoursesTest.class,
         GetDegreesTest.class,
   

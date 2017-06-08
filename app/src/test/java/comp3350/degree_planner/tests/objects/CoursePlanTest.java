@@ -24,7 +24,7 @@ public class CoursePlanTest {
     public void testConstructor() {
         System.out.println("\nStarting CoursePlan Test: constructor");
 
-        CoursePlan cp = new CoursePlan(123, 456, 2, 2018);
+        CoursePlan cp = new CoursePlan(1, 123, 456, 2, 2018);
         assertNotNull(cp);
         assertEquals("Course ID was assigned incorrectly", 123, cp.getCourseId());
         assertEquals("Student ID was assigned incorrectly", 456, cp.getStudentId());

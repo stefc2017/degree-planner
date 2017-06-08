@@ -152,9 +152,9 @@ public class DataAccessStub implements DataAccess {
         // Create Course Plans
 
         coursePlans = new ArrayList<CoursePlan>();
-        coursePlans.add(new CoursePlan(3, 1, 2, 2018));
-        coursePlans.add(new CoursePlan(1, 2, 1, 2017));
-        coursePlans.add(new CoursePlan(5, 2, 1, 2017));
+        coursePlans.add(new CoursePlan(1, 3, 1, 2, 2018));
+        coursePlans.add(new CoursePlan(2, 1, 2, 1, 2017));
+        coursePlans.add(new CoursePlan(3, 5, 2, 1, 2017));
 
         // Create Course Prerequisites
 
@@ -606,19 +606,37 @@ public class DataAccessStub implements DataAccess {
     /*
      * Created by Tiffany Jiang on 2017-06-07
      *
-     * Returns the Department object with the specified id, or null if no such department exists
+     * Adds a new course plan
+     * Returns either the id of the newly added course plan, or -1 if an error occurred (input not valid)
      */
-    public boolean addToCoursePlan (int courseId, int studentId, int termTypeId, int year) {
-        boolean addSuccessful = false;
+    public int addToCoursePlan (int courseId, int studentId, int termTypeId, int year) {
+        int id = -1;
+        CoursePlan newCoursePlan;
 
         if (isValidStudentId(studentId) && isValidCourseId(courseId) && isValidTermTypeId(termTypeId)
                 && courseOffered(courseId, termTypeId)) {
-            coursePlans.add(new CoursePlan(courseId, studentId, termTypeId, year));
-            addSuccessful = true;
+            id = getMaxCoursePlanId()+1;
+            newCoursePlan = new CoursePlan(id, courseId, studentId, termTypeId, year);
+            coursePlans.add(newCoursePlan);
         }
 
-        return addSuccessful;
+        return id;
     }
+
+    //Private helper method for add that gets the next increment of the id
+    private int getMaxCoursePlanId() {
+        int max = 1;
+
+        for (int i = 0; i<coursePlans.size(); i++) {
+            if (coursePlans.get(i).getId() > max) {
+                max = coursePlans.get(i).getId();
+            }
+        }
+
+        return max;
+    }
+
+    //These next few private helper methods perform checks (as stated respectively) for adding and modify course plans
 
     private boolean isValidStudentId (int studentId) {
         boolean validStudentId = false;
@@ -664,18 +682,29 @@ public class DataAccessStub implements DataAccess {
 
     private boolean courseOffered (int courseId, int termTypeId) {
         boolean validTerm = false;
+        Course course = getCourseById(courseId);
 
-        //Is the course historically offered in this term?
-        for (int i = 0; i<courseOfferings.size(); i++) {
-            if (courseOfferings.get(i).getCourseId() == courseId && courseOfferings.get(i).getTermTypeId() == termTypeId) {
-                validTerm = true;
-                break;
+        if (course instanceof ScienceCourse) {
+            //Is the course historically offered in this term?
+            for (int i = 0; i < courseOfferings.size(); i++) {
+                if (courseOfferings.get(i).getCourseId() == courseId && courseOfferings.get(i).getTermTypeId() == termTypeId) {
+                    validTerm = true;
+                    break;
+                }
             }
+        } else if (course instanceof UserDefinedCourse) {
+            //For user-defined courses, let the user freely enter the the term and year
+            validTerm = true;
         }
 
         return validTerm;
     }
 
+    /*
+     * Created by Tiffany Jiang on 2017-06-07
+     *
+     * Moves a course in an existing course plan to a different term/year
+     */
     public boolean moveCourse (int coursePlanId, int newTermTypeId, int newYear) {
         CoursePlan coursePlan;
         CourseOffering currCourseOffering;
@@ -697,6 +726,11 @@ public class DataAccessStub implements DataAccess {
         return moveSuccessful;
     }
 
+    /*
+     * Created by Tiffany Jiang on 2017-06-07
+     *
+     * Removes a course plan
+     */
     public boolean removeFromCoursePlan (int coursePlanId) {
         boolean removeSuccessful = false;
 
@@ -711,18 +745,15 @@ public class DataAccessStub implements DataAccess {
         return removeSuccessful;
     }
 
-//    public ArrayList<CoursePlan> getCoursePlanByStudentId (int studentId) {
-//        ArrayList<CoursePlan> result = new ArrayList<CoursePlan>();
-//        CoursePlan currCoursePlan;
-//
-//        for (int i = 0; i<coursePlans.size(); i++) {
-//            currCoursePlan = coursePlans.get(i);
-//
-//            if (currCoursePlan.getStudentId() == studentId) {
-//                result.add(currCoursePlan);
-//            }
-//        }
-//
-//        return result;
-//    }
+    public CoursePlan getCoursePlanById (int coursePlanId) {
+        CoursePlan result = null;
+
+        for (int i = 0; i<coursePlans.size(); i++) {
+            if (coursePlans.get(i).getId() == coursePlanId) {
+                result = coursePlans.get(i);
+            }
+        }
+
+        return result;
+    }
 }
