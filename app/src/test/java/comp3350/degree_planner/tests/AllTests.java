@@ -4,6 +4,8 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import comp3350.degree_planner.tests.business.GetCompletedCoursesTest;
+import comp3350.degree_planner.tests.business.GetDegreeCoursesTest;
+import comp3350.degree_planner.tests.business.GetDegreesTest;
 
 /**
  * Created by Tiffany Jiang on 2017-06-04.
@@ -23,5 +25,7 @@ public class AllTests {
 
     private static void testBusiness() {
         suite.addTestSuite(GetCompletedCoursesTest.class);
+        suite.addTestSuite(GetDegreeCoursesTest.class);
+        suite.addTestSuite(GetDegreesTest.class);
     }
 }
