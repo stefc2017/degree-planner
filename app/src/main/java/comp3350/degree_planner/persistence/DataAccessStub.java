@@ -453,6 +453,11 @@ public class DataAccessStub implements DataAccess {
     }
 
     //By F.D.
+    //Returns list of all Course Offerings
+    public ArrayList<CourseOffering> getAllCourseOfferings(){
+        return courseOfferings;
+    }
+
     //Returns list of courses fy selected term
     public ArrayList<CourseOffering> getCourseOfferingsByTerm(TermType term) {
 

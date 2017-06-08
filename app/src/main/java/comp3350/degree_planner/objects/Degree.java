@@ -9,7 +9,7 @@ package comp3350.degree_planner.objects;
  * about the degree; required courses are stored separately.
  */
 
-public class Degree {
+public class  Degree {
     private int id;
     private String name;
     private double creditHours;
