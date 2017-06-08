@@ -1,27 +1,51 @@
 package comp3350.degree_planner.tests;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 
 import comp3350.degree_planner.tests.business.GetCompletedCoursesTest;
+import comp3350.degree_planner.tests.objects.CourseOfferingTest;
+import comp3350.degree_planner.tests.objects.CoursePlanTest;
+import comp3350.degree_planner.tests.objects.CoursePrerequisiteTest;
+import comp3350.degree_planner.tests.objects.CourseResultTest;
+import comp3350.degree_planner.tests.objects.DegreeCourseTest;
+import comp3350.degree_planner.tests.objects.DegreeCourseTypeTest;
+import comp3350.degree_planner.tests.objects.DegreeTest;
+import comp3350.degree_planner.tests.objects.DepartmentTest;
+import comp3350.degree_planner.tests.objects.GradeTypeTest;
+import comp3350.degree_planner.tests.objects.RatingTest;
+import comp3350.degree_planner.tests.objects.RatingTypeTest;
+import comp3350.degree_planner.tests.objects.ScienceCourseTest;
+import comp3350.degree_planner.tests.objects.StudentTest;
+import comp3350.degree_planner.tests.objects.TermTypeTest;
+import comp3350.degree_planner.tests.objects.UserDefinedCourseTest;
 
 /**
  * Created by Tiffany Jiang on 2017-06-04.
- * <p>
+ *
  * Runs all unit tests
  */
 
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+        GetCompletedCoursesTest.class,
+
+        CourseOfferingTest.class,
+        CoursePlanTest.class,
+        CoursePrerequisiteTest.class,
+        CourseResultTest.class,
+        DegreeCourseTest.class,
+        DegreeCourseTypeTest.class,
+        DegreeTest.class,
+        DepartmentTest.class,
+        GradeTypeTest.class,
+        RatingTest.class,
+        RatingTypeTest.class,
+        ScienceCourseTest.class,
+        StudentTest.class,
+        TermTypeTest.class,
+        UserDefinedCourseTest.class
+})
+
 public class AllTests {
-    public static TestSuite suite;
-
-    public static Test suite() {
-        suite = new TestSuite("All tests");
-        System.out.println("Running all tests...\n");
-        testBusiness();
-        return suite;
-    }
-
-    private static void testBusiness() {
-        suite.addTestSuite(GetCompletedCoursesTest.class);
-    }
 }

@@ -1,9 +1,8 @@
 package comp3350.degree_planner.tests.business;
 
-import junit.framework.TestCase;
-
 import org.junit.Before;
 import org.junit.Test;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,7 +28,7 @@ import comp3350.degree_planner.persistence.DataAccessStub;
  * Unit tests for getting completed courses for a student
  */
 
-public class GetCompletedCoursesTest extends TestCase {
+public class GetCompletedCoursesTest {
     private CompletedCourses cc;
 
     //Sets up test data with the entries we need for all tests below
@@ -191,7 +190,7 @@ public class GetCompletedCoursesTest extends TestCase {
         testData.open();
     }
 
-    //    @Test
+    @Test
     public void testInvalidStudentId() {
         System.out.println("\nStarting Get Completed Courses Test: invalid student id");
 
@@ -201,7 +200,7 @@ public class GetCompletedCoursesTest extends TestCase {
         System.out.println("Finished Get Completed Courses Test: invalid student id");
     }
 
-    //    @Test
+    @Test
     public void testEmptyCourseResults() {
         System.out.println("\nStarting Get Completed Courses Test: valid student id and empty course results");
 
@@ -211,13 +210,12 @@ public class GetCompletedCoursesTest extends TestCase {
         System.out.println("Finished Get Completed Courses Test: valid student id and empty course results");
     }
 
-
-    //    @Test
+    @Test
     public void testValidData() {
         System.out.println("\nStarted Get Completed Courses Test: valid student id and non-empty course results");
-        final int nbCompletedCoursesForStudent1 = 4;
+        final int NB_COMPLETED_COURSES_FOR_STUDENT_1 = 4;
 
-        String[][] expectedResult = new String[nbCompletedCoursesForStudent1][2];
+        String[][] expectedResult = new String[NB_COMPLETED_COURSES_FOR_STUDENT_1][2];
         expectedResult[0][0] = "COMP 1010: Introductory Computer Science I";
         expectedResult[0][1] = "Passed";
         expectedResult[1][0] = "COMP 1020: Introductory Computer Science II";
@@ -232,7 +230,7 @@ public class GetCompletedCoursesTest extends TestCase {
         assertNotNull("Completed courses array is null", result);
         assertEquals("Result length is not the same as expected result length", expectedResult.length, result.length);
 
-        for (int i = 0; i < nbCompletedCoursesForStudent1; i++) {
+        for (int i = 0; i < NB_COMPLETED_COURSES_FOR_STUDENT_1; i++) {
             assertTrue("Expected result and result are not equal at index " + i, Arrays.equals(expectedResult[i], result[i]));
         }
 

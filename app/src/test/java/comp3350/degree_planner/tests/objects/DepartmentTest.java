@@ -1,6 +1,6 @@
 package comp3350.degree_planner.tests.objects;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 
@@ -11,7 +11,7 @@ import comp3350.degree_planner.objects.Department;
  * Department object.
  */
 
-public class DepartmentTest extends TestCase {
+public class DepartmentTest {
 
     /*
      * testConstructor
@@ -30,6 +30,6 @@ public class DepartmentTest extends TestCase {
         assertEquals("Name was assigned incorrectly", "Test Department", d.getName());
         assertEquals("Abbreviation was assigned incorrectly", "TEST", d.getAbbreviation());
 
-        System.out.println("\nFinished Department Test: constructor");
+        System.out.println("Finished Department Test: constructor");
     }
 }

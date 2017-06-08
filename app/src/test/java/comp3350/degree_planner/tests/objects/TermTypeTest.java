@@ -1,6 +1,6 @@
 package comp3350.degree_planner.tests.objects;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 
@@ -11,7 +11,7 @@ import comp3350.degree_planner.objects.TermType;
  * TermType object.
  */
 
-public class TermTypeTest extends TestCase {
+public class TermTypeTest {
 
     /*
      * testConstructor
@@ -29,6 +29,6 @@ public class TermTypeTest extends TestCase {
         assertEquals("ID was assigned incorrectly", 1, tt.getId());
         assertEquals("Season was assigned incorrectly", "Fall", tt.getSeason());
 
-        System.out.println("\nFinished TermType Test: constructor");
+        System.out.println("Finished TermType Test: constructor");
     }
 }
