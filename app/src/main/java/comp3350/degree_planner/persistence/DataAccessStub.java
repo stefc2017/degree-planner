@@ -453,18 +453,28 @@ public class DataAccessStub implements DataAccess {
     }
 
     //By F.D.
+    //Returns list of all Course Offerings
+    public ArrayList<CourseOffering> getAllCourseOfferings(){
+        return courseOfferings;
+    }
+
+    //By F.D.
     //Returns list of courses fy selected term
     public ArrayList<CourseOffering> getCourseOfferingsByTerm(TermType term) {
-
         ArrayList<CourseOffering> courseOfferingsByTermList = new ArrayList<CourseOffering>();
-
-        for (int i = 0; i < courseOfferings.size(); i++) {
-            if (term.getId() == courseOfferings.get(i).getTermTypeId()) {
-                //Adds course offering based on courseID from COurseOfferings and matching TermID
-                courseOfferingsByTermList.add(courseOfferings.get(i));
+        if(term != null) {
+            for (int i = 0; i < courseOfferings.size(); i++) {
+                try {
+                    if (term.getId() == 1 || term.getId() == 2 || term.getId() == 3) {
+                        if (term.getId() == courseOfferings.get(i).getTermTypeId()) {
+                            //Adds course offering based on courseID from CourseOfferings and matching TermID
+                            courseOfferingsByTermList.add(courseOfferings.get(i));
+                        }
+                    }
+                } catch (IllegalArgumentException e) {
+                }
             }
         }
-
 
         return courseOfferingsByTermList;
     }
