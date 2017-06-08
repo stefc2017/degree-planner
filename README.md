@@ -2,6 +2,8 @@
 
 [Iteration 1 Developer Log](https://docs.google.com/document/d/1VlnjG8H_lTQEfeJ99SGC2vxbQOdTMdJD4wwznMJKhIU/edit?usp=sharing)
 
+[Repository](https://github.com/tiffcj/degree-planner.git)
+
 Submission Contents:
 
 Main package: comp3350.degree_planner
