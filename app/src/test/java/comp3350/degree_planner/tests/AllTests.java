@@ -4,6 +4,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 import comp3350.degree_planner.tests.business.GetCompletedCoursesTest;
+<<<<<<< refs/remotes/origin/master
 import comp3350.degree_planner.tests.objects.CourseOfferingTest;
 import comp3350.degree_planner.tests.objects.CoursePlanTest;
 import comp3350.degree_planner.tests.objects.CoursePrerequisiteTest;
@@ -19,6 +20,10 @@ import comp3350.degree_planner.tests.objects.ScienceCourseTest;
 import comp3350.degree_planner.tests.objects.StudentTest;
 import comp3350.degree_planner.tests.objects.TermTypeTest;
 import comp3350.degree_planner.tests.objects.UserDefinedCourseTest;
+=======
+import comp3350.degree_planner.tests.business.GetDegreeCoursesTest;
+import comp3350.degree_planner.tests.business.GetDegreesTest;
+>>>>>>> add new test suites
 
 /**
  * Created by Tiffany Jiang on 2017-06-04.
@@ -47,5 +52,13 @@ import comp3350.degree_planner.tests.objects.UserDefinedCourseTest;
         UserDefinedCourseTest.class
 })
 
+<<<<<<< refs/remotes/origin/master
 public class AllTests {
+=======
+    private static void testBusiness() {
+        suite.addTestSuite(GetCompletedCoursesTest.class);
+        suite.addTestSuite(GetDegreeCoursesTest.class);
+        suite.addTestSuite(GetDegreesTest.class);
+    }
+>>>>>>> add new test suites
 }
