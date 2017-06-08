@@ -3,9 +3,11 @@ package comp3350.degree_planner.persistence;
 import java.util.ArrayList;
 
 import comp3350.degree_planner.objects.Course;
+import comp3350.degree_planner.objects.CourseOffering;
 import comp3350.degree_planner.objects.CourseResult;
 import comp3350.degree_planner.objects.Degree;
 import comp3350.degree_planner.objects.Department;
+import comp3350.degree_planner.objects.TermType;
 
 /**
  * Created by Tiffany Jiang on 2017-06-06.
@@ -45,6 +47,8 @@ public interface DataAccess {
     int getFailingGradeId();
 
     Course getCourseById(int courseId);
+
+    ArrayList<CourseOffering> getCourseOfferingsByTerm(TermType type);
 
     Department getDepartmentById(int departmentId);
 
