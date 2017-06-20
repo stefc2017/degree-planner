@@ -28,4 +28,9 @@ public class MainActivity extends Activity {
         Intent intent = new Intent(MainActivity.this, DegreesActivity.class);
         MainActivity.this.startActivity(intent);
     }
+
+    public void buttonCoursePlanOnClick(View v){
+        Intent intent = new Intent(MainActivity.this, CoursePlansActivity.class);
+        MainActivity.this.startActivity(intent);
+    }
 }

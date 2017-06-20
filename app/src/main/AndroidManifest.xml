@@ -25,6 +25,7 @@
         </activity>
         <activity android:name=".presentation.DegreesActivity"></activity>
         <activity android:name=".presentation.DegreeInfoActivity"></activity>
+        <activity android:name=".presentation.CoursePlansActivity"></activity>
     </application>
 
 </manifest>

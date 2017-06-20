@@ -44,6 +44,7 @@
             android:layout_width="135dp"
             android:layout_height="138dp"
             android:background="@color/colorLightGreen"
+            android:onClick="buttonCoursePlanOnClick"
             android:text="@string/coursePlan"
             android:textColor="?attr/actionModeSplitBackground"
             android:textSize="20sp"
