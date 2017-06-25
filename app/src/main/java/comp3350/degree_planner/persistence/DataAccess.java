@@ -17,6 +17,8 @@ import comp3350.degree_planner.objects.TermType;
  */
 
 public interface DataAccess {
+    void open(String string);
+
     void open();
 
     void close();

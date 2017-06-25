@@ -36,6 +36,10 @@ public class DataAccessStub implements DataAccess {
     public DataAccessStub() {
     }
 
+    public void open(String string) {
+
+    }
+
     /*
      * open
      *
