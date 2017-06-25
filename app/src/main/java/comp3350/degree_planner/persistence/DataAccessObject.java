@@ -1,7 +1,5 @@
 package comp3350.degree_planner.persistence;
 
-import android.provider.ContactsContract;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -14,7 +12,6 @@ import comp3350.degree_planner.objects.CoursePlan;
 import comp3350.degree_planner.objects.CourseResult;
 import comp3350.degree_planner.objects.Degree;
 import comp3350.degree_planner.objects.Department;
-import comp3350.degree_planner.objects.Student;
 import comp3350.degree_planner.objects.TermType;
 
 /**
@@ -48,6 +45,8 @@ public class DataAccessObject implements DataAccess {
     public void open(String dbPath)
     {
         String url;
+        int result;
+
         try
         {
             dbType = "HSQL";
@@ -58,12 +57,14 @@ public class DataAccessObject implements DataAccess {
             st2 = c1.createStatement();
             st3 = c1.createStatement();
 
-//            int result = st1.executeUpdate("CREATE MEMORY TABLE DEGREE(ID INTEGER NOT NULL PRIMARY KEY, NAME VARCHAR(20), CREDIT_HOURS FLOAT, MAJOR_CREDIT_HOURS FLOAT, GPA_REQUIRED FLOAT)");
+//            result = st1.executeUpdate("CREATE MEMORY TABLE DEGREE(ID INTEGER NOT NULL PRIMARY KEY, NAME VARCHAR(20), CREDIT_HOURS FLOAT, MAJOR_CREDIT_HOURS FLOAT, GPA_REQUIRED FLOAT)");
 //            result = st1.executeUpdate("INSERT INTO DEGREE VALUES(1,'Computer Science Major', 120.0, 81.0, 2.0)");
-//            result = st1.executeUpdate("INSERT INTO DEGREE VALUES(2,'Computer Science Honours', 120.0, 81.0, 2.0)");
+//            result = st1.executeUpdate("INSERT INTO DEGREE VALUES(2,'Computer Science Honours', 120.0, 81.0, 3.0)");
+//            result = st1.executeUpdate("INSERT INTO DEGREE VALUES(3,'Statistics Major', 120.0, 81.0, 2.0)");
         }
         catch (Exception e)
         {
+            System.out.println (e);
 //            processSQLError(e);
         }
         System.out.println("Opened " + dbType + " database " + dbPath);
@@ -121,6 +122,7 @@ public class DataAccessObject implements DataAccess {
         int id;
         String name;
         double creditHours, majorCreditHours, gpaRequired;
+        degrees = new ArrayList<Degree>();
 
         result = null;
         try
