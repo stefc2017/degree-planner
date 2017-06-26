@@ -1,7 +1,8 @@
 package comp3350.degree_planner.presentation;
 import android.os.Bundle;
-import android.app.Activity;
+import android.support.v7.app.AppCompatActivity;
 import android.content.Intent;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -19,14 +20,18 @@ import comp3350.degree_planner.objects.Degree;
  * Created by Penny He on 6/4/2017.
  */
 
-public class DegreesActivity extends Activity {
+public class DegreesActivity extends AppCompatActivity {
     private AccessDegrees accessDegrees;
     private ArrayList<Degree> degreeList;
     private ArrayAdapter<Degree> degreeListAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_degrees);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.degrees_toolbar);
+        setSupportActionBar(toolbar);
 
         accessDegrees = new AccessDegrees(Services.getDataAccess());
         degreeList = new ArrayList<Degree>();
