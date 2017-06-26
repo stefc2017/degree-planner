@@ -177,11 +177,12 @@ public class DataAccessStub implements DataAccess {
         // Create Course Plans
 
         coursePlans = new ArrayList<CoursePlan>();
-        coursePlans.add(new CoursePlan(1, new ScienceCourse(3, "Object Orientation", 3.0, 1,
-                2150, "Detailed look at proper object oriented programming."), new Student(1, 1234567,
-                "Jim Bob", "jimbob@myumanitoba.ca", "helloworld1", 1), new TermType(2, "Winter"), 2018));
-        coursePlans.add(new CoursePlan(2, new ScienceCourse(1, "Introductory Computer Science I",
-                3.0, 1, 1010, "Basic programming concepts."), new Student(1, 1234567, "Jim Bob", "jimbob@myumanitoba.ca", "helloworld1", 1), new TermType(1, "Fall"), 2017));
+        coursePlans.add(new CoursePlan(1, new ScienceCourse(3, "Object Orientation", 3.0, 1, 2150,
+                "Detailed look at proper object oriented programming."), new Student(1,
+                1234567, "Jim Bob", "jimbob@myumanitoba.ca", "helloworld1", 1), new TermType(2, "Winter"), 2018));
+        coursePlans.add(new CoursePlan(2, new ScienceCourse(1, "Introductory Computer Science I", 3.0, 1, 1010,
+                "Basic programming concepts."), new Student(1, 1234567, "Jim Bob", "jimbob@myumanitoba.ca", "helloworld1", 1),
+                new TermType(1, "Fall"), 2017));
         coursePlans.add(new CoursePlan(3, new UserDefinedCourse(5, "Cultural Anthropology", 3.0, "ANTH 1220"),
                 new Student(1, 1234567, "Jim Bob", "jimbob@myumanitoba.ca", "helloworld1", 1), new TermType(1, "Fall"), 2017));
 
@@ -206,7 +207,10 @@ public class DataAccessStub implements DataAccess {
         ratingTypes.add (new RatingType(4, "Poor", 2));
         ratingTypes.add (new RatingType(5, "Very Poor", 1));
 
-        ratings.add (new Rating(1, 1, 1, 1, "I learned a lot from this course!"));
+        ratings.add (new Rating(1, new Student(1, 1234567, "Jim Bob", "jimbob@myumanitoba.ca", "helloworld1", 1),
+                new ScienceCourse(1, "Introductory Computer Science I", 3.0, 1,
+                1010, "Basic programming concepts."), new RatingType(1, "Excellent", 5),
+                "I learned a lot from this course!"));
 
         System.out.println("Opened " +dbType +" database " +dbName);
     }
