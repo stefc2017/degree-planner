@@ -7,6 +7,7 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import comp3350.degree_planner.application.Main;
 import comp3350.degree_planner.business.CompletedCourses;
 import comp3350.degree_planner.objects.Course;
 import comp3350.degree_planner.objects.CourseResult;
@@ -55,7 +56,7 @@ public class GetCompletedCoursesTest {
             private ArrayList<UserDefinedCourse> userDefinedCourses;
 
             @Override
-            public void open() {
+            public void open(String dbName) {
                 ScienceCourse tempScienceCourse;
                 UserDefinedCourse tempUserDefinedCourse;
 
@@ -189,7 +190,7 @@ public class GetCompletedCoursesTest {
         };
 
         cc = new CompletedCourses(testData);
-        testData.open();
+        testData.open(Main.dbName);
     }
 
     @Test

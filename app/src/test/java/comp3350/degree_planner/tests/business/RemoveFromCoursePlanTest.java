@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
+import comp3350.degree_planner.application.Main;
 import comp3350.degree_planner.business.AccessCoursePlan;
 import comp3350.degree_planner.objects.Course;
 import comp3350.degree_planner.objects.CourseOffering;
@@ -54,7 +55,7 @@ public class RemoveFromCoursePlanTest {
             private ArrayList<UserDefinedCourse> userDefinedCourses;
 
             @Override
-            public void open() {
+            public void open(String dbName) {
                 ScienceCourse tempScienceCourse;
                 UserDefinedCourse tempUserDefinedCourse;
 
@@ -171,7 +172,7 @@ public class RemoveFromCoursePlanTest {
         };
 
         acp = new AccessCoursePlan(testData);
-        testData.open();
+        testData.open(Main.dbName);
     }
 
     @Test

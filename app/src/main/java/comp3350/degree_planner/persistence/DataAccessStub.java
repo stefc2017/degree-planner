@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import comp3350.degree_planner.application.Main;
 import comp3350.degree_planner.objects.*;
 
 /**
@@ -33,7 +34,15 @@ public class DataAccessStub implements DataAccess {
     private ArrayList<TermType> termTypes;
     private ArrayList<UserDefinedCourse> userDefinedCourses;
 
+    private String dbName;
+    private String dbType = "stub";
+
     public DataAccessStub() {
+        this.dbName = Main.dbName;
+    }
+
+    public DataAccessStub(String dbName) {
+        this.dbName = dbName;
     }
 
     /*
@@ -43,7 +52,7 @@ public class DataAccessStub implements DataAccess {
      * data stored in a real database.
      */
 
-    public void open() {
+    public void open(String dbName) {
         ScienceCourse tempScienceCourse;    // Used to hold a science course so it can be added
         // to both the ScienceCourse and Course arrays
         UserDefinedCourse tempUserDefinedCourse;    // Used to hold a user defined course so it can
@@ -75,7 +84,6 @@ public class DataAccessStub implements DataAccess {
 
         departments = new ArrayList<Department>();
         departments.add(new Department(1, "Computer Science", "COMP"));
-        departments.add(new Department(2, "Biology", "BIOL"));
 
         // Create Courses
 
@@ -128,13 +136,12 @@ public class DataAccessStub implements DataAccess {
 
         students = new ArrayList<Student>();
         students.add(new Student(1, 1234567, "Jim Bob", "jimbob@myumanitoba.ca", "helloworld1", 1));
-        students.add(new Student(2, 9999999, "DK", "dk@myumanitoba.ca", "password1", 1));
 
         // Create Course Results
 
         courseResults = new ArrayList<CourseResult>();
         courseResults.add(new CourseResult(1, 1, 1, 1));
-        courseResults.add(new CourseResult(2, 1, 1, 2));
+        courseResults.add(new CourseResult(2, 1, 2, 2));
 
         // Create Course Offerings
 
@@ -153,8 +160,8 @@ public class DataAccessStub implements DataAccess {
 
         coursePlans = new ArrayList<CoursePlan>();
         coursePlans.add(new CoursePlan(1, 3, 1, 2, 2018));
-        coursePlans.add(new CoursePlan(2, 1, 2, 1, 2017));
-        coursePlans.add(new CoursePlan(3, 5, 2, 1, 2017));
+        coursePlans.add(new CoursePlan(2, 1, 1, 1, 2017));
+        coursePlans.add(new CoursePlan(3, 5, 1, 1, 2017));
 
         // Create Course Prerequisites
 
@@ -163,11 +170,21 @@ public class DataAccessStub implements DataAccess {
         coursePrerequisites.add(new CoursePrerequisite(3, 2));
         coursePrerequisites.add(new CoursePrerequisite(4, 3));
 
-        System.out.println("Opened stub database.");
+        //Create Rating data
+
+        ratingTypes.add (new RatingType(1, "Excellent", 5));
+        ratingTypes.add (new RatingType(2, "Good", 4));
+        ratingTypes.add (new RatingType(3, "Fair", 3));
+        ratingTypes.add (new RatingType(4, "Poor", 2));
+        ratingTypes.add (new RatingType(5, "Very Poor", 1));
+
+        ratings.add (new Rating(1, 1, 1, 1, "I learned a lot from this course!"));
+
+        System.out.println("Opened " +dbType +" database " +dbName);
     }
 
     public void close() {
-        System.out.println("Closed stub database.");
+        System.out.println("Closed " +dbType +" database " +dbName);
     }
 
     /**
