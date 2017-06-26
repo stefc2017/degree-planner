@@ -109,13 +109,17 @@ public class GetCompletedCoursesTest {
                 // Create Degrees
 
                 degrees = new ArrayList<Degree>();
-                degrees.add(new Degree(1, "Computer Science Major", 120.0, 81.0, 2.0));
+                Degree degree = new Degree(1, "Computer Science Major", 120.0, 81.0, 2.0);
+                degrees.add(degree);
 
                 // Map courses to degrees
 
                 degreeCourses = new ArrayList<DegreeCourse>();
-                degreeCourses.add(new DegreeCourse(1, 1, 1));
-                degreeCourses.add(new DegreeCourse(1, 2, 1));
+
+                degreeCourses.add(new DegreeCourse(degree, new ScienceCourse(1, "Introductory Computer Science I",
+                        3.0, 1, 1010, "Basic programming concepts."), new DegreeCourseType(1, "Required")));
+                degreeCourses.add(new DegreeCourse(degree, new ScienceCourse(2, "Introductory Computer Science II", 3.0,
+                        1, 1020, "More basic programming concepts."), new DegreeCourseType(1, "Required")));
 
                 // Create Students
 
@@ -126,10 +130,26 @@ public class GetCompletedCoursesTest {
                 // Create Course Results
 
                 courseResults = new ArrayList<CourseResult>();
-                courseResults.add(new CourseResult(1, 1, 1, 1)); //Student 1 science course passed
-                courseResults.add(new CourseResult(2, 2, 1, 8)); //Student 1 science course failed
-                courseResults.add(new CourseResult(3, 3, 1, 8)); //Student 1 user-defined course failed
-                courseResults.add(new CourseResult(4, 3, 1, 3)); //Student 1 user-defined course passed
+
+                //Student 1 science course passed
+                courseResults.add(new CourseResult(1, new ScienceCourse(1, "Introductory Computer Science I",
+                        3.0, 1, 1010, "Basic programming concepts."), new Student(1, 1234567, "Jim Bob",
+                        "jimbob@myumanitoba.ca", "helloworld1", 1), new GradeType(1, "A+", 4.5)));
+
+                //Student 1 science course failed
+                courseResults.add(new CourseResult(2, new ScienceCourse(2, "Introductory Computer Science II", 3.0,
+                        1, 1020, "More basic programming concepts."), new Student(1, 1234567, "Jim Bob",
+                        "jimbob@myumanitoba.ca", "helloworld1", 1), new GradeType(8, "F", 0.0)));
+
+                //Student 1 user-defined course failed
+                courseResults.add(new CourseResult(3, new ScienceCourse(3, "Object Orientation", 3.0, 1,
+                        2150, "Detailed look at proper object oriented programming."), new Student(1, 1234567, "Jim Bob",
+                        "jimbob@myumanitoba.ca", "helloworld1", 1), new GradeType(8, "F", 0.0)));
+
+                //Student 1 user-defined course passed
+                courseResults.add(new CourseResult(4, new ScienceCourse(3, "Object Orientation", 3.0, 1,
+                        2150, "Detailed look at proper object oriented programming."), new Student(1, 1234567, "Jim Bob",
+                        "jimbob@myumanitoba.ca", "helloworld1", 1),new GradeType(3, "B+", 3.5)));
             }
 
             @Override
@@ -139,7 +159,7 @@ public class GetCompletedCoursesTest {
 
                 for (int i = 0; i < courseResults.size(); i++) {
                     currCR = courseResults.get(i);
-                    if (currCR.getStudentId() == studentId) {
+                    if (currCR.getStudent().getId() == studentId) {
                         crByStudentId.add(currCR);
                     }
                 }

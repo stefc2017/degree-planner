@@ -122,15 +122,20 @@ public class DataAccessStub implements DataAccess {
         // Create Degrees
 
         degrees = new ArrayList<Degree>();
-        degrees.add(new Degree(1, "Computer Science Major", 120.0, 81.0, 2.0));
+        Degree degree = new Degree(1, "Computer Science Major", 120.0, 81.0, 2.0);
+        degrees.add(degree);
 
         // Map courses to degrees
 
         degreeCourses = new ArrayList<DegreeCourse>();
-        degreeCourses.add(new DegreeCourse(1, 1, 1));
-        degreeCourses.add(new DegreeCourse(1, 2, 1));
-        degreeCourses.add(new DegreeCourse(1, 3, 1));
-        degreeCourses.add(new DegreeCourse(1, 4, 1));
+        degreeCourses.add(new DegreeCourse(degree, new ScienceCourse(1, "Introductory Computer Science I",
+                3.0, 1, 1010, "Basic programming concepts."), new DegreeCourseType(1, "Required")));
+        degreeCourses.add(new DegreeCourse(degree, new ScienceCourse(2, "Introductory Computer Science II", 3.0,
+                1, 1020, "More basic programming concepts."), new DegreeCourseType(1, "Required")));
+        degreeCourses.add(new DegreeCourse(degree, new ScienceCourse(3, "Object Orientation", 3.0, 1,
+                2150, "Detailed look at proper object oriented programming."), new DegreeCourseType(1, "Required")));
+        degreeCourses.add(new DegreeCourse(degree, new ScienceCourse(4, "Software Engineering I", 3.0, 1,
+                3350, "Good software development practices."), new DegreeCourseType(1, "Required")));
 
         // Create Students
 
@@ -140,35 +145,58 @@ public class DataAccessStub implements DataAccess {
         // Create Course Results
 
         courseResults = new ArrayList<CourseResult>();
-        courseResults.add(new CourseResult(1, 1, 1, 1));
-        courseResults.add(new CourseResult(2, 1, 2, 2));
+        courseResults.add(new CourseResult(1, new ScienceCourse(1, "Introductory Computer Science I",
+                3.0, 1, 1010, "Basic programming concepts."), new Student(1, 1234567, "Jim Bob",
+                "jimbob@myumanitoba.ca", "helloworld1", 1), new GradeType(1, "A+", 4.5)));
+        courseResults.add(new CourseResult(2, new ScienceCourse(2, "Introductory Computer Science II", 3.0,
+                1, 1020, "More basic programming concepts."), new Student(1, 1234567, "Jim Bob",
+                "jimbob@myumanitoba.ca", "helloworld1", 1), new GradeType(2, "A", 4.0)));
 
         // Create Course Offerings
 
         courseOfferings = new ArrayList<CourseOffering>();
-        courseOfferings.add(new CourseOffering(1, 1));
-        courseOfferings.add(new CourseOffering(1, 2));
-        courseOfferings.add(new CourseOffering(1, 3));
-        courseOfferings.add(new CourseOffering(2, 1));
-        courseOfferings.add(new CourseOffering(2, 2));
-        courseOfferings.add(new CourseOffering(2, 3));
-        courseOfferings.add(new CourseOffering(3, 2));
-        courseOfferings.add(new CourseOffering(4, 2));
-        courseOfferings.add(new CourseOffering(4, 3));
+        courseOfferings.add(new CourseOffering(new ScienceCourse(1, "Introductory Computer Science I",
+                3.0, 1, 1010, "Basic programming concepts."), new TermType(1, "Fall")));
+        courseOfferings.add(new CourseOffering(new ScienceCourse(1, "Introductory Computer Science I",
+                3.0, 1, 1010, "Basic programming concepts."), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(new ScienceCourse(1, "Introductory Computer Science I",
+                3.0, 1, 1010, "Basic programming concepts."), new TermType(3, "Summer")));
+        courseOfferings.add(new CourseOffering(new ScienceCourse(2, "Introductory Computer Science II", 3.0,
+                1, 1020, "More basic programming concepts."), new TermType(1, "Fall")));
+        courseOfferings.add(new CourseOffering(new ScienceCourse(2, "Introductory Computer Science II", 3.0,
+                1, 1020, "More basic programming concepts."), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(new ScienceCourse(2, "Introductory Computer Science II", 3.0,
+                1, 1020, "More basic programming concepts."), new TermType(3, "Summer")));
+        courseOfferings.add(new CourseOffering(new ScienceCourse(3, "Object Orientation", 3.0, 1,
+                2150, "Detailed look at proper object oriented programming."), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(new ScienceCourse(4, "Software Engineering I", 3.0, 1,
+                3350, "Good software development practices."), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(new ScienceCourse(4, "Software Engineering I", 3.0, 1,
+                3350, "Good software development practices."), new TermType(3, "Summer")));
 
         // Create Course Plans
 
         coursePlans = new ArrayList<CoursePlan>();
-        coursePlans.add(new CoursePlan(1, 3, 1, 2, 2018));
-        coursePlans.add(new CoursePlan(2, 1, 1, 1, 2017));
-        coursePlans.add(new CoursePlan(3, 5, 1, 1, 2017));
+        coursePlans.add(new CoursePlan(1, new ScienceCourse(3, "Object Orientation", 3.0, 1,
+                2150, "Detailed look at proper object oriented programming."), new Student(1, 1234567,
+                "Jim Bob", "jimbob@myumanitoba.ca", "helloworld1", 1), new TermType(2, "Winter"), 2018));
+        coursePlans.add(new CoursePlan(2, new ScienceCourse(1, "Introductory Computer Science I",
+                3.0, 1, 1010, "Basic programming concepts."), new Student(1, 1234567, "Jim Bob", "jimbob@myumanitoba.ca", "helloworld1", 1), new TermType(1, "Fall"), 2017));
+        coursePlans.add(new CoursePlan(3, new UserDefinedCourse(5, "Cultural Anthropology", 3.0, "ANTH 1220"),
+                new Student(1, 1234567, "Jim Bob", "jimbob@myumanitoba.ca", "helloworld1", 1), new TermType(1, "Fall"), 2017));
 
         // Create Course Prerequisites
 
         coursePrerequisites = new ArrayList<CoursePrerequisite>();
-        coursePrerequisites.add(new CoursePrerequisite(2, 1));
-        coursePrerequisites.add(new CoursePrerequisite(3, 2));
-        coursePrerequisites.add(new CoursePrerequisite(4, 3));
+        coursePrerequisites.add(new CoursePrerequisite(new ScienceCourse(2, "Introductory Computer Science II", 3.0,
+                1, 1020, "More basic programming concepts."), new ScienceCourse(1, "Introductory Computer Science I",
+                3.0, 1, 1010, "Basic programming concepts.")));
+        coursePrerequisites.add(new CoursePrerequisite(new ScienceCourse(3, "Object Orientation", 3.0, 1,
+                2150, "Detailed look at proper object oriented programming."), new ScienceCourse(2,
+                "Introductory Computer Science II", 3.0, 1, 1020, "More basic programming concepts.")));
+        coursePrerequisites.add(new CoursePrerequisite(new ScienceCourse(4, "Software Engineering I", 3.0, 1,
+                3350, "Good software development practices."), new ScienceCourse(3, "Object Orientation", 3.0, 1,
+                2150, "Detailed look at proper object oriented programming.")));
 
         //Create Rating data
 
@@ -231,7 +259,7 @@ public class DataAccessStub implements DataAccess {
      **/
     public Course getCourse(CourseResult courseResult, ArrayList<Course> allCourses) {
         Course course = null;
-        int courseId = courseResult.getCourseId();
+        int courseId = courseResult.getCourse().getId();
         int numberOfCourses = allCourses.size();
         int index = 0;
 
@@ -311,7 +339,7 @@ public class DataAccessStub implements DataAccess {
                     inner_index = 0; //initialize inner_index to 0
 
                     while (hasPreReqs && inner_index < coursesTaken.size() && preReqId !=
-                            (coursesTaken.get(inner_index)).getCourseId()) { //goes through each course that the student has taken
+                            (coursesTaken.get(inner_index)).getCourse().getId()) { //goes through each course that the student has taken
                         inner_index++;
                     }//end while
 
@@ -340,8 +368,8 @@ public class DataAccessStub implements DataAccess {
         Course currentCourse; //to keep track of the current course
 
         for (int i = 0; i < numberOfCoursePrereqs; i++) {
-            if ((coursePrerequisites.get(i)).getCourseId() == courseId) { //if this is a prerequisite for the course
-                currentCourse = findCourse((coursePrerequisites.get(i)).getPrereqCourseId()); //get the course
+            if ((coursePrerequisites.get(i)).getCourse().getId() == courseId) { //if this is a prerequisite for the course
+                currentCourse = findCourse((coursePrerequisites.get(i)).getPrereqCourse().getId()); //get the course
                 prerequisites.add(currentCourse); //add the course to the list of prerequisites
             }//end if
         }//end for
@@ -461,7 +489,7 @@ public class DataAccessStub implements DataAccess {
         while (crIterator.hasNext()) {
             currCR = crIterator.next();
 
-            if (currCR.getStudentId() == studentId) {
+            if (currCR.getStudent().getId() == studentId) {
                 crByStudentId.add (currCR);
             }
         }
@@ -483,7 +511,7 @@ public class DataAccessStub implements DataAccess {
             for (int i = 0; i < courseOfferings.size(); i++) {
                 try {
                     if (term.getId() == 1 || term.getId() == 2 || term.getId() == 3) {
-                        if (term.getId() == courseOfferings.get(i).getTermTypeId()) {
+                        if (term.getId() == (courseOfferings.get(i)).getTermType().getId()) {
                             //Adds course offering based on courseID from CourseOfferings and matching TermID
                             courseOfferingsByTermList.add(courseOfferings.get(i));
                         }
@@ -560,7 +588,7 @@ public class DataAccessStub implements DataAccess {
         ArrayList<CourseResult> crByStudentId = getCourseResultsByStudentId(studentId);
 
         for (CourseResult result : crByStudentId) {
-            coursesTaken.add(findCourse(result.getCourseId()));
+            coursesTaken.add(findCourse(result.getCourse().getId()));
         }
 
         return coursesTaken;
@@ -595,8 +623,8 @@ public class DataAccessStub implements DataAccess {
         ArrayList<Course> reqCourseList = new ArrayList<Course>();
 
         for( DegreeCourse course : degreeCourses ){
-            if( course.getDegreeId() == degreeId && course.getDegreeCourseTypeId() == REQUIRED_COURSE){
-                reqCourseList.add( findCourse( course.getCourseId() ) );
+            if( course.getDegree().getId() == degreeId && course.getDegreeCourseType().getId() == REQUIRED_COURSE){
+                reqCourseList.add( findCourse( course.getCourse().getId() ) );
             }
         }
 
@@ -643,11 +671,35 @@ public class DataAccessStub implements DataAccess {
         if (isValidStudentId(studentId) && isValidCourseId(courseId) && isValidTermTypeId(termTypeId)
                 && courseOffered(courseId, termTypeId)) {
             id = getMaxCoursePlanId()+1;
-            newCoursePlan = new CoursePlan(id, courseId, studentId, termTypeId, year);
+            newCoursePlan = new CoursePlan(id, getCourseById(courseId), getStudentById(studentId), getTermTypeById(termTypeId), year);
             coursePlans.add(newCoursePlan);
         }
 
         return id;
+    }
+
+    private Student getStudentById (int studentId){
+        Student student = null;
+
+        for (Student s : students) {
+            if (s.getId() == studentId) {
+                student = s;
+                break;
+            }
+        }
+        return student;
+    }
+
+    private TermType getTermTypeById (int termTypeId){
+        TermType termType = null;
+
+        for (TermType type : termTypes) {
+            if (type.getId() == termTypeId) {
+                termType = type;
+                break;
+            }
+        }
+        return termType;
     }
 
     //Private helper method for add that gets the next increment of the id
@@ -714,7 +766,8 @@ public class DataAccessStub implements DataAccess {
         if (course instanceof ScienceCourse) {
             //Is the course historically offered in this term?
             for (int i = 0; i < courseOfferings.size(); i++) {
-                if (courseOfferings.get(i).getCourseId() == courseId && courseOfferings.get(i).getTermTypeId() == termTypeId) {
+                if (courseOfferings.get(i).getCourse().getId() == courseId &&
+                        courseOfferings.get(i).getTermType().getId() == termTypeId) {
                     validTerm = true;
                     break;
                 }
@@ -741,8 +794,8 @@ public class DataAccessStub implements DataAccess {
         for (int i = 0; i<coursePlans.size(); i++) {
             coursePlan = coursePlans.get(i);
             if (coursePlan.getId() == coursePlanId) {
-                if (isValidTermTypeId(newTermTypeId) && courseOffered(coursePlan.getCourseId(), newTermTypeId)) {
-                    coursePlan.setTermTypeId(newTermTypeId);
+                if (isValidTermTypeId(newTermTypeId) && courseOffered(coursePlan.getCourse().getId(), newTermTypeId)) {
+                    coursePlan.setTermType(getTermTypeById(newTermTypeId));
                     coursePlan.setYear(newYear);
                     moveSuccessful = true;
                     break;

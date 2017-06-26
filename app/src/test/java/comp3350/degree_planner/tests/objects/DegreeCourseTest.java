@@ -4,7 +4,10 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import comp3350.degree_planner.objects.Degree;
 import comp3350.degree_planner.objects.DegreeCourse;
+import comp3350.degree_planner.objects.DegreeCourseType;
+import comp3350.degree_planner.objects.ScienceCourse;
 
 /**
  * This class is used to test all of the behaviours of a
@@ -24,11 +27,13 @@ public class DegreeCourseTest {
     public void testConstructor() {
         System.out.println("\nStarting DegreeCourse Test: constructor");
 
-        DegreeCourse dc = new DegreeCourse(1, 2, 3);
+        DegreeCourse dc = new DegreeCourse(new Degree(1, "Computer Science Major", 120.0, 81.0, 2.0),
+                new ScienceCourse(1, "Introductory Computer Science I", 3.0, 1, 1010, "Basic programming concepts."),
+                new DegreeCourseType(1, "Required"));
         assertNotNull(dc);
-        assertEquals("Degree ID was assigned incorrectly", 1, dc.getDegreeId());
-        assertEquals("Course ID was assigned incorrectly", 2, dc.getCourseId());
-        assertEquals("Degree Course Type ID was assigned incorrectly", 3, dc.getDegreeCourseTypeId());
+        assertEquals("Degree ID was assigned incorrectly", 1, dc.getDegree().getId());
+        assertEquals("Course ID was assigned incorrectly", 1, dc.getCourse().getId());
+        assertEquals("Degree Course Type ID was assigned incorrectly", 1, dc.getDegreeCourseType().getId());
 
         System.out.println("Finished DegreeCourse Test: constructor");
     }

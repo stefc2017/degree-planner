@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import comp3350.degree_planner.application.Main;
 import comp3350.degree_planner.business.AccessCourses;
+import comp3350.degree_planner.objects.ScienceCourse;
 import comp3350.degree_planner.persistence.DataAccess;
 import comp3350.degree_planner.persistence.DataAccessStub;
 import comp3350.degree_planner.objects.CourseOffering;
@@ -31,15 +32,24 @@ public class GetCourseOfferingsByTermTest {
                 // Create Course Offerings
 
                 courseOfferings = new ArrayList<CourseOffering>();
-                courseOfferings.add(new CourseOffering(1, 1));
-                courseOfferings.add(new CourseOffering(1, 2));
-                courseOfferings.add(new CourseOffering(1, 3));
-                courseOfferings.add(new CourseOffering(2, 1));
-                courseOfferings.add(new CourseOffering(2, 2));
-                courseOfferings.add(new CourseOffering(2, 3));
-                courseOfferings.add(new CourseOffering(3, 2));
-                courseOfferings.add(new CourseOffering(4, 2));
-                courseOfferings.add(new CourseOffering(4, 3));
+                courseOfferings.add(new CourseOffering(new ScienceCourse(1, "Introductory Computer Science I",
+                        3.0, 1, 1010, "Basic programming concepts."), new TermType(1, "Fall")));
+                courseOfferings.add(new CourseOffering(new ScienceCourse(1, "Introductory Computer Science I",
+                        3.0, 1, 1010, "Basic programming concepts."), new TermType(2, "Winter")));
+                courseOfferings.add(new CourseOffering(new ScienceCourse(1, "Introductory Computer Science I",
+                        3.0, 1, 1010, "Basic programming concepts."), new TermType(3, "Summer")));
+                courseOfferings.add(new CourseOffering(new ScienceCourse(2, "Introductory Computer Science II", 3.0,
+                        1, 1020, "More basic programming concepts."), new TermType(1, "Fall")));
+                courseOfferings.add(new CourseOffering(new ScienceCourse(2, "Introductory Computer Science II", 3.0,
+                        1, 1020, "More basic programming concepts."), new TermType(2, "Winter")));
+                courseOfferings.add(new CourseOffering(new ScienceCourse(2, "Introductory Computer Science II", 3.0,
+                        1, 1020, "More basic programming concepts."), new TermType(3, "Summer")));
+                courseOfferings.add(new CourseOffering(new ScienceCourse(3, "Object Orientation", 3.0, 1,
+                        2150, "Detailed look at proper object oriented programming."), new TermType(2, "Winter")));
+                courseOfferings.add(new CourseOffering(new ScienceCourse(4, "Software Engineering I", 3.0, 1,
+                        3350, "Good software development practices."), new TermType(2, "Winter")));
+                courseOfferings.add(new CourseOffering(new ScienceCourse(4, "Software Engineering I", 3.0, 1,
+                        3350, "Good software development practices."), new TermType(3, "Summer")));
             }
 
             @Override
@@ -54,7 +64,7 @@ public class GetCourseOfferingsByTermTest {
                     for (int i = 0; i < courseOfferings.size(); i++) {
                         try {
                             if (term.getId() == 1 || term.getId() == 2 || term.getId() == 3) {
-                                if (term.getId() == courseOfferings.get(i).getTermTypeId()) {
+                                if (term.getId() == courseOfferings.get(i).getTermType().getId()) {
                                     //Adds course offering based on courseID from CourseOfferings and matching TermID
                                     courseOfferingsByTermList.add(courseOfferings.get(i));
                                 }

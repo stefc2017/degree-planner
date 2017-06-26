@@ -10,19 +10,19 @@ package comp3350.degree_planner.objects;
  */
 
 public class DegreeCourse {
-    int degreeId;
-    int courseId;
-    int degreeCourseTypeId;
+    private Degree degree;
+    private Course course;
+    private DegreeCourseType degreeCourseType;
 
-    public DegreeCourse(int degreeId, int courseId, int degreeCourseTypeId) {
-        this.degreeId = degreeId;
-        this.courseId = courseId;
-        this.degreeCourseTypeId = degreeCourseTypeId;
+    public DegreeCourse(Degree degree, Course course, DegreeCourseType degreeCourseType) {
+        this.degree = degree;
+        this.course = course;
+        this.degreeCourseType = degreeCourseType;
     }
 
-    public int getDegreeId() { return degreeId; }
+    public Degree getDegree() { return degree; }
 
-    public int getCourseId() { return courseId; }
+    public Course getCourse() { return course; }
 
-    public int getDegreeCourseTypeId() { return degreeCourseTypeId; }
+    public DegreeCourseType getDegreeCourseType() { return degreeCourseType; }
 }

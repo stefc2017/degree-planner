@@ -108,13 +108,16 @@ public class RemoveFromCoursePlanTest {
                 // Create Degrees
 
                 degrees = new ArrayList<Degree>();
-                degrees.add(new Degree(1, "Computer Science Major", 120.0, 81.0, 2.0));
+                Degree degree = new Degree(1, "Computer Science Major", 120.0, 81.0, 2.0);
+                degrees.add(degree);
 
                 // Map courses to degrees
 
                 degreeCourses = new ArrayList<DegreeCourse>();
-                degreeCourses.add(new DegreeCourse(1, 1, 1));
-                degreeCourses.add(new DegreeCourse(1, 2, 1));
+                degreeCourses.add(new DegreeCourse(degree, new ScienceCourse(1, "Introductory Computer Science I",
+                        3.0, 1, 1010, "Basic programming concepts."), new DegreeCourseType(1, "Required")));
+                degreeCourses.add(new DegreeCourse(degree, new ScienceCourse(2, "Introductory Computer Science II", 3.0,
+                        1, 1020, "More basic programming concepts."), new DegreeCourseType(1, "Required")));
 
                 // Create Students
 
@@ -124,22 +127,33 @@ public class RemoveFromCoursePlanTest {
                 // Create Course Results
 
                 courseResults = new ArrayList<CourseResult>();
-                courseResults.add(new CourseResult(1, 1, 1, 1));
+                courseResults.add(new CourseResult(1, new ScienceCourse(1, "Introductory Computer Science I",
+                        3.0, 1, 1010, "Basic programming concepts."), new Student(1, 1234567, "Jim Bob",
+                        "jimbob@myumanitoba.ca", "helloworld1", 1), new GradeType(1, "A+", 4.5)));
 
                 // Create Course Offerings
 
                 courseOfferings = new ArrayList<CourseOffering>();
-                courseOfferings.add(new CourseOffering(1, 1));
-                courseOfferings.add(new CourseOffering(1, 2));
-                courseOfferings.add(new CourseOffering(1, 3));
-                courseOfferings.add(new CourseOffering(2, 1));
-                courseOfferings.add(new CourseOffering(2, 2));
+                courseOfferings.add(new CourseOffering(new ScienceCourse(1, "Introductory Computer Science I",
+                        3.0, 1, 1010, "Basic programming concepts."), new TermType(1, "Fall")));
+                courseOfferings.add(new CourseOffering(new ScienceCourse(1, "Introductory Computer Science I",
+                        3.0, 1, 1010, "Basic programming concepts."), new TermType(2, "Winter")));
+                courseOfferings.add(new CourseOffering(new ScienceCourse(1, "Introductory Computer Science I",
+                        3.0, 1, 1010, "Basic programming concepts."), new TermType(3, "Summer")));
+                courseOfferings.add(new CourseOffering(new ScienceCourse(2, "Introductory Computer Science II", 3.0,
+                        1, 1020, "More basic programming concepts."), new TermType(1, "Fall")));
+                courseOfferings.add(new CourseOffering(new ScienceCourse(2, "Introductory Computer Science II", 3.0,
+                        1, 1020, "More basic programming concepts."), new TermType(2, "Winter")));
 
                 // Create Course Plans
 
                 coursePlans = new ArrayList<CoursePlan>();
-                coursePlans.add(new CoursePlan(1, 2, 1, 1, 2018));
-                coursePlans.add(new CoursePlan(2, 3, 1, 2, 2018));
+                coursePlans.add(new CoursePlan(1, new ScienceCourse(2, "Introductory Computer Science II", 3.0,
+                        1, 1020, "More basic programming concepts."), new Student(1, 1234567, "Jim Bob", "jimbob@myumanitoba.ca",
+                        "helloworld1", 1), new TermType(1, "Fall"), 2018));
+                coursePlans.add(new CoursePlan(2, new ScienceCourse(3, "Object Orientation", 3.0, 1,
+                        2150, "Detailed look at proper object oriented programming."), new Student(1, 1234567, "Jim Bob",
+                        "jimbob@myumanitoba.ca", "helloworld1", 1), new TermType(2, "Winter"), 2018));
             }
 
             @Override

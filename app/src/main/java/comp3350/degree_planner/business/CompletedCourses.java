@@ -52,7 +52,7 @@ public class CompletedCourses {
 
             for (int i = 0; i < completedCourses.size(); i++) {
                 currCourseResult = completedCourses.get(i);
-                currCourse = dataAccess.getCourseById(currCourseResult.getCourseId());
+                currCourse = dataAccess.getCourseById(currCourseResult.getCourse().getId());
 
                 //Error checking: course returned is not null
                 if (currCourse != null) {
@@ -81,7 +81,7 @@ public class CompletedCourses {
                     failingGradeId = dataAccess.getFailingGradeId();
                     //Error checking: failingGradeId was found
                     if (failingGradeId != -1) {
-                        if (currCourseResult.getGradeId() != failingGradeId) {
+                        if (currCourseResult.getGrade().getId() != failingGradeId) {
                             completedCoursesDisplay[i][1] = "Passed";
                         } else {
                             completedCoursesDisplay[i][1] = "Failed";

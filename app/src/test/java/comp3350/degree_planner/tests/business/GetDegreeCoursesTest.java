@@ -60,7 +60,8 @@ public class GetDegreeCoursesTest {
                 // Create Degrees
 
                 degrees = new ArrayList<Degree>();
-                degrees.add(new Degree(1, "Computer Science Major", 120.0, 81.0, 2.0));
+                Degree degree = new Degree(1, "Computer Science Major", 120.0, 81.0, 2.0);
+                degrees.add(degree);
 
                 // Create types of degree courses
 
@@ -71,8 +72,10 @@ public class GetDegreeCoursesTest {
                 // Map courses to degrees
 
                 degreeCourses = new ArrayList<DegreeCourse>();
-                degreeCourses.add(new DegreeCourse(1, 1, 1));
-                degreeCourses.add(new DegreeCourse(1, 2, 1));
+                degreeCourses.add(new DegreeCourse(degree, new ScienceCourse(1, "Introductory Computer Science I",
+                        3.0, 1, 1010, "Basic programming concepts."), new DegreeCourseType(1, "Required")));
+                degreeCourses.add(new DegreeCourse(degree, new ScienceCourse(2, "Introductory Computer Science II", 3.0,
+                        1, 1020, "More basic programming concepts."), new DegreeCourseType(1, "Required")));
             }
 
             @Override
@@ -81,8 +84,8 @@ public class GetDegreeCoursesTest {
                 ArrayList<Course> reqCourseList = new ArrayList<Course>();
 
                 for( DegreeCourse course : degreeCourses ){
-                    if( course.getDegreeId() == degreeId && course.getDegreeCourseTypeId() == REQUIRED_COURSE){
-                        reqCourseList.add( findCourse( course.getCourseId() ) );
+                    if( course.getDegree().getId() == degreeId && course.getDegreeCourseType().getId() == REQUIRED_COURSE){
+                        reqCourseList.add( findCourse( course.getCourse().getId() ) );
                     }
                 }
 

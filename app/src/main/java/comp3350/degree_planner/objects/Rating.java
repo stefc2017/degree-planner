@@ -11,26 +11,26 @@ package comp3350.degree_planner.objects;
 
 public class Rating {
     private int id;
-    private int studentId;
-    private int courseId;
-    private int ratingTypeId;
+    private Student student;
+    private Course course;
+    private RatingType ratingType;
     private String comment;
 
-    public Rating(int id, int studentId, int courseId, int ratingTypeId, String comment) {
+    public Rating(int id, Student student, Course course, RatingType ratingType, String comment) {
         this.id = id;
-        this.studentId = studentId;
-        this.courseId = courseId;
-        this.ratingTypeId = ratingTypeId;
+        this.student = student;
+        this.course = course;
+        this.ratingType = ratingType;
         this.comment = comment;
     }
 
     public int getId() { return id; }
 
-    public int getStudentId() { return studentId; }
+    public Student getStudent() { return student; }
 
-    public int getCourseId() { return courseId; }
+    public Course getCourse() { return course; }
 
-    public int getRatingTypeId() { return ratingTypeId; }
+    public RatingType getRatingType() { return ratingType; }
 
     public String getComment() {
         return comment;
