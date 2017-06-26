@@ -11,26 +11,26 @@ package comp3350.degree_planner.objects;
 
 public class CourseResult {
     private int id;         // Id of the object, since a student may take a course more than once
-    private int courseId;
-    private int studentId;
-    private int gradeId;
+    private Course course;
+    private Student student;
+    private GradeType gradeType;
 
-    public CourseResult(int id, int courseId, int studentId, int gradeId) {
+    public CourseResult(int id, Course course, Student student, GradeType gradeType) {
         this.id = id;
-        this.courseId = courseId;
-        this.studentId = studentId;
-        this.gradeId = gradeId;
+        this.course = course;
+        this.student = student;
+        this.gradeType = gradeType;
     }
 
     public int getId() { return id; }
 
-    public int getStudentId(){
-        return studentId;
+    public Course getCourse(){
+        return course;
     }
 
-    public int getCourseId(){
-        return courseId;
+    public Student getStudent(){
+        return student;
     }
 
-    public int getGradeId() { return gradeId; }
+    public GradeType getGrade() { return gradeType; }
 }

@@ -11,15 +11,16 @@ package comp3350.degree_planner.objects;
  */
 
 public class CourseOffering {
-    private int courseId;
-    private int termTypeId;
+    private Course course;
+    private TermType termType;
 
-    public CourseOffering(int courseId, int termTypeId) {
-        this.courseId = courseId;
-        this.termTypeId = termTypeId;
+    private CourseOffering(Course course, TermType termType) {
+        this.course = course;
+        this.termType = termType;
     }
 
-    public int getCourseId() { return courseId; }
+    public Course getCourse() { return this.course; }
 
-    public int getTermTypeId() { return termTypeId; }
+    public TermType getTermType() { return this.termType; }
+
 }

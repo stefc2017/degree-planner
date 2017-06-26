@@ -11,36 +11,32 @@ package comp3350.degree_planner.objects;
 
 public class CoursePlan {
     private int id;
-    private int courseId;
-    private int studentId;
-    private int termTypeId;
+    private Course course;
+    private Student student;
+    private TermType termType;
     private int year;
 
-    public CoursePlan(int id, int courseId, int studentId, int termTypeId, int year) {
+    public CoursePlan(int id, Course course, Student student, TermType termType, int year) {
         this.id = id;
-        this.courseId = courseId;
-        this.studentId = studentId;
-        this.termTypeId = termTypeId;
+        this.course = course;
+        this.student = student;
+        this.termType = termType;
         this.year = year;
     }
 
-    public int getCourseId() { return courseId; }
+    public Course getCourse() { return this.course; }
 
-    public int getStudentId() { return studentId; }
+    public Student getStudent() { return student; }
 
-    public int getTermTypeId() { return termTypeId; }
+    public TermType getTermType() { return termType; }
 
     public int getYear() { return year; }
 
-    public int getId() {
-        return id;
+    public int getId() { return id; }
+
+    public void setTermType (TermType termType) {
+        this.termType = termType;
     }
 
-    public void setTermTypeId (int termTypeId) {
-        this.termTypeId = termTypeId;
-    }
-
-    public void setYear (int year) {
-        this.year = year;
-    }
+    public void setYear (int year) { this.year = year; }
 }

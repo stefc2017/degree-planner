@@ -9,15 +9,15 @@ package comp3350.degree_planner.objects;
  */
 
 public class CoursePrerequisite {
-    private int courseId;
-    private int prereqCourseId;
+    private Course course;
+    private Course prereqCourse;
 
-    public CoursePrerequisite(int courseId, int prereqCourseId) {
-        this.courseId = courseId;
-        this.prereqCourseId = prereqCourseId;
+    public CoursePrerequisite(Course course, Course prereqCourse) {
+        this.course = course;
+        this.prereqCourse = prereqCourse;
     }
 
-    public int getCourseId(){ return courseId; }
+    public Course getCourse(){ return this.course; }
 
-    public int getPrereqCourseId(){ return prereqCourseId; }
+    public Course getPrereqCourse(){ return prereqCourse; }
 }
