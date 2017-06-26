@@ -14,7 +14,7 @@ public class CourseOffering {
     private Course course;
     private TermType termType;
 
-    private CourseOffering(Course course, TermType termType) {
+    public CourseOffering(Course course, TermType termType) {
         this.course = course;
         this.termType = termType;
     }
