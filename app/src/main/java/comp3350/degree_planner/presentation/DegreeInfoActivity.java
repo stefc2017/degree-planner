@@ -1,6 +1,7 @@
 package comp3350.degree_planner.presentation;
 import android.os.Bundle;
-import android.app.Activity;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -20,15 +21,19 @@ import comp3350.degree_planner.objects.Degree;
  * Created by Penny He on 6/4/2017.
  */
 
-public class DegreeInfoActivity extends Activity {
+public class DegreeInfoActivity extends AppCompatActivity {
     private AccessCourses accessCourses;
     private AccessDegrees accessDegrees;
     private ArrayList<Course> courseList;
     private ArrayAdapter<Course> courseListAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_degreeinfo);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.degreeinfo_toolbar);
+        setSupportActionBar(toolbar);
 
         Bundle b = getIntent().getExtras();
         int degreeId = b.getInt("degreeId");
@@ -65,5 +70,5 @@ public class DegreeInfoActivity extends Activity {
             ListView degreeRequiredCourses = (ListView)findViewById(R.id.degreeRequiredCourses);
             degreeRequiredCourses.setAdapter(courseListAdapter);
         }
-    }
+    }//end onCreate
 }

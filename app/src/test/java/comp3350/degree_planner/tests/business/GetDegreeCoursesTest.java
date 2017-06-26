@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import java.util.ArrayList;
 
+import comp3350.degree_planner.application.Main;
 import comp3350.degree_planner.business.AccessCourses;
 import comp3350.degree_planner.objects.Course;
 import comp3350.degree_planner.objects.Degree;
@@ -36,7 +37,7 @@ public class GetDegreeCoursesTest {
             private ArrayList<DegreeCourse> degreeCourses;
 
             @Override
-            public void open(){
+            public void open(String dbName){
                 ScienceCourse tempScienceCourse;
                 UserDefinedCourse tempUserDefinedCourse;
 
@@ -110,7 +111,7 @@ public class GetDegreeCoursesTest {
         };
 
         degreeReqCourses = new AccessCourses(testData);
-        testData.open();
+        testData.open(Main.dbName);
     }// end setUp
 
     @Test

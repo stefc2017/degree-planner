@@ -4,4 +4,8 @@
     <string name="coursePlan">Course Planning</string>
     <string name="progress">View Progress</string>
     <string name="degreePageTitle">Undergraduate Degrees</string>
+    <string name="removeCourse">Remove Course</string>
+    <string name="confirmRemoveCourse">Are you sure you want to remove this course?</string>
+    <string name="cancel">Cancel</string>
+    <string name="remove">Remove Course</string>
 </resources>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/garbagebin_toolbar"
+        android:icon="@drawable/garbagebin_toolbar"
+        android:title=""
+        app:showAsAction="ifRoom"/>
+        <!--android:onClick="save"/>-->
+
+    <item
+        android:id="@+id/options_toolbar"
+        android:icon="@drawable/options_toolbar"
+        android:title=""
+        app:showAsAction="ifRoom"/>
+</menu>
