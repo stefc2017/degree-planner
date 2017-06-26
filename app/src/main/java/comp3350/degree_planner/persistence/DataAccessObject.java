@@ -16,6 +16,22 @@ import comp3350.degree_planner.objects.TermType;
 
 /**
  * Created by Tiffany Jiang on 2017-06-24.
+ *
+ * Comments about the database:
+ * - There are a total of 14 tables (for 16 objects)
+ * - See Degree_Planner.script (in assets->db) for required info, basically same as what's in Objects
+ * - Has been filled with same "default" info as stub, as instructed
+ * - All courses are in 1 table: Course table contains some columns corresponding to fields belonging
+ * to only ScienceCourse or UserDefinedCourse that are nullable, and also contains a IsUserDefined boolean
+ * - Most of the id's are auto-generated (starts at 1, increments for each insert),
+ * except for: reference type tables and some tables where some combo of its attributes make up the primary key
+ * (again, generally same as what we currently have in the objects - if there's no id field, no id column)
+ * - Basically I've found out how the db runs is that when the person runs the app the first time,
+ * the db is set up through whatever's in Degree_Planner.script
+ * - Then you can only make changes to db through executing updates/queries via DataAccessObject.java,
+ * changes to Degree_Planner.script will not be run again
+ * - There is currently only 1 student (id 1), please use that as the student for now,
+ * at least until we get login capabilities set up
  */
 
 public class DataAccessObject implements DataAccess {
@@ -38,14 +54,9 @@ public class DataAccessObject implements DataAccess {
         this.dbName = dbName;
     }
 
-    public void open() {
-
-    }
-
     public void open(String dbPath)
     {
         String url;
-        int result;
 
         try
         {
@@ -56,16 +67,10 @@ public class DataAccessObject implements DataAccess {
             st1 = c1.createStatement();
             st2 = c1.createStatement();
             st3 = c1.createStatement();
-
-//            result = st1.executeUpdate("CREATE MEMORY TABLE DEGREE(ID INTEGER NOT NULL PRIMARY KEY, NAME VARCHAR(20), CREDIT_HOURS FLOAT, MAJOR_CREDIT_HOURS FLOAT, GPA_REQUIRED FLOAT)");
-//            result = st1.executeUpdate("INSERT INTO DEGREE VALUES(1,'Computer Science Major', 120.0, 81.0, 2.0)");
-//            result = st1.executeUpdate("INSERT INTO DEGREE VALUES(2,'Computer Science Honours', 120.0, 81.0, 3.0)");
-//            result = st1.executeUpdate("INSERT INTO DEGREE VALUES(3,'Statistics Major', 120.0, 81.0, 2.0)");
         }
         catch (Exception e)
         {
-            System.out.println (e);
-//            processSQLError(e);
+            processSQLError(e);
         }
         System.out.println("Opened " + dbType + " database " + dbPath);
     }
@@ -80,7 +85,7 @@ public class DataAccessObject implements DataAccess {
         }
         catch (Exception e)
         {
-//            processSQLError(e);
+            processSQLError(e);
         }
         System.out.println("Closed " + dbType + " database " + dbName);
     }
@@ -132,7 +137,7 @@ public class DataAccessObject implements DataAccess {
         }
         catch (Exception e)
         {
-//            processSQLError(e);
+            processSQLError(e);
         }
         try
         {
@@ -150,7 +155,7 @@ public class DataAccessObject implements DataAccess {
         }
         catch (Exception e)
         {
-//            result = processSQLError(e);
+            result = processSQLError(e);
         }
 
         return degrees;
@@ -218,5 +223,15 @@ public class DataAccessObject implements DataAccess {
 
     public CoursePlan getCoursePlanById (int coursePlanId) {
         return null;
+    }
+
+    public String processSQLError(Exception e)
+    {
+        String result = "*** SQL Error: " + e.getMessage();
+
+        // Remember, this will NOT be seen by the user!
+        e.printStackTrace();
+
+        return result;
     }
 }

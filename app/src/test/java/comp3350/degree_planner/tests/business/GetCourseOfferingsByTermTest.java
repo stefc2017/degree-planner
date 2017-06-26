@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
+import comp3350.degree_planner.application.Main;
 import comp3350.degree_planner.business.AccessCourses;
 import comp3350.degree_planner.persistence.DataAccess;
 import comp3350.degree_planner.persistence.DataAccessStub;
@@ -26,7 +27,7 @@ public class GetCourseOfferingsByTermTest {
             private ArrayList<CourseOffering> courseOfferings;
 
             @Override
-            public void open() {
+            public void open(String dbName) {
                 // Create Course Offerings
 
                 courseOfferings = new ArrayList<CourseOffering>();
@@ -67,7 +68,7 @@ public class GetCourseOfferingsByTermTest {
         };
 
         courseOfferings = new AccessCourses(testData);
-        testData.open();
+        testData.open(Main.dbName);
     }// end setUp
 
     @Test

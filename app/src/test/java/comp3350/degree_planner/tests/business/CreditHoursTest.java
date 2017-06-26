@@ -6,6 +6,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import comp3350.degree_planner.application.Main;
 import comp3350.degree_planner.business.CreditHours;
 import comp3350.degree_planner.objects.Course;
 import comp3350.degree_planner.objects.CourseResult;
@@ -54,7 +55,7 @@ public class CreditHoursTest {
             private ArrayList<UserDefinedCourse> userDefinedCourses;
 
             @Override
-            public void open() {
+            public void open(String dbName) {
                 ScienceCourse tempScienceCourse;
                 UserDefinedCourse tempUserDefinedCourse;
 
@@ -205,7 +206,7 @@ public class CreditHoursTest {
 
         };
 
-        testData.open();
+        testData.open(Main.dbName);
         creditHours = new CreditHours( testData );
     }
 

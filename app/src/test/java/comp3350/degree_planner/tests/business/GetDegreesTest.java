@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import java.util.ArrayList;
 
+import comp3350.degree_planner.application.Main;
 import comp3350.degree_planner.business.AccessDegrees;
 import comp3350.degree_planner.objects.Degree;
 
@@ -27,7 +28,7 @@ public class GetDegreesTest {
             private ArrayList<Degree> degrees;
 
             @Override
-            public void open() {
+            public void open(String dbName) {
                 // Create Degrees
 
                 degrees = new ArrayList<Degree>();
@@ -59,7 +60,7 @@ public class GetDegreesTest {
         };
 
         degrees = new AccessDegrees(testData);
-        testData.open();
+        testData.open(Main.dbName);
     }// end setUp
 
     @Test
