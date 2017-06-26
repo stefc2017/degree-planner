@@ -5,6 +5,9 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import comp3350.degree_planner.objects.CourseResult;
+import comp3350.degree_planner.objects.GradeType;
+import comp3350.degree_planner.objects.ScienceCourse;
+import comp3350.degree_planner.objects.Student;
 
 /**
  * This class is used to test all of the behaviours of a
@@ -24,12 +27,14 @@ public class CourseResultTest {
     public void testConstructor() {
         System.out.println("\nStarting CourseOffering Test: constructor");
 
-        CourseResult cr = new CourseResult(1, 123, 321, 7);
+        CourseResult cr = new CourseResult(1, new ScienceCourse(1, "Introductory Computer Science I",
+                3.0, 1, 1010, "Basic programming concepts."), new Student(1, 1234567, "Jim Bob",
+                "jimbob@myumanitoba.ca", "helloworld1", 1), new GradeType(1, "A+", 4.5));
         assertNotNull(cr);
-        assertEquals("ID was assigned incorrectly", 1, cr.getId());
-        assertEquals("Course ID was assigned incorrectly", 123, cr.getCourseId());
-        assertEquals("Student ID was assigned incorrectly", 321, cr.getStudentId());
-        assertEquals("Grade ID was assigned incorrectly", 7, cr.getGradeId());
+        assertEquals("ID was assigned incorrectly", 1, cr.getCourse().getId());
+        assertEquals("Course ID was assigned incorrectly", 1, cr.getCourse().getId());
+        assertEquals("Student ID was assigned incorrectly", 1, cr.getStudent().getId());
+        assertEquals("Grade ID was assigned incorrectly", 1, cr.getGrade().getId());
 
         System.out.println("Finished CourseOffering Test: constructor");
     }
