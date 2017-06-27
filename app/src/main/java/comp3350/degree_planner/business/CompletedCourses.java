@@ -5,7 +5,7 @@ package comp3350.degree_planner.business;
  * Modified on 2017-06-07.
  */
 
-import java.util.ArrayList;
+import java.util.List;
 
 import comp3350.degree_planner.objects.Course;
 import comp3350.degree_planner.objects.CourseResult;
@@ -34,7 +34,7 @@ public class CompletedCourses {
      * This can be easily changed later
      */
     public String[][] getCompletedCourses(int studentId) {
-        ArrayList<CourseResult> completedCourses = dataAccess.getCourseResultsByStudentId(studentId);
+        List<CourseResult> completedCourses = dataAccess.getCourseResultsByStudentId(studentId);
         String[][] completedCoursesDisplay = null;
         //Processing/for loop variables:
         CourseResult currCourseResult;

@@ -1,6 +1,5 @@
 package comp3350.degree_planner.persistence;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import comp3350.degree_planner.objects.Course;
@@ -24,6 +23,8 @@ public interface DataAccess {
 
     List<Course> getCoursesNotTaken(int studentNumber);
 
+    Course getCourse(CourseResult courseResult, List<Course> allCourses);
+
     List<Course> getAllCourses();
 
     List<Course> getCoursesCanTake(int studentNumber);
@@ -42,25 +43,25 @@ public interface DataAccess {
 
     Degree getDegreeById(int degreeId);
 
-    ArrayList<CourseResult> getCourseResultsByStudentId(int studentId);
+    List<CourseResult> getCourseResultsByStudentId(int studentId);
 
-    ArrayList<CourseOffering> getAllCourseOfferings();
+    List<CourseOffering> getAllCourseOfferings();
 
     int getFailingGradeId();
 
     Course getCourseById(int courseId);
 
-    ArrayList<CourseOffering> getCourseOfferingsByTerm(TermType type);
+    List<CourseOffering> getCourseOfferingsByTerm(TermType type);
 
     Department getDepartmentById(int departmentId);
 
-    ArrayList<Course> getCoursesTaken(int studentId);
+    List<Course> getCoursesTaken(int studentId);
 
-    ArrayList<Course> getDegreeCoursesTaken(int studentId, int degreeId);
+    List<Course> getDegreeCoursesTaken(int studentId, int degreeId);
 
-    ArrayList<Course> getDegreeCourses(int degreeId);
+    List<Course> getDegreeCourses(int degreeId);
 
-    ArrayList<Course> getEligibleRequiredCourse(int studentNum, int degreeId);
+    List<Course> getEligibleRequiredCourse(int studentNum, int degreeId);
 
     int addToCoursePlan (int courseId, int studentId, int termTypeId, int year);
 

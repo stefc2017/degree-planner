@@ -17,22 +17,22 @@ import comp3350.degree_planner.objects.*;
  */
 
 public class DataAccessStub implements DataAccess {
-    private ArrayList<Course> courses;
-    private ArrayList<CourseOffering> courseOfferings;
-    private ArrayList<CoursePlan> coursePlans;
-    private ArrayList<CoursePrerequisite> coursePrerequisites;
-    private ArrayList<CourseResult> courseResults;
-    private ArrayList<DegreeCourseType> degreeCourseTypes;
-    private ArrayList<Degree> degrees;
-    private ArrayList<DegreeCourse> degreeCourses;
-    private ArrayList<Department> departments;
-    private ArrayList<GradeType> gradeTypes;
-    private ArrayList<Rating> ratings;
-    private ArrayList<RatingType> ratingTypes;
-    private ArrayList<ScienceCourse> scienceCourses;
-    private ArrayList<Student> students;
-    private ArrayList<TermType> termTypes;
-    private ArrayList<UserDefinedCourse> userDefinedCourses;
+    private List<Course> courses;
+    private List<CourseOffering> courseOfferings;
+    private List<CoursePlan> coursePlans;
+    private List<CoursePrerequisite> coursePrerequisites;
+    private List<CourseResult> courseResults;
+    private List<DegreeCourseType> degreeCourseTypes;
+    private List<Degree> degrees;
+    private List<DegreeCourse> degreeCourses;
+    private List<Department> departments;
+    private List<GradeType> gradeTypes;
+    private List<Rating> ratings;
+    private List<RatingType> ratingTypes;
+    private List<ScienceCourse> scienceCourses;
+    private List<Student> students;
+    private List<TermType> termTypes;
+    private List<UserDefinedCourse> userDefinedCourses;
 
     private String dbName;
     private String dbType = "stub";
@@ -229,8 +229,7 @@ public class DataAccessStub implements DataAccess {
     public List<Course> getCoursesNotTaken(int studentNumber) {
         List<Course> coursesNotTaken; //the list of courses that the student has not taken
         List<Course> allCourses = getAllCourses(); //the list of all courses offered
-        List<CourseResult> coursesTaken = getCourseResultsByStudentId(studentNumber); //the list of courses taken
-                                                                        //by the student
+        List<CourseResult> coursesTaken = getCourseResultsByStudentId(studentNumber); //the list of courses taken by the student
         int numCoursesTaken = coursesTaken.size(); //number of courses taken
         int index = -1; //whether or not the course the student took is a course in the list
         int numberOfCourses; //the total number of courses offered
@@ -258,7 +257,7 @@ public class DataAccessStub implements DataAccess {
      * getCourse
      *
      * @param courseResult: a CourseList that we want to convert to a Course object
-     * @param allCourses:   an arraylist of all the courses in the database
+     * @param allCourses:   a list of all the courses in the database
      * @return a Course Object
      **/
     public Course getCourse(CourseResult courseResult, List<Course> allCourses) {
@@ -318,7 +317,7 @@ public class DataAccessStub implements DataAccess {
      * @param studentNumber: the student number of the student we want to check if they have all preReqs to take the
      *                       course with courseName given as a parameter
      * @param courseName:    the name of the course we want to see if the student has all preReqs for it
-     * @return: an arraylist of all prerequisites of the course given as a parameter
+     * @return: boolean saying if the student has the prerequisites or not
      **/
     public boolean hasPrerequisites(int studentNumber, String courseName) {
         List<CourseResult> coursesTaken = getCourseResultsByStudentId(studentNumber); //the courses the student has taken
@@ -485,8 +484,8 @@ public class DataAccessStub implements DataAccess {
      *
      * Returns a list of course results for the specified student
      */
-    public ArrayList<CourseResult> getCourseResultsByStudentId (int studentId) {
-        ArrayList<CourseResult> crByStudentId = new ArrayList<CourseResult>();
+    public List<CourseResult> getCourseResultsByStudentId (int studentId) {
+        List<CourseResult> crByStudentId = new ArrayList<CourseResult>();
         Iterator<CourseResult> crIterator = courseResults.iterator();
         CourseResult currCR;
 
@@ -503,14 +502,14 @@ public class DataAccessStub implements DataAccess {
 
     //By F.D.
     //Returns list of all Course Offerings
-    public ArrayList<CourseOffering> getAllCourseOfferings(){
+    public List<CourseOffering> getAllCourseOfferings(){
         return courseOfferings;
     }
 
     //By F.D.
     //Returns list of courses fy selected term
-    public ArrayList<CourseOffering> getCourseOfferingsByTerm(TermType term) {
-        ArrayList<CourseOffering> courseOfferingsByTermList = new ArrayList<CourseOffering>();
+    public List<CourseOffering> getCourseOfferingsByTerm(TermType term) {
+        List<CourseOffering> courseOfferingsByTermList = new ArrayList<CourseOffering>();
         if(term != null) {
             for (int i = 0; i < courseOfferings.size(); i++) {
                 try {
@@ -587,9 +586,9 @@ public class DataAccessStub implements DataAccess {
 
         Returns a list of courses taken by a given student
      */
-    public ArrayList<Course> getCoursesTaken(int studentId) {
-        ArrayList<Course> coursesTaken = new ArrayList<Course>();
-        ArrayList<CourseResult> crByStudentId = getCourseResultsByStudentId(studentId);
+    public List<Course> getCoursesTaken(int studentId) {
+        List<Course> coursesTaken = new ArrayList<Course>();
+        List<CourseResult> crByStudentId = getCourseResultsByStudentId(studentId);
 
         for (CourseResult result : crByStudentId) {
             coursesTaken.add(findCourse(result.getCourse().getId()));
@@ -603,10 +602,10 @@ public class DataAccessStub implements DataAccess {
 
         Returns a list of degree required courses student has taken
     */
-    public ArrayList<Course> getDegreeCoursesTaken(int studentId, int degreeId) {
-        ArrayList<Course> coursesTaken = getCoursesTaken(studentId);
-        ArrayList<Course> degreeCourses = getDegreeCourses(degreeId);
-        ArrayList<Course> takenDegreeCourses = new ArrayList<Course>();
+    public List<Course> getDegreeCoursesTaken(int studentId, int degreeId) {
+        List<Course> coursesTaken = getCoursesTaken(studentId);
+        List<Course> degreeCourses = getDegreeCourses(degreeId);
+        List<Course> takenDegreeCourses = new ArrayList<Course>();
 
         for (Course degreeCourse : degreeCourses) {
             if (coursesTaken.contains(degreeCourse)) {
@@ -622,9 +621,9 @@ public class DataAccessStub implements DataAccess {
 
         Returns a list of courses required by a degree
     */
-    public ArrayList<Course> getDegreeCourses( int degreeId ) {
+    public List<Course> getDegreeCourses( int degreeId ) {
         final int REQUIRED_COURSE = 1;
-        ArrayList<Course> reqCourseList = new ArrayList<Course>();
+        List<Course> reqCourseList = new ArrayList<Course>();
 
         for( DegreeCourse course : degreeCourses ){
             if( course.getDegree().getId() == degreeId && course.getDegreeCourseType().getId() == REQUIRED_COURSE){
@@ -640,11 +639,11 @@ public class DataAccessStub implements DataAccess {
 
         Returns a list of required degree courses that a given student can take
     */
-    public ArrayList<Course> getEligibleRequiredCourse(int studentNum, int degreeId) {
-        ArrayList<Course> coursesTaken = getCoursesTaken(studentNum);
-        ArrayList<Course> degreeCourses = getDegreeCourses(degreeId);
-        ArrayList<Course> notTakenDegreeCourses = new ArrayList<Course>();
-        ArrayList<Course> eligibleDegreeCourses = new ArrayList<Course>();
+    public List<Course> getEligibleRequiredCourse(int studentNum, int degreeId) {
+        List<Course> coursesTaken = getCoursesTaken(studentNum);
+        List<Course> degreeCourses = getDegreeCourses(degreeId);
+        List<Course> notTakenDegreeCourses = new ArrayList<Course>();
+        List<Course> eligibleDegreeCourses = new ArrayList<Course>();
 
         for (Course degreeCourse : degreeCourses) {
             if (!(coursesTaken.contains(degreeCourse))) {

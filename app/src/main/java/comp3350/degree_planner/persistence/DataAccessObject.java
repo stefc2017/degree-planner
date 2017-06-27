@@ -67,6 +67,7 @@ public class DataAccessObject implements DataAccess {
     private List<Degree> degrees;
     private List<Course> courses;
 
+
     public DataAccessObject(String dbName)
     {
         this.dbName = dbName;
@@ -582,11 +583,11 @@ public class DataAccessObject implements DataAccess {
         return degree;
     }
 
-    public ArrayList<CourseResult> getCourseResultsByStudentId(int studentId) {
+    public List<CourseResult> getCourseResultsByStudentId(int studentId) {
         return null;
     }
 
-    public ArrayList<CourseOffering> getAllCourseOfferings() {
+    public List<CourseOffering> getAllCourseOfferings() {
         return null;
     }
 
@@ -598,7 +599,7 @@ public class DataAccessObject implements DataAccess {
         return null;
     }
 
-    public ArrayList<CourseOffering> getCourseOfferingsByTerm(TermType type) {
+    public List<CourseOffering> getCourseOfferingsByTerm(TermType type) {
         return null;
     }
 
@@ -606,24 +607,23 @@ public class DataAccessObject implements DataAccess {
         return null;
     }
 
-    public ArrayList<Course> getCoursesTaken(int studentId) {
+    public List<Course> getCoursesTaken(int studentId) {
         return null;
     }
 
-    public ArrayList<Course> getDegreeCoursesTaken(int studentId, int degreeId) {
+    public List<Course> getDegreeCoursesTaken(int studentId, int degreeId) {
         return null;
     }
 
-    public ArrayList<Course> getDegreeCourses(int degreeId) {
+    public List<Course> getDegreeCourses(int degreeId) {
         return null;
     }
 
-    public ArrayList<Course> getEligibleRequiredCourse(int studentNum, int degreeId) {
+    public List<Course> getEligibleRequiredCourse(int studentNum, int degreeId) {
         return null;
     }
 
-    public int addToCoursePlan (int courseId, int studentId, int termTypeId, int year) {
-        return -1;
+    public int addToCoursePlan (int courseId, int studentId, int termTypeId, int year) { return -1;
     }
 
     public boolean moveCourse (int coursePlanId, int newTermTypeId, int newYear) {
@@ -637,6 +637,8 @@ public class DataAccessObject implements DataAccess {
     public CoursePlan getCoursePlanById (int coursePlanId) {
         return null;
     }
+
+    public Course getCourse(CourseResult courseResult, List<Course> allCourses){ return null; }
 
     public String processSQLError(Exception e)
     {

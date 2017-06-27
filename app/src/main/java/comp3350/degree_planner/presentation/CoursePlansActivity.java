@@ -9,7 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import comp3350.degree_planner.R;
 import comp3350.degree_planner.application.Services;
@@ -21,7 +21,7 @@ import comp3350.degree_planner.business.AccessCoursePlan;
 
 public class CoursePlansActivity extends AppCompatActivity {
     private AccessCoursePlan accessCoursePlan;
-    private ArrayList coursePlansAndHeaders;
+    private List coursePlansAndHeaders;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

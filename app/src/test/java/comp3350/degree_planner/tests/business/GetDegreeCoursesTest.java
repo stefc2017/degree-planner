@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import java.util.ArrayList;
+import java.util.List;
 
 import comp3350.degree_planner.application.Main;
 import comp3350.degree_planner.business.AccessCourses;
@@ -29,12 +30,12 @@ public class GetDegreeCoursesTest {
     @Before
     public void setUp() {
         final DataAccess testData = new DataAccessStub() {
-            private ArrayList<Course> courses;
-            private ArrayList<Degree> degrees;
-            private ArrayList<DegreeCourseType> degreeCourseTypes;
-            private ArrayList<ScienceCourse> scienceCourses;
-            private ArrayList<UserDefinedCourse> userDefinedCourses;
-            private ArrayList<DegreeCourse> degreeCourses;
+            private List<Course> courses;
+            private List<Degree> degrees;
+            private List<DegreeCourseType> degreeCourseTypes;
+            private List<ScienceCourse> scienceCourses;
+            private List<UserDefinedCourse> userDefinedCourses;
+            private List<DegreeCourse> degreeCourses;
 
             @Override
             public void open(String dbName){
@@ -79,7 +80,7 @@ public class GetDegreeCoursesTest {
             }
 
             @Override
-            public ArrayList<Course> getDegreeCourses(int degreeId){
+            public List<Course> getDegreeCourses(int degreeId){
                 final int REQUIRED_COURSE = 1;
                 ArrayList<Course> reqCourseList = new ArrayList<Course>();
 

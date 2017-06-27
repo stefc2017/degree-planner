@@ -1,5 +1,5 @@
 package comp3350.degree_planner.business;
-import java.util.ArrayList;
+import java.util.List;
 
 import comp3350.degree_planner.objects.Course;
 import comp3350.degree_planner.objects.CourseOffering;
@@ -12,11 +12,11 @@ public class AccessCourses {
 
 	public AccessCourses(DataAccess dataAccess) { this.dataAccess = dataAccess; }
 
-    public ArrayList<Course> getDegreeCourses(int degreeId) { return dataAccess.getDegreeCourses(degreeId); }
+    public List<Course> getDegreeCourses(int degreeId) { return dataAccess.getDegreeCourses(degreeId); }
 
-	public ArrayList<CourseOffering> getAllCourseOfferings(){return dataAccess.getAllCourseOfferings();}
+	public List<CourseOffering> getAllCourseOfferings(){return dataAccess.getAllCourseOfferings();}
 
-	public ArrayList<CourseOffering> getCourseOfferingsByTerm(TermType term){ return dataAccess.getCourseOfferingsByTerm(term); }
+	public List<CourseOffering> getCourseOfferingsByTerm(TermType term){ return dataAccess.getCourseOfferingsByTerm(term); }
 }
 
 
