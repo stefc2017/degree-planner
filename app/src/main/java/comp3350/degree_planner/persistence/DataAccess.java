@@ -8,6 +8,7 @@ import comp3350.degree_planner.objects.CourseOffering;
 import comp3350.degree_planner.objects.CourseResult;
 import comp3350.degree_planner.objects.Degree;
 import comp3350.degree_planner.objects.Department;
+import comp3350.degree_planner.objects.ScienceCourse;
 import comp3350.degree_planner.objects.TermType;
 
 /**
@@ -24,8 +25,9 @@ public interface DataAccess {
     List<Course> getCoursesNotTaken(int studentNumber);
 
     Course getCourse(CourseResult courseResult, List<Course> allCourses);
-
+    //By F.D.
     List<Course> getAllCourses();
+    //List<ScienceCourse> getAllCourses();
 
     List<Course> getCoursesCanTake(int studentNumber);
 

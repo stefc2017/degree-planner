@@ -10,9 +10,11 @@ import java.util.List;
 import comp3350.degree_planner.objects.Course;
 import comp3350.degree_planner.objects.CourseOffering;
 import comp3350.degree_planner.objects.CoursePlan;
+import comp3350.degree_planner.objects.CoursePrerequisite;
 import comp3350.degree_planner.objects.CourseResult;
 import comp3350.degree_planner.objects.Degree;
 import comp3350.degree_planner.objects.Department;
+import comp3350.degree_planner.objects.ScienceCourse;
 import comp3350.degree_planner.objects.TermType;
 
 /**
@@ -63,6 +65,9 @@ public class DataAccessObject implements DataAccess {
     private static String EOF = "  ";
 
     private List<Degree> degrees;
+    private List<Course> courses;
+    private List<CoursePrerequisite> coursePrerequisites;
+    private List<CourseOffering> courseOfferings;
 
     public DataAccessObject(String dbName)
     {
@@ -112,9 +117,46 @@ public class DataAccessObject implements DataAccess {
     public Course getCourse(CourseResult courseResult, ArrayList<Course> allCourses) {
         return null;
     }
-
+    //By F.D.
+    //This one gets ScienceCourses, so it might need to be changed...
     public List<Course> getAllCourses() {
-        return null;
+        ScienceCourse course;
+        int id, courseNumber, departmentId;
+        String name, description;
+        double creditHours;
+        courses = new ArrayList<Course>();
+
+        result = null;
+        try
+        {
+            cmdString = "Select * from Course";
+            rs2 = st1.executeQuery(cmdString);
+        }
+        catch (Exception e)
+        {
+            processSQLError(e);
+        }
+        try
+        {
+            while (rs2.next())
+            {
+                id = Integer.parseInt(rs2.getString("ID"));
+                name = rs2.getString("NAME");
+                creditHours = Double.parseDouble(rs2.getString("CREDIT_HOURS"));
+                courseNumber = Integer.parseInt(rs2.getString("COURSE_NUMBER"));
+                departmentId = Integer.parseInt(rs2.getString("DEPARTMENT_ID"));
+                description = rs2.getString("DESCRIPTION");
+                course = new ScienceCourse(id, name, creditHours, departmentId, courseNumber, description);
+                courses.add(course);
+            }
+            rs2.close();
+        }
+        catch (Exception e)
+        {
+            result = processSQLError(e);
+        }
+
+        return courses;
     }
 
     public List<Course> getCoursesCanTake(int studentNumber) {
@@ -124,9 +166,55 @@ public class DataAccessObject implements DataAccess {
     public boolean hasPrerequisites(int studentNumber, String courseName) {
         return false;
     }
-
+    //By F.D.
+    //Again, not sure how to get all course info
     public List<Course> getAllPrerequisites(Course course) {
-        return null;
+        //ScienceCourse course;
+        Course prereqCourse;
+        CoursePrerequisite coursePrerequisite;
+        int courseID, prereqCourseID;
+        coursePrerequisites = new ArrayList<CoursePrerequisite>();
+
+        result = null;
+        try
+        {
+            cmdString = "Select * from CoursePrerequisite";
+            rs2 = st1.executeQuery(cmdString);
+        }
+        catch (Exception e)
+        {
+            processSQLError(e);
+        }
+        try
+        {
+            while (rs2.next())
+            {
+                courseID = Integer.parseInt(rs2.getString("COURSE_ID"));
+                prereqCourseID = Integer.parseInt(rs2.getString("PREREQ_COURSE_ID"));
+                prereqCourse = new ScienceCourse(prereqCourseID, "temp", 3.0, 1, 3333, "temp");//Again, not sure how to get course for now
+                coursePrerequisite=new CoursePrerequisite(course,prereqCourse);
+                coursePrerequisites.add(coursePrerequisite);
+            }
+            rs2.close();
+        }
+        catch (Exception e)
+        {
+            result = processSQLError(e);
+        }
+
+        List<Course> prerequisites = new ArrayList<Course>();
+        int numberOfCoursePrereqs = coursePrerequisites.size(); //the number of prerequisites
+        int courseId = course.getId(); //the course number of the course object
+        Course currentCourse; //to keep track of the current course
+
+        for (int i = 0; i < numberOfCoursePrereqs; i++) {
+            if ((coursePrerequisites.get(i)).getCourse().getId() == courseId) { //if this is a prerequisite for the course
+                currentCourse = findCourse((coursePrerequisites.get(i)).getPrereqCourse().getId()); //get the course
+                prerequisites.add(currentCourse); //add the course to the list of prerequisites
+            }//end if
+        }//end for
+
+        return prerequisites;
     }
 
     public Course findCourse(int courseId) {
@@ -187,9 +275,47 @@ public class DataAccessObject implements DataAccess {
     public List<CourseResult> getCourseResultsByStudentId(int studentId) {
         return null;
     }
-
+    //By F.D.
+    //I'm not exactly sure how to get course and term info other than ID, so filled them with temps for now
     public List<CourseOffering> getAllCourseOfferings() {
-        return null;
+        CourseOffering courseOffering;
+        Course course;
+        TermType termType;
+        int courseID;
+        int termTypeID;
+        courseOfferings=new ArrayList<CourseOffering>();
+
+
+        result = null;
+        try
+        {
+            cmdString = "Select * from CourseOffering";
+            rs2 = st1.executeQuery(cmdString);
+        }
+        catch (Exception e)
+        {
+            processSQLError(e);
+        }
+        try
+        {
+            while (rs2.next())
+            {
+                //Temps for now because I'm not sure how to get other course and termtype info
+                courseID=Integer.parseInt(rs2.getString("COURSE_ID"));
+                termTypeID=Integer.parseInt(rs2.getString("TERM_TYPE_ID"));
+                course=new ScienceCourse(courseID,"Temp",3.0,1,1,"test");
+                termType=new TermType(termTypeID, "Winter");
+                courseOffering=new CourseOffering(course,termType);
+                courseOfferings.add(courseOffering);
+            }
+            rs2.close();
+        }
+        catch (Exception e)
+        {
+            result = processSQLError(e);
+        }
+
+        return courseOfferings;
     }
 
     public int getFailingGradeId() {
@@ -199,9 +325,25 @@ public class DataAccessObject implements DataAccess {
     public Course getCourseById(int courseId) {
         return null;
     }
+    //By F.D.
+    //Seems like no changes needed on this one..
+    public List<CourseOffering> getCourseOfferingsByTerm(TermType term) {
+        List<CourseOffering> courseOfferingsByTermList = new ArrayList<>();
+        if(term != null) {
+            for (int i = 0; i < courseOfferings.size(); i++) {
+                try {
+                    if (term.getId() == 1 || term.getId() == 2 || term.getId() == 3) {
+                        if (term.getId() == (courseOfferings.get(i)).getTermType().getId()) {
+                            //Adds course offering based on courseID from CourseOfferings and matching TermID
+                            courseOfferingsByTermList.add(courseOfferings.get(i));
+                        }
+                    }
+                } catch (IllegalArgumentException e) {
+                }
+            }
+        }
 
-    public List<CourseOffering> getCourseOfferingsByTerm(TermType type) {
-        return null;
+        return courseOfferingsByTermList;
     }
 
     public Department getDepartmentById(int departmentId) {
