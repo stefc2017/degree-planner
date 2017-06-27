@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import java.util.ArrayList;
+import java.util.List;
 
 import comp3350.degree_planner.application.Main;
 import comp3350.degree_planner.business.AccessDegrees;
@@ -25,7 +26,7 @@ public class GetDegreesTest {
     @Before
     public void setUp() {
         final DataAccess testData = new DataAccessStub() {
-            private ArrayList<Degree> degrees;
+            private List<Degree> degrees;
 
             @Override
             public void open(String dbName) {
@@ -36,13 +37,13 @@ public class GetDegreesTest {
             }
 
             @Override
-            public ArrayList<Degree> getAllDegrees() {
+            public List<Degree> getAllDegrees() {
                 return degrees;
             }
 
             @Override
             public Degree getDegreeById(int degreeId) {
-                ArrayList<Degree> allDegrees = degrees;
+                List<Degree> allDegrees = degrees;
                 int numberOfDegrees = allDegrees.size();
                 Degree degree = null;
                 int index = 0;
