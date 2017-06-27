@@ -14,7 +14,6 @@ public class AccessDegrees {
 
     public AccessDegrees(DataAccess dataAccess){ this.dataAccess = dataAccess; }
 
-
     public List<Degree> getAllDegrees()
     {
         return dataAccess.getAllDegrees();

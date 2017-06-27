@@ -229,8 +229,7 @@ public class DataAccessStub implements DataAccess {
     public List<Course> getCoursesNotTaken(int studentNumber) {
         List<Course> coursesNotTaken; //the list of courses that the student has not taken
         List<Course> allCourses = getAllCourses(); //the list of all courses offered
-        List<CourseResult> coursesTaken = getCourseResultsByStudentId(studentNumber); //the list of courses taken
-        //by the student
+        List<CourseResult> coursesTaken = getCourseResultsByStudentId(studentNumber); //the list of courses taken by the student
         int numCoursesTaken = coursesTaken.size(); //number of courses taken
         int index = -1; //whether or not the course the student took is a course in the list
         int numberOfCourses; //the total number of courses offered
@@ -301,7 +300,7 @@ public class DataAccessStub implements DataAccess {
         Course currentCourse;
 
         for (int i = 0; i < numOfCoursesNotTaken; i++) {
-            currentCourse = coursesNotTaken.get(i);
+            currentCourse = (Course) coursesNotTaken.get(i);
 
             if (hasPrerequisites(studentNumber, currentCourse.getName())) { //if the student has all preRequisites for the course
                 coursesCanTake.add(currentCourse);

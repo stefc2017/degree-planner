@@ -13,7 +13,9 @@ import comp3350.degree_planner.objects.CoursePlan;
 import comp3350.degree_planner.objects.CourseResult;
 import comp3350.degree_planner.objects.Degree;
 import comp3350.degree_planner.objects.Department;
+import comp3350.degree_planner.objects.ScienceCourse;
 import comp3350.degree_planner.objects.TermType;
+import comp3350.degree_planner.objects.UserDefinedCourse;
 
 /**
  * Created by Tiffany Jiang on 2017-06-24.
@@ -63,6 +65,8 @@ public class DataAccessObject implements DataAccess {
     private static String EOF = "  ";
 
     private List<Degree> degrees;
+    private List<Course> courses;
+
 
     public DataAccessObject(String dbName)
     {
@@ -106,35 +110,366 @@ public class DataAccessObject implements DataAccess {
     }
 
     public List<Course> getCoursesNotTaken(int studentNumber) {
-        return null;
-    }
+        List<Course> allCourses;
+        List<Course> coursesTaken;
+        List<Course> coursesNotTaken;
+        Course course;
 
-    public Course getCourse(CourseResult courseResult, ArrayList<Course> allCourses) {
-        return null;
+        course = null;
+        allCourses = null;
+        coursesTaken = null;
+        coursesNotTaken = null;
+
+        try
+        {
+            cmdString = "Select COURSE_ID from CourseResult where STUDENT_ID = " + studentNumber;
+            rs2 = st1.executeQuery(cmdString);
+        }
+        catch (Exception e)
+        {
+            processSQLError(e);
+        }
+
+        try
+        {
+            while(rs2.next()){
+                course = findCourse(Integer.parseInt(rs3.getString("COURSE_ID")));
+                coursesTaken.add(course);
+            }
+
+            allCourses = getAllCourses();
+
+            for(int i = 0; i < coursesTaken.size(); i++){
+                for(int j = 0; j < allCourses.size(); j++){ //search and delete course in all Courses list
+                    if(allCourses.get(i) == coursesTaken.get(i)){
+                        allCourses.remove(i);
+                    }
+                }
+            }
+
+            coursesNotTaken = allCourses;
+        }
+        catch (Exception e)
+        {
+            result = processSQLError(e);
+        }
+        return coursesNotTaken;
     }
 
     public List<Course> getAllCourses() {
-        return null;
+        Course course;
+        int id;
+        String name;
+        double creditHours;
+        int courseNumber;
+        String description;
+        int departmentId;
+        String fullAbbreviation;
+        Boolean isUserDefined;
+        courses = new ArrayList<Course>();
+
+        result = null;
+        try
+        {
+            cmdString = "Select * from Course";
+            rs2 = st1.executeQuery(cmdString);
+        }
+        catch (Exception e)
+        {
+            processSQLError(e);
+        }
+        try
+        {
+            while (rs2.next())
+            {
+                id = Integer.parseInt(rs2.getString("ID"));
+                name = rs2.getString("NAME");
+                creditHours = Double.parseDouble(rs2.getString("CREDIT_HOURS"));
+                departmentId = Integer.parseInt(rs2.getString("DEPARTMENT_ID"));
+                courseNumber = Integer.parseInt(rs2.getString("COURSE_NUMBER"));
+                description = rs2.getString("DESCRIPTION");
+                fullAbbreviation = rs2.getString("FULL_ABBREVIATION");
+                isUserDefined = Boolean.parseBoolean(rs2.getString("IS_USER_DEFINED"));
+
+                if(isUserDefined){
+                    course = new UserDefinedCourse(id, name, creditHours, fullAbbreviation);
+                }
+                else{
+                    course = new ScienceCourse(id, name, creditHours, departmentId, courseNumber, description);
+                }
+
+               courses.add(course);
+            }
+            rs2.close();
+        }
+        catch (Exception e)
+        {
+            result = processSQLError(e);
+        }
+
+        return courses;
     }
 
     public List<Course> getCoursesCanTake(int studentNumber) {
-        return null;
+        List<Course> coursesNotTaken;
+        List<Course> coursesCanTake;
+
+        coursesNotTaken = getCoursesNotTaken(studentNumber);
+        coursesCanTake = null;
+
+        for(int i = 0; i < coursesNotTaken.size(); i++){
+            if(hasPrerequisites(studentNumber, (coursesNotTaken.get(i)).getName())){
+                coursesCanTake.add(coursesNotTaken.get(i));
+            }
+        }
+
+        return coursesCanTake;
     }
 
     public boolean hasPrerequisites(int studentNumber, String courseName) {
-        return false;
+        boolean hasPreReqs = true;
+        List<Course> preReqs_ofCourse = null;
+        List<Course> coursesTaken = null;
+        Course course;
+        int id;
+        String name;
+        double creditHours;
+        int courseNumber;
+        String description;
+        int departmentId;
+        String fullAbbreviation;
+        Boolean isUserDefined;
+
+        course = null;
+        result = null;
+
+        try
+        {
+            cmdString = "Select * from Course where NAME = " + courseName;
+            rs2 = st1.executeQuery(cmdString);
+        }
+        catch (Exception e)
+        {
+            processSQLError(e);
+        }
+        try
+        {
+            id = Integer.parseInt(rs2.getString("ID"));
+            name = rs2.getString("NAME");
+            creditHours = Double.parseDouble(rs2.getString("CREDIT_HOURS"));
+            departmentId = Integer.parseInt(rs2.getString("DEPARTMENT_ID"));
+            courseNumber = Integer.parseInt(rs2.getString("COURSE_NUMBER"));
+            description = rs2.getString("DESCRIPTION");
+            fullAbbreviation = rs2.getString("FULL_ABBREVIATION");
+            isUserDefined = Boolean.parseBoolean(rs2.getString("IS_USER_DEFINED"));
+
+            if(isUserDefined){
+                course = new UserDefinedCourse(id, name, creditHours, fullAbbreviation);
+            }
+            else{
+                course = new ScienceCourse(id, name, creditHours, departmentId, courseNumber, description);
+            }
+
+            preReqs_ofCourse = getAllPrerequisites(course);
+
+            try
+            {
+                cmdString = "Select COURSE_ID from CourseResult where STUDENT_ID = " + studentNumber;
+                rs3 = st2.executeQuery(cmdString);
+            }
+            catch (Exception e)
+            {
+                processSQLError(e);
+            }
+
+            while(rs3.next()){
+                course = findCourse(Integer.parseInt(rs3.getString("COURSE_ID")));
+                coursesTaken.add(course);
+            }
+
+            for(int i = 0; i < preReqs_ofCourse.size(); i++) {
+                if(!coursesTaken.contains(preReqs_ofCourse.get(i))){
+                    hasPreReqs = false;
+                }
+            }
+
+            rs2.close();
+            rs3.close();
+        }
+        catch (Exception e)
+        {
+            result = processSQLError(e);
+        }
+
+        return hasPreReqs;
     }
 
     public List<Course> getAllPrerequisites(Course course) {
-        return null;
+        Course currentCourse;
+        int prereqId;
+        int id;
+        String name;
+        double creditHours;
+        int courseNumber;
+        String description;
+        int departmentId;
+        String fullAbbreviation;
+        Boolean isUserDefined;
+        courses = new ArrayList<Course>();
+
+        result = null;
+        try
+        {
+            cmdString = "Select PREREQ_COURSE_ID from CoursePrerequisite where COURSE_ID = " + course.getId();
+            rs2 = st1.executeQuery(cmdString);
+        }
+        catch (Exception e)
+        {
+            processSQLError(e);
+        }
+        try
+        {
+            while (rs2.next())
+            {
+                prereqId = Integer.parseInt(rs2.getString("PREREQ_COURSE_ID"));
+
+                try
+                {
+                    cmdString = "Select * from Course where COURSE_ID = " + prereqId;
+                    rs3 = st2.executeQuery(cmdString);
+                }
+                catch (Exception e)
+                {
+                    processSQLError(e);
+                }
+
+                id = Integer.parseInt(rs3.getString("ID"));
+                name = rs3.getString("NAME");
+                creditHours = Double.parseDouble(rs3.getString("CREDIT_HOURS"));
+                departmentId = Integer.parseInt(rs3.getString("DEPARTMENT_ID"));
+                courseNumber = Integer.parseInt(rs3.getString("COURSE_NUMBER"));
+                description = rs3.getString("DESCRIPTION");
+                fullAbbreviation = rs3.getString("FULL_ABBREVIATION");
+                isUserDefined = Boolean.parseBoolean(rs3.getString("IS_USER_DEFINED"));
+
+                if(isUserDefined){
+                    currentCourse = new UserDefinedCourse(id, name, creditHours, fullAbbreviation);
+                }
+                else{
+                    currentCourse = new ScienceCourse(id, name, creditHours, departmentId, courseNumber, description);
+                }
+
+                courses.add(currentCourse);
+            }
+            rs2.close();
+            rs3.close();
+        }
+        catch (Exception e)
+        {
+            result = processSQLError(e);
+        }
+
+        return courses;
     }
 
     public Course findCourse(int courseId) {
-        return null;
+        Course course;
+        int id;
+        String name;
+        double creditHours;
+        int courseNumber;
+        String description;
+        int departmentId;
+        String fullAbbreviation;
+        Boolean isUserDefined;
+
+        course = null;
+        result = null;
+        try
+        {
+            cmdString = "Select * from Course where ID = " + courseId;
+            rs2 = st1.executeQuery(cmdString);
+        }
+        catch (Exception e)
+        {
+            processSQLError(e);
+        }
+        try
+        {
+                id = Integer.parseInt(rs2.getString("ID"));
+                name = rs2.getString("NAME");
+                creditHours = Double.parseDouble(rs2.getString("CREDIT_HOURS"));
+                departmentId = Integer.parseInt(rs2.getString("DEPARTMENT_ID"));
+                courseNumber = Integer.parseInt(rs2.getString("COURSE_NUMBER"));
+                description = rs2.getString("DESCRIPTION");
+                fullAbbreviation = rs2.getString("FULL_ABBREVIATION");
+                isUserDefined = Boolean.parseBoolean(rs2.getString("IS_USER_DEFINED"));
+
+                if(isUserDefined){
+                    course = new UserDefinedCourse(id, name, creditHours, fullAbbreviation);
+                }
+                else{
+                    course = new ScienceCourse(id, name, creditHours, departmentId, courseNumber, description);
+                }
+
+            rs2.close();
+        }
+        catch (Exception e)
+        {
+            result = processSQLError(e);
+        }
+
+        return course;
     }
 
     public Course findCourse(String courseName) {
-        return null;
+        Course course;
+        int id;
+        String name;
+        double creditHours;
+        int courseNumber;
+        String description;
+        int departmentId;
+        String fullAbbreviation;
+        Boolean isUserDefined;
+
+        course = null;
+        result = null;
+        try
+        {
+            cmdString = "Select * from Course where NAME = " + courseName;
+            rs2 = st1.executeQuery(cmdString);
+        }
+        catch (Exception e)
+        {
+            processSQLError(e);
+        }
+        try
+        {
+            id = Integer.parseInt(rs2.getString("ID"));
+            name = rs2.getString("NAME");
+            creditHours = Double.parseDouble(rs2.getString("CREDIT_HOURS"));
+            departmentId = Integer.parseInt(rs2.getString("DEPARTMENT_ID"));
+            courseNumber = Integer.parseInt(rs2.getString("COURSE_NUMBER"));
+            description = rs2.getString("DESCRIPTION");
+            fullAbbreviation = rs2.getString("FULL_ABBREVIATION");
+            isUserDefined = Boolean.parseBoolean(rs2.getString("IS_USER_DEFINED"));
+
+            if(isUserDefined){
+                course = new UserDefinedCourse(id, name, creditHours, fullAbbreviation);
+            }
+            else{
+                course = new ScienceCourse(id, name, creditHours, departmentId, courseNumber, description);
+            }
+
+            rs2.close();
+        }
+        catch (Exception e)
+        {
+            result = processSQLError(e);
+        }
+
+        return course;
     }
 
     public List<Degree> getAllDegrees() {
@@ -177,11 +512,75 @@ public class DataAccessObject implements DataAccess {
     }
 
     public Degree getDegreeByName(String degreeName) {
-        return null;
+        Degree degree;
+        int id;
+        String name;
+        double creditHours, majorCreditHours, gpaRequired;
+
+        degree = null;
+        result = null;
+        try
+        {
+            cmdString = "Select * from Degree where name = " +degreeName;
+            rs2 = st1.executeQuery(cmdString);
+        }
+        catch (Exception e)
+        {
+            processSQLError(e);
+        }
+        try
+        {
+                id = Integer.parseInt(rs2.getString("ID"));
+                name = rs2.getString("NAME");
+                creditHours = Double.parseDouble(rs2.getString("CREDIT_HOURS"));
+                majorCreditHours = Double.parseDouble(rs2.getString("MAJOR_CREDIT_HOURS"));
+                gpaRequired = Double.parseDouble(rs2.getString("GPA_REQUIRED"));
+                degree = new Degree(id, name, creditHours, majorCreditHours, gpaRequired);
+
+            rs2.close();
+        }
+        catch (Exception e)
+        {
+            result = processSQLError(e);
+        }
+
+        return degree;
     }
 
     public Degree getDegreeById(int degreeId) {
-        return null;
+        Degree degree;
+        int id;
+        String name;
+        double creditHours, majorCreditHours, gpaRequired;
+
+        degree = null;
+        result = null;
+        try
+        {
+            cmdString = "Select * from Degree where ID = " +degreeId;
+            rs2 = st1.executeQuery(cmdString);
+        }
+        catch (Exception e)
+        {
+            processSQLError(e);
+        }
+        try
+        {
+            id = Integer.parseInt(rs2.getString("ID"));
+            name = rs2.getString("NAME");
+            creditHours = Double.parseDouble(rs2.getString("CREDIT_HOURS"));
+            majorCreditHours = Double.parseDouble(rs2.getString("MAJOR_CREDIT_HOURS"));
+            gpaRequired = Double.parseDouble(rs2.getString("GPA_REQUIRED"));
+            degree = new Degree(id, name, creditHours, majorCreditHours, gpaRequired);
+
+            rs2.close();
+        }
+        catch (Exception e)
+        {
+            result = processSQLError(e);
+        }
+
+        return degree;
     }
 
     public List<CourseResult> getCourseResultsByStudentId(int studentId) {
@@ -224,8 +623,7 @@ public class DataAccessObject implements DataAccess {
         return null;
     }
 
-    public int addToCoursePlan (int courseId, int studentId, int termTypeId, int year) {
-        return -1;
+    public int addToCoursePlan (int courseId, int studentId, int termTypeId, int year) { return -1;
     }
 
     public boolean moveCourse (int coursePlanId, int newTermTypeId, int newYear) {
