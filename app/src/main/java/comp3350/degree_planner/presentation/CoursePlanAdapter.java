@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import comp3350.degree_planner.R;
 import comp3350.degree_planner.objects.Course;
@@ -20,13 +20,13 @@ import comp3350.degree_planner.objects.Course;
  */
 
 public class CoursePlanAdapter extends BaseAdapter {
-    private ArrayList coursePlansAndHeaders;
+    private List coursePlansAndHeaders;
     private static final int COURSE = 0;
     private static final int SECTION_HEADER = 1;
     private static final int VIEW_TYPE_COUNT = 2;
     private LayoutInflater inflater;
 
-    public CoursePlanAdapter(Context c, ArrayList list){
+    public CoursePlanAdapter(Context c, List list){
         coursePlansAndHeaders = list;
         inflater = (LayoutInflater)c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
