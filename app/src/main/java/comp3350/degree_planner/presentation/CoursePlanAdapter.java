@@ -11,6 +11,7 @@ import java.util.List;
 
 import comp3350.degree_planner.R;
 import comp3350.degree_planner.objects.Course;
+import comp3350.degree_planner.objects.CoursePlan;
 
 /**
  * Created by Penny He on 6/20/2017.
@@ -21,7 +22,7 @@ import comp3350.degree_planner.objects.Course;
 
 public class CoursePlanAdapter extends BaseAdapter {
     private List coursePlansAndHeaders;
-    private static final int COURSE = 0;
+    private static final int COURSEPLAN = 0;
     private static final int SECTION_HEADER = 1;
     private static final int VIEW_TYPE_COUNT = 2;
     private LayoutInflater inflater;
@@ -33,8 +34,8 @@ public class CoursePlanAdapter extends BaseAdapter {
 
     @Override
     public int getItemViewType(int position){
-        if(coursePlansAndHeaders.get(position) instanceof Course){
-            return COURSE;
+        if(coursePlansAndHeaders.get(position) instanceof CoursePlan){
+            return COURSEPLAN;
         }else{
             return SECTION_HEADER;
         }
@@ -59,7 +60,7 @@ public class CoursePlanAdapter extends BaseAdapter {
         if(view == null){
             // Fill the basic layout
             switch (getItemViewType(position)){
-                case COURSE:
+                case COURSEPLAN:
                     view = inflater.inflate(android.R.layout.simple_list_item_1, null);
                     break;
                 case SECTION_HEADER:
@@ -75,10 +76,10 @@ public class CoursePlanAdapter extends BaseAdapter {
 
         // Fill in data
         switch (getItemViewType(position)){
-            case COURSE:
+            case COURSEPLAN:
                 TextView courseName = (TextView)view.findViewById(android.R.id.text1);
                 // Display course name
-                courseName.setText(((Course)coursePlansAndHeaders.get(position)).getName());
+                courseName.setText(((CoursePlan)coursePlansAndHeaders.get(position)).getCourse().getName());
                 break;
             case SECTION_HEADER:
                 TextView header = (TextView)view.findViewById(R.id.sectionHeader);
