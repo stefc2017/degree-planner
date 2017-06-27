@@ -165,7 +165,7 @@ public class CreditHoursTest {
                 List<CourseResult> crByStudentId = getCourseResultsByStudentId(studentId);
 
                 for (CourseResult result : crByStudentId) {
-                    coursesTaken.add(findCourse(result.getCourse().getId()));
+                    coursesTaken.add(getCourseById(result.getCourse().getId()));
                 }
 
                 return coursesTaken;
@@ -178,7 +178,7 @@ public class CreditHoursTest {
 
                 for( DegreeCourse course : degreeCourses ){
                     if( course.getDegree().getId() == degreeId && course.getDegreeCourseType().getId() == REQUIRED_COURSE){
-                        reqCourseList.add( findCourse( course.getCourse().getId() ) );
+                        reqCourseList.add( getCourseById( course.getCourse().getId() ) );
                     }
                 }
 
@@ -201,7 +201,7 @@ public class CreditHoursTest {
             }
 
             @Override
-            public Course findCourse(int courseId) {
+            public Course getCourseById(int courseId) {
                 int numberOfCourses = courses.size(); //the number of all courses
                 Course course = null; //the course we will return
                 int index = 0; //index for searching

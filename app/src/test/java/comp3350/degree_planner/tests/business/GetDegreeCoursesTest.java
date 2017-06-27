@@ -86,7 +86,7 @@ public class GetDegreeCoursesTest {
 
                 for( DegreeCourse course : degreeCourses ){
                     if( course.getDegree().getId() == degreeId && course.getDegreeCourseType().getId() == REQUIRED_COURSE){
-                        reqCourseList.add( findCourse( course.getCourse().getId() ) );
+                        reqCourseList.add( getCourseById( course.getCourse().getId() ) );
                     }
                 }
 
@@ -94,21 +94,18 @@ public class GetDegreeCoursesTest {
             }
 
             @Override
-            public Course findCourse(int courseId) {
-                int numberOfCourses = courses.size(); //the number of all courses
-                Course course = null; //the course we will return
-                int index = 0; //index for searching
+            public Course getCourseById(int courseId) {
+                Course result = null;
 
-                while (index < numberOfCourses && (courses.get(index)).getId() != courseId) {
-                    index++;
-                }//end while
+                for (int i = 0; i < courses.size(); i++) {
+                    if (courses.get(i).getId() == courseId) {
+                        result = courses.get(i);
+                        break;
+                    }
+                }
 
-                if (index < numberOfCourses && (courses.get(index)).getId() == courseId) { //we found the course
-                    course = courses.get(index);
-                }//end if
-
-                return course;
-            }//end findCourse
+                return result;
+            }
         };
 
         degreeReqCourses = new AccessCourses(testData);
