@@ -3,9 +3,11 @@ package comp3350.degree_planner.business;
 import java.util.ArrayList;
 import java.util.List;
 
+import comp3350.degree_planner.objects.Student;
+import comp3350.degree_planner.objects.TermType;
 import comp3350.degree_planner.persistence.DataAccess;
 
-import comp3350.degree_planner.objects.Course;
+import comp3350.degree_planner.objects.CoursePlan;
 import comp3350.degree_planner.objects.ScienceCourse;
 import comp3350.degree_planner.objects.UserDefinedCourse;
 
@@ -36,39 +38,30 @@ public class AccessCoursePlan {
 
     /**
      * Temporary method for developing UI
-     * Return a list of Strings and Courses
-     * UI renders different ListItem layouts for Courses and section headers(Ex. "Fall 2017")
+     * Return a list of Strings and CoursePlans
+     * UI renders different ListItem layouts for CoursePlans and section headers(Ex. "Fall 2017")
      */
     public List getCoursePlansAndHeaders(){
-        Course tempScienceCourse, tempUserDefinedCourse;
+        CoursePlan tempCoursePlan;
         List coursePlansAndHeaders = new ArrayList();
         String[] terms = {"Fall 2017", "Winter 2018", "Summer 2018", "Fall 2019"};
         coursePlansAndHeaders.add(terms[0]);
-        tempScienceCourse = new ScienceCourse(1, "Introductory Computer Science I", 3.0, 1,
-                1010, "Basic programming concepts.");
-        coursePlansAndHeaders.add(tempScienceCourse);
-        tempUserDefinedCourse = new UserDefinedCourse(5, "Cultural Anthropology", 3.0, "ANTH 1220");
-        coursePlansAndHeaders.add(tempUserDefinedCourse);
-        coursePlansAndHeaders.add(terms[1]);
-        tempScienceCourse = new ScienceCourse(2, "Introductory Computer Science II", 3.0,
-                1, 1020, "More basic programming concepts.");
-        coursePlansAndHeaders.add(tempScienceCourse);
-        tempScienceCourse = new ScienceCourse(7, "Programming Practices", 3.0,
-                1, 2160, "123");
-        coursePlansAndHeaders.add(tempScienceCourse);
-        coursePlansAndHeaders.add(terms[2]);
-        tempScienceCourse = new ScienceCourse(3, "Object Orientation", 3.0, 1,
-                2150, "Detailed look at proper object oriented programming.");
-        coursePlansAndHeaders.add(tempScienceCourse);
-        tempScienceCourse = new ScienceCourse(4, "Software Engineering I", 3.0, 1,
-                3350, "Good software development practices.");
-        coursePlansAndHeaders.add(tempScienceCourse);
 
-        coursePlansAndHeaders.add(terms[3]);
-        for(int i = 0; i < 20; i++){
-            coursePlansAndHeaders.add(new ScienceCourse(5+i, "Course " + i, 3.0, 1,
-                    1010+i, "description"));
-        }
+        tempCoursePlan = new CoursePlan(2, new ScienceCourse(1, "Introductory Computer Science I", 3.0, 1, 1010,
+                "Basic programming concepts."), new Student(1, 1234567, "Jim Bob", "jimbob@myumanitoba.ca", "helloworld1", 1),
+                new TermType(1, "Fall"), 2017);
+        coursePlansAndHeaders.add(tempCoursePlan);
+
+        tempCoursePlan = new CoursePlan(3, new UserDefinedCourse(5, "Cultural Anthropology", 3.0, "ANTH 1220"),
+                new Student(1, 1234567, "Jim Bob", "jimbob@myumanitoba.ca", "helloworld1", 1), new TermType(1, "Fall"), 2017);
+        coursePlansAndHeaders.add(tempCoursePlan);
+
+        coursePlansAndHeaders.add(terms[1]);
+        tempCoursePlan = new CoursePlan(1, new ScienceCourse(3, "Object Orientation", 3.0, 1, 2150,
+                "Detailed look at proper object oriented programming."), new Student(1,
+                1234567, "Jim Bob", "jimbob@myumanitoba.ca", "helloworld1", 1), new TermType(2, "Winter"), 2018);
+        coursePlansAndHeaders.add(tempCoursePlan);
+
         return coursePlansAndHeaders;
     }
 }
