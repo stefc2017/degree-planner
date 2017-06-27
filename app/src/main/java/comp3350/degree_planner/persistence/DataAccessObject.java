@@ -133,7 +133,7 @@ public class DataAccessObject implements DataAccess {
         try
         {
             while(rs2.next()){
-                course = findCourse(Integer.parseInt(rs3.getString("COURSE_ID")));
+                course = getCourseById(Integer.parseInt(rs3.getString("COURSE_ID")));
                 coursesTaken.add(course);
             }
 
@@ -283,7 +283,7 @@ public class DataAccessObject implements DataAccess {
             }
 
             while(rs3.next()){
-                course = findCourse(Integer.parseInt(rs3.getString("COURSE_ID")));
+                course = getCourseById(Integer.parseInt(rs3.getString("COURSE_ID")));
                 coursesTaken.add(course);
             }
 
@@ -372,57 +372,7 @@ public class DataAccessObject implements DataAccess {
         return courses;
     }
 
-    public Course findCourse(int courseId) {
-        Course course;
-        int id;
-        String name;
-        double creditHours;
-        int courseNumber;
-        String description;
-        int departmentId;
-        String fullAbbreviation;
-        Boolean isUserDefined;
-
-        course = null;
-        result = null;
-        try
-        {
-            cmdString = "Select * from Course where ID = " + courseId;
-            rs2 = st1.executeQuery(cmdString);
-        }
-        catch (Exception e)
-        {
-            processSQLError(e);
-        }
-        try
-        {
-                id = Integer.parseInt(rs2.getString("ID"));
-                name = rs2.getString("NAME");
-                creditHours = Double.parseDouble(rs2.getString("CREDIT_HOURS"));
-                departmentId = Integer.parseInt(rs2.getString("DEPARTMENT_ID"));
-                courseNumber = Integer.parseInt(rs2.getString("COURSE_NUMBER"));
-                description = rs2.getString("DESCRIPTION");
-                fullAbbreviation = rs2.getString("FULL_ABBREVIATION");
-                isUserDefined = Boolean.parseBoolean(rs2.getString("IS_USER_DEFINED"));
-
-                if(isUserDefined){
-                    course = new UserDefinedCourse(id, name, creditHours, fullAbbreviation);
-                }
-                else{
-                    course = new ScienceCourse(id, name, creditHours, departmentId, courseNumber, description);
-                }
-
-            rs2.close();
-        }
-        catch (Exception e)
-        {
-            result = processSQLError(e);
-        }
-
-        return course;
-    }
-
-    public Course findCourse(String courseName) {
+    public Course getCourseByName(String courseName) {
         Course course;
         int id;
         String name;
@@ -596,7 +546,53 @@ public class DataAccessObject implements DataAccess {
     }
 
     public Course getCourseById(int courseId) {
-        return null;
+        Course course;
+        int id;
+        String name;
+        double creditHours;
+        int courseNumber;
+        String description;
+        int departmentId;
+        String fullAbbreviation;
+        Boolean isUserDefined;
+
+        course = null;
+        result = null;
+        try
+        {
+            cmdString = "Select * from Course where ID = " + courseId;
+            rs2 = st1.executeQuery(cmdString);
+        }
+        catch (Exception e)
+        {
+            processSQLError(e);
+        }
+        try
+        {
+            id = Integer.parseInt(rs2.getString("ID"));
+            name = rs2.getString("NAME");
+            creditHours = Double.parseDouble(rs2.getString("CREDIT_HOURS"));
+            departmentId = Integer.parseInt(rs2.getString("DEPARTMENT_ID"));
+            courseNumber = Integer.parseInt(rs2.getString("COURSE_NUMBER"));
+            description = rs2.getString("DESCRIPTION");
+            fullAbbreviation = rs2.getString("FULL_ABBREVIATION");
+            isUserDefined = Boolean.parseBoolean(rs2.getString("IS_USER_DEFINED"));
+
+            if(isUserDefined){
+                course = new UserDefinedCourse(id, name, creditHours, fullAbbreviation);
+            }
+            else{
+                course = new ScienceCourse(id, name, creditHours, departmentId, courseNumber, description);
+            }
+
+            rs2.close();
+        }
+        catch (Exception e)
+        {
+            result = processSQLError(e);
+        }
+
+        return course;
     }
 
     public List<CourseOffering> getCourseOfferingsByTerm(TermType type) {

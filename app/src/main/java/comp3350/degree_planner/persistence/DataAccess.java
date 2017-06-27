@@ -21,47 +21,47 @@ public interface DataAccess {
 
     void close();
 
-    List<Course> getCoursesNotTaken(int studentNumber);
-
     Course getCourse(CourseResult courseResult, List<Course> allCourses);
 
     List<Course> getAllCourses();
 
-    List<Course> getCoursesCanTake(int studentNumber);
-
-    boolean hasPrerequisites(int studentNumber, String courseName);
+    List<Degree> getAllDegrees();
 
     List<Course> getAllPrerequisites(Course course);
 
-    Course findCourse(int courseId);
+    List<CourseOffering> getAllCourseOfferings();
 
-    Course findCourse(String courseName);
+    List<Course> getCoursesTaken(int studentId);
 
-    List<Degree> getAllDegrees();
+    List<Course> getCoursesNotTaken(int studentNumber);
+
+    List<Course> getCoursesCanTake(int studentNumber);
+
+    List<Course> getEligibleRequiredCourse(int studentNum, int degreeId);
+
+    boolean hasPrerequisites(int studentNumber, String courseName);
+
+    Course getCourseByName(String courseName);
 
     Degree getDegreeByName(String degreeName);
 
-    Degree getDegreeById(int degreeId);
-
-    List<CourseResult> getCourseResultsByStudentId(int studentId);
-
-    List<CourseOffering> getAllCourseOfferings();
-
-    int getFailingGradeId();
-
     Course getCourseById(int courseId);
 
-    List<CourseOffering> getCourseOfferingsByTerm(TermType type);
+    Degree getDegreeById(int degreeId);
 
     Department getDepartmentById(int departmentId);
 
-    List<Course> getCoursesTaken(int studentId);
+    List<CourseResult> getCourseResultsByStudentId(int studentId);
+
+    CoursePlan getCoursePlanById (int coursePlanId);
+
+    int getFailingGradeId();
+
+    List<CourseOffering> getCourseOfferingsByTerm(TermType type);
 
     List<Course> getDegreeCoursesTaken(int studentId, int degreeId);
 
     List<Course> getDegreeCourses(int degreeId);
-
-    List<Course> getEligibleRequiredCourse(int studentNum, int degreeId);
 
     int addToCoursePlan (int courseId, int studentId, int termTypeId, int year);
 
@@ -69,5 +69,4 @@ public interface DataAccess {
 
     boolean removeFromCoursePlan (int coursePlanId);
 
-    CoursePlan getCoursePlanById (int coursePlanId);
 }

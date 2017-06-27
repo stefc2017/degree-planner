@@ -321,7 +321,7 @@ public class DataAccessStub implements DataAccess {
      **/
     public boolean hasPrerequisites(int studentNumber, String courseName) {
         List<CourseResult> coursesTaken = getCourseResultsByStudentId(studentNumber); //the courses the student has taken
-        Course course = findCourse(courseName); //the course we want to get the preRequisites of
+        Course course = getCourseByName(courseName); //the course we want to get the preRequisites of
         List<Course> coursePreReqs = null; //the preReqs for the course
         boolean hasPreReqs = true; //initially- we have all preReqs say if there is no preRequisites
         Course currentPreReq; //the current preReq, used for in the while loop
@@ -372,7 +372,7 @@ public class DataAccessStub implements DataAccess {
 
         for (int i = 0; i < numberOfCoursePrereqs; i++) {
             if ((coursePrerequisites.get(i)).getCourse().getId() == courseId) { //if this is a prerequisite for the course
-                currentCourse = findCourse((coursePrerequisites.get(i)).getPrereqCourse().getId()); //get the course
+                currentCourse = getCourseById((coursePrerequisites.get(i)).getPrereqCourse().getId()); //get the course
                 prerequisites.add(currentCourse); //add the course to the list of prerequisites
             }//end if
         }//end for
@@ -381,34 +381,12 @@ public class DataAccessStub implements DataAccess {
     }//end getAllPrerequisites
 
     /**
-     * findCourse
-     *
-     * @param courseId: given the course Id, find that course
-     * @return: the course with the id specified as the parameter
-     **/
-    public Course findCourse(int courseId) {
-        int numberOfCourses = courses.size(); //the number of all courses
-        Course course = null; //the course we will return
-        int index = 0; //index for searching
-
-        while (index < numberOfCourses && (courses.get(index)).getId() != courseId) {
-            index++;
-        }//end while
-
-        if (index < numberOfCourses && (courses.get(index)).getId() == courseId) { //we found the course
-            course = courses.get(index);
-        }//end if
-
-        return course;
-    }//end findCourse
-
-    /**
-     * findCourse
+     * getCourseByName
      *
      * @param courseName: given the course name, find that course
      * @return: the course with the name specified as the parameter
      **/
-    public Course findCourse(String courseName) {
+    public Course getCourseByName(String courseName) {
         int numberOfCourses = courses.size(); //the number of all courses
         Course course = null; //the course we will return
         int index = 0; //index for searching
@@ -422,7 +400,7 @@ public class DataAccessStub implements DataAccess {
         }//end if
 
         return course;
-    }//end findCourse
+    }//end getCourseByName
 
     /**
      * getAllDegrees
@@ -591,7 +569,7 @@ public class DataAccessStub implements DataAccess {
         List<CourseResult> crByStudentId = getCourseResultsByStudentId(studentId);
 
         for (CourseResult result : crByStudentId) {
-            coursesTaken.add(findCourse(result.getCourse().getId()));
+            coursesTaken.add(getCourseById(result.getCourse().getId()));
         }
 
         return coursesTaken;
@@ -627,7 +605,7 @@ public class DataAccessStub implements DataAccess {
 
         for( DegreeCourse course : degreeCourses ){
             if( course.getDegree().getId() == degreeId && course.getDegreeCourseType().getId() == REQUIRED_COURSE){
-                reqCourseList.add( findCourse( course.getCourse().getId() ) );
+                reqCourseList.add( getCourseById( course.getCourse().getId() ) );
             }
         }
 
