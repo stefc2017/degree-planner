@@ -1,6 +1,7 @@
 package comp3350.degree_planner.persistence;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import comp3350.degree_planner.objects.Course;
 import comp3350.degree_planner.objects.CoursePlan;
@@ -21,23 +22,21 @@ public interface DataAccess {
 
     void close();
 
-    ArrayList<Course> getCoursesNotTaken(int studentNumber);
+    List<Course> getCoursesNotTaken(int studentNumber);
 
-    Course getCourse(CourseResult courseResult, ArrayList<Course> allCourses);
+    List<Course> getAllCourses();
 
-    ArrayList<Course> getAllCourses();
-
-    ArrayList<Course> getCoursesCanTake(int studentNumber);
+    List<Course> getCoursesCanTake(int studentNumber);
 
     boolean hasPrerequisites(int studentNumber, String courseName);
 
-    ArrayList<Course> getAllPrerequisites(Course course);
+    List<Course> getAllPrerequisites(Course course);
 
     Course findCourse(int courseId);
 
     Course findCourse(String courseName);
 
-    ArrayList<Degree> getAllDegrees();
+    List<Degree> getAllDegrees();
 
     Degree getDegreeByName(String degreeName);
 
