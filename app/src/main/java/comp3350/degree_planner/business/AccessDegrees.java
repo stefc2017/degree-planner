@@ -1,6 +1,6 @@
 package comp3350.degree_planner.business;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import comp3350.degree_planner.objects.Degree;
 import comp3350.degree_planner.persistence.DataAccess;
@@ -15,7 +15,7 @@ public class AccessDegrees {
     public AccessDegrees(DataAccess dataAccess){ this.dataAccess = dataAccess; }
 
 
-    public ArrayList<Degree> getAllDegrees()
+    public List<Degree> getAllDegrees()
     {
         return dataAccess.getAllDegrees();
     }

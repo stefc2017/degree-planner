@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 import comp3350.degree_planner.objects.Course;
 import comp3350.degree_planner.objects.CourseOffering;
@@ -61,7 +62,7 @@ public class DataAccessObject implements DataAccess {
     private String result;
     private static String EOF = "  ";
 
-    private ArrayList<Degree> degrees;
+    private List<Degree> degrees;
 
     public DataAccessObject(String dbName)
     {
@@ -104,7 +105,7 @@ public class DataAccessObject implements DataAccess {
         System.out.println("Closed " + dbType + " database " + dbName);
     }
 
-    public ArrayList<Course> getCoursesNotTaken(int studentNumber) {
+    public List<Course> getCoursesNotTaken(int studentNumber) {
         return null;
     }
 
@@ -112,11 +113,11 @@ public class DataAccessObject implements DataAccess {
         return null;
     }
 
-    public ArrayList<Course> getAllCourses() {
+    public List<Course> getAllCourses() {
         return null;
     }
 
-    public ArrayList<Course> getCoursesCanTake(int studentNumber) {
+    public List<Course> getCoursesCanTake(int studentNumber) {
         return null;
     }
 
@@ -124,7 +125,7 @@ public class DataAccessObject implements DataAccess {
         return false;
     }
 
-    public ArrayList<Course> getAllPrerequisites(Course course) {
+    public List<Course> getAllPrerequisites(Course course) {
         return null;
     }
 
@@ -136,7 +137,7 @@ public class DataAccessObject implements DataAccess {
         return null;
     }
 
-    public ArrayList<Degree> getAllDegrees() {
+    public List<Degree> getAllDegrees() {
         Degree degree;
         int id;
         String name;
@@ -183,11 +184,11 @@ public class DataAccessObject implements DataAccess {
         return null;
     }
 
-    public ArrayList<CourseResult> getCourseResultsByStudentId(int studentId) {
+    public List<CourseResult> getCourseResultsByStudentId(int studentId) {
         return null;
     }
 
-    public ArrayList<CourseOffering> getAllCourseOfferings() {
+    public List<CourseOffering> getAllCourseOfferings() {
         return null;
     }
 
@@ -199,7 +200,7 @@ public class DataAccessObject implements DataAccess {
         return null;
     }
 
-    public ArrayList<CourseOffering> getCourseOfferingsByTerm(TermType type) {
+    public List<CourseOffering> getCourseOfferingsByTerm(TermType type) {
         return null;
     }
 
@@ -207,19 +208,19 @@ public class DataAccessObject implements DataAccess {
         return null;
     }
 
-    public ArrayList<Course> getCoursesTaken(int studentId) {
+    public List<Course> getCoursesTaken(int studentId) {
         return null;
     }
 
-    public ArrayList<Course> getDegreeCoursesTaken(int studentId, int degreeId) {
+    public List<Course> getDegreeCoursesTaken(int studentId, int degreeId) {
         return null;
     }
 
-    public ArrayList<Course> getDegreeCourses(int degreeId) {
+    public List<Course> getDegreeCourses(int degreeId) {
         return null;
     }
 
-    public ArrayList<Course> getEligibleRequiredCourse(int studentNum, int degreeId) {
+    public List<Course> getEligibleRequiredCourse(int studentNum, int degreeId) {
         return null;
     }
 
@@ -238,6 +239,8 @@ public class DataAccessObject implements DataAccess {
     public CoursePlan getCoursePlanById (int coursePlanId) {
         return null;
     }
+
+    public Course getCourse(CourseResult courseResult, List<Course> allCourses){ return null; }
 
     public String processSQLError(Exception e)
     {
