@@ -17,6 +17,8 @@ import comp3350.degree_planner.objects.ScienceCourse;
 import comp3350.degree_planner.objects.TermType;
 import comp3350.degree_planner.objects.UserDefinedCourse;
 
+import static org.hsqldb.HsqlDateTime.e;
+
 /**
  * Created by Tiffany Jiang on 2017-06-24.
  *
@@ -516,12 +518,14 @@ public class DataAccessObject implements DataAccess {
         }
         try
         {
-            id = Integer.parseInt(rs2.getString("ID"));
-            name = rs2.getString("NAME");
-            creditHours = Double.parseDouble(rs2.getString("CREDIT_HOURS"));
-            majorCreditHours = Double.parseDouble(rs2.getString("MAJOR_CREDIT_HOURS"));
-            gpaRequired = Double.parseDouble(rs2.getString("GPA_REQUIRED"));
-            degree = new Degree(id, name, creditHours, majorCreditHours, gpaRequired);
+            while (rs2.next()) {
+                id = Integer.parseInt(rs2.getString("ID"));
+                name = rs2.getString("NAME");
+                creditHours = Double.parseDouble(rs2.getString("CREDIT_HOURS"));
+                majorCreditHours = Double.parseDouble(rs2.getString("MAJOR_CREDIT_HOURS"));
+                gpaRequired = Double.parseDouble(rs2.getString("GPA_REQUIRED"));
+                degree = new Degree(id, name, creditHours, majorCreditHours, gpaRequired);
+            }
 
             rs2.close();
         }
@@ -569,20 +573,21 @@ public class DataAccessObject implements DataAccess {
         }
         try
         {
-            id = Integer.parseInt(rs2.getString("ID"));
-            name = rs2.getString("NAME");
-            creditHours = Double.parseDouble(rs2.getString("CREDIT_HOURS"));
-            departmentId = Integer.parseInt(rs2.getString("DEPARTMENT_ID"));
-            courseNumber = Integer.parseInt(rs2.getString("COURSE_NUMBER"));
-            description = rs2.getString("DESCRIPTION");
-            fullAbbreviation = rs2.getString("FULL_ABBREVIATION");
-            isUserDefined = Boolean.parseBoolean(rs2.getString("IS_USER_DEFINED"));
+            while (rs2.next()) {
+                id = Integer.parseInt(rs2.getString("ID"));
+                name = rs2.getString("NAME");
+                creditHours = Double.parseDouble(rs2.getString("CREDIT_HOURS"));
+                departmentId = Integer.parseInt(rs2.getString("DEPARTMENT_ID"));
+                courseNumber = Integer.parseInt(rs2.getString("COURSE_NUMBER"));
+                description = rs2.getString("DESCRIPTION");
+                fullAbbreviation = rs2.getString("FULL_ABBREVIATION");
+                isUserDefined = Boolean.parseBoolean(rs2.getString("IS_USER_DEFINED"));
 
-            if(isUserDefined){
-                course = new UserDefinedCourse(id, name, creditHours, fullAbbreviation);
-            }
-            else{
-                course = new ScienceCourse(id, name, creditHours, departmentId, courseNumber, description);
+                if (isUserDefined) {
+                    course = new UserDefinedCourse(id, name, creditHours, fullAbbreviation);
+                } else {
+                    course = new ScienceCourse(id, name, creditHours, departmentId, courseNumber, description);
+                }
             }
 
             rs2.close();
@@ -627,6 +632,7 @@ public class DataAccessObject implements DataAccess {
                 course = getCourseById(Integer.parseInt(rs3.getString("COURSE_ID")));
                 coursesTaken.add(course);
             }
+            rs2.close();
         }
         catch (Exception e)
         {
@@ -667,7 +673,7 @@ public class DataAccessObject implements DataAccess {
         try
         {
             cmdString = "Select COURSE_ID from DEGREE_COURSE WHERE DEGREE_ID = " + degreeId + " AND DEGREE_COURSE_TYPE_ID = " + REQUIRED_COURSE;
-            rs2 = st1.executeQuery(cmdString);
+            rs3 = st2.executeQuery(cmdString);
         }
         catch (Exception e)
         {
@@ -675,10 +681,12 @@ public class DataAccessObject implements DataAccess {
         }
         try
         {
-            while(rs2.next()){
+            while(rs3.next()){
                 course = getCourseById(Integer.parseInt(rs3.getString("COURSE_ID")));
                 requiredCourses.add(course);
             }
+
+            rs3.close();
         }
         catch (Exception e)
         {
