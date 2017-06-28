@@ -19,22 +19,22 @@ import static android.R.attr.id;
  */
 
 public class DataAccessStub implements DataAccess {
-    private ArrayList<Course> courses;
-    private ArrayList<CourseOffering> courseOfferings;
-    private ArrayList<CoursePlan> coursePlans;
-    private ArrayList<CoursePrerequisite> coursePrerequisites;
-    private ArrayList<CourseResult> courseResults;
-    private ArrayList<DegreeCourseType> degreeCourseTypes;
-    private ArrayList<Degree> degrees;
-    private ArrayList<DegreeCourse> degreeCourses;
-    private ArrayList<Department> departments;
-    private ArrayList<GradeType> gradeTypes;
-    private ArrayList<Rating> ratings;
-    private ArrayList<RatingType> ratingTypes;
-    private ArrayList<ScienceCourse> scienceCourses;
-    private ArrayList<Student> students;
-    private ArrayList<TermType> termTypes;
-    private ArrayList<UserDefinedCourse> userDefinedCourses;
+    private List<Course> courses;
+    private List<CourseOffering> courseOfferings;
+    private List<CoursePlan> coursePlans;
+    private List<CoursePrerequisite> coursePrerequisites;
+    private List<CourseResult> courseResults;
+    private List<DegreeCourseType> degreeCourseTypes;
+    private List<Degree> degrees;
+    private List<DegreeCourse> degreeCourses;
+    private List<Department> departments;
+    private List<GradeType> gradeTypes;
+    private List<Rating> ratings;
+    private List<RatingType> ratingTypes;
+    private List<ScienceCourse> scienceCourses;
+    private List<Student> students;
+    private List<TermType> termTypes;
+    private List<UserDefinedCourse> userDefinedCourses;
 
     private String dbName;
     private String dbType = "stub";
@@ -228,11 +228,10 @@ public class DataAccessStub implements DataAccess {
      *                       courses they have not taken yet.
      * @return: The courses that student has not taken yet.
      **/
-    public ArrayList<Course> getCoursesNotTaken(int studentNumber) {
-        ArrayList<Course> coursesNotTaken; //the list of courses that the student has not taken
-        ArrayList<Course> allCourses = getAllCourses(); //the list of all courses offered
-        ArrayList<CourseResult> coursesTaken = getCourseResultsByStudentId(studentNumber); //the list of courses taken
-        //by the student
+    public List<Course> getCoursesNotTaken(int studentNumber) {
+        List<Course> coursesNotTaken; //the list of courses that the student has not taken
+        List<Course> allCourses = getAllCourses(); //the list of all courses offered
+        List<CourseResult> coursesTaken = getCourseResultsByStudentId(studentNumber); //the list of courses taken by the student
         int numCoursesTaken = coursesTaken.size(); //number of courses taken
         int index = -1; //whether or not the course the student took is a course in the list
         int numberOfCourses; //the total number of courses offered
@@ -260,10 +259,10 @@ public class DataAccessStub implements DataAccess {
      * getCourse
      *
      * @param courseResult: a CourseList that we want to convert to a Course object
-     * @param allCourses:   an arraylist of all the courses in the database
+     * @param allCourses:   a list of all the courses in the database
      * @return a Course Object
      **/
-    public Course getCourse(CourseResult courseResult, ArrayList<Course> allCourses) {
+    public Course getCourse(CourseResult courseResult, List<Course> allCourses) {
         Course course = null;
         int courseId = courseResult.getCourse().getId();
         int numberOfCourses = allCourses.size();
@@ -285,7 +284,7 @@ public class DataAccessStub implements DataAccess {
      *
      * @return: An arrayList of all the courses offered
      **/
-    public ArrayList<Course> getAllCourses() {
+    public List<Course> getAllCourses() {
         return courses;
     }//end getAllCourses
 
@@ -296,14 +295,14 @@ public class DataAccessStub implements DataAccess {
      *                       has not taken but has the preRequisites to take
      * @return: an arraylist of all the courses the student has the preRequisites for.
      **/
-    public ArrayList<Course> getCoursesCanTake(int studentNumber) {
-        ArrayList<Course> coursesNotTaken = getCoursesNotTaken(studentNumber); //get the courses that student has not taken yet
-        ArrayList<Course> coursesCanTake = new ArrayList<Course>(); //will contain the courses the student can take
+    public List<Course> getCoursesCanTake(int studentNumber) {
+        List<Course> coursesNotTaken = getCoursesNotTaken(studentNumber); //get the courses that student has not taken yet
+        List<Course> coursesCanTake = new ArrayList<Course>(); //will contain the courses the student can take
         int numOfCoursesNotTaken = coursesNotTaken.size(); //number of courses that the student has not taken
         Course currentCourse;
 
         for (int i = 0; i < numOfCoursesNotTaken; i++) {
-            currentCourse = coursesNotTaken.get(i);
+            currentCourse = (Course) coursesNotTaken.get(i);
 
             if (hasPrerequisites(studentNumber, currentCourse.getName())) { //if the student has all preRequisites for the course
                 coursesCanTake.add(currentCourse);
@@ -320,12 +319,12 @@ public class DataAccessStub implements DataAccess {
      * @param studentNumber: the student number of the student we want to check if they have all preReqs to take the
      *                       course with courseName given as a parameter
      * @param courseName:    the name of the course we want to see if the student has all preReqs for it
-     * @return: an arraylist of all prerequisites of the course given as a parameter
+     * @return: boolean saying if the student has the prerequisites or not
      **/
     public boolean hasPrerequisites(int studentNumber, String courseName) {
-        ArrayList<CourseResult> coursesTaken = getCourseResultsByStudentId(studentNumber); //the courses the student has taken
-        Course course = findCourse(courseName); //the course we want to get the preRequisites of
-        ArrayList<Course> coursePreReqs = null; //the preReqs for the course
+        List<CourseResult> coursesTaken = getCourseResultsByStudentId(studentNumber); //the courses the student has taken
+        Course course = getCourseByName(courseName); //the course we want to get the preRequisites of
+        List<Course> coursePreReqs = null; //the preReqs for the course
         boolean hasPreReqs = true; //initially- we have all preReqs say if there is no preRequisites
         Course currentPreReq; //the current preReq, used for in the while loop
         int outer_index = 0; //index for the outer while loop
@@ -367,15 +366,15 @@ public class DataAccessStub implements DataAccess {
      * @param course: the course we want to get all the prerequisites of
      * @return: an arraylist of all prerequisites of the course given as a parameter
      **/
-    public ArrayList<Course> getAllPrerequisites(Course course) {
-        ArrayList<Course> prerequisites = new ArrayList<Course>();
+    public List<Course> getAllPrerequisites(Course course) {
+        List<Course> prerequisites = new ArrayList<Course>();
         int numberOfCoursePrereqs = coursePrerequisites.size(); //the number of prerequisites
         int courseId = course.getId(); //the course number of the course object
         Course currentCourse; //to keep track of the current course
 
         for (int i = 0; i < numberOfCoursePrereqs; i++) {
             if ((coursePrerequisites.get(i)).getCourse().getId() == courseId) { //if this is a prerequisite for the course
-                currentCourse = findCourse((coursePrerequisites.get(i)).getPrereqCourse().getId()); //get the course
+                currentCourse = getCourseById((coursePrerequisites.get(i)).getPrereqCourse().getId()); //get the course
                 prerequisites.add(currentCourse); //add the course to the list of prerequisites
             }//end if
         }//end for
@@ -384,34 +383,12 @@ public class DataAccessStub implements DataAccess {
     }//end getAllPrerequisites
 
     /**
-     * findCourse
-     *
-     * @param courseId: given the course Id, find that course
-     * @return: the course with the id specified as the parameter
-     **/
-    public Course findCourse(int courseId) {
-        int numberOfCourses = courses.size(); //the number of all courses
-        Course course = null; //the course we will return
-        int index = 0; //index for searching
-
-        while (index < numberOfCourses && (courses.get(index)).getId() != courseId) {
-            index++;
-        }//end while
-
-        if (index < numberOfCourses && (courses.get(index)).getId() == courseId) { //we found the course
-            course = courses.get(index);
-        }//end if
-
-        return course;
-    }//end findCourse
-
-    /**
-     * findCourse
+     * getCourseByName
      *
      * @param courseName: given the course name, find that course
      * @return: the course with the name specified as the parameter
      **/
-    public Course findCourse(String courseName) {
+    public Course getCourseByName(String courseName) {
         int numberOfCourses = courses.size(); //the number of all courses
         Course course = null; //the course we will return
         int index = 0; //index for searching
@@ -425,14 +402,14 @@ public class DataAccessStub implements DataAccess {
         }//end if
 
         return course;
-    }//end findCourse
+    }//end getCourseByName
 
     /**
      * getAllDegrees
      *
      * @return: All the degrees that are offered.
      **/
-    public ArrayList<Degree> getAllDegrees() {
+    public List<Degree> getAllDegrees() {
         return degrees;
     }//end getAllDegrees
 
@@ -443,7 +420,7 @@ public class DataAccessStub implements DataAccess {
      * @return: The degree with the name given as a parameter or null if that degree does not exist.
      **/
     public Degree getDegreeByName(String degreeName) {
-        ArrayList<Degree> allDegrees = degrees; //all degrees offered
+        List<Degree> allDegrees = degrees; //all degrees offered
         int numberOfDegrees = allDegrees.size(); //number of degrees offered
         Degree degree = null;
         int index = 0; //index to loop through degrees
@@ -466,7 +443,7 @@ public class DataAccessStub implements DataAccess {
      * @return: The degree with the id given as the parameter.
      **/
     public Degree getDegreeById(int degreeId) {
-        ArrayList<Degree> allDegrees = degrees; //all degrees offered
+        List<Degree> allDegrees = degrees; //all degrees offered
         int numberOfDegrees = allDegrees.size(); //number of degrees offered
         Degree degree = null;
         int index = 0; //index to loop through degrees
@@ -487,8 +464,8 @@ public class DataAccessStub implements DataAccess {
      *
      * Returns a list of course results for the specified student
      */
-    public ArrayList<CourseResult> getCourseResultsByStudentId (int studentId) {
-        ArrayList<CourseResult> crByStudentId = new ArrayList<CourseResult>();
+    public List<CourseResult> getCourseResultsByStudentId (int studentId) {
+        List<CourseResult> crByStudentId = new ArrayList<CourseResult>();
         Iterator<CourseResult> crIterator = courseResults.iterator();
         CourseResult currCR;
 
@@ -505,14 +482,14 @@ public class DataAccessStub implements DataAccess {
 
     //By F.D.
     //Returns list of all Course Offerings
-    public ArrayList<CourseOffering> getAllCourseOfferings(){
+    public List<CourseOffering> getAllCourseOfferings(){
         return courseOfferings;
     }
 
     //By F.D.
     //Returns list of courses fy selected term
-    public ArrayList<CourseOffering> getCourseOfferingsByTerm(TermType term) {
-        ArrayList<CourseOffering> courseOfferingsByTermList = new ArrayList<CourseOffering>();
+    public List<CourseOffering> getCourseOfferingsByTerm(TermType term) {
+        List<CourseOffering> courseOfferingsByTermList = new ArrayList<CourseOffering>();
         if(term != null) {
             for (int i = 0; i < courseOfferings.size(); i++) {
                 try {
@@ -589,12 +566,12 @@ public class DataAccessStub implements DataAccess {
 
         Returns a list of courses taken by a given student
      */
-    public ArrayList<Course> getCoursesTaken(int studentId) {
-        ArrayList<Course> coursesTaken = new ArrayList<Course>();
-        ArrayList<CourseResult> crByStudentId = getCourseResultsByStudentId(studentId);
+    public List<Course> getCoursesTaken(int studentId) {
+        List<Course> coursesTaken = new ArrayList<Course>();
+        List<CourseResult> crByStudentId = getCourseResultsByStudentId(studentId);
 
         for (CourseResult result : crByStudentId) {
-            coursesTaken.add(findCourse(result.getCourse().getId()));
+            coursesTaken.add(getCourseById(result.getCourse().getId()));
         }
 
         return coursesTaken;
@@ -605,10 +582,10 @@ public class DataAccessStub implements DataAccess {
 
         Returns a list of degree required courses student has taken
     */
-    public ArrayList<Course> getDegreeCoursesTaken(int studentId, int degreeId) {
-        ArrayList<Course> coursesTaken = getCoursesTaken(studentId);
-        ArrayList<Course> degreeCourses = getDegreeCourses(degreeId);
-        ArrayList<Course> takenDegreeCourses = new ArrayList<Course>();
+    public List<Course> getDegreeCoursesTaken(int studentId, int degreeId) {
+        List<Course> coursesTaken = getCoursesTaken(studentId);
+        List<Course> degreeCourses = getDegreeCourses(degreeId);
+        List<Course> takenDegreeCourses = new ArrayList<Course>();
 
         for (Course degreeCourse : degreeCourses) {
             if (coursesTaken.contains(degreeCourse)) {
@@ -624,13 +601,13 @@ public class DataAccessStub implements DataAccess {
 
         Returns a list of courses required by a degree
     */
-    public ArrayList<Course> getDegreeCourses( int degreeId ) {
+    public List<Course> getDegreeCourses( int degreeId ) {
         final int REQUIRED_COURSE = 1;
-        ArrayList<Course> reqCourseList = new ArrayList<Course>();
+        List<Course> reqCourseList = new ArrayList<Course>();
 
         for( DegreeCourse course : degreeCourses ){
             if( course.getDegree().getId() == degreeId && course.getDegreeCourseType().getId() == REQUIRED_COURSE){
-                reqCourseList.add( findCourse( course.getCourse().getId() ) );
+                reqCourseList.add( getCourseById( course.getCourse().getId() ) );
             }
         }
 
@@ -642,11 +619,11 @@ public class DataAccessStub implements DataAccess {
 
         Returns a list of required degree courses that a given student can take
     */
-    public ArrayList<Course> getEligibleRequiredCourse(int studentNum, int degreeId) {
-        ArrayList<Course> coursesTaken = getCoursesTaken(studentNum);
-        ArrayList<Course> degreeCourses = getDegreeCourses(degreeId);
-        ArrayList<Course> notTakenDegreeCourses = new ArrayList<Course>();
-        ArrayList<Course> eligibleDegreeCourses = new ArrayList<Course>();
+    public List<Course> getEligibleRequiredCourse(int studentNum, int degreeId) {
+        List<Course> coursesTaken = getCoursesTaken(studentNum);
+        List<Course> degreeCourses = getDegreeCourses(degreeId);
+        List<Course> notTakenDegreeCourses = new ArrayList<Course>();
+        List<Course> eligibleDegreeCourses = new ArrayList<Course>();
 
         for (Course degreeCourse : degreeCourses) {
             if (!(coursesTaken.contains(degreeCourse))) {

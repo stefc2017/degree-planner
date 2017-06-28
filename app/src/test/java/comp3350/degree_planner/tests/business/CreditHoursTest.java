@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import comp3350.degree_planner.application.Main;
 import comp3350.degree_planner.business.CreditHours;
@@ -42,17 +43,17 @@ public class CreditHoursTest {
          * Overriding (copied) only the methods needed for the testing
         */
         final DataAccess testData = new DataAccessStub() {
-            private ArrayList<Course> courses;
-            private ArrayList<CourseResult> courseResults;
-            private ArrayList<DegreeCourseType> degreeCourseTypes;
-            private ArrayList<Degree> degrees;
-            private ArrayList<DegreeCourse> degreeCourses;
-            private ArrayList<Department> departments;
-            private ArrayList<GradeType> gradeTypes;
-            private ArrayList<ScienceCourse> scienceCourses;
-            private ArrayList<Student> students;
-            private ArrayList<TermType> termTypes;
-            private ArrayList<UserDefinedCourse> userDefinedCourses;
+            private List<Course> courses;
+            private List<CourseResult> courseResults;
+            private List<DegreeCourseType> degreeCourseTypes;
+            private List<Degree> degrees;
+            private List<DegreeCourse> degreeCourses;
+            private List<Department> departments;
+            private List<GradeType> gradeTypes;
+            private List<ScienceCourse> scienceCourses;
+            private List<Student> students;
+            private List<TermType> termTypes;
+            private List<UserDefinedCourse> userDefinedCourses;
 
             @Override
             public void open(String dbName) {
@@ -159,25 +160,25 @@ public class CreditHoursTest {
             }
 
             @Override
-            public ArrayList<Course> getCoursesTaken(int studentId) {
-                ArrayList<Course> coursesTaken = new ArrayList<Course>();
-                ArrayList<CourseResult> crByStudentId = getCourseResultsByStudentId(studentId);
+            public List<Course> getCoursesTaken(int studentId) {
+                List<Course> coursesTaken = new ArrayList<Course>();
+                List<CourseResult> crByStudentId = getCourseResultsByStudentId(studentId);
 
                 for (CourseResult result : crByStudentId) {
-                    coursesTaken.add(findCourse(result.getCourse().getId()));
+                    coursesTaken.add(getCourseById(result.getCourse().getId()));
                 }
 
                 return coursesTaken;
             }
 
             @Override
-            public ArrayList<Course> getDegreeCourses( int degreeId ) {
+            public List<Course> getDegreeCourses( int degreeId ) {
                 final int REQUIRED_COURSE = 1;
-                ArrayList<Course> reqCourseList = new ArrayList<Course>();
+                List<Course> reqCourseList = new ArrayList<Course>();
 
                 for( DegreeCourse course : degreeCourses ){
                     if( course.getDegree().getId() == degreeId && course.getDegreeCourseType().getId() == REQUIRED_COURSE){
-                        reqCourseList.add( findCourse( course.getCourse().getId() ) );
+                        reqCourseList.add( getCourseById( course.getCourse().getId() ) );
                     }
                 }
 
@@ -185,10 +186,10 @@ public class CreditHoursTest {
             }
 
             @Override
-            public ArrayList<Course> getDegreeCoursesTaken(int studentId, int degreeId) {
-                ArrayList<Course> coursesTaken = getCoursesTaken(studentId);
-                ArrayList<Course> degreeCourses = getDegreeCourses(degreeId);
-                ArrayList<Course> takenDegreeCourses = new ArrayList<Course>();
+            public List<Course> getDegreeCoursesTaken(int studentId, int degreeId) {
+                List<Course> coursesTaken = getCoursesTaken(studentId);
+                List<Course> degreeCourses = getDegreeCourses(degreeId);
+                List<Course> takenDegreeCourses = new ArrayList<Course>();
 
                 for (Course degreeCourse : degreeCourses) {
                     if (coursesTaken.contains(degreeCourse)) {
@@ -200,7 +201,7 @@ public class CreditHoursTest {
             }
 
             @Override
-            public Course findCourse(int courseId) {
+            public Course getCourseById(int courseId) {
                 int numberOfCourses = courses.size(); //the number of all courses
                 Course course = null; //the course we will return
                 int index = 0; //index for searching

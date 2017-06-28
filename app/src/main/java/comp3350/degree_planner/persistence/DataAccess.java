@@ -1,6 +1,6 @@
 package comp3350.degree_planner.persistence;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import comp3350.degree_planner.objects.Course;
 import comp3350.degree_planner.objects.CoursePlan;
@@ -21,47 +21,47 @@ public interface DataAccess {
 
     void close();
 
-    ArrayList<Course> getCoursesNotTaken(int studentNumber);
+    Course getCourse(CourseResult courseResult, List<Course> allCourses);
 
-    Course getCourse(CourseResult courseResult, ArrayList<Course> allCourses);
+    List<Course> getAllCourses();
 
-    ArrayList<Course> getAllCourses();
+    List<Degree> getAllDegrees();
 
-    ArrayList<Course> getCoursesCanTake(int studentNumber);
+    List<Course> getAllPrerequisites(Course course);
+
+    List<CourseOffering> getAllCourseOfferings();
+
+    List<Course> getCoursesTaken(int studentId);
+
+    List<Course> getCoursesNotTaken(int studentNumber);
+
+    List<Course> getCoursesCanTake(int studentNumber);
+
+    List<Course> getEligibleRequiredCourse(int studentNum, int degreeId);
 
     boolean hasPrerequisites(int studentNumber, String courseName);
 
-    ArrayList<Course> getAllPrerequisites(Course course);
-
-    Course findCourse(int courseId);
-
-    Course findCourse(String courseName);
-
-    ArrayList<Degree> getAllDegrees();
+    Course getCourseByName(String courseName);
 
     Degree getDegreeByName(String degreeName);
 
-    Degree getDegreeById(int degreeId);
-
-    ArrayList<CourseResult> getCourseResultsByStudentId(int studentId);
-
-    ArrayList<CourseOffering> getAllCourseOfferings();
-
-    int getFailingGradeId();
-
     Course getCourseById(int courseId);
 
-    ArrayList<CourseOffering> getCourseOfferingsByTerm(TermType type);
+    Degree getDegreeById(int degreeId);
 
     Department getDepartmentById(int departmentId);
 
-    ArrayList<Course> getCoursesTaken(int studentId);
+    List<CourseResult> getCourseResultsByStudentId(int studentId);
 
-    ArrayList<Course> getDegreeCoursesTaken(int studentId, int degreeId);
+    CoursePlan getCoursePlanById (int coursePlanId);
 
-    ArrayList<Course> getDegreeCourses(int degreeId);
+    int getFailingGradeId();
 
-    ArrayList<Course> getEligibleRequiredCourse(int studentNum, int degreeId);
+    List<CourseOffering> getCourseOfferingsByTerm(TermType type);
+
+    List<Course> getDegreeCoursesTaken(int studentId, int degreeId);
+
+    List<Course> getDegreeCourses(int degreeId);
 
     void addToCoursePlan (int courseId, int studentId, int termTypeId, int year) throws Exception;
 

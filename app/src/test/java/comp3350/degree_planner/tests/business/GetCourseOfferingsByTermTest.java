@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import comp3350.degree_planner.application.Main;
 import comp3350.degree_planner.business.AccessCourses;
@@ -25,7 +26,7 @@ public class GetCourseOfferingsByTermTest {
     @Before
     public void setUp() {
         final DataAccess testData = new DataAccessStub() {
-            private ArrayList<CourseOffering> courseOfferings;
+            private List<CourseOffering> courseOfferings;
 
             @Override
             public void open(String dbName) {
@@ -53,7 +54,7 @@ public class GetCourseOfferingsByTermTest {
             }
 
             @Override
-            public ArrayList<CourseOffering> getAllCourseOfferings() {
+            public List<CourseOffering> getAllCourseOfferings() {
                 return courseOfferings;
             }
 

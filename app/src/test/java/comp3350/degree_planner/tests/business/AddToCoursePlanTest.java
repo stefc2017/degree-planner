@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import comp3350.degree_planner.application.Main;
 import comp3350.degree_planner.business.AccessCoursePlan;
@@ -46,20 +47,19 @@ public class AddToCoursePlanTest {
         //Setting up test data for the add
         //Mostly copied over from DataAccessStub.java
         testData = new DataAccessStub() {
-            private ArrayList<Course> courses;
-            private ArrayList<CourseOffering> courseOfferings;
-            private ArrayList<CoursePlan> coursePlans;
-            private ArrayList<CoursePrerequisite> coursePrerequisites;
-            private ArrayList<CourseResult> courseResults;
-            private ArrayList<DegreeCourseType> degreeCourseTypes;
-            private ArrayList<Degree> degrees;
-            private ArrayList<DegreeCourse> degreeCourses;
-            private ArrayList<Department> departments;
-            private ArrayList<GradeType> gradeTypes;
-            private ArrayList<ScienceCourse> scienceCourses;
-            private ArrayList<Student> students;
-            private ArrayList<TermType> termTypes;
-            private ArrayList<UserDefinedCourse> userDefinedCourses;
+            private List<Course> courses;
+            private List<CourseOffering> courseOfferings;
+            private List<CoursePlan> coursePlans;
+            private List<CourseResult> courseResults;
+            private List<DegreeCourseType> degreeCourseTypes;
+            private List<Degree> degrees;
+            private List<DegreeCourse> degreeCourses;
+            private List<Department> departments;
+            private List<GradeType> gradeTypes;
+            private List<ScienceCourse> scienceCourses;
+            private List<Student> students;
+            private List<TermType> termTypes;
+            private List<UserDefinedCourse> userDefinedCourses;
 
             private String dbName;
             private String dbType = "stub";
@@ -253,7 +253,7 @@ public class AddToCoursePlanTest {
                 return max;
             }
 
-            public boolean isValidStudentId (int studentId) {
+            private boolean isValidStudentId (int studentId) {
                 boolean validStudentId = false;
 
                 //Does a student with the entered studentId exist?

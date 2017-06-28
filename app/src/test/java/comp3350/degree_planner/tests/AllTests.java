@@ -6,8 +6,8 @@ import org.junit.runners.Suite;
 import comp3350.degree_planner.tests.business.AddToCoursePlanTest;
 import comp3350.degree_planner.tests.business.CreditHoursTest;
 import comp3350.degree_planner.tests.business.GetCompletedCoursesTest;
-import comp3350.degree_planner.tests.business.MoveCourseTest;
-import comp3350.degree_planner.tests.business.RemoveFromCoursePlanTest;
+//import comp3350.degree_planner.tests.business.MoveCourseTest;
+//import comp3350.degree_planner.tests.business.RemoveFromCoursePlanTest;
 import comp3350.degree_planner.tests.business.GetDegreeCoursesTest;
 import comp3350.degree_planner.tests.business.GetDegreesTest;
 import comp3350.degree_planner.tests.business.GetCourseOfferingsByTermTest;
@@ -37,8 +37,8 @@ import comp3350.degree_planner.tests.objects.UserDefinedCourseTest;
 @Suite.SuiteClasses({
         GetCompletedCoursesTest.class,
         AddToCoursePlanTest.class,
-        MoveCourseTest.class,
-        RemoveFromCoursePlanTest.class,
+//        MoveCourseTest.class,
+//        RemoveFromCoursePlanTest.class,
         GetDegreeCoursesTest.class,
         GetDegreesTest.class,
         CreditHoursTest.class,

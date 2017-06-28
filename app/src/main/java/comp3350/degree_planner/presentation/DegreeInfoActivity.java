@@ -9,6 +9,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import comp3350.degree_planner.R;
 import comp3350.degree_planner.application.Services;
@@ -24,7 +25,7 @@ import comp3350.degree_planner.objects.Degree;
 public class DegreeInfoActivity extends AppCompatActivity {
     private AccessCourses accessCourses;
     private AccessDegrees accessDegrees;
-    private ArrayList<Course> courseList;
+    private List<Course> courseList;
     private ArrayAdapter<Course> courseListAdapter;
 
     @Override
