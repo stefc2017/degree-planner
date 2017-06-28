@@ -14,6 +14,7 @@ import comp3350.degree_planner.objects.CourseResult;
 import comp3350.degree_planner.objects.Degree;
 import comp3350.degree_planner.objects.Department;
 import comp3350.degree_planner.objects.ScienceCourse;
+import comp3350.degree_planner.objects.Student;
 import comp3350.degree_planner.objects.TermType;
 import comp3350.degree_planner.objects.UserDefinedCourse;
 
@@ -635,6 +636,106 @@ public class DataAccessObject implements DataAccess {
     }
 
     public Course getCourse(CourseResult courseResult, List<Course> allCourses){ return null; }
+
+    /**
+     * getStudentById
+     *
+     * @param studentId: The id for the student find
+     * @return: LA Student object whose id matches the given value
+     **/
+
+    public Student getStudentById(int studentId) {
+        Student student;
+        int studentNumber;
+        String name, email, password;
+        Degree degree;
+        int degreeId;
+
+        student = null;
+        result = null;
+        try
+        {
+            cmdString = "Select * from Student s where ID = " + studentId;
+            rs2 = st1.executeQuery(cmdString);
+        }
+        catch (Exception e)
+        {
+            processSQLError(e);
+        }
+        try
+        {
+            // Get Student Information
+            studentNumber = rs2.getInt("STUDENT_NUMBER");
+            name = rs2.getString("NAME");
+            email = rs2.getString("EMAIL");
+            password = rs2.getString("PASSWORD");
+
+            // Get Degree Information
+            degree = null;
+            degreeId = rs2.getInt("DEGREE_ID");
+            if (degreeId != 0) {
+
+            }
+            degree = getDegreeById(Integer.parseInt(rs2.getString("DEGREE_ID")));
+
+            student = new Student(studentId, studentNumber, name, email, password, degree);
+            rs2.close();
+        }
+        catch (Exception e)
+        {
+            result = processSQLError(e);
+        }
+
+        return student;
+    }
+
+    /**
+     * getCoursePlansByStudent
+     *
+     * @param student: The student whose course plans will be found
+     * @return: List of all course plans for the student
+     **/
+
+    public List<CoursePlan> getCoursePlansByStudent (Student student) {
+        ArrayList<CoursePlan> coursePlans = new ArrayList<CoursePlan>();
+
+        Course course;
+
+        TermType termType;
+
+        try
+        {
+            cmdString = "select * " +
+                    "from Course_Plan cp inner join " +
+                    "Course c on cp.course_id = c.id inner join " +
+                    "Term_Type tt on cp.term_type_id = tt.id " +
+                    "where cp.student_id = " + student.getId();
+            rs2 = st1.executeQuery(cmdString);
+        }
+        catch (Exception e)
+        {
+            processSQLError(e);
+        }
+
+        try
+        {
+            while (rs2.next()) {
+
+            }
+            id = Integer.parseInt(rs2.getString("ID"));
+            name = rs2.getString("NAME");
+            creditHours = Double.parseDouble(rs2.getString("CREDIT_HOURS"));
+            majorCreditHours = Double.parseDouble(rs2.getString("MAJOR_CREDIT_HOURS"));
+            gpaRequired = Double.parseDouble(rs2.getString("GPA_REQUIRED"));
+            degree = new Degree(id, name, creditHours, majorCreditHours, gpaRequired);
+
+            rs2.close();
+        }
+        catch (Exception e)
+        {
+            result = processSQLError(e);
+        }
+    }
 
     public String processSQLError(Exception e)
     {
