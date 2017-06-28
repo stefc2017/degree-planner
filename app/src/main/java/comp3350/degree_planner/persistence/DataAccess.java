@@ -63,11 +63,21 @@ public interface DataAccess {
 
     ArrayList<Course> getEligibleRequiredCourse(int studentNum, int degreeId);
 
-    int addToCoursePlan (int courseId, int studentId, int termTypeId, int year);
+    void addToCoursePlan (int courseId, int studentId, int termTypeId, int year) throws Exception;
+
+    boolean isValidStudentId (int studentId) throws Exception;
+
+    boolean isValidCourseId (int courseId) throws Exception;
+
+    boolean isValidTermTypeId (int termTypeId) throws Exception;
+
+    boolean courseOffered (int courseId, int termTypeId) throws Exception;
+
+    boolean coursePlanExists (int courseId, int studentId, int termTypeId, int year) throws Exception;
 
     boolean moveCourse (int coursePlanId, int newTermTypeId, int newYear);
 
     boolean removeFromCoursePlan (int coursePlanId);
 
-    CoursePlan getCoursePlanById (int coursePlanId);
+    CoursePlan getCoursePlan (int courseId, int studentId, int termTypeId, int year) throws Exception;
 }

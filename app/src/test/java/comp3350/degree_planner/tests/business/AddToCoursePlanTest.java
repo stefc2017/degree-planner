@@ -9,9 +9,15 @@ import java.util.ArrayList;
 
 import comp3350.degree_planner.application.Main;
 import comp3350.degree_planner.business.AccessCoursePlan;
+import comp3350.degree_planner.business.exceptions.CourseAlreadyPlannedForTermException;
+import comp3350.degree_planner.business.exceptions.CourseDoesNotExistException;
+import comp3350.degree_planner.business.exceptions.CourseNotOfferedInTermException;
+import comp3350.degree_planner.business.exceptions.StudentDoesNotExistException;
+import comp3350.degree_planner.business.exceptions.TermTypeDoesNotExistException;
 import comp3350.degree_planner.objects.Course;
 import comp3350.degree_planner.objects.CourseOffering;
 import comp3350.degree_planner.objects.CoursePlan;
+import comp3350.degree_planner.objects.CoursePrerequisite;
 import comp3350.degree_planner.objects.CourseResult;
 import comp3350.degree_planner.objects.Degree;
 import comp3350.degree_planner.objects.DegreeCourse;
@@ -38,11 +44,12 @@ public class AddToCoursePlanTest {
     @Before
     public void setUp() {
         //Setting up test data for the add
-        //Mostly copied over from DataAccessStub.java with a few changes to data
+        //Mostly copied over from DataAccessStub.java
         testData = new DataAccessStub() {
             private ArrayList<Course> courses;
             private ArrayList<CourseOffering> courseOfferings;
             private ArrayList<CoursePlan> coursePlans;
+            private ArrayList<CoursePrerequisite> coursePrerequisites;
             private ArrayList<CourseResult> courseResults;
             private ArrayList<DegreeCourseType> degreeCourseTypes;
             private ArrayList<Degree> degrees;
@@ -53,6 +60,9 @@ public class AddToCoursePlanTest {
             private ArrayList<Student> students;
             private ArrayList<TermType> termTypes;
             private ArrayList<UserDefinedCourse> userDefinedCourses;
+
+            private String dbName;
+            private String dbType = "stub";
 
             @Override
             public void open(String dbName) {
@@ -101,7 +111,21 @@ public class AddToCoursePlanTest {
                 courses.add(tempScienceCourse);
                 scienceCourses.add(tempScienceCourse);
 
-                tempUserDefinedCourse = new UserDefinedCourse(3, "Cultural Anthropology", 3.0, "ANTH 1220");
+                tempScienceCourse = new ScienceCourse(3, "Object Orientation", 3.0, 1,
+                        2150, "Detailed look at proper object oriented programming.");
+                courses.add(tempScienceCourse);
+                scienceCourses.add(tempScienceCourse);
+
+                tempScienceCourse = new ScienceCourse(4, "Software Engineering I", 3.0, 1,
+                        3350, "Good software development practices.");
+                courses.add(tempScienceCourse);
+                scienceCourses.add(tempScienceCourse);
+
+                tempUserDefinedCourse = new UserDefinedCourse(5, "Cultural Anthropology", 3.0, "ANTH 1220");
+                courses.add(tempUserDefinedCourse);
+                userDefinedCourses.add(tempUserDefinedCourse);
+
+                tempUserDefinedCourse = new UserDefinedCourse(6, "Language and Culture", 3.0, "ANTH 2370");
                 courses.add(tempUserDefinedCourse);
                 userDefinedCourses.add(tempUserDefinedCourse);
 
@@ -118,6 +142,11 @@ public class AddToCoursePlanTest {
                         3.0, 1, 1010, "Basic programming concepts."), new DegreeCourseType(1, "Required")));
                 degreeCourses.add(new DegreeCourse(degree, new ScienceCourse(2, "Introductory Computer Science II", 3.0,
                         1, 1020, "More basic programming concepts."), new DegreeCourseType(1, "Required")));
+                degreeCourses.add(new DegreeCourse(degree, new ScienceCourse(3, "Object Orientation", 3.0, 1,
+                        2150, "Detailed look at proper object oriented programming."), new DegreeCourseType(1, "Required")));
+                degreeCourses.add(new DegreeCourse(degree, new ScienceCourse(4, "Software Engineering I", 3.0, 1,
+                        3350, "Good software development practices."), new DegreeCourseType(1, "Required")));
+
                 // Create Students
 
                 students = new ArrayList<Student>();
@@ -129,6 +158,9 @@ public class AddToCoursePlanTest {
                 courseResults.add(new CourseResult(1, new ScienceCourse(1, "Introductory Computer Science I",
                         3.0, 1, 1010, "Basic programming concepts."), new Student(1, 1234567, "Jim Bob",
                         "jimbob@myumanitoba.ca", "helloworld1", 1), new GradeType(1, "A+", 4.5)));
+                courseResults.add(new CourseResult(2, new ScienceCourse(2, "Introductory Computer Science II", 3.0,
+                        1, 1020, "More basic programming concepts."), new Student(1, 1234567, "Jim Bob",
+                        "jimbob@myumanitoba.ca", "helloworld1", 1), new GradeType(2, "A", 4.0)));
 
                 // Create Course Offerings
 
@@ -143,25 +175,46 @@ public class AddToCoursePlanTest {
                         1, 1020, "More basic programming concepts."), new TermType(1, "Fall")));
                 courseOfferings.add(new CourseOffering(new ScienceCourse(2, "Introductory Computer Science II", 3.0,
                         1, 1020, "More basic programming concepts."), new TermType(2, "Winter")));
+                courseOfferings.add(new CourseOffering(new ScienceCourse(2, "Introductory Computer Science II", 3.0,
+                        1, 1020, "More basic programming concepts."), new TermType(3, "Summer")));
+                courseOfferings.add(new CourseOffering(new ScienceCourse(3, "Object Orientation", 3.0, 1,
+                        2150, "Detailed look at proper object oriented programming."), new TermType(2, "Winter")));
+                courseOfferings.add(new CourseOffering(new ScienceCourse(4, "Software Engineering I", 3.0, 1,
+                        3350, "Good software development practices."), new TermType(2, "Winter")));
+                courseOfferings.add(new CourseOffering(new ScienceCourse(4, "Software Engineering I", 3.0, 1,
+                        3350, "Good software development practices."), new TermType(3, "Summer")));
 
                 // Create Course Plans
 
                 coursePlans = new ArrayList<CoursePlan>();
+                coursePlans.add(new CoursePlan(1, new ScienceCourse(3, "Object Orientation", 3.0, 1, 2150,
+                        "Detailed look at proper object oriented programming."), new Student(1,
+                        1234567, "Jim Bob", "jimbob@myumanitoba.ca", "helloworld1", 1), new TermType(2, "Winter"), 2018));
+                coursePlans.add(new CoursePlan(2, new ScienceCourse(1, "Introductory Computer Science I", 3.0, 1, 1010,
+                        "Basic programming concepts."), new Student(1, 1234567, "Jim Bob", "jimbob@myumanitoba.ca", "helloworld1", 1),
+                        new TermType(1, "Fall"), 2017));
+                coursePlans.add(new CoursePlan(3, new UserDefinedCourse(5, "Cultural Anthropology", 3.0, "ANTH 1220"),
+                        new Student(1, 1234567, "Jim Bob", "jimbob@myumanitoba.ca", "helloworld1", 1), new TermType(1, "Fall"), 2017));
+
+                // Create Course Prerequisites
+
+                coursePrerequisites = new ArrayList<CoursePrerequisite>();
+                coursePrerequisites.add(new CoursePrerequisite(new ScienceCourse(2, "Introductory Computer Science II", 3.0,
+                        1, 1020, "More basic programming concepts."), new ScienceCourse(1, "Introductory Computer Science I",
+                        3.0, 1, 1010, "Basic programming concepts.")));
+                coursePrerequisites.add(new CoursePrerequisite(new ScienceCourse(3, "Object Orientation", 3.0, 1,
+                        2150, "Detailed look at proper object oriented programming."), new ScienceCourse(2,
+                        "Introductory Computer Science II", 3.0, 1, 1020, "More basic programming concepts.")));
+                coursePrerequisites.add(new CoursePrerequisite(new ScienceCourse(4, "Software Engineering I", 3.0, 1,
+                        3350, "Good software development practices."), new ScienceCourse(3, "Object Orientation", 3.0, 1,
+                        2150, "Detailed look at proper object oriented programming.")));
             }
 
             @Override
-            public int addToCoursePlan (int courseId, int studentId, int termTypeId, int year) {
-                int id = -1;
+            public void addToCoursePlan (int courseId, int studentId, int termTypeId, int year) {
                 CoursePlan newCoursePlan;
-
-                if (isValidStudentId(studentId) && isValidCourseId(courseId) && isValidTermTypeId(termTypeId)
-                        && courseOffered(courseId, termTypeId)) {
-                    id = getMaxCoursePlanId()+1;
-                    newCoursePlan = new CoursePlan(id, getCourseById(courseId), getStudentById(studentId), getTermTypeById(termTypeId), year);
-                    coursePlans.add(newCoursePlan);
-                }
-
-                return id;
+                newCoursePlan = new CoursePlan(getMaxCoursePlanId()+1, getCourseById(courseId), getStudentById(studentId), getTermTypeById(termTypeId), year);
+                coursePlans.add(newCoursePlan);
             }
 
             private Student getStudentById (int studentId){
@@ -200,7 +253,7 @@ public class AddToCoursePlanTest {
                 return max;
             }
 
-            private boolean isValidStudentId (int studentId) {
+            public boolean isValidStudentId (int studentId) {
                 boolean validStudentId = false;
 
                 //Does a student with the entered studentId exist?
@@ -214,7 +267,7 @@ public class AddToCoursePlanTest {
                 return validStudentId;
             }
 
-            private boolean isValidCourseId (int courseId) {
+            public boolean isValidCourseId (int courseId) {
                 boolean validCourseId = false;
 
                 //Does a course with the entered courseId exist?
@@ -228,7 +281,7 @@ public class AddToCoursePlanTest {
                 return validCourseId;
             }
 
-            private boolean isValidTermTypeId (int termTypeId) {
+            public boolean isValidTermTypeId (int termTypeId) {
                 boolean validTermTypeId = false;
 
                 //Does a term type with the entered termTypeId exist?
@@ -242,14 +295,15 @@ public class AddToCoursePlanTest {
                 return validTermTypeId;
             }
 
-            private boolean courseOffered (int courseId, int termTypeId) {
+            public boolean courseOffered (int courseId, int termTypeId) {
                 boolean validTerm = false;
                 Course course = getCourseById(courseId);
 
                 if (course instanceof ScienceCourse) {
                     //Is the course historically offered in this term?
                     for (int i = 0; i < courseOfferings.size(); i++) {
-                        if (courseOfferings.get(i).getCourse().getId() == courseId && courseOfferings.get(i).getTermType().getId() == termTypeId) {
+                        if (courseOfferings.get(i).getCourse().getId() == courseId &&
+                                courseOfferings.get(i).getTermType().getId() == termTypeId) {
                             validTerm = true;
                             break;
                         }
@@ -260,6 +314,24 @@ public class AddToCoursePlanTest {
                 }
 
                 return validTerm;
+            }
+
+            public boolean coursePlanExists(int courseId, int studentId, int termTypeId, int year) {
+                boolean coursePlanExists = false;
+                CoursePlan currCoursePlan;
+
+                //Does a course plan for the specified course in the specified term already exist?
+                for (int i = 0; i<coursePlans.size(); i++) {
+                    currCoursePlan = coursePlans.get(i);
+
+                    if (currCoursePlan.getCourse().getId() == courseId && currCoursePlan.getStudent().getId() == studentId
+                            && currCoursePlan.getTermType().getId() == termTypeId && currCoursePlan.getYear() == year) {
+                        coursePlanExists = true;
+                        break;
+                    }
+                }
+
+                return coursePlanExists;
             }
 
             @Override
@@ -277,12 +349,17 @@ public class AddToCoursePlanTest {
             }
 
             @Override
-            public CoursePlan getCoursePlanById (int coursePlanId) {
+            public CoursePlan getCoursePlan (int courseId, int studentId, int termTypeId, int year) {
                 CoursePlan result = null;
+                CoursePlan currCoursePlan;
 
                 for (int i = 0; i<coursePlans.size(); i++) {
-                    if (coursePlans.get(i).getId() == coursePlanId) {
-                        result = coursePlans.get(i);
+                    currCoursePlan = coursePlans.get(i);
+
+                    if (currCoursePlan.getCourse().getId() == courseId && currCoursePlan.getStudent().getId() == studentId
+                            && currCoursePlan.getTermType().getId() == termTypeId && currCoursePlan.getYear() == year) {
+                        result = currCoursePlan;
+                        break;
                     }
                 }
 
@@ -294,74 +371,79 @@ public class AddToCoursePlanTest {
         testData.open(Main.dbName);
     }
 
-    @Test
-    public void testInvalidCourseId() {
+    @Test(expected = CourseDoesNotExistException.class)
+    public void testInvalidCourseId() throws Exception {
         System.out.println("\nStarting Add to Course Plan Test: invalid course id");
-        assertEquals ("Adding course plan with an invalid course ID did not fail", acp.addToCoursePlan(-1, 1, 1, 2018), -1);
+        acp.addToCoursePlan(-1, 1, 1, 2018);
         System.out.println("Finished Add to Course Plan Test: invalid course id");
     }
 
-    @Test
-    public void testInvalidStudentId() {
+    @Test(expected = StudentDoesNotExistException.class)
+    public void testInvalidStudentId() throws Exception {
         System.out.println("\nStarting Add to Course Plan Test: invalid student id");
-        assertEquals ("Adding course plan for invalid student ID did not fail", acp.addToCoursePlan(2, -1, 1, 2018), -1);
+        acp.addToCoursePlan(2, -1, 1, 2018);
         System.out.println("Finished Add to Course Plan Test: invalid student id");
     }
 
-    @Test
-    public void testInvalidTermTypeId() {
+    @Test(expected = TermTypeDoesNotExistException.class)
+    public void testInvalidTermTypeId() throws Exception {
         System.out.println("\nStarting Add to Course Plan Test: invalid term type id");
-        assertEquals ("Adding course plan with an invalid term type ID did not fail", acp.addToCoursePlan(2, 1, -1, 2018), -1);
+        acp.addToCoursePlan(2, 1, -1, 2018);
         System.out.println("Finished Add to Course Plan Test: invalid term type id");
     }
 
-    @Test
-    public void testNonExistentCourseId() {
+    @Test(expected = CourseDoesNotExistException.class)
+    public void testNonExistentCourseId() throws Exception {
         System.out.println("\nStarting Add to Course Plan Test: non-existent course id");
-        assertEquals ("Adding course plan with a non-existent course ID did not fail", acp.addToCoursePlan(5, 1, 1, 2018), -1);
+        acp.addToCoursePlan(10, 1, 1, 2018);
         System.out.println("Finished Add to Course Plan Test: non-existent course id");
     }
 
-    @Test
-    public void testNonExistentStudentId() {
+    @Test(expected = StudentDoesNotExistException.class)
+    public void testNonExistentStudentId() throws Exception {
         System.out.println("\nStarting Add to Course Plan Test: non-existent student id");
-        assertEquals ("Adding course plan for a non-existent student ID did not fail", acp.addToCoursePlan(2, 5, 1, 2018), -1);
+        acp.addToCoursePlan(2, 5, 1, 2018);
         System.out.println("Finished Add to Course Plan Test: non-existent student id");
     }
 
-    @Test
-    public void testNonExistentTermTypeId() {
+    @Test(expected = TermTypeDoesNotExistException.class)
+    public void testNonExistentTermTypeId() throws Exception {
         System.out.println("\nStarting Add to Course Plan Test: non-existent term type id");
-        assertEquals ("Adding course plan with a non-existent term type ID did not fail", acp.addToCoursePlan(2, 1, 5, 2018), -1);
+        acp.addToCoursePlan(2, 1, 4, 2018);
         System.out.println("Finished Add to Course Plan Test: non-existent term type id");
     }
 
-    @Test
-    public void testWrongTerm() {
+    @Test(expected = CourseNotOfferedInTermException.class)
+    public void testWrongTerm() throws Exception {
         System.out.println("\nStarting Add to Course Plan Test: course not offered in term");
-        assertEquals ("Adding course plan with a term the course is not offered in did not fail", acp.addToCoursePlan(2, 1, 3, 2018), -1);
+        acp.addToCoursePlan(4, 1, 1, 2018);
+        System.out.println("Finished Add to Course Plan Test: course not offered in term");
+    }
+
+    @Test(expected = CourseAlreadyPlannedForTermException.class)
+    public void testDuplicateCoursePlan() throws Exception {
+        System.out.println("\nStarting Add to Course Plan Test: course not offered in term");
+        acp.addToCoursePlan(3, 1, 2, 2018);
         System.out.println("Finished Add to Course Plan Test: course not offered in term");
     }
 
     @Test
-    public void testValidData() {
-        int idAdded;
+    public void testValidData() throws Exception {
         CoursePlan added;
 
         final int SCIENCE_COURSE_ID = 2;
         final int STUDENT_ID = 1;
         final int TERM_TYPE_ID = 1;
         final int YEAR = 2018;
-        final int USER_DEFINED_COURSE_ID = 3;
+        final int USER_DEFINED_COURSE_ID = 4;
         final int USER_DEFINED_TERM_TYPE_ID = 2;
 
         System.out.println("\nStarting Add to Course Plan Test: valid data");
 
         //Testing science course
-        idAdded = acp.addToCoursePlan(SCIENCE_COURSE_ID, STUDENT_ID, TERM_TYPE_ID, YEAR);
-        assertNotEquals ("Adding course plan with valid data failed", idAdded, -1);
+        acp.addToCoursePlan(SCIENCE_COURSE_ID, STUDENT_ID, TERM_TYPE_ID, YEAR);
 
-        added = testData.getCoursePlanById(idAdded);
+        added = testData.getCoursePlan(SCIENCE_COURSE_ID, STUDENT_ID, TERM_TYPE_ID, YEAR);
         assertNotNull("Course plan was not added", added);
         assertEquals ("Course IDs weren't equal", added.getCourse().getId(), SCIENCE_COURSE_ID);
         assertEquals ("Student IDs weren't equal", added.getStudent().getId(), STUDENT_ID);
@@ -369,10 +451,9 @@ public class AddToCoursePlanTest {
         assertEquals ("Years weren't equal", added.getYear(), YEAR);
 
         //Testing user-defined course
-        idAdded = acp.addToCoursePlan(USER_DEFINED_COURSE_ID, STUDENT_ID, USER_DEFINED_TERM_TYPE_ID, YEAR);
-        assertNotEquals ("Adding course plan with valid data failed", idAdded, -1);
+        acp.addToCoursePlan(USER_DEFINED_COURSE_ID, STUDENT_ID, USER_DEFINED_TERM_TYPE_ID, YEAR);
 
-        added = testData.getCoursePlanById(idAdded);
+        added = testData.getCoursePlan(USER_DEFINED_COURSE_ID, STUDENT_ID, USER_DEFINED_TERM_TYPE_ID, YEAR);
         assertNotNull("Course plan was not added", added);
         assertEquals ("Course IDs weren't equal", added.getCourse().getId(), USER_DEFINED_COURSE_ID);
         assertEquals ("Student IDs weren't equal", added.getStudent().getId(), STUDENT_ID);

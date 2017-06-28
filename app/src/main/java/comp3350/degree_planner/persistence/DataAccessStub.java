@@ -7,6 +7,8 @@ import java.util.List;
 import comp3350.degree_planner.application.Main;
 import comp3350.degree_planner.objects.*;
 
+import static android.R.attr.id;
+
 /**
  * Created by Kaleigh on 2017-05-31.
  *
@@ -666,20 +668,11 @@ public class DataAccessStub implements DataAccess {
      * Created by Tiffany Jiang on 2017-06-07
      *
      * Adds a new course plan
-     * Returns either the id of the newly added course plan, or -1 if an error occurred (input not valid)
      */
-    public int addToCoursePlan (int courseId, int studentId, int termTypeId, int year) {
-        int id = -1;
+    public void addToCoursePlan (int courseId, int studentId, int termTypeId, int year) {
         CoursePlan newCoursePlan;
-
-        if (isValidStudentId(studentId) && isValidCourseId(courseId) && isValidTermTypeId(termTypeId)
-                && courseOffered(courseId, termTypeId)) {
-            id = getMaxCoursePlanId()+1;
-            newCoursePlan = new CoursePlan(id, getCourseById(courseId), getStudentById(studentId), getTermTypeById(termTypeId), year);
-            coursePlans.add(newCoursePlan);
-        }
-
-        return id;
+        newCoursePlan = new CoursePlan(getMaxCoursePlanId()+1, getCourseById(courseId), getStudentById(studentId), getTermTypeById(termTypeId), year);
+        coursePlans.add(newCoursePlan);
     }
 
     private Student getStudentById (int studentId){
@@ -706,7 +699,7 @@ public class DataAccessStub implements DataAccess {
         return termType;
     }
 
-    //Private helper method for add that gets the next increment of the id
+    //Private helper method for add that returns the next increment of the id
     private int getMaxCoursePlanId() {
         int max = 1;
 
@@ -719,9 +712,9 @@ public class DataAccessStub implements DataAccess {
         return max;
     }
 
-    //These next few private helper methods perform checks (as stated respectively) for adding and modify course plans
+    //These next few methods perform checks (as stated respectively) for adding and modify course plans
 
-    private boolean isValidStudentId (int studentId) {
+    public boolean isValidStudentId (int studentId) {
         boolean validStudentId = false;
 
         //Does a student with the entered studentId exist?
@@ -735,7 +728,7 @@ public class DataAccessStub implements DataAccess {
         return validStudentId;
     }
 
-    private boolean isValidCourseId (int courseId) {
+    public boolean isValidCourseId (int courseId) {
         boolean validCourseId = false;
 
         //Does a course with the entered courseId exist?
@@ -749,7 +742,7 @@ public class DataAccessStub implements DataAccess {
         return validCourseId;
     }
 
-    private boolean isValidTermTypeId (int termTypeId) {
+    public boolean isValidTermTypeId (int termTypeId) {
         boolean validTermTypeId = false;
 
         //Does a term type with the entered termTypeId exist?
@@ -763,7 +756,7 @@ public class DataAccessStub implements DataAccess {
         return validTermTypeId;
     }
 
-    private boolean courseOffered (int courseId, int termTypeId) {
+    public boolean courseOffered (int courseId, int termTypeId) {
         boolean validTerm = false;
         Course course = getCourseById(courseId);
 
@@ -782,6 +775,24 @@ public class DataAccessStub implements DataAccess {
         }
 
         return validTerm;
+    }
+
+    public boolean coursePlanExists(int courseId, int studentId, int termTypeId, int year) {
+        boolean coursePlanExists = false;
+        CoursePlan currCoursePlan;
+
+        //Does a course plan for the specified course in the specified term already exist?
+        for (int i = 0; i<coursePlans.size(); i++) {
+            currCoursePlan = coursePlans.get(i);
+
+            if (currCoursePlan.getCourse().getId() == courseId && currCoursePlan.getStudent().getId() == studentId
+                    && currCoursePlan.getTermType().getId() == termTypeId && currCoursePlan.getYear() == year) {
+                coursePlanExists = true;
+                break;
+            }
+        }
+
+        return coursePlanExists;
     }
 
     /*
@@ -829,12 +840,17 @@ public class DataAccessStub implements DataAccess {
         return removeSuccessful;
     }
 
-    public CoursePlan getCoursePlanById (int coursePlanId) {
+    public CoursePlan getCoursePlan (int courseId, int studentId, int termTypeId, int year) {
         CoursePlan result = null;
+        CoursePlan currCoursePlan;
 
         for (int i = 0; i<coursePlans.size(); i++) {
-            if (coursePlans.get(i).getId() == coursePlanId) {
-                result = coursePlans.get(i);
+            currCoursePlan = coursePlans.get(i);
+
+            if (currCoursePlan.getCourse().getId() == courseId && currCoursePlan.getStudent().getId() == studentId
+                    && currCoursePlan.getTermType().getId() == termTypeId && currCoursePlan.getYear() == year) {
+                result = currCoursePlan;
+                break;
             }
         }
 

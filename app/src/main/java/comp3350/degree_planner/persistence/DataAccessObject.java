@@ -3,6 +3,9 @@ package comp3350.degree_planner.persistence;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
+import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.util.ArrayList;
 
@@ -12,7 +15,12 @@ import comp3350.degree_planner.objects.CoursePlan;
 import comp3350.degree_planner.objects.CourseResult;
 import comp3350.degree_planner.objects.Degree;
 import comp3350.degree_planner.objects.Department;
+import comp3350.degree_planner.objects.ScienceCourse;
+import comp3350.degree_planner.objects.Student;
 import comp3350.degree_planner.objects.TermType;
+import comp3350.degree_planner.objects.UserDefinedCourse;
+
+import static android.R.attr.description;
 
 /**
  * Created by Tiffany Jiang on 2017-06-24.
@@ -68,6 +76,8 @@ public class DataAccessObject implements DataAccess {
         this.dbName = dbName;
     }
 
+    private final static int hsqlNoParentViolationErrorCode = -177;
+
     public void open(String dbPath)
     {
         String url;
@@ -86,6 +96,42 @@ public class DataAccessObject implements DataAccess {
         {
             processSQLError(e);
         }
+
+        try {
+            getCoursePlan(1, 1, 1, 2019);
+        } catch (SQLException se) {
+            se.printStackTrace();
+            String temp = se.getSQLState();
+            int temp2 = se.getErrorCode();
+            String temp3 = se.getMessage();
+            String temp4 = se.toString();
+            System.out.println (temp + " " + temp2 + temp3 + temp4);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+//        boolean errorOccurred = false;
+//        try {
+////            if (courseOffered(1, 1)) {
+//                addToCoursePlan(50, 1, 1, 2019);
+////            }
+//        } catch (SQLIntegrityConstraintViolationException cve) {
+//            System.out.println (cve.getCause().toString());
+//            errorOccurred = true;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        if (errorOccurred) {
+//            try {
+//                if (!isValidCourseId(6)) {
+//                    System.out.println ("here");
+//                }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+
         System.out.println("Opened " + dbType + " database " + dbPath);
     }
 
@@ -223,8 +269,88 @@ public class DataAccessObject implements DataAccess {
         return null;
     }
 
-    public int addToCoursePlan (int courseId, int studentId, int termTypeId, int year) {
-        return -1;
+    public void addToCoursePlan (int courseId, int studentId, int termTypeId, int year) throws Exception {
+        String newCoursePlanValues = courseId + ", " + studentId + ", " + termTypeId + ", " + year;
+        cmdString = "Insert into Course_Plan (Course_Id, Student_Id, Term_Type_Id, Year) " + " Values (" + newCoursePlanValues + ")";
+        updateCount = st1.executeUpdate(cmdString);
+    }
+
+    //These next few methods perform checks (as stated respectively) for adding and modify course plans
+
+    public boolean courseOffered (int courseId, int termTypeId) throws Exception {
+        boolean validTerm = false;
+
+        //For user-defined courses, let the user freely enter the the term and year
+        cmdString = "Select is_user_defined from Course where id = " + courseId;
+        rs4 = st2.executeQuery(cmdString);
+        while (rs4.next()) {
+            validTerm = rs4.getBoolean("is_user_defined");
+        }
+        rs4.close();
+
+        if (!validTerm) {
+            //Is the course historically offered in this term?
+            cmdString = "Select count(*) as courseOfferingCount from Course_Offering where course_id = " + courseId + " and term_type_id = " + termTypeId;
+            rs4 = st2.executeQuery(cmdString);
+            while (rs4.next()) {
+                validTerm = (rs4.getInt("courseOfferingCount") > 0);
+            }
+            rs4.close();
+        }
+
+        return validTerm;
+    }
+
+    public boolean isValidStudentId (int studentId) throws Exception {
+        boolean studentExists = false;
+
+        cmdString = "Select count(*) as studentCount from Student where id = " + studentId;
+        rs4 = st2.executeQuery(cmdString);
+        while (rs4.next()) {
+            studentExists = (rs4.getInt("studentCount") > 0);
+        }
+        rs4.close();
+
+        return studentExists;
+    }
+
+    public boolean isValidCourseId (int courseId) throws Exception {
+        boolean courseExists = false;
+
+        cmdString = "Select count(*) as courseCount from Course where id = " + courseId;
+        rs4 = st2.executeQuery(cmdString);
+        while (rs4.next()) {
+            courseExists = (rs4.getInt("courseCount") > 0);
+        }
+        rs4.close();
+
+        return courseExists;
+    }
+
+    public boolean isValidTermTypeId (int termTypeId) throws Exception {
+        boolean termTypeExists = false;
+
+        cmdString = "Select count(*) as termTypeCount from Term_Type where id = " + termTypeId;
+        rs4 = st2.executeQuery(cmdString);
+        while (rs4.next()) {
+            termTypeExists = (rs4.getInt("termTypeCount") > 0);
+        }
+        rs4.close();
+
+        return termTypeExists;
+    }
+
+    public boolean coursePlanExists (int courseId, int studentId, int termTypeId, int year) throws Exception {
+        boolean coursePlanExists = false;
+
+        cmdString = "Select count(*) as coursePlanCount from Course_Plan where course_id = " + courseId + " and student_id = " + studentId + " and term_type_id = " + termTypeId + " and year = " + year;
+        rs4 = st2.executeQuery(cmdString);
+        while (rs4.next()) {
+            coursePlanExists = (rs4.getInt("coursePlanCount") > 0);
+        }
+        rs4.close();
+
+        return coursePlanExists;
     }
 
     public boolean moveCourse (int coursePlanId, int newTermTypeId, int newYear) {
@@ -235,11 +361,55 @@ public class DataAccessObject implements DataAccess {
         return false;
     }
 
-    public CoursePlan getCoursePlanById (int coursePlanId) {
-        return null;
+    public CoursePlan getCoursePlan (int courseId, int studentId, int termTypeId, int year) throws Exception {
+        CoursePlan cp = null;
+        Course course = null;
+        Student student = null;
+        TermType termType = null;
+        Boolean isUserDefinedCourse;
+        int coursePlanId = -1;
+
+        cmdString = "SELECT * FROM Course_Plan cp INNER JOIN Course c ON cp.course_id = c.id where cp.course_id = " + courseId + " and cp.student_id = " + studentId + " and cp.term_type_id = " + termTypeId + " and cp.year = " + year;
+        rs4 = st2.executeQuery(cmdString);
+        while (rs4.next()) {
+            isUserDefinedCourse = rs4.getBoolean("is_user_defined");
+            if (isUserDefinedCourse) {
+                course = new UserDefinedCourse(rs4.getInt("course_id"), rs4.getString("name"), rs4.getDouble("credit_hours"), rs4.getString("full_abbreviation"));
+            } else {
+                course = new ScienceCourse(rs4.getInt("course_id"), rs4.getString("name"), rs4.getDouble("credit_hours"), rs4.getInt("department_id"), rs4.getInt("course_number"), rs4.getString("description"));
+//                String temp = course.getName();
+//                String temp2 = ((ScienceCourse)course).getDescription();
+//                System.out.println(course.getName());
+//                System.out.println(((ScienceCourse)course).getDescription());
+            }
+        }
+        rs4.close();
+
+        if (course != null) { //Course plan found in database
+            cmdString = "SELECT * FROM Course_Plan cp INNER JOIN Student s ON cp.student_id = s.id where cp.course_id = " + courseId + " and cp.student_id = " + studentId + " and cp.term_type_id = " + termTypeId + " and cp.year = " + year;
+            rs4 = st2.executeQuery(cmdString);
+            while (rs4.next()) {
+                student = new Student(rs4.getInt("student_id"), rs4.getInt("student_number"), rs4.getString("name"), rs4.getString("email"), rs4.getString("password"), rs4.getInt("degree_id"));
+            }
+            rs4.close();
+
+            cmdString = "SELECT cp.id as course_plan_id, tt.id, tt.season FROM Course_Plan cp INNER JOIN Term_Type tt ON cp.term_type_id = tt.id where cp.course_id = " + courseId + " and cp.student_id = " + studentId + " and cp.term_type_id = " + termTypeId + " and cp.year = " + year;
+            rs4 = st2.executeQuery(cmdString);
+            while (rs4.next()) {
+                termType = new TermType(rs4.getInt("term_type_id"), rs4.getString("season"));
+                coursePlanId = rs4.getInt("course_plan_id");
+            }
+            rs4.close();
+
+            cp = new CoursePlan(coursePlanId, course, student, termType, year);
+        } else { //Course Plan was not found in database
+            cp = null;
+        }
+
+        return cp;
     }
 
-    public String processSQLError(Exception e)
+    private String processSQLError(Exception e)
     {
         String result = "*** SQL Error: " + e.getMessage();
 
