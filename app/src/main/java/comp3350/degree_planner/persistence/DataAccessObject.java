@@ -610,10 +610,7 @@ public class DataAccessObject implements DataAccess {
     */
     public List<Course> getCoursesTaken(int studentId) {
         List<Course> coursesTaken = new ArrayList<Course>();
-        Course course;
-
-        course = null;
-        coursesTaken = null;
+        Course course = null;
 
         try
         {
