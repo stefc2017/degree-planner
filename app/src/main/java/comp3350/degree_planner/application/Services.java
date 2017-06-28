@@ -26,6 +26,17 @@ public class Services {
         return dataAccessService;
     }
 
+    public static DataAccess createDataAccess(DataAccess alternateDataAccessService)
+    {
+        if (dataAccessService == null)
+        {
+            System.out.println("alternateive datasource received\n");
+            dataAccessService = alternateDataAccessService;
+            dataAccessService.open(Main.getDBPathName());
+        }
+        return dataAccessService;
+    }
+
     public static DataAccess getDataAccess()
     {
         if (dataAccessService == null)
