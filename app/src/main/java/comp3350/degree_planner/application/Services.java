@@ -30,7 +30,6 @@ public class Services {
     {
         if (dataAccessService == null)
         {
-            System.out.println("alternateive datasource received\n");
             dataAccessService = alternateDataAccessService;
             dataAccessService.open(Main.getDBPathName());
         }
