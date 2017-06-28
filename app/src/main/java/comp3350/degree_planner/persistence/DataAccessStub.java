@@ -200,13 +200,14 @@ public class DataAccessStub implements DataAccess {
                 2150, "Detailed look at proper object oriented programming.")));
 
         //Create Rating data
-
+        ratingTypes = new ArrayList<RatingType>();
         ratingTypes.add (new RatingType(1, "Excellent", 5));
         ratingTypes.add (new RatingType(2, "Good", 4));
         ratingTypes.add (new RatingType(3, "Fair", 3));
         ratingTypes.add (new RatingType(4, "Poor", 2));
         ratingTypes.add (new RatingType(5, "Very Poor", 1));
 
+        ratings = new ArrayList<Rating>();
         ratings.add (new Rating(1, new Student(1, 1234567, "Jim Bob", "jimbob@myumanitoba.ca", "helloworld1", 1),
                 new ScienceCourse(1, "Introductory Computer Science I", 3.0, 1,
                 1010, "Basic programming concepts."), new RatingType(1, "Excellent", 5),
