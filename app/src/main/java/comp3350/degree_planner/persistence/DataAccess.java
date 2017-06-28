@@ -53,8 +53,6 @@ public interface DataAccess {
 
     List<CourseResult> getCourseResultsByStudentId(int studentId);
 
-    CoursePlan getCoursePlanById (int coursePlanId);
-
     int getFailingGradeId();
 
     List<CourseOffering> getCourseOfferingsByTerm(TermType type);

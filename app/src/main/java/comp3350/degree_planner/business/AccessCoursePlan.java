@@ -5,9 +5,13 @@ import comp3350.degree_planner.business.exceptions.CourseNotOfferedInTermExcepti
 import comp3350.degree_planner.business.exceptions.CourseDoesNotExistException;
 import comp3350.degree_planner.business.exceptions.StudentDoesNotExistException;
 import comp3350.degree_planner.business.exceptions.TermTypeDoesNotExistException;
+import comp3350.degree_planner.objects.Student;
+import comp3350.degree_planner.objects.TermType;
 import comp3350.degree_planner.persistence.DataAccess;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.hsqldb.HsqlDateTime.e;
 

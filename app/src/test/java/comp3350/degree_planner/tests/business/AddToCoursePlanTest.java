@@ -60,6 +60,7 @@ public class AddToCoursePlanTest {
             private List<Student> students;
             private List<TermType> termTypes;
             private List<UserDefinedCourse> userDefinedCourses;
+            private List<CoursePrerequisite> coursePrerequisites;
 
             private String dbName;
             private String dbType = "stub";
@@ -253,7 +254,7 @@ public class AddToCoursePlanTest {
                 return max;
             }
 
-            private boolean isValidStudentId (int studentId) {
+            public boolean isValidStudentId (int studentId) {
                 boolean validStudentId = false;
 
                 //Does a student with the entered studentId exist?

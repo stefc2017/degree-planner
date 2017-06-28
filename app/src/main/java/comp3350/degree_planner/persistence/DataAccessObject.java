@@ -22,6 +22,7 @@ import comp3350.degree_planner.objects.Student;
 import comp3350.degree_planner.objects.TermType;
 import comp3350.degree_planner.objects.UserDefinedCourse;
 
+import static android.R.attr.id;
 import static org.hsqldb.HsqlDateTime.e;
 import comp3350.degree_planner.objects.UserDefinedCourse;
 
@@ -105,7 +106,11 @@ public class DataAccessObject implements DataAccess {
         }
 
         try {
-            getCoursePlan(1, 1, 1, 2019);
+            CoursePlan cp = getCoursePlan(1, 1, 1, 2017);
+            String name = cp.getCourse().getName();
+            String email = cp.getStudent().getEmail();
+            String season = cp.getTermType().getSeason();
+            System.out.println (name + email + season);
         } catch (SQLException se) {
             se.printStackTrace();
             String temp = se.getSQLState();
@@ -768,7 +773,6 @@ public class DataAccessObject implements DataAccess {
         return eligibleDegreeCourses;
     }
 
-    public int addToCoursePlan (int courseId, int studentId, int termTypeId, int year) { return -1;
     public void addToCoursePlan (int courseId, int studentId, int termTypeId, int year) throws Exception {
         String newCoursePlanValues = courseId + ", " + studentId + ", " + termTypeId + ", " + year;
         cmdString = "Insert into Course_Plan (Course_Id, Student_Id, Term_Type_Id, Year) " + " Values (" + newCoursePlanValues + ")";
@@ -866,51 +870,50 @@ public class DataAccessObject implements DataAccess {
         Course course = null;
         Student student = null;
         TermType termType = null;
-        Boolean isUserDefinedCourse;
-        int coursePlanId = -1;
 
-        cmdString = "SELECT * FROM Course_Plan cp INNER JOIN Course c ON cp.course_id = c.id where cp.course_id = " + courseId + " and cp.student_id = " + studentId + " and cp.term_type_id = " + termTypeId + " and cp.year = " + year;
+        cmdString = "SELECT * FROM Course_Plan cp where cp.course_id = " + courseId + " and cp.student_id = " + studentId + " and cp.term_type_id = " + termTypeId + " and cp.year = " + year;
         rs4 = st2.executeQuery(cmdString);
+
         while (rs4.next()) {
-            isUserDefinedCourse = rs4.getBoolean("is_user_defined");
-            if (isUserDefinedCourse) {
-                course = new UserDefinedCourse(rs4.getInt("course_id"), rs4.getString("name"), rs4.getDouble("credit_hours"), rs4.getString("full_abbreviation"));
-            } else {
-                course = new ScienceCourse(rs4.getInt("course_id"), rs4.getString("name"), rs4.getDouble("credit_hours"), rs4.getInt("department_id"), rs4.getInt("course_number"), rs4.getString("description"));
-//                String temp = course.getName();
-//                String temp2 = ((ScienceCourse)course).getDescription();
-//                System.out.println(course.getName());
-//                System.out.println(((ScienceCourse)course).getDescription());
-            }
+            course = getCourseById(rs4.getInt("course_id"));
+            student = getStudentById(rs4.getInt("student_id"));
+            termType = getTermTypeById(rs4.getInt("term_type_id"));
+            cp = new CoursePlan(rs4.getInt("id"), course, student, termType, rs4.getInt("year"));
         }
         rs4.close();
 
-    public Course getCourse(CourseResult courseResult, List<Course> allCourses){ return null; }
-
-    public String processSQLError(Exception e)
-        if (course != null) { //Course plan found in database
-            cmdString = "SELECT * FROM Course_Plan cp INNER JOIN Student s ON cp.student_id = s.id where cp.course_id = " + courseId + " and cp.student_id = " + studentId + " and cp.term_type_id = " + termTypeId + " and cp.year = " + year;
-            rs4 = st2.executeQuery(cmdString);
-            while (rs4.next()) {
-                student = new Student(rs4.getInt("student_id"), rs4.getInt("student_number"), rs4.getString("name"), rs4.getString("email"), rs4.getString("password"), rs4.getInt("degree_id"));
-            }
-            rs4.close();
-
-            cmdString = "SELECT cp.id as course_plan_id, tt.id, tt.season FROM Course_Plan cp INNER JOIN Term_Type tt ON cp.term_type_id = tt.id where cp.course_id = " + courseId + " and cp.student_id = " + studentId + " and cp.term_type_id = " + termTypeId + " and cp.year = " + year;
-            rs4 = st2.executeQuery(cmdString);
-            while (rs4.next()) {
-                termType = new TermType(rs4.getInt("term_type_id"), rs4.getString("season"));
-                coursePlanId = rs4.getInt("course_plan_id");
-            }
-            rs4.close();
-
-            cp = new CoursePlan(coursePlanId, course, student, termType, year);
-        } else { //Course Plan was not found in database
-            cp = null;
-        }
-
         return cp;
     }
+
+    private Student getStudentById (int studentId) throws Exception {
+        Student student = null;
+
+        cmdString = "Select * from Student where id = " + studentId;
+        rs2 = st1.executeQuery(cmdString);
+
+        while (rs2.next()) {
+            student = new Student(rs2.getInt("id"), rs2.getInt("student_number"), rs2.getString("name"), rs2.getString("email"), rs2.getString("password"), rs2.getInt("degree_id"));
+        }
+        rs2.close();
+
+        return student;
+    }
+
+    private TermType getTermTypeById (int termTypeId) throws Exception {
+        TermType tt = null;
+
+        cmdString = "Select * from Term_Type where id = " + termTypeId;
+        rs2 = st1.executeQuery(cmdString);
+
+        while (rs2.next()) {
+            tt = new TermType(rs2.getInt("id"), rs2.getString("season"));
+        }
+        rs2.close();
+
+        return tt;
+    }
+
+    public Course getCourse(CourseResult courseResult, List<Course> allCourses){ return null; }
 
     private String processSQLError(Exception e)
     {
