@@ -794,13 +794,23 @@ public class DataAccessObject implements DataAccess {
     public List<CoursePlan> getCoursePlansByStudent (Student student) {
         ArrayList<CoursePlan> coursePlans = new ArrayList<CoursePlan>();
 
+        CoursePlan coursePlan;
+        int coursePlanId;
+        int coursePlanYear;
+
         Course course;
+        int courseId;
+        String courseName;
+        double courseCreditHours;
 
         TermType termType;
+        int termTypeId;
+        String termTypeSeason;
 
         try
         {
-            cmdString = "select * " +
+            cmdString = "select cp.id, cp.year, " +
+                    "c.id as COURSE_ID, c.name as COURSE_NAME, c.creditHours, c.departmentId, c." +
                     "from Course_Plan cp inner join " +
                     "Course c on cp.course_id = c.id inner join " +
                     "Term_Type tt on cp.term_type_id = tt.id " +
@@ -815,7 +825,12 @@ public class DataAccessObject implements DataAccess {
         try
         {
             while (rs2.next()) {
+                // Get the Course Plan information
+                coursePlanId = rs2.getInt("");
 
+                // Get the course information
+                courseId = rs2.getInt("COURSE_ID");
+                courseName = rs2.getString("COURSE_NAME");
             }
             id = Integer.parseInt(rs2.getString("ID"));
             name = rs2.getString("NAME");
