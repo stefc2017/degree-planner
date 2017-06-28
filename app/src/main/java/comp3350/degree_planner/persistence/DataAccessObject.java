@@ -116,13 +116,13 @@ public class DataAccessObject implements DataAccess {
         Course course;
 
         course = null;
-        allCourses = null;
-        coursesTaken = null;
-        coursesNotTaken = null;
+        allCourses = new ArrayList<Course>();
+        coursesTaken = new ArrayList<Course>();
+        coursesNotTaken = new ArrayList<Course>();
 
         try
         {
-            cmdString = "Select COURSE_ID from CourseResult where STUDENT_ID = " + studentNumber;
+            cmdString = "Select COURSE_ID from COURSE_RESULT where STUDENT_ID = " + studentNumber;
             rs2 = st1.executeQuery(cmdString);
         }
         catch (Exception e)
@@ -215,7 +215,7 @@ public class DataAccessObject implements DataAccess {
         List<Course> coursesCanTake;
 
         coursesNotTaken = getCoursesNotTaken(studentNumber);
-        coursesCanTake = null;
+        coursesCanTake = new ArrayList<Course>();
 
         for(int i = 0; i < coursesNotTaken.size(); i++){
             if(hasPrerequisites(studentNumber, (coursesNotTaken.get(i)).getName())){
@@ -229,7 +229,7 @@ public class DataAccessObject implements DataAccess {
     public boolean hasPrerequisites(int studentNumber, String courseName) {
         boolean hasPreReqs = true;
         List<Course> preReqs_ofCourse = null;
-        List<Course> coursesTaken = null;
+        List<Course> coursesTaken = new ArrayList<Course>();
         Course course;
         int id;
         String name;
@@ -603,20 +603,115 @@ public class DataAccessObject implements DataAccess {
         return null;
     }
 
+    /*
+    Created by Matthew Provencher on 2017-06-27
+
+    Returns a list of courses taken by a given student
+    */
     public List<Course> getCoursesTaken(int studentId) {
-        return null;
+        List<Course> coursesTaken = new ArrayList<Course>();
+        Course course = null;
+
+        try
+        {
+            cmdString = "Select COURSE_ID from Course_Result where STUDENT_ID = " + studentId;
+            rs2 = st1.executeQuery(cmdString);
+        }
+        catch (Exception e)
+        {
+            processSQLError(e);
+        }
+        try
+        {
+            while(rs2.next()){
+                course = getCourseById(Integer.parseInt(rs3.getString("COURSE_ID")));
+                coursesTaken.add(course);
+            }
+        }
+        catch (Exception e)
+        {
+            result = processSQLError(e);
+        }
+        return coursesTaken;
     }
 
+    /*
+        Created by Matthew Provencher on 2017-06-27
+
+        Returns a list of degree required courses student has taken
+    */
     public List<Course> getDegreeCoursesTaken(int studentId, int degreeId) {
-        return null;
+        List<Course> coursesTaken = getCoursesTaken(studentId);
+        List<Course> degreeCourses = getDegreeCourses(degreeId);
+        List<Course> takenDegreeCourses = new ArrayList<Course>();
+
+        for (Course degreeCourse : degreeCourses) {
+            if (coursesTaken.contains(degreeCourse)) {
+                takenDegreeCourses.add(degreeCourse);
+            }
+        }
+
+        return takenDegreeCourses;
     }
 
+    /*
+        Created by Matthew Provencher on 2017-06-27
+
+        Returns a list of courses required by a degree
+    */
     public List<Course> getDegreeCourses(int degreeId) {
-        return null;
+        List<Course> requiredCourses = new ArrayList<Course>();
+        Course course = null;
+        final int REQUIRED_COURSE = 1;
+
+        try
+        {
+            cmdString = "Select COURSE_ID from DEGREE_COURSE WHERE DEGREE_ID = " + degreeId + " AND DEGREE_COURSE_TYPE_ID = " + REQUIRED_COURSE;
+            rs2 = st1.executeQuery(cmdString);
+        }
+        catch (Exception e)
+        {
+            processSQLError(e);
+        }
+        try
+        {
+            while(rs2.next()){
+                course = getCourseById(Integer.parseInt(rs3.getString("COURSE_ID")));
+                requiredCourses.add(course);
+            }
+        }
+        catch (Exception e)
+        {
+            result = processSQLError(e);
+        }
+
+        return requiredCourses;
     }
 
+    /*
+    Created by Matthew Provencher on 2017-06-27
+
+    Returns a list of required degree courses that a given student can take
+    */
     public List<Course> getEligibleRequiredCourse(int studentNum, int degreeId) {
-        return null;
+        List<Course> coursesTaken = getCoursesTaken(studentNum);
+        List<Course> degreeCourses = getDegreeCourses(degreeId);
+        List<Course> notTakenDegreeCourses = new ArrayList<Course>();
+        List<Course> eligibleDegreeCourses = new ArrayList<Course>();
+
+        for (Course degreeCourse : degreeCourses) {
+            if (!(coursesTaken.contains(degreeCourse))) {
+                notTakenDegreeCourses.add(degreeCourse);
+            }
+        }
+
+        for (Course course : notTakenDegreeCourses) {
+            if (hasPrerequisites(studentNum, course.getName())) {
+                eligibleDegreeCourses.add(course);
+            }
+        }
+
+        return eligibleDegreeCourses;
     }
 
     public int addToCoursePlan (int courseId, int studentId, int termTypeId, int year) { return -1;
