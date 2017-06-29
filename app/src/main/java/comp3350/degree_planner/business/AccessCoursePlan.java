@@ -10,11 +10,8 @@ import comp3350.degree_planner.objects.Student;
 import comp3350.degree_planner.objects.TermType;
 import comp3350.degree_planner.persistence.DataAccess;
 
-import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.hsqldb.HsqlDateTime.e;
 
 import comp3350.degree_planner.objects.CoursePlan;
 import comp3350.degree_planner.objects.ScienceCourse;
@@ -33,6 +30,10 @@ public class AccessCoursePlan {
         this.dataAccess = dataAccess;
     }
 
+    //Adds a course plan
+    //Throws 5 different custom exceptions based on the cases specified below,
+    // in which error can potentially occur
+    //May throw a different unexpected exception, which is caught and rethrown
     public void addToCoursePlan(int courseId, int studentId, int termTypeId, int year) throws Exception {
         try {
             if (!dataAccess.isValidStudentId(studentId)) {
@@ -54,17 +55,15 @@ public class AccessCoursePlan {
         }
     }
 
-    public boolean removeFromCoursePlan(int coursePlanId) {
-        return dataAccess.removeFromCoursePlan(coursePlanId);
-    }
-
+    //Moves a course plan to a different term
+    //Throws 4 different exceptions based on the cases specified below, in which error can occur
     public void moveCourse(int coursePlanId, int newTermTypeId, int newYear) throws Exception {
         CoursePlan cp;
 
         try {
             cp = dataAccess.getCoursePlan(coursePlanId);
 
-            if (cp != null) {
+            if (cp != null) { //Course Plan exists
                 if (!dataAccess.isValidTermTypeId(newTermTypeId)) {
                     throw new TermTypeDoesNotExistException();
                 } else if (!dataAccess.courseOffered(cp.getCourse().getId(), newTermTypeId)) {
@@ -74,6 +73,25 @@ public class AccessCoursePlan {
                 } else {
                     dataAccess.moveCourse(coursePlanId, newTermTypeId, newYear);
                 }
+            } else { //Course Plan does not exist - can't modify something that doesn't exist
+                throw new CoursePlanDoesNotExistException();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    //Removes a course plan
+    //Throws CoursePlanDoesNotExistException if coursePlanId parameter refers to a nonexistent Course Plan
+    public void removeFromCoursePlan(int coursePlanId) throws Exception {
+        CoursePlan cp;
+
+        try {
+            cp = dataAccess.getCoursePlan(coursePlanId);
+
+            if (cp != null) {
+                dataAccess.removeFromCoursePlan(coursePlanId);
             } else {
                 throw new CoursePlanDoesNotExistException();
             }

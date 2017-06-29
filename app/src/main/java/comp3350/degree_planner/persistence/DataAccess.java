@@ -75,7 +75,7 @@ public interface DataAccess {
 
     void moveCourse (int coursePlanId, int newTermTypeId, int newYear) throws Exception;
 
-    boolean removeFromCoursePlan (int coursePlanId);
+    void removeFromCoursePlan (int coursePlanId) throws Exception;
 
     CoursePlan getCoursePlan (int courseId, int studentId, int termTypeId, int year) throws Exception;
 

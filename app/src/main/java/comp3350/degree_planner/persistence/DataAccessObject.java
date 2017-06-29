@@ -811,8 +811,9 @@ public class DataAccessObject implements DataAccess {
         updateCount = st1.executeUpdate(cmdString);
     }
 
-    public boolean removeFromCoursePlan (int coursePlanId) {
-        return false;
+    public void removeFromCoursePlan (int coursePlanId) throws Exception {
+        cmdString = "DELETE FROM Course_Plan WHERE id = " + coursePlanId;
+        updateCount = st3.executeUpdate(cmdString);
     }
 
     public CoursePlan getCoursePlan (int courseId, int studentId, int termTypeId, int year) throws Exception {

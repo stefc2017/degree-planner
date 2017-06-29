@@ -11,6 +11,8 @@ import comp3350.degree_planner.tests.business.GetCompletedCoursesTest;
 import comp3350.degree_planner.tests.business.GetDegreeCoursesTest;
 import comp3350.degree_planner.tests.business.GetDegreesTest;
 import comp3350.degree_planner.tests.business.GetCourseOfferingsByTermTest;
+import comp3350.degree_planner.tests.business.MoveCourseTest;
+import comp3350.degree_planner.tests.business.RemoveFromCoursePlanTest;
 import comp3350.degree_planner.tests.objects.CourseOfferingTest;
 import comp3350.degree_planner.tests.objects.CoursePlanTest;
 import comp3350.degree_planner.tests.objects.CoursePrerequisiteTest;
@@ -37,8 +39,8 @@ import comp3350.degree_planner.tests.objects.UserDefinedCourseTest;
 @Suite.SuiteClasses({
         GetCompletedCoursesTest.class,
         AddToCoursePlanTest.class,
-//        MoveCourseTest.class,
-//        RemoveFromCoursePlanTest.class,
+        MoveCourseTest.class,
+        RemoveFromCoursePlanTest.class,
         GetDegreeCoursesTest.class,
         GetDegreesTest.class,
         CreditHoursTest.class,

@@ -249,6 +249,7 @@ public class MoveCourseTest {
                 return result;
             }
 
+            @Override
             public boolean isValidTermTypeId (int termTypeId) {
                 boolean validTermTypeId = false;
 
@@ -263,6 +264,7 @@ public class MoveCourseTest {
                 return validTermTypeId;
             }
 
+            @Override
             public boolean courseOffered (int courseId, int termTypeId) {
                 boolean validTerm = false;
                 Course course = getCourseById(courseId);
@@ -284,6 +286,7 @@ public class MoveCourseTest {
                 return validTerm;
             }
 
+            @Override
             public boolean coursePlanExists(int courseId, int studentId, int termTypeId, int year) {
                 boolean coursePlanExists = false;
                 CoursePlan currCoursePlan;

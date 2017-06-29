@@ -792,18 +792,13 @@ public class DataAccessStub implements DataAccess {
      *
      * Removes a course plan
      */
-    public boolean removeFromCoursePlan (int coursePlanId) {
-        boolean removeSuccessful = false;
-
+    public void removeFromCoursePlan (int coursePlanId) {
         for (int i = 0; i<coursePlans.size(); i++) {
             if (coursePlans.get(i).getId() == coursePlanId) {
                 coursePlans.remove(i);
-                removeSuccessful = true;
                 break;
             }
         }
-
-        return removeSuccessful;
     }
 
     public CoursePlan getCoursePlan (int coursePlanId) {
