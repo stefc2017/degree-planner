@@ -705,6 +705,7 @@ public class DataAccessObject implements DataAccess {
                                 curr_offering=new CourseOffering(curr_course,curr_term);
                                 courseOfferingsByTermList.add(curr_offering);
                             }
+                            rs2.close();
                         }catch (Exception e){
                             processSQLError(e);
                         }
