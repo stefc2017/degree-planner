@@ -80,4 +80,6 @@ public interface DataAccess {
     CoursePlan getCoursePlan (int courseId, int studentId, int termTypeId, int year) throws Exception;
 
     CoursePlan getCoursePlan (int coursePlanId) throws Exception;
+
+    List<CoursePlan> getCoursePlansByStudentId (int studentId) throws Exception;
 }

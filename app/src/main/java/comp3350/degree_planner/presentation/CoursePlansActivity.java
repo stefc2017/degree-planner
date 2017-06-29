@@ -33,7 +33,13 @@ public class CoursePlansActivity extends AppCompatActivity {
 
         ListView coursePlanList = (ListView)findViewById(R.id.coursePlans);
         accessCoursePlan = new AccessCoursePlan(Services.getDataAccess());
-        coursePlansAndHeaders = accessCoursePlan.getCoursePlansAndHeaders();
+
+        try {
+            coursePlansAndHeaders = accessCoursePlan.getCoursePlansAndHeaders(1);
+        }
+        catch (Exception e) {
+            setContentView(R.layout.generic_error);
+        }
 
         coursePlanList.setAdapter(new CoursePlanAdapter(this, coursePlansAndHeaders));
     }

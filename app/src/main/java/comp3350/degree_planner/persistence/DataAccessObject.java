@@ -926,16 +926,15 @@ public class DataAccessObject implements DataAccess {
     public Course getCourse(CourseResult courseResult, List<Course> allCourses){ return null; }
 
     /**
-     * getCoursePlansByStudent
+     * getCoursePlansByStudentId
      *
-     * @param student: The student whose course plans will be found
+     * @param studentId: The ID of the student whose course plans will be found
      * @return: List of all course plans for the student
      **/
 
-    public List<CoursePlan> getCoursePlansByStudent (Student student) {
+    public List<CoursePlan> getCoursePlansByStudentId (int studentId) {
         ArrayList<CoursePlan> coursePlans = new ArrayList<CoursePlan>();
 
-        CoursePlan coursePlan;
         int coursePlanId;
         int coursePlanYear;
 
@@ -943,49 +942,86 @@ public class DataAccessObject implements DataAccess {
         int courseId;
         String courseName;
         double courseCreditHours;
+        int courseNumber = 0;
+        String courseDescription = null;
+        int courseDepartmentId = 0;
+        String courseFullAbbreviation = null;
+        boolean isUserDefined;
 
         TermType termType;
         int termTypeId;
         String termTypeSeason;
 
+        Student student;
+
         try
         {
-            cmdString = "select cp.id, cp.year, " +
-                    "c.id as COURSE_ID, c.name as COURSE_NAME, c.creditHours, c.departmentId, c." +
+            cmdString = "select cp.ID, cp.YEAR, " +
+                    "c.ID as COURSE_ID, c.NAME as COURSE_NAME, c.CREDIT_HOURS, " +
+                    "c.COURSE_NUMBER, c.DESCRIPTION, c.DEPARTMENT_ID, " +
+                    "c.FULL_ABBREVIATION, c.IS_USER_DEFINED, " +
+                    "tt.ID as TERM_TYPE_ID, tt.SEASON " +
                     "from Course_Plan cp inner join " +
-                    "Course c on cp.course_id = c.id inner join " +
-                    "Term_Type tt on cp.term_type_id = tt.id " +
-                    "where cp.student_id = " + student.getId();
-            rs2 = st1.executeQuery(cmdString);
+                    "Course c on cp.COURSE_ID = c.ID inner join " +
+                    "Term_Type tt on cp.TERM_TYPE_ID = tt.ID " +
+                    "where cp.STUDENT_ID = " + studentId + " " +
+                    "order by cp.YEAR, tt.ID";
+            rs5 = st1.executeQuery(cmdString);
+        }
+        catch (Exception e)
+        {
+            processSQLError(e);
+        }
+        try
+        {
+            student = getStudentById(studentId);
+
+            try
+            {
+                while (rs5.next()) {
+                    // Get the Course Plan information
+                    coursePlanId = rs5.getInt("ID");
+                    coursePlanYear = rs5.getInt("YEAR");
+
+                    // Get the course information
+                    courseId = rs5.getInt("COURSE_ID");
+                    courseName = rs5.getString("COURSE_NAME");
+                    courseCreditHours = rs5.getDouble("CREDIT_HOURS");
+                    isUserDefined = rs5.getBoolean("IS_USER_DEFINED");
+                    if (isUserDefined) {
+                        courseFullAbbreviation = rs5.getString("FULL_ABBREVIATION");
+                        course = new UserDefinedCourse(courseId, courseName, courseCreditHours,
+                                courseFullAbbreviation);
+                    }
+                    else {
+                        courseNumber = rs5.getInt("COURSE_NUMBER");
+                        courseDescription = rs5.getString("DESCRIPTION");
+                        courseDepartmentId = rs5.getInt("DEPARTMENT_ID");
+                        course = new ScienceCourse(courseId, courseName, courseCreditHours,
+                                courseDepartmentId, courseNumber, courseDescription);
+                    }
+
+                    // Get the term type information
+                    termTypeId = rs5.getInt("TERM_TYPE_ID");
+                    termTypeSeason = rs5.getString("SEASON");
+                    termType = new TermType(termTypeId, termTypeSeason);
+
+                    // Add this course plan to the list the CoursePlan
+                    coursePlans.add(new CoursePlan(coursePlanId, course, student, termType, coursePlanYear));
+                }
+                rs5.close();
+            }
+            catch (Exception e)
+            {
+                processSQLError(e);
+            }
         }
         catch (Exception e)
         {
             processSQLError(e);
         }
 
-        try
-        {
-            while (rs2.next()) {
-                // Get the Course Plan information
-                coursePlanId = rs2.getInt("");
-
-                // Get the course information
-                courseId = rs2.getInt("COURSE_ID");
-                courseName = rs2.getString("COURSE_NAME");
-            }
-            id = Integer.parseInt(rs2.getString("ID"));
-            name = rs2.getString("NAME");
-            creditHours = Double.parseDouble(rs2.getString("CREDIT_HOURS"));
-            majorCreditHours = Double.parseDouble(rs2.getString("MAJOR_CREDIT_HOURS"));
-            gpaRequired = Double.parseDouble(rs2.getString("GPA_REQUIRED"));
-            degree = new Degree(id, name, creditHours, majorCreditHours, gpaRequired);
-
-            rs2.close();
-        }
-        catch (Exception e)
-        {
-            result = processSQLError(e);
-        }
+        return coursePlans;
     }
 
     private String processSQLError(Exception e)
