@@ -604,7 +604,7 @@ public class DataAccessObject implements DataAccess {
         {
             while (rs2.next())
             {
-                //Temps for now because I'm not sure how to get other course and termtype info
+
                 courseID=Integer.parseInt(rs2.getString("COURSE_ID"));
                 termTypeID=Integer.parseInt(rs2.getString("TERM_TYPE_ID"));
                 course=getCourseById(courseID);
@@ -621,6 +621,8 @@ public class DataAccessObject implements DataAccess {
 
         return courseOfferings;
     }
+
+
 
     public int getFailingGradeId() {
         return -1;
@@ -678,15 +680,37 @@ public class DataAccessObject implements DataAccess {
     }
 
     public List<CourseOffering> getCourseOfferingsByTerm(TermType type) {
+        int curr_term_ID;
+        int curr_course_ID;
+        TermType curr_term;
+        Course curr_course;
+        CourseOffering curr_offering;
         List<CourseOffering> courseOfferingsByTermList = new ArrayList<>();
         if (type != null) {
             for (int i = 0; i < courseOfferings.size(); i++) {
                 try {
                     if (type.getId() == 1 || type.getId() == 2 || type.getId() == 3) {
-                        if (type.getId() == (courseOfferings.get(i)).getTermType().getId()) {
-                            //Adds course offering based on courseID from CourseOfferings and matching TermID
-                            courseOfferingsByTermList.add(courseOfferings.get(i));
+                        try{//Read all entries with matching term_id
+                            cmdString = "Select * from COURSE_OFFERING where TERM_TYPE_ID = " + type.getId();
+                            rs2 = st1.executeQuery(cmdString);
+                        }catch (Exception e){
+                            processSQLError(e);
                         }
+
+                        try{
+                            while (rs2.next()){
+                                curr_term_ID=Integer.parseInt((rs2.getString("TERM_TYPE_ID")));
+                                curr_course_ID=Integer.parseInt((rs2.getString("COURSE_ID")));
+                                curr_term=getTermTypeById(curr_term_ID);
+                                curr_course=getCourseById(curr_course_ID);
+                                curr_offering=new CourseOffering(curr_course,curr_term);
+                                courseOfferingsByTermList.add(curr_offering);
+                            }
+                        }catch (Exception e){
+                            processSQLError(e);
+                        }
+
+
                     }
                 } catch (IllegalArgumentException e) {
                 }
