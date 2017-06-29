@@ -70,6 +70,7 @@ public class DataAccessObject implements DataAccess {
 
     private List<Degree> degrees;
     private List<Course> courses;
+    private List<CourseOffering> courseOfferings;
 
 
     public DataAccessObject(String dbName)
@@ -581,7 +582,44 @@ public class DataAccessObject implements DataAccess {
     }
 
     public List<CourseOffering> getAllCourseOfferings() {
-        return null;
+        CourseOffering courseOffering;
+        Course course;
+        TermType termType;
+        int courseID;
+        int termTypeID;
+        courseOfferings=new ArrayList<>();
+
+
+        result = null;
+        try
+        {
+            cmdString = "Select * from CourseOffering";
+            rs2 = st1.executeQuery(cmdString);
+        }
+        catch (Exception e)
+        {
+            processSQLError(e);
+        }
+        try
+        {
+            while (rs2.next())
+            {
+                //Temps for now because I'm not sure how to get other course and termtype info
+                courseID=Integer.parseInt(rs2.getString("COURSE_ID"));
+                termTypeID=Integer.parseInt(rs2.getString("TERM_TYPE_ID"));
+                course=getCourseById(courseID);
+                termType=getTermTypeById(termTypeID);
+                courseOffering=new CourseOffering(course,termType);
+                courseOfferings.add(courseOffering);
+            }
+            rs2.close();
+        }
+        catch (Exception e)
+        {
+            result = processSQLError(e);
+        }
+
+        return courseOfferings;
     }
 
     public int getFailingGradeId() {
@@ -640,7 +678,21 @@ public class DataAccessObject implements DataAccess {
     }
 
     public List<CourseOffering> getCourseOfferingsByTerm(TermType type) {
-        return null;
+        List<CourseOffering> courseOfferingsByTermList = new ArrayList<>();
+        if (type != null) {
+            for (int i = 0; i < courseOfferings.size(); i++) {
+                try {
+                    if (type.getId() == 1 || type.getId() == 2 || type.getId() == 3) {
+                        if (type.getId() == (courseOfferings.get(i)).getTermType().getId()) {
+                            //Adds course offering based on courseID from CourseOfferings and matching TermID
+                            courseOfferingsByTermList.add(courseOfferings.get(i));
+                        }
+                    }
+                } catch (IllegalArgumentException e) {
+                }
+            }
+        }
+        return courseOfferingsByTermList;
     }
 
     public Department getDepartmentById(int departmentId) {
