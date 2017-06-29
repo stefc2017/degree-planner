@@ -10,9 +10,14 @@ import java.util.List;
 
 import comp3350.degree_planner.application.Main;
 import comp3350.degree_planner.business.AccessCoursePlan;
+import comp3350.degree_planner.business.exceptions.CourseAlreadyPlannedForTermException;
+import comp3350.degree_planner.business.exceptions.CourseNotOfferedInTermException;
+import comp3350.degree_planner.business.exceptions.CoursePlanDoesNotExistException;
+import comp3350.degree_planner.business.exceptions.TermTypeDoesNotExistException;
 import comp3350.degree_planner.objects.Course;
 import comp3350.degree_planner.objects.CourseOffering;
 import comp3350.degree_planner.objects.CoursePlan;
+import comp3350.degree_planner.objects.CoursePrerequisite;
 import comp3350.degree_planner.objects.CourseResult;
 import comp3350.degree_planner.objects.Degree;
 import comp3350.degree_planner.objects.DegreeCourse;
@@ -39,7 +44,7 @@ public class MoveCourseTest {
     @Before
     public void setUp() {
         //Setting up test data for the move
-        //Mostly copied over from DataAccessStub.java with a few changes to data
+        //Mostly copied over from DataAccessStub.java
         testData = new DataAccessStub() {
             private List<Course> courses;
             private List<CourseOffering> courseOfferings;
@@ -54,6 +59,10 @@ public class MoveCourseTest {
             private List<Student> students;
             private List<TermType> termTypes;
             private List<UserDefinedCourse> userDefinedCourses;
+            private List<CoursePrerequisite> coursePrerequisites;
+
+            private String dbName;
+            private String dbType = "stub";
 
             @Override
             public void open(String dbName) {
@@ -102,7 +111,21 @@ public class MoveCourseTest {
                 courses.add(tempScienceCourse);
                 scienceCourses.add(tempScienceCourse);
 
-                tempUserDefinedCourse = new UserDefinedCourse(3, "Cultural Anthropology", 3.0, "ANTH 1220");
+                tempScienceCourse = new ScienceCourse(3, "Object Orientation", 3.0, 1,
+                        2150, "Detailed look at proper object oriented programming.");
+                courses.add(tempScienceCourse);
+                scienceCourses.add(tempScienceCourse);
+
+                tempScienceCourse = new ScienceCourse(4, "Software Engineering I", 3.0, 1,
+                        3350, "Good software development practices.");
+                courses.add(tempScienceCourse);
+                scienceCourses.add(tempScienceCourse);
+
+                tempUserDefinedCourse = new UserDefinedCourse(5, "Cultural Anthropology", 3.0, "ANTH 1220");
+                courses.add(tempUserDefinedCourse);
+                userDefinedCourses.add(tempUserDefinedCourse);
+
+                tempUserDefinedCourse = new UserDefinedCourse(6, "Language and Culture", 3.0, "ANTH 2370");
                 courses.add(tempUserDefinedCourse);
                 userDefinedCourses.add(tempUserDefinedCourse);
 
@@ -119,6 +142,10 @@ public class MoveCourseTest {
                         3.0, 1, 1010, "Basic programming concepts."), new DegreeCourseType(1, "Required")));
                 degreeCourses.add(new DegreeCourse(degree, new ScienceCourse(2, "Introductory Computer Science II", 3.0,
                         1, 1020, "More basic programming concepts."), new DegreeCourseType(1, "Required")));
+                degreeCourses.add(new DegreeCourse(degree, new ScienceCourse(3, "Object Orientation", 3.0, 1,
+                        2150, "Detailed look at proper object oriented programming."), new DegreeCourseType(1, "Required")));
+                degreeCourses.add(new DegreeCourse(degree, new ScienceCourse(4, "Software Engineering I", 3.0, 1,
+                        3350, "Good software development practices."), new DegreeCourseType(1, "Required")));
 
                 // Create Students
 
@@ -131,6 +158,9 @@ public class MoveCourseTest {
                 courseResults.add(new CourseResult(1, new ScienceCourse(1, "Introductory Computer Science I",
                         3.0, 1, 1010, "Basic programming concepts."), new Student(1, 1234567, "Jim Bob",
                         "jimbob@myumanitoba.ca", "helloworld1", 1), new GradeType(1, "A+", 4.5)));
+                courseResults.add(new CourseResult(2, new ScienceCourse(2, "Introductory Computer Science II", 3.0,
+                        1, 1020, "More basic programming concepts."), new Student(1, 1234567, "Jim Bob",
+                        "jimbob@myumanitoba.ca", "helloworld1", 1), new GradeType(2, "A", 4.0)));
 
                 // Create Course Offerings
 
@@ -145,69 +175,52 @@ public class MoveCourseTest {
                         1, 1020, "More basic programming concepts."), new TermType(1, "Fall")));
                 courseOfferings.add(new CourseOffering(new ScienceCourse(2, "Introductory Computer Science II", 3.0,
                         1, 1020, "More basic programming concepts."), new TermType(2, "Winter")));
+                courseOfferings.add(new CourseOffering(new ScienceCourse(2, "Introductory Computer Science II", 3.0,
+                        1, 1020, "More basic programming concepts."), new TermType(3, "Summer")));
+                courseOfferings.add(new CourseOffering(new ScienceCourse(3, "Object Orientation", 3.0, 1,
+                        2150, "Detailed look at proper object oriented programming."), new TermType(2, "Winter")));
+                courseOfferings.add(new CourseOffering(new ScienceCourse(4, "Software Engineering I", 3.0, 1,
+                        3350, "Good software development practices."), new TermType(2, "Winter")));
+                courseOfferings.add(new CourseOffering(new ScienceCourse(4, "Software Engineering I", 3.0, 1,
+                        3350, "Good software development practices."), new TermType(3, "Summer")));
 
                 // Create Course Plans
 
                 coursePlans = new ArrayList<CoursePlan>();
-                coursePlans.add(new CoursePlan(1, new ScienceCourse(2, "Introductory Computer Science II", 3.0,
-                        1, 1020, "More basic programming concepts."), new Student(1, 1234567, "Jim Bob",
-                        "jimbob@myumanitoba.ca", "helloworld1", 1), new TermType(1, "Fall"), 2018));
+                coursePlans.add(new CoursePlan(1, new ScienceCourse(3, "Object Orientation", 3.0, 1, 2150,
+                        "Detailed look at proper object oriented programming."), new Student(1,
+                        1234567, "Jim Bob", "jimbob@myumanitoba.ca", "helloworld1", 1), new TermType(2, "Winter"), 2018));
+                coursePlans.add(new CoursePlan(2, new ScienceCourse(1, "Introductory Computer Science I", 3.0, 1, 1010,
+                        "Basic programming concepts."), new Student(1, 1234567, "Jim Bob", "jimbob@myumanitoba.ca", "helloworld1", 1),
+                        new TermType(1, "Fall"), 2017));
+                coursePlans.add(new CoursePlan(3, new UserDefinedCourse(5, "Cultural Anthropology", 3.0, "ANTH 1220"),
+                        new Student(1, 1234567, "Jim Bob", "jimbob@myumanitoba.ca", "helloworld1", 1), new TermType(1, "Fall"), 2017));
+
+                // Create Course Prerequisites
+
+                coursePrerequisites = new ArrayList<CoursePrerequisite>();
+                coursePrerequisites.add(new CoursePrerequisite(new ScienceCourse(2, "Introductory Computer Science II", 3.0,
+                        1, 1020, "More basic programming concepts."), new ScienceCourse(1, "Introductory Computer Science I",
+                        3.0, 1, 1010, "Basic programming concepts.")));
+                coursePrerequisites.add(new CoursePrerequisite(new ScienceCourse(3, "Object Orientation", 3.0, 1,
+                        2150, "Detailed look at proper object oriented programming."), new ScienceCourse(2,
+                        "Introductory Computer Science II", 3.0, 1, 1020, "More basic programming concepts.")));
+                coursePrerequisites.add(new CoursePrerequisite(new ScienceCourse(4, "Software Engineering I", 3.0, 1,
+                        3350, "Good software development practices."), new ScienceCourse(3, "Object Orientation", 3.0, 1,
+                        2150, "Detailed look at proper object oriented programming.")));
             }
 
             @Override
-            public boolean moveCourse (int coursePlanId, int newTermTypeId, int newYear) {
+            public void moveCourse (int coursePlanId, int newTermTypeId, int newYear) {
                 CoursePlan coursePlan;
-                CourseOffering currCourseOffering;
-                boolean validTerm = false;
-                boolean moveSuccessful = false;
 
                 for (int i = 0; i<coursePlans.size(); i++) {
                     coursePlan = coursePlans.get(i);
                     if (coursePlan.getId() == coursePlanId) {
-                        if (isValidTermTypeId(newTermTypeId) && courseOffered(coursePlan.getCourse().getId(), newTermTypeId)) {
-                            coursePlan.setTermType(getTermTypeById(newTermTypeId));
-                            coursePlan.setYear(newYear);
-                            moveSuccessful = true;
-                            break;
-                        }
+                        coursePlan.setTermType(getTermTypeById(newTermTypeId));
+                        coursePlan.setYear(newYear);
                     }
                 }
-
-                return moveSuccessful;
-            }
-
-            private boolean isValidTermTypeId (int termTypeId) {
-                boolean validTermTypeId = false;
-
-                //Does a term type with the entered termTypeId exist?
-                for (int i = 0; i<termTypes.size(); i++) {
-                    if (termTypes.get(i).getId() == termTypeId) {
-                        validTermTypeId = true;
-                        break;
-                    }
-                }
-
-                return validTermTypeId;
-            }
-
-            private boolean courseOffered (int courseId, int termTypeId) {
-                boolean validTerm = false;
-                Course course = getCourseById(courseId);
-
-                if (course instanceof ScienceCourse) {
-                    //Is the course historically offered in this term?
-                    for (int i = 0; i < courseOfferings.size(); i++) {
-                        if (courseOfferings.get(i).getCourse().getId() == courseId && courseOfferings.get(i).getTermType().getId() == termTypeId) {
-                            validTerm = true;
-                            break;
-                        }
-                    }
-                } else if (course instanceof UserDefinedCourse) {
-                    //For user-defined courses, let the user freely enter the the term and year
-                    validTerm = true;
-                }
-
-                return validTerm;
             }
 
             private TermType getTermTypeById (int termTypeId){
@@ -237,61 +250,145 @@ public class MoveCourseTest {
             }
 
             @Override
-            public CoursePlan getCoursePlanById (int coursePlanId) {
+            public boolean isValidTermTypeId (int termTypeId) {
+                boolean validTermTypeId = false;
+
+                //Does a term type with the entered termTypeId exist?
+                for (int i = 0; i<termTypes.size(); i++) {
+                    if (termTypes.get(i).getId() == termTypeId) {
+                        validTermTypeId = true;
+                        break;
+                    }
+                }
+
+                return validTermTypeId;
+            }
+
+            @Override
+            public boolean courseOffered (int courseId, int termTypeId) {
+                boolean validTerm = false;
+                Course course = getCourseById(courseId);
+
+                if (course instanceof ScienceCourse) {
+                    //Is the course historically offered in this term?
+                    for (int i = 0; i < courseOfferings.size(); i++) {
+                        if (courseOfferings.get(i).getCourse().getId() == courseId &&
+                                courseOfferings.get(i).getTermType().getId() == termTypeId) {
+                            validTerm = true;
+                            break;
+                        }
+                    }
+                } else if (course instanceof UserDefinedCourse) {
+                    //For user-defined courses, let the user freely enter the the term and year
+                    validTerm = true;
+                }
+
+                return validTerm;
+            }
+
+            @Override
+            public boolean coursePlanExists(int courseId, int studentId, int termTypeId, int year) {
+                boolean coursePlanExists = false;
+                CoursePlan currCoursePlan;
+
+                //Does a course plan for the specified course in the specified term already exist?
+                for (int i = 0; i<coursePlans.size(); i++) {
+                    currCoursePlan = coursePlans.get(i);
+
+                    if (currCoursePlan.getCourse().getId() == courseId && currCoursePlan.getStudent().getId() == studentId
+                            && currCoursePlan.getTermType().getId() == termTypeId && currCoursePlan.getYear() == year) {
+                        coursePlanExists = true;
+                        break;
+                    }
+                }
+
+                return coursePlanExists;
+            }
+
+            @Override
+            public CoursePlan getCoursePlan (int courseId, int studentId, int termTypeId, int year) {
                 CoursePlan result = null;
+                CoursePlan currCoursePlan;
 
                 for (int i = 0; i<coursePlans.size(); i++) {
-                    if (coursePlans.get(i).getId() == coursePlanId) {
-                        result = coursePlans.get(i);
+                    currCoursePlan = coursePlans.get(i);
+
+                    if (currCoursePlan.getCourse().getId() == courseId && currCoursePlan.getStudent().getId() == studentId
+                            && currCoursePlan.getTermType().getId() == termTypeId && currCoursePlan.getYear() == year) {
+                        result = currCoursePlan;
+                        break;
                     }
                 }
 
                 return result;
             }
 
+            @Override
+            public CoursePlan getCoursePlan (int coursePlanId) {
+                CoursePlan result = null;
+                CoursePlan currCoursePlan;
+
+                for (int i = 0; i<coursePlans.size(); i++) {
+                    currCoursePlan = coursePlans.get(i);
+
+                    if (currCoursePlan.getId() == coursePlanId) {
+                        result = currCoursePlan;
+                        break;
+                    }
+                }
+
+                return result;
+            }
         };
 
         acp = new AccessCoursePlan(testData);
         testData.open(Main.dbName);
     }
 
-    @Test
-    public void testInvalidCoursePlanId() {
+    @Test(expected = CoursePlanDoesNotExistException.class)
+    public void testInvalidCoursePlanId() throws Exception {
         System.out.println("\nStarting Move Course Test: invalid course plan id");
-        assertFalse ("Modifying a course plan with invalid ID did not fail", acp.moveCourse(-1, 2, 2019));
+        acp.moveCourse(-1, 2, 2019);
         System.out.println("Finished Move Course Test: invalid course plan id");
     }
 
-    @Test
-    public void testInvalidTermTypeId() {
+    @Test(expected = TermTypeDoesNotExistException.class)
+    public void testInvalidTermTypeId() throws Exception {
         System.out.println("\nStarting Move Course Test: invalid term type id");
-        assertFalse ("Modifying course plan with an invalid term type ID did not fail", acp.moveCourse(1, -1, 2019));
+        acp.moveCourse(1, -1, 2019);
         System.out.println("Finished Move Course Test: invalid term type id");
     }
 
-    @Test
-    public void testNonExistentCoursePlanId() {
+    @Test(expected = CoursePlanDoesNotExistException.class)
+    public void testNonExistentCoursePlanId() throws Exception {
         System.out.println("\nStarting Move Course Test: non-existent course plan id");
-        assertFalse ("Modifying a non-existent course plan did not fail", acp.moveCourse(5, 2, 2019));
+        acp.moveCourse(5, 2, 2019);
         System.out.println("Finished Move Course Test: non-existent course plan id");
     }
 
-    @Test
-    public void testNonExistentTermTypeId() {
+    @Test(expected = TermTypeDoesNotExistException.class)
+    public void testNonExistentTermTypeId() throws Exception {
         System.out.println("\nStarting Move Course Test: non-existent term type id");
-        assertFalse ("Modifying course plan with a non-existent term type ID did not fail", acp.moveCourse(1, 5, 2019));
+        acp.moveCourse(1, 5, 2019);
         System.out.println("Finished Move Course Test: non-existent term type id");
     }
 
-    @Test
-    public void testWrongTerm() {
+    @Test(expected = CourseNotOfferedInTermException.class)
+    public void testWrongTerm() throws Exception {
         System.out.println("\nStarting Move Course Test: course not offered in term");
-        assertFalse ("Modifying course plan with a term the course is not offered in did not fail", acp.moveCourse(1, 3, 2019));
+        acp.moveCourse(1, 3, 2019);
         System.out.println("Finished Move Course Test: course not offered in term");
     }
 
+    @Test(expected = CourseAlreadyPlannedForTermException.class)
+    public void testCourseAlreadyPlanned() throws Exception {
+        System.out.println("\nStarting Move Course Test: course already planned in term");
+        acp.moveCourse(1, 2, 2018);
+        System.out.println("Finished Move Course Test: course already planned in term");
+    }
+
     @Test
-    public void testValidData() {
+    public void testValidData() throws Exception {
         CoursePlan coursePlan;
 
         final int COURSE_PLAN_ID = 1;
@@ -300,9 +397,9 @@ public class MoveCourseTest {
 
         System.out.println("\nStarting Move Course Test: valid data");
 
-        assertTrue ("Modifying a course plan with valid data failed", acp.moveCourse(COURSE_PLAN_ID, TERM_TYPE_ID, YEAR));
+        acp.moveCourse(COURSE_PLAN_ID, TERM_TYPE_ID, YEAR);
 
-        coursePlan = testData.getCoursePlanById(COURSE_PLAN_ID);
+        coursePlan = testData.getCoursePlan(COURSE_PLAN_ID);
         assertNotNull("Error occurred with modification", coursePlan);
         assertEquals("Term Type IDs weren't equal", coursePlan.getTermType().getId(), TERM_TYPE_ID);
         assertEquals ("Years weren't equal", coursePlan.getYear(), YEAR);

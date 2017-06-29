@@ -10,9 +10,11 @@ import java.util.List;
 
 import comp3350.degree_planner.application.Main;
 import comp3350.degree_planner.business.AccessCoursePlan;
+import comp3350.degree_planner.business.exceptions.CoursePlanDoesNotExistException;
 import comp3350.degree_planner.objects.Course;
 import comp3350.degree_planner.objects.CourseOffering;
 import comp3350.degree_planner.objects.CoursePlan;
+import comp3350.degree_planner.objects.CoursePrerequisite;
 import comp3350.degree_planner.objects.CourseResult;
 import comp3350.degree_planner.objects.Degree;
 import comp3350.degree_planner.objects.DegreeCourse;
@@ -29,7 +31,7 @@ import comp3350.degree_planner.persistence.DataAccessStub;
 /**
  * Created by Tiffany Jiang on 2017-06-07.
  *
- * Unit tests for moving a course in a course plan to a different term/year
+ * Unit tests for removing a course plan
  */
 
 public class RemoveFromCoursePlanTest {
@@ -39,7 +41,7 @@ public class RemoveFromCoursePlanTest {
     @Before
     public void setUp() {
         //Setting up test data for the remove
-        //Mostly copied over from DataAccessStub.java with a few changes to data
+        //Mostly copied over from DataAccessStub.java
         testData = new DataAccessStub() {
             private List<Course> courses;
             private List<CourseOffering> courseOfferings;
@@ -54,6 +56,10 @@ public class RemoveFromCoursePlanTest {
             private List<Student> students;
             private List<TermType> termTypes;
             private List<UserDefinedCourse> userDefinedCourses;
+            private List<CoursePrerequisite> coursePrerequisites;
+
+            private String dbName;
+            private String dbType = "stub";
 
             @Override
             public void open(String dbName) {
@@ -102,7 +108,21 @@ public class RemoveFromCoursePlanTest {
                 courses.add(tempScienceCourse);
                 scienceCourses.add(tempScienceCourse);
 
-                tempUserDefinedCourse = new UserDefinedCourse(3, "Cultural Anthropology", 3.0, "ANTH 1220");
+                tempScienceCourse = new ScienceCourse(3, "Object Orientation", 3.0, 1,
+                        2150, "Detailed look at proper object oriented programming.");
+                courses.add(tempScienceCourse);
+                scienceCourses.add(tempScienceCourse);
+
+                tempScienceCourse = new ScienceCourse(4, "Software Engineering I", 3.0, 1,
+                        3350, "Good software development practices.");
+                courses.add(tempScienceCourse);
+                scienceCourses.add(tempScienceCourse);
+
+                tempUserDefinedCourse = new UserDefinedCourse(5, "Cultural Anthropology", 3.0, "ANTH 1220");
+                courses.add(tempUserDefinedCourse);
+                userDefinedCourses.add(tempUserDefinedCourse);
+
+                tempUserDefinedCourse = new UserDefinedCourse(6, "Language and Culture", 3.0, "ANTH 2370");
                 courses.add(tempUserDefinedCourse);
                 userDefinedCourses.add(tempUserDefinedCourse);
 
@@ -119,6 +139,10 @@ public class RemoveFromCoursePlanTest {
                         3.0, 1, 1010, "Basic programming concepts."), new DegreeCourseType(1, "Required")));
                 degreeCourses.add(new DegreeCourse(degree, new ScienceCourse(2, "Introductory Computer Science II", 3.0,
                         1, 1020, "More basic programming concepts."), new DegreeCourseType(1, "Required")));
+                degreeCourses.add(new DegreeCourse(degree, new ScienceCourse(3, "Object Orientation", 3.0, 1,
+                        2150, "Detailed look at proper object oriented programming."), new DegreeCourseType(1, "Required")));
+                degreeCourses.add(new DegreeCourse(degree, new ScienceCourse(4, "Software Engineering I", 3.0, 1,
+                        3350, "Good software development practices."), new DegreeCourseType(1, "Required")));
 
                 // Create Students
 
@@ -131,6 +155,9 @@ public class RemoveFromCoursePlanTest {
                 courseResults.add(new CourseResult(1, new ScienceCourse(1, "Introductory Computer Science I",
                         3.0, 1, 1010, "Basic programming concepts."), new Student(1, 1234567, "Jim Bob",
                         "jimbob@myumanitoba.ca", "helloworld1", 1), new GradeType(1, "A+", 4.5)));
+                courseResults.add(new CourseResult(2, new ScienceCourse(2, "Introductory Computer Science II", 3.0,
+                        1, 1020, "More basic programming concepts."), new Student(1, 1234567, "Jim Bob",
+                        "jimbob@myumanitoba.ca", "helloworld1", 1), new GradeType(2, "A", 4.0)));
 
                 // Create Course Offerings
 
@@ -145,40 +172,62 @@ public class RemoveFromCoursePlanTest {
                         1, 1020, "More basic programming concepts."), new TermType(1, "Fall")));
                 courseOfferings.add(new CourseOffering(new ScienceCourse(2, "Introductory Computer Science II", 3.0,
                         1, 1020, "More basic programming concepts."), new TermType(2, "Winter")));
+                courseOfferings.add(new CourseOffering(new ScienceCourse(2, "Introductory Computer Science II", 3.0,
+                        1, 1020, "More basic programming concepts."), new TermType(3, "Summer")));
+                courseOfferings.add(new CourseOffering(new ScienceCourse(3, "Object Orientation", 3.0, 1,
+                        2150, "Detailed look at proper object oriented programming."), new TermType(2, "Winter")));
+                courseOfferings.add(new CourseOffering(new ScienceCourse(4, "Software Engineering I", 3.0, 1,
+                        3350, "Good software development practices."), new TermType(2, "Winter")));
+                courseOfferings.add(new CourseOffering(new ScienceCourse(4, "Software Engineering I", 3.0, 1,
+                        3350, "Good software development practices."), new TermType(3, "Summer")));
 
                 // Create Course Plans
 
                 coursePlans = new ArrayList<CoursePlan>();
-                coursePlans.add(new CoursePlan(1, new ScienceCourse(2, "Introductory Computer Science II", 3.0,
-                        1, 1020, "More basic programming concepts."), new Student(1, 1234567, "Jim Bob", "jimbob@myumanitoba.ca",
-                        "helloworld1", 1), new TermType(1, "Fall"), 2018));
-                coursePlans.add(new CoursePlan(2, new ScienceCourse(3, "Object Orientation", 3.0, 1,
-                        2150, "Detailed look at proper object oriented programming."), new Student(1, 1234567, "Jim Bob",
-                        "jimbob@myumanitoba.ca", "helloworld1", 1), new TermType(2, "Winter"), 2018));
+                coursePlans.add(new CoursePlan(1, new ScienceCourse(3, "Object Orientation", 3.0, 1, 2150,
+                        "Detailed look at proper object oriented programming."), new Student(1,
+                        1234567, "Jim Bob", "jimbob@myumanitoba.ca", "helloworld1", 1), new TermType(2, "Winter"), 2018));
+                coursePlans.add(new CoursePlan(2, new ScienceCourse(1, "Introductory Computer Science I", 3.0, 1, 1010,
+                        "Basic programming concepts."), new Student(1, 1234567, "Jim Bob", "jimbob@myumanitoba.ca", "helloworld1", 1),
+                        new TermType(1, "Fall"), 2017));
+                coursePlans.add(new CoursePlan(3, new UserDefinedCourse(5, "Cultural Anthropology", 3.0, "ANTH 1220"),
+                        new Student(1, 1234567, "Jim Bob", "jimbob@myumanitoba.ca", "helloworld1", 1), new TermType(1, "Fall"), 2017));
+
+                // Create Course Prerequisites
+
+                coursePrerequisites = new ArrayList<CoursePrerequisite>();
+                coursePrerequisites.add(new CoursePrerequisite(new ScienceCourse(2, "Introductory Computer Science II", 3.0,
+                        1, 1020, "More basic programming concepts."), new ScienceCourse(1, "Introductory Computer Science I",
+                        3.0, 1, 1010, "Basic programming concepts.")));
+                coursePrerequisites.add(new CoursePrerequisite(new ScienceCourse(3, "Object Orientation", 3.0, 1,
+                        2150, "Detailed look at proper object oriented programming."), new ScienceCourse(2,
+                        "Introductory Computer Science II", 3.0, 1, 1020, "More basic programming concepts.")));
+                coursePrerequisites.add(new CoursePrerequisite(new ScienceCourse(4, "Software Engineering I", 3.0, 1,
+                        3350, "Good software development practices."), new ScienceCourse(3, "Object Orientation", 3.0, 1,
+                        2150, "Detailed look at proper object oriented programming.")));
             }
 
             @Override
-            public boolean removeFromCoursePlan (int coursePlanId) {
-                boolean removeSuccessful = false;
-
+            public void removeFromCoursePlan (int coursePlanId) {
                 for (int i = 0; i<coursePlans.size(); i++) {
                     if (coursePlans.get(i).getId() == coursePlanId) {
                         coursePlans.remove(i);
-                        removeSuccessful = true;
                         break;
                     }
                 }
-
-                return removeSuccessful;
             }
 
             @Override
-            public CoursePlan getCoursePlanById (int coursePlanId) {
+            public CoursePlan getCoursePlan (int coursePlanId) {
                 CoursePlan result = null;
+                CoursePlan currCoursePlan;
 
                 for (int i = 0; i<coursePlans.size(); i++) {
-                    if (coursePlans.get(i).getId() == coursePlanId) {
-                        result = coursePlans.get(i);
+                    currCoursePlan = coursePlans.get(i);
+
+                    if (currCoursePlan.getId() == coursePlanId) {
+                        result = currCoursePlan;
+                        break;
                     }
                 }
 
@@ -190,28 +239,28 @@ public class RemoveFromCoursePlanTest {
         testData.open(Main.dbName);
     }
 
-    @Test
-    public void testInvalidCoursePlanId() {
+    @Test(expected = CoursePlanDoesNotExistException.class)
+    public void testInvalidCoursePlanId() throws Exception {
         System.out.println("\nStarting Remove From Course Plan Test: invalid course plan id");
-        assertFalse ("Removing a course plan with invalid ID did not fail", acp.removeFromCoursePlan(-1));
+        acp.removeFromCoursePlan(-1);
         System.out.println("Finished Remove From Course Plan Test: invalid course plan id");
     }
 
-    @Test
-    public void testNonExistentCoursePlanId() {
+    @Test(expected = CoursePlanDoesNotExistException.class)
+    public void testNonExistentCoursePlanId() throws Exception {
         System.out.println("\nStarting Remove From Course Plan Test: non-existent course plan id");
-        assertFalse ("Removing a non-existent course plan did not fail", acp.removeFromCoursePlan(5));
+        acp.removeFromCoursePlan(5);
         System.out.println("Finished Remove From Course Plan Test: non-existent course plan id");
     }
 
     @Test
-    public void testValidData() {
+    public void testValidData() throws Exception{
         final int COURSE_PLAN_ID = 1;
 
         System.out.println("\nStarting Remove From Course Plan Test: valid data");
 
-        assertTrue ("Removing a course plan with valid data failed", acp.removeFromCoursePlan(COURSE_PLAN_ID));
-        assertNull("Removing a course plan was not successful", testData.getCoursePlanById(COURSE_PLAN_ID));
+        acp.removeFromCoursePlan(COURSE_PLAN_ID);
+        assertNull("Removing a course plan was not successful", testData.getCoursePlan(COURSE_PLAN_ID));
 
         System.out.println("Finished Remove From Course Plan Test: valid data");
     }
