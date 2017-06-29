@@ -3,9 +3,6 @@ package comp3350.degree_planner.persistence;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
-import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,16 +14,9 @@ import comp3350.degree_planner.objects.CourseResult;
 import comp3350.degree_planner.objects.Degree;
 import comp3350.degree_planner.objects.Department;
 import comp3350.degree_planner.objects.ScienceCourse;
-import comp3350.degree_planner.objects.ScienceCourse;
 import comp3350.degree_planner.objects.Student;
 import comp3350.degree_planner.objects.TermType;
 import comp3350.degree_planner.objects.UserDefinedCourse;
-
-import static android.R.attr.id;
-import static org.hsqldb.HsqlDateTime.e;
-import comp3350.degree_planner.objects.UserDefinedCourse;
-
-import static android.R.attr.description;
 
 /**
  * Created by Tiffany Jiang on 2017-06-24.
@@ -84,8 +74,6 @@ public class DataAccessObject implements DataAccess {
         this.dbName = dbName;
     }
 
-    private final static int hsqlNoParentViolationErrorCode = -177;
-
     public void open(String dbPath)
     {
         String url;
@@ -104,45 +92,6 @@ public class DataAccessObject implements DataAccess {
         {
             processSQLError(e);
         }
-
-        try {
-            CoursePlan cp = getCoursePlan(1, 1, 1, 2017);
-            String name = cp.getCourse().getName();
-            String email = cp.getStudent().getEmail();
-            String season = cp.getTermType().getSeason();
-            System.out.println (name + email + season);
-        } catch (SQLException se) {
-            se.printStackTrace();
-            String temp = se.getSQLState();
-            int temp2 = se.getErrorCode();
-            String temp3 = se.getMessage();
-            String temp4 = se.toString();
-            System.out.println (temp + " " + temp2 + temp3 + temp4);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-//        boolean errorOccurred = false;
-//        try {
-////            if (courseOffered(1, 1)) {
-//                addToCoursePlan(50, 1, 1, 2019);
-////            }
-//        } catch (SQLIntegrityConstraintViolationException cve) {
-//            System.out.println (cve.getCause().toString());
-//            errorOccurred = true;
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//        if (errorOccurred) {
-//            try {
-//                if (!isValidCourseId(6)) {
-//                    System.out.println ("here");
-//                }
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
 
         System.out.println("Opened " + dbType + " database " + dbPath);
     }
@@ -775,7 +724,7 @@ public class DataAccessObject implements DataAccess {
 
     public void addToCoursePlan (int courseId, int studentId, int termTypeId, int year) throws Exception {
         String newCoursePlanValues = courseId + ", " + studentId + ", " + termTypeId + ", " + year;
-        cmdString = "Insert into Course_Plan (Course_Id, Student_Id, Term_Type_Id, Year) " + " Values (" + newCoursePlanValues + ")";
+        cmdString = "INSERT INTO Course_Plan (Course_Id, Student_Id, Term_Type_Id, Year) " + " VALUES (" + newCoursePlanValues + ")";
         updateCount = st1.executeUpdate(cmdString);
     }
 
@@ -857,8 +806,9 @@ public class DataAccessObject implements DataAccess {
         return coursePlanExists;
     }
 
-    public boolean moveCourse (int coursePlanId, int newTermTypeId, int newYear) {
-        return false;
+    public void moveCourse (int coursePlanId, int newTermTypeId, int newYear) throws Exception {
+        cmdString = "UPDATE Course_Plan SET term_type_id = " + newTermTypeId + ", year = " + newYear + " WHERE id = " + coursePlanId;
+        updateCount = st1.executeUpdate(cmdString);
     }
 
     public boolean removeFromCoursePlan (int coursePlanId) {
@@ -867,11 +817,31 @@ public class DataAccessObject implements DataAccess {
 
     public CoursePlan getCoursePlan (int courseId, int studentId, int termTypeId, int year) throws Exception {
         CoursePlan cp = null;
-        Course course = null;
-        Student student = null;
-        TermType termType = null;
+        Course course;
+        Student student;
+        TermType termType;
 
-        cmdString = "SELECT * FROM Course_Plan cp where cp.course_id = " + courseId + " and cp.student_id = " + studentId + " and cp.term_type_id = " + termTypeId + " and cp.year = " + year;
+        cmdString = "SELECT * FROM Course_Plan cp WHERE cp.course_id = " + courseId + " and cp.student_id = " + studentId + " and cp.term_type_id = " + termTypeId + " and cp.year = " + year;
+        rs4 = st2.executeQuery(cmdString);
+
+        while (rs4.next()) {
+            course = getCourseById(rs4.getInt("course_id"));
+            student = getStudentById(rs4.getInt("student_id"));
+            termType = getTermTypeById(rs4.getInt("term_type_id"));
+            cp = new CoursePlan(rs4.getInt("id"), course, student, termType, rs4.getInt("year"));
+        }
+        rs4.close();
+
+        return cp;
+    }
+
+    public CoursePlan getCoursePlan (int coursePlanId) throws Exception {
+        CoursePlan cp = null;
+        Course course;
+        Student student;
+        TermType termType;
+
+        cmdString = "SELECT * FROM Course_Plan WHERE id = " + coursePlanId;
         rs4 = st2.executeQuery(cmdString);
 
         while (rs4.next()) {

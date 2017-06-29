@@ -423,9 +423,9 @@ public class AddToCoursePlanTest {
 
     @Test(expected = CourseAlreadyPlannedForTermException.class)
     public void testDuplicateCoursePlan() throws Exception {
-        System.out.println("\nStarting Add to Course Plan Test: course not offered in term");
+        System.out.println("\nStarting Add to Course Plan Test: course already planned in term");
         acp.addToCoursePlan(3, 1, 2, 2018);
-        System.out.println("Finished Add to Course Plan Test: course not offered in term");
+        System.out.println("Finished Add to Course Plan Test: course already planned in term");
     }
 
     @Test

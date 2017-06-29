@@ -7,8 +7,6 @@ import java.util.List;
 import comp3350.degree_planner.application.Main;
 import comp3350.degree_planner.objects.*;
 
-import static android.R.attr.id;
-
 /**
  * Created by Kaleigh on 2017-05-31.
  *
@@ -777,25 +775,16 @@ public class DataAccessStub implements DataAccess {
      *
      * Moves a course in an existing course plan to a different term/year
      */
-    public boolean moveCourse (int coursePlanId, int newTermTypeId, int newYear) {
+    public void moveCourse (int coursePlanId, int newTermTypeId, int newYear) {
         CoursePlan coursePlan;
-        CourseOffering currCourseOffering;
-        boolean validTerm = false;
-        boolean moveSuccessful = false;
 
         for (int i = 0; i<coursePlans.size(); i++) {
             coursePlan = coursePlans.get(i);
             if (coursePlan.getId() == coursePlanId) {
-                if (isValidTermTypeId(newTermTypeId) && courseOffered(coursePlan.getCourse().getId(), newTermTypeId)) {
-                    coursePlan.setTermType(getTermTypeById(newTermTypeId));
-                    coursePlan.setYear(newYear);
-                    moveSuccessful = true;
-                    break;
-                }
+                coursePlan.setTermType(getTermTypeById(newTermTypeId));
+                coursePlan.setYear(newYear);
             }
         }
-
-        return moveSuccessful;
     }
 
     /*
@@ -815,6 +804,22 @@ public class DataAccessStub implements DataAccess {
         }
 
         return removeSuccessful;
+    }
+
+    public CoursePlan getCoursePlan (int coursePlanId) {
+        CoursePlan result = null;
+        CoursePlan currCoursePlan;
+
+        for (int i = 0; i<coursePlans.size(); i++) {
+            currCoursePlan = coursePlans.get(i);
+
+            if (currCoursePlan.getId() == coursePlanId) {
+                result = currCoursePlan;
+                break;
+            }
+        }
+
+        return result;
     }
 
     public CoursePlan getCoursePlan (int courseId, int studentId, int termTypeId, int year) {

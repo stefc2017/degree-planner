@@ -3,6 +3,7 @@ package comp3350.degree_planner.business;
 import comp3350.degree_planner.business.exceptions.CourseAlreadyPlannedForTermException;
 import comp3350.degree_planner.business.exceptions.CourseNotOfferedInTermException;
 import comp3350.degree_planner.business.exceptions.CourseDoesNotExistException;
+import comp3350.degree_planner.business.exceptions.CoursePlanDoesNotExistException;
 import comp3350.degree_planner.business.exceptions.StudentDoesNotExistException;
 import comp3350.degree_planner.business.exceptions.TermTypeDoesNotExistException;
 import comp3350.degree_planner.objects.Student;
@@ -32,8 +33,6 @@ public class AccessCoursePlan {
         this.dataAccess = dataAccess;
     }
 
-    //Throws 4 possible exceptions based on 4 errors that may occur:
-    //Rethrows any other unpredicted exceptions
     public void addToCoursePlan(int courseId, int studentId, int termTypeId, int year) throws Exception {
         try {
             if (!dataAccess.isValidStudentId(studentId)) {
@@ -59,8 +58,29 @@ public class AccessCoursePlan {
         return dataAccess.removeFromCoursePlan(coursePlanId);
     }
 
-    public boolean moveCourse(int coursePlanId, int newTermTypeId, int newYear) {
-        return dataAccess.moveCourse(coursePlanId, newTermTypeId, newYear);
+    public void moveCourse(int coursePlanId, int newTermTypeId, int newYear) throws Exception {
+        CoursePlan cp;
+
+        try {
+            cp = dataAccess.getCoursePlan(coursePlanId);
+
+            if (cp != null) {
+                if (!dataAccess.isValidTermTypeId(newTermTypeId)) {
+                    throw new TermTypeDoesNotExistException();
+                } else if (!dataAccess.courseOffered(cp.getCourse().getId(), newTermTypeId)) {
+                    throw new CourseNotOfferedInTermException();
+                } else if (dataAccess.coursePlanExists(cp.getCourse().getId(), cp.getStudent().getId(), newTermTypeId, newYear)) {
+                    throw new CourseAlreadyPlannedForTermException();
+                } else {
+                    dataAccess.moveCourse(coursePlanId, newTermTypeId, newYear);
+                }
+            } else {
+                throw new CoursePlanDoesNotExistException();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 
     /**
