@@ -7,9 +7,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import comp3350.degree_planner.R;
+import comp3350.degree_planner.business.Season;
 import comp3350.degree_planner.objects.Course;
 import comp3350.degree_planner.objects.CoursePlan;
 
@@ -26,8 +28,10 @@ public class CoursePlanAdapter extends BaseAdapter {
     private static final int SECTION_HEADER = 1;
     private static final int VIEW_TYPE_COUNT = 2;
     private LayoutInflater inflater;
+    private final Context myContext;
 
     public CoursePlanAdapter(Context c, List list){
+        myContext = c;
         coursePlansAndHeaders = list;
         inflater = (LayoutInflater)c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -57,6 +61,7 @@ public class CoursePlanAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View view, ViewGroup viewGroup){
+        String s;
         if(view == null){
             // Fill the basic layout
             switch (getItemViewType(position)){
@@ -82,12 +87,27 @@ public class CoursePlanAdapter extends BaseAdapter {
                 courseName.setText(((CoursePlan)coursePlansAndHeaders.get(position)).getCourse().getName());
                 break;
             case SECTION_HEADER:
-                TextView header = (TextView)view.findViewById(R.id.sectionHeader);
-                // Display term
-                header.setText(((String)coursePlansAndHeaders.get(position)));
+                TextView headerTerm = (TextView)view.findViewById(R.id.sectionHeaderTerm);
+                TextView headerYear = (TextView)view.findViewById(R.id.sectionHeaderYear);
+                int term = (Integer)((ArrayList)coursePlansAndHeaders.get(position)).get(0);
+                int year = (Integer)((ArrayList)coursePlansAndHeaders.get(position)).get(1);
+                System.out.println(term);
+                System.out.println(year);
+                if(term == Season.FALL.ordinal()){
+                    headerTerm.setText(myContext.getText(R.string.fall));
+                    headerYear.setText(year+"");
+                }else if(term == Season.SUMMER.ordinal()){
+                    headerTerm.setText(myContext.getText(R.string.summer));
+                    headerYear.setText(year+"");
+                }else{
+                    headerTerm.setText(myContext.getText(R.string.winter));
+                    headerYear.setText(year+"");
+                }
                 break;
         }
 
         return view;
     }
 }
+
+
