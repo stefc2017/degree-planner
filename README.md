@@ -56,6 +56,7 @@ Additional Packages:
   contains stub database code as well as code for retrieving data from the stub
   - DataAccess.java - contains stub interface
   - DataAccessStub.java - contains stub implementation
+  - DataAccessObject.java - contains real database implementation
 
 - comp3350.degree_planner.presentation
   contains code for the UI
@@ -63,6 +64,8 @@ Additional Packages:
   - DegreesActivity - shows a list of Degrees (user can choose one to go to DegreeInfoActivity)
   - MainActivity - shows app home screen
   - Splash - shows startup screen
+  - CoursePlanAdaptor
+  - CoursePlansActivity
 
 - comp3350.degree_planner.tests
   contains unit tests for methods / classes in the above packages
