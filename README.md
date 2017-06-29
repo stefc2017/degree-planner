@@ -126,3 +126,4 @@ Incomplete Issues/Tasks:
 - Change DepartmentId in ScienceCourses to be object instead of integer
 - Pick degree
 - See my student information
+- Add / remove courses from course plan
