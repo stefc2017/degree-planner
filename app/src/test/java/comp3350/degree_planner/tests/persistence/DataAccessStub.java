@@ -3,6 +3,7 @@ package comp3350.degree_planner.tests.persistence;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Collections;
 
 import comp3350.degree_planner.application.Main;
 import comp3350.degree_planner.objects.*;
@@ -834,5 +835,30 @@ public class DataAccessStub implements DataAccess {
         }
 
         return result;
+    }
+
+    /*
+     * Created by Kaleigh McCormick on 2017-06-28
+     *
+     * Returns a list of all course plans associated with a given student ID
+     * Results are ordered by year and term type.
+     */
+
+    public List<CoursePlan> getCoursePlansByStudentId(int studentId) {
+        ArrayList<CoursePlan> studentCPs = new ArrayList<CoursePlan>();
+        CoursePlan currCoursePlan;
+
+        for (int i = 0; i < coursePlans.size(); i++) {
+            currCoursePlan = coursePlans.get(i);
+
+            if (currCoursePlan.getStudent().getId() == studentId) {
+                studentCPs.add(currCoursePlan);
+            }
+        }
+
+        // Sort the list before returning it
+        Collections.sort(studentCPs);
+
+        return studentCPs;
     }
 }

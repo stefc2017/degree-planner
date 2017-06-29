@@ -444,6 +444,21 @@ public class DataAccessTest {
         assertNull( result );
     }
 
+    @Test
+    public void testGetCoursePlansByStudentId() throws Exception {
+        final int NUM_COURSE_PLANS = 3;
+        final int STUDENT_ID = 1;
+        final int INVALID_STUDENT = -1;
+
+        // valid student
+        List<CoursePlan> coursePlans = dataAccess.getCoursePlansByStudentId( STUDENT_ID );
+        assertEquals( NUM_COURSE_PLANS, coursePlans.size() );
+
+        //invalid student
+        coursePlans = dataAccess.getCoursePlansByStudentId( INVALID_STUDENT );
+        assertEquals( 0, coursePlans.size() );
+    }
+
     @After
     public void cleanUp(){
         Services.closeDataAccess();

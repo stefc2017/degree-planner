@@ -1,6 +1,7 @@
 package comp3350.degree_planner.tests.objects;
 
 import static org.junit.Assert.*;
+import comp3350.degree_planner.objects.Degree;
 
 import org.junit.Test;
 

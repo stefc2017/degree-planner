@@ -12,6 +12,7 @@ import comp3350.degree_planner.persistence.DataAccess;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 import comp3350.degree_planner.objects.CoursePlan;
 import comp3350.degree_planner.objects.ScienceCourse;
@@ -102,30 +103,60 @@ public class AccessCoursePlan {
     }
 
     /**
-     * Temporary method for developing UI
      * Return a list of Strings and CoursePlans
      * UI renders different ListItem layouts for CoursePlans and section headers(Ex. "Fall 2017")
+     * Parameters:
+     * int studentId    Gives the student whose course plans will be returned
      */
-    public List getCoursePlansAndHeaders(){
-        CoursePlan tempCoursePlan;
-        List coursePlansAndHeaders = new ArrayList();
-        String[] terms = {"Fall 2017", "Winter 2018", "Summer 2018", "Fall 2019"};
-        coursePlansAndHeaders.add(terms[0]);
+    public List getCoursePlansAndHeaders(int studentId) throws Exception {
+        ArrayList<Object> coursePlansAndHeaders = new ArrayList<Object>();  // List to be returned
+        List coursePlans;   // Course plans as retrieved from the persistence layer
+                            // These will be in sorted order
+        ListIterator cpIterator;    // Used to iterate over coursePlans
+        CoursePlan currCP;  // Current course plan in coursePlans
 
-        tempCoursePlan = new CoursePlan(2, new ScienceCourse(1, "Introductory Computer Science I", 3.0, 1, 1010,
-                "Basic programming concepts."), new Student(1, 1234567, "Jim Bob", "jimbob@myumanitoba.ca", "helloworld1", 1),
-                new TermType(1, "Fall"), 2017);
-        coursePlansAndHeaders.add(tempCoursePlan);
+        String header;      // Header text for each section
+        TermType currentTerm;   // Term for the current course plan, used in headers
+        int currentYear;        // Year for the current course plan, used in headers
+        boolean newHeader;      // Shows if a new section header is needed
 
-        tempCoursePlan = new CoursePlan(3, new UserDefinedCourse(5, "Cultural Anthropology", 3.0, "ANTH 1220"),
-                new Student(1, 1234567, "Jim Bob", "jimbob@myumanitoba.ca", "helloworld1", 1), new TermType(1, "Fall"), 2017);
-        coursePlansAndHeaders.add(tempCoursePlan);
+        try {
+            // Get the course plans from the database
+            coursePlans = dataAccess.getCoursePlansByStudentId(studentId);
 
-        coursePlansAndHeaders.add(terms[1]);
-        tempCoursePlan = new CoursePlan(1, new ScienceCourse(3, "Object Orientation", 3.0, 1, 2150,
-                "Detailed look at proper object oriented programming."), new Student(1,
-                1234567, "Jim Bob", "jimbob@myumanitoba.ca", "helloworld1", 1), new TermType(2, "Winter"), 2018);
-        coursePlansAndHeaders.add(tempCoursePlan);
+            // Process the results into a list with section headers
+
+            currentTerm = null;
+            currentYear = 0;
+            header = "";
+            newHeader = false;
+            cpIterator = coursePlans.listIterator();
+            while (cpIterator.hasNext()) {
+                currCP = (CoursePlan)cpIterator.next();
+
+                // Update the header text if the term / year has changed
+                if (currentTerm == null || !currCP.getTermType().equals(currentTerm)) {
+                    currentTerm = currCP.getTermType();
+                    header = currentTerm.getSeason() + " " + currentYear;
+                    newHeader = true;
+                }
+                if (currCP.getYear() != currentYear) {
+                    currentYear = currCP.getYear();
+                    header = currentTerm.getSeason() + " " + currentYear;
+                    newHeader = true;
+                }
+                if (newHeader) {
+                    coursePlansAndHeaders.add(header);
+                    newHeader = false;
+                }
+
+                coursePlansAndHeaders.add(currCP);
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
 
         return coursePlansAndHeaders;
     }

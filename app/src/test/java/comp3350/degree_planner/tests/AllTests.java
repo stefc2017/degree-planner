@@ -8,6 +8,7 @@ import comp3350.degree_planner.tests.business.CreditHoursTest;
 import comp3350.degree_planner.tests.business.GetCompletedCoursesTest;
 //import comp3350.degree_planner.tests.business.MoveCourseTest;
 //import comp3350.degree_planner.tests.business.RemoveFromCoursePlanTest;
+import comp3350.degree_planner.tests.business.GetCoursePlansAndHeadersTest;
 import comp3350.degree_planner.tests.business.GetDegreeCoursesTest;
 import comp3350.degree_planner.tests.business.GetDegreesTest;
 import comp3350.degree_planner.tests.business.GetCourseOfferingsByTermTest;
@@ -46,7 +47,8 @@ import comp3350.degree_planner.tests.persistence.DataAccessTest;
         GetDegreesTest.class,
         CreditHoursTest.class,
         GetCourseOfferingsByTermTest.class,
-  
+        GetCoursePlansAndHeadersTest.class,
+
         CourseOfferingTest.class,
         CoursePlanTest.class,
         CoursePrerequisiteTest.class,
