@@ -4,7 +4,7 @@
 
 [Repository](https://github.com/tiffcj/degree-planner.git)
 
-Submission Contents:
+## Submission Contents:
 
 Main package: comp3350.degree_planner
 
@@ -22,6 +22,16 @@ Additional Packages:
   - AccessDegrees.java
   - CompletedCourses.java
   - CreditHours.java
+
+- comp3350.degree_planner.business.exceptions
+  contains custom exception classes for business layer to throw to presentation layer, 
+  mainly used for when the data access is modified
+  - CourseAlreadyPlannedForTermException.java
+  - CourseDoesNotExistException.java
+  - CourseNotOfferedInTermException.java
+  - CoursePlanDoesNotExistException.java
+  - StudentDoesNotExistException.java
+  - TermTypeDoesNotExistException.java
 
 - comp3350.degree_planner.objects
   contains classes for business objects
@@ -97,6 +107,15 @@ Major Features:
   This feature is not reachable in the current UI.
 
 ## Iteration 2
-- Leftover Issues:
-  - Use Mockitos as data source for unit tests: Issue-TBD
-  - Change DepartmentId in ScienceCourses to be object instead of integer: Issue-TBD
+
+Major Changes:
+
+- App now by default uses a real database instead of a stub
+- Error handling has been added for select methods
+- Unit tests has been added for persistence layer
+- Lists are now used in place of ArrayLists
+
+Incomplete Issues:
+
+- Use Mockitos as data source for unit tests: Issue-TBD
+- Change DepartmentId in ScienceCourses to be object instead of integer: Issue-TBD
