@@ -733,58 +733,6 @@ public class DataAccessObject implements DataAccess {
     public Course getCourse(CourseResult courseResult, List<Course> allCourses){ return null; }
 
     /**
-     * getStudentById
-     *
-     * @param studentId: The id for the student find
-     * @return: LA Student object whose id matches the given value
-     **/
-
-    public Student getStudentById(int studentId) {
-        Student student;
-        int studentNumber;
-        String name, email, password;
-        Degree degree;
-        int degreeId;
-
-        student = null;
-        result = null;
-        try
-        {
-            cmdString = "Select * from Student s where ID = " + studentId;
-            rs2 = st1.executeQuery(cmdString);
-        }
-        catch (Exception e)
-        {
-            processSQLError(e);
-        }
-        try
-        {
-            // Get Student Information
-            studentNumber = rs2.getInt("STUDENT_NUMBER");
-            name = rs2.getString("NAME");
-            email = rs2.getString("EMAIL");
-            password = rs2.getString("PASSWORD");
-
-            // Get Degree Information
-            degree = null;
-            degreeId = rs2.getInt("DEGREE_ID");
-            if (degreeId != 0) {
-
-            }
-            degree = getDegreeById(Integer.parseInt(rs2.getString("DEGREE_ID")));
-
-            student = new Student(studentId, studentNumber, name, email, password, degree);
-            rs2.close();
-        }
-        catch (Exception e)
-        {
-            result = processSQLError(e);
-        }
-
-        return student;
-    }
-
-    /**
      * getCoursePlansByStudent
      *
      * @param student: The student whose course plans will be found

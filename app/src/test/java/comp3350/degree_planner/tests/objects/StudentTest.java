@@ -25,15 +25,14 @@ public class StudentTest {
     public void testConstructor() {
         System.out.println("\nStarting Student Test: constructor");
 
-        Student s = new Student(1, 1234567, "Test Student", "email@ex.com", "pa55word",
-                new Degree(23, "Test Degree", 1.0, 0.5, 3.0));
+        Student s = new Student(1, 1234567, "Test Student", "email@ex.com", "pa55word", 23);
         assertNotNull(s);
         assertEquals("ID was assigned incorrectly", 1, s.getId());
         assertEquals("Student Number was assigned incorrectly", 1234567, s.getStudentNumber());
         assertEquals("Name was assigned incorrectly", "Test Student", s.getName());
         assertEquals("Email was assigned incorrectly", "email@ex.com", s.getEmail());
         assertEquals("Password was assigned incorrectly", "pa55word", s.getPassword());
-        assertEquals("Degree was assigned incorrectly", 23, s.getDegree().getId());
+        assertEquals("Degree ID was assigned incorrectly", 23, s.getDegreeId());
 
         System.out.println("Finished Student Test: constructor");
     }
