@@ -47,7 +47,7 @@ import comp3350.degree_planner.tests.objects.UserDefinedCourseTest;
         CreditHoursTest.class,
         GetCourseOfferingsByTermTest.class,
         GetCoursePlansAndHeadersTest.class,
-  
+
         CourseOfferingTest.class,
         CoursePlanTest.class,
         CoursePrerequisiteTest.class,

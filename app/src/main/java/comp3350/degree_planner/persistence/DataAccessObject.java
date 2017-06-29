@@ -70,6 +70,7 @@ public class DataAccessObject implements DataAccess {
 
     private List<Degree> degrees;
     private List<Course> courses;
+    private List<CourseOffering> courseOfferings;
 
 
     public DataAccessObject(String dbName)
@@ -581,7 +582,44 @@ public class DataAccessObject implements DataAccess {
     }
 
     public List<CourseOffering> getAllCourseOfferings() {
-        return null;
+        CourseOffering courseOffering;
+        Course course;
+        TermType termType;
+        int courseID;
+        int termTypeID;
+        courseOfferings=new ArrayList<>();
+
+
+        result = null;
+        try
+        {
+            cmdString = "Select * from CourseOffering";
+            rs2 = st1.executeQuery(cmdString);
+        }
+        catch (Exception e)
+        {
+            processSQLError(e);
+        }
+        try
+        {
+            while (rs2.next())
+            {
+
+                courseID=Integer.parseInt(rs2.getString("COURSE_ID"));
+                termTypeID=Integer.parseInt(rs2.getString("TERM_TYPE_ID"));
+                course=getCourseById(courseID);
+                termType=getTermTypeById(termTypeID);
+                courseOffering=new CourseOffering(course,termType);
+                courseOfferings.add(courseOffering);
+            }
+            rs2.close();
+        }
+        catch (Exception e)
+        {
+            result = processSQLError(e);
+        }
+
+        return courseOfferings;
     }
 
     public int getFailingGradeId() {
@@ -640,7 +678,42 @@ public class DataAccessObject implements DataAccess {
     }
 
     public List<CourseOffering> getCourseOfferingsByTerm(TermType type) {
-        return null;
+        int curr_term_ID;
+        int curr_course_ID;
+        TermType curr_term;
+        Course curr_course;
+        CourseOffering curr_offering;
+        List<CourseOffering> courseOfferingsByTermList = new ArrayList<>();
+        if (type != null) {
+                try {
+                    if (type.getId() == 1 || type.getId() == 2 || type.getId() == 3) {
+                        try{//Read all entries with matching term_id
+                            cmdString = "Select * from COURSE_OFFERING where TERM_TYPE_ID = " + type.getId();
+                            rs2 = st1.executeQuery(cmdString);
+                        }catch (Exception e){
+                            processSQLError(e);
+                        }
+
+                        try{
+                            while (rs2.next()){
+                                curr_term_ID=Integer.parseInt((rs2.getString("TERM_TYPE_ID")));
+                                curr_course_ID=Integer.parseInt((rs2.getString("COURSE_ID")));
+                                curr_term=getTermTypeById(curr_term_ID);
+                                curr_course=getCourseById(curr_course_ID);
+                                curr_offering=new CourseOffering(curr_course,curr_term);
+                                courseOfferingsByTermList.add(curr_offering);
+                            }
+                            rs2.close();
+                        }catch (Exception e){
+                            processSQLError(e);
+                        }
+
+
+                    }
+                } catch (IllegalArgumentException e) {
+                }
+            }
+        return courseOfferingsByTermList;
     }
 
     public Department getDepartmentById(int departmentId) {
