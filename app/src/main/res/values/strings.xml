@@ -8,4 +8,7 @@
     <string name="confirmRemoveCourse">Are you sure you want to remove this course?</string>
     <string name="cancel">Cancel</string>
     <string name="remove">Remove Course</string>
+    <string name="fall">Fall</string>
+    <string name="summer">Summer</string>
+    <string name="winter">Winter</string>
 </resources>

@@ -9,6 +9,7 @@ import java.util.List;
 import comp3350.degree_planner.application.Main;
 import comp3350.degree_planner.business.AccessCoursePlan;
 import comp3350.degree_planner.business.CompletedCourses;
+import comp3350.degree_planner.business.Season;
 import comp3350.degree_planner.objects.Course;
 import comp3350.degree_planner.objects.CoursePlan;
 import comp3350.degree_planner.objects.Department;
@@ -170,8 +171,8 @@ public class GetCoursePlansAndHeadersTest {
         assertEquals("Result length is not the same as expected result length",
                 NB_LIST_SIZE_FOR_STUDENT_1, coursePlansAndHeaders.size());
 
-        assertTrue("No starting header", coursePlansAndHeaders.get(0) instanceof String);
-        assertEquals("Header at index 0 is incorrect", "Fall 2017", coursePlansAndHeaders.get(0));
+        assertTrue("No starting header", coursePlansAndHeaders.get(0) instanceof ArrayList);
+        assertEquals("Header at index 0 is incorrect", Season.FALL.ordinal(), ((ArrayList)coursePlansAndHeaders.get(0)).get(0));
 
         assertTrue("Value at index 1 is not a CoursePlan", coursePlansAndHeaders.get(1) instanceof CoursePlan);
         tempCP = (CoursePlan)(coursePlansAndHeaders.get(1));
@@ -181,15 +182,15 @@ public class GetCoursePlansAndHeadersTest {
         tempCP = (CoursePlan)(coursePlansAndHeaders.get(2));
         assertEquals("CoursePlan at index 2 is incorrect", 2, tempCP.getId());
 
-        assertTrue("Value at index 3 is not a String", coursePlansAndHeaders.get(3) instanceof String);
-        assertEquals("Header at index 3 is incorrect", "Winter 2018", coursePlansAndHeaders.get(3));
+        assertTrue("Value at index 3 is not a header", coursePlansAndHeaders.get(3) instanceof ArrayList);
+        assertEquals("Header at index 3 is incorrect", Season.WINTER.ordinal(), ((ArrayList)coursePlansAndHeaders.get(3)).get(0));
 
         assertTrue("Value at index 4 is not a CoursePlan", coursePlansAndHeaders.get(4) instanceof CoursePlan);
         tempCP = (CoursePlan)(coursePlansAndHeaders.get(4));
         assertEquals("CoursePlan at index 4 is incorrect", 3, tempCP.getId());
 
-        assertTrue("Value at index 5 is not a String", coursePlansAndHeaders.get(5) instanceof String);
-        assertEquals("Header at index 5 is incorrect", "Summer 2018", coursePlansAndHeaders.get(5));
+        assertTrue("Value at index 5 is not a header", coursePlansAndHeaders.get(5) instanceof ArrayList);
+        assertEquals("Header at index 5 is incorrect", Season.SUMMER.ordinal(), ((ArrayList)coursePlansAndHeaders.get(5)).get(0));
 
         assertTrue("Value at index 6 is not a CoursePlan", coursePlansAndHeaders.get(6) instanceof CoursePlan);
         tempCP = (CoursePlan)(coursePlansAndHeaders.get(6));
