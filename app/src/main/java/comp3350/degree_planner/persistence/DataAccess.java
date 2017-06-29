@@ -51,7 +51,7 @@ public interface DataAccess {
 
     Department getDepartmentById(int departmentId);
 
-    List<CourseResult> getCourseResultsByStudentId(int studentId);
+    List<CourseResult> getCourseResultsByStudentId(int studentId) throws Exception;
 
     int getFailingGradeId();
 

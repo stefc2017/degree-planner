@@ -4,8 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import comp3350.degree_planner.application.Main;
@@ -56,6 +56,9 @@ public class GetCompletedCoursesTest {
             private List<TermType> termTypes;
             private List<UserDefinedCourse> userDefinedCourses;
 
+            private String dbName;
+            private String dbType = "stub";
+
             @Override
             public void open(String dbName) {
                 ScienceCourse tempScienceCourse;
@@ -103,7 +106,21 @@ public class GetCompletedCoursesTest {
                 courses.add(tempScienceCourse);
                 scienceCourses.add(tempScienceCourse);
 
-                tempUserDefinedCourse = new UserDefinedCourse(3, "Cultural Anthropology", 3.0, "ANTH 1220");
+                tempScienceCourse = new ScienceCourse(3, "Object Orientation", 3.0, 1,
+                        2150, "Detailed look at proper object oriented programming.");
+                courses.add(tempScienceCourse);
+                scienceCourses.add(tempScienceCourse);
+
+                tempScienceCourse = new ScienceCourse(4, "Software Engineering I", 3.0, 1,
+                        3350, "Good software development practices.");
+                courses.add(tempScienceCourse);
+                scienceCourses.add(tempScienceCourse);
+
+                tempUserDefinedCourse = new UserDefinedCourse(5, "Cultural Anthropology", 3.0, "ANTH 1220");
+                courses.add(tempUserDefinedCourse);
+                userDefinedCourses.add(tempUserDefinedCourse);
+
+                tempUserDefinedCourse = new UserDefinedCourse(6, "Language and Culture", 3.0, "ANTH 2370");
                 courses.add(tempUserDefinedCourse);
                 userDefinedCourses.add(tempUserDefinedCourse);
 
@@ -116,11 +133,14 @@ public class GetCompletedCoursesTest {
                 // Map courses to degrees
 
                 degreeCourses = new ArrayList<DegreeCourse>();
-
                 degreeCourses.add(new DegreeCourse(degree, new ScienceCourse(1, "Introductory Computer Science I",
                         3.0, 1, 1010, "Basic programming concepts."), new DegreeCourseType(1, "Required")));
                 degreeCourses.add(new DegreeCourse(degree, new ScienceCourse(2, "Introductory Computer Science II", 3.0,
                         1, 1020, "More basic programming concepts."), new DegreeCourseType(1, "Required")));
+                degreeCourses.add(new DegreeCourse(degree, new ScienceCourse(3, "Object Orientation", 3.0, 1,
+                        2150, "Detailed look at proper object oriented programming."), new DegreeCourseType(1, "Required")));
+                degreeCourses.add(new DegreeCourse(degree, new ScienceCourse(4, "Software Engineering I", 3.0, 1,
+                        3350, "Good software development practices."), new DegreeCourseType(1, "Required")));
 
                 // Create Students
 
@@ -131,82 +151,30 @@ public class GetCompletedCoursesTest {
                 // Create Course Results
 
                 courseResults = new ArrayList<CourseResult>();
-
-                //Student 1 science course passed
                 courseResults.add(new CourseResult(1, new ScienceCourse(1, "Introductory Computer Science I",
                         3.0, 1, 1010, "Basic programming concepts."), new Student(1, 1234567, "Jim Bob",
                         "jimbob@myumanitoba.ca", "helloworld1", 1), new GradeType(1, "A+", 4.5)));
-
-                //Student 1 science course failed
                 courseResults.add(new CourseResult(2, new ScienceCourse(2, "Introductory Computer Science II", 3.0,
                         1, 1020, "More basic programming concepts."), new Student(1, 1234567, "Jim Bob",
-                        "jimbob@myumanitoba.ca", "helloworld1", 1), new GradeType(8, "F", 0.0)));
+                        "jimbob@myumanitoba.ca", "helloworld1", 1), new GradeType(2, "A", 4.0)));
 
-                //Student 1 user-defined course failed
-                courseResults.add(new CourseResult(3, new ScienceCourse(3, "Object Orientation", 3.0, 1,
-                        2150, "Detailed look at proper object oriented programming."), new Student(1, 1234567, "Jim Bob",
-                        "jimbob@myumanitoba.ca", "helloworld1", 1), new GradeType(8, "F", 0.0)));
-
-                //Student 1 user-defined course passed
-                courseResults.add(new CourseResult(4, new ScienceCourse(3, "Object Orientation", 3.0, 1,
-                        2150, "Detailed look at proper object oriented programming."), new Student(1, 1234567, "Jim Bob",
-                        "jimbob@myumanitoba.ca", "helloworld1", 1),new GradeType(3, "B+", 3.5)));
+                System.out.println("Opened " +dbType +" database " +dbName);
             }
 
-            @Override
-            public ArrayList<CourseResult> getCourseResultsByStudentId(int studentId) {
-                ArrayList<CourseResult> crByStudentId = new ArrayList<CourseResult>();
+            public List<CourseResult> getCourseResultsByStudentId (int studentId) {
+                List<CourseResult> crByStudentId = new ArrayList<CourseResult>();
+                Iterator<CourseResult> crIterator = courseResults.iterator();
                 CourseResult currCR;
 
-                for (int i = 0; i < courseResults.size(); i++) {
-                    currCR = courseResults.get(i);
+                while (crIterator.hasNext()) {
+                    currCR = crIterator.next();
+
                     if (currCR.getStudent().getId() == studentId) {
-                        crByStudentId.add(currCR);
+                        crByStudentId.add (currCR);
                     }
                 }
 
                 return crByStudentId;
-            }
-
-            @Override
-            public int getFailingGradeId() {
-                int failingGradeId = -1;
-
-                for (int i = 0; i < gradeTypes.size(); i++) {
-                    if (gradeTypes.get(i).getName().equals("F")) {
-                        failingGradeId = gradeTypes.get(i).getId();
-                        break;
-                    }
-                }
-                return failingGradeId;
-            }
-
-            @Override
-            public Course getCourseById(int courseId) {
-                Course result = null;
-
-                for (int i = 0; i < courses.size(); i++) {
-                    if (courses.get(i).getId() == courseId) {
-                        result = courses.get(i);
-                        break;
-                    }
-                }
-
-                return result;
-            }
-
-            @Override
-            public Department getDepartmentById(int departmentId) {
-                Department result = null;
-
-                for (int i = 0; i < departments.size(); i++) {
-                    if (departments.get(i).getId() == departmentId) {
-                        result = departments.get(i);
-                        break;
-                    }
-                }
-
-                return result;
             }
         };
 
@@ -215,47 +183,32 @@ public class GetCompletedCoursesTest {
     }
 
     @Test
-    public void testInvalidStudentId() {
+    public void testInvalidStudentId() throws Exception {
         System.out.println("\nStarting Get Completed Courses Test: invalid student id");
-
-        String[][] result = cc.getCompletedCourses(-1);
-        assertNull("Completed courses array was not null", result);
-
+        assertEquals("Completed courses list was not empty", cc.getCompletedCourses(-1).size(), 0);
         System.out.println("Finished Get Completed Courses Test: invalid student id");
     }
 
     @Test
-    public void testEmptyCourseResults() {
+    public void testEmptyCourseResults() throws Exception {
         System.out.println("\nStarting Get Completed Courses Test: valid student id and empty course results");
-
-        String[][] result = cc.getCompletedCourses(2);
-        assertNull("Completed courses array was not null", result);
-
+        assertEquals("Completed courses list was not empty", cc.getCompletedCourses(2).size(), 0);
         System.out.println("Finished Get Completed Courses Test: valid student id and empty course results");
     }
 
     @Test
-    public void testValidData() {
+    public void testValidData() throws Exception {
+        final int NB_COMPLETED_COURSES_FOR_STUDENT_1 = 2;
+
         System.out.println("\nStarted Get Completed Courses Test: valid student id and non-empty course results");
-        final int NB_COMPLETED_COURSES_FOR_STUDENT_1 = 4;
 
-        String[][] expectedResult = new String[NB_COMPLETED_COURSES_FOR_STUDENT_1][2];
-        expectedResult[0][0] = "COMP 1010: Introductory Computer Science I";
-        expectedResult[0][1] = "Passed";
-        expectedResult[1][0] = "COMP 1020: Introductory Computer Science II";
-        expectedResult[1][1] = "Failed";
-        expectedResult[2][0] = "ANTH 1220: Cultural Anthropology";
-        expectedResult[2][1] = "Failed";
-        expectedResult[3][0] = "ANTH 1220: Cultural Anthropology";
-        expectedResult[3][1] = "Passed";
+        List<CourseResult> courseResults = cc.getCompletedCourses(1);
 
-        String[][] result = cc.getCompletedCourses(1);
-
-        assertNotNull("Completed courses array is null", result);
-        assertEquals("Result length is not the same as expected result length", expectedResult.length, result.length);
+        assertNotNull("Completed courses array is null", courseResults);
+        assertEquals("Result length is not the same as expected result length", NB_COMPLETED_COURSES_FOR_STUDENT_1, courseResults.size());
 
         for (int i = 0; i < NB_COMPLETED_COURSES_FOR_STUDENT_1; i++) {
-            assertTrue("Expected result and result are not equal at index " + i, Arrays.equals(expectedResult[i], result[i]));
+            assertEquals("Expected result and result are not equal at index " + i, courseResults.get(i).getCourse().getId(), i+1);
         }
 
         System.out.println("Finished Get Completed Courses Test: valid student id and non-empty course results");
