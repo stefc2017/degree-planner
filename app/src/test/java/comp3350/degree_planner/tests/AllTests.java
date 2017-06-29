@@ -28,6 +28,7 @@ import comp3350.degree_planner.tests.objects.ScienceCourseTest;
 import comp3350.degree_planner.tests.objects.StudentTest;
 import comp3350.degree_planner.tests.objects.TermTypeTest;
 import comp3350.degree_planner.tests.objects.UserDefinedCourseTest;
+import comp3350.degree_planner.tests.persistence.DataAccessTest;
 
 /**
  * Created by Tiffany Jiang on 2017-06-04.
@@ -60,7 +61,8 @@ import comp3350.degree_planner.tests.objects.UserDefinedCourseTest;
         ScienceCourseTest.class,
         StudentTest.class,
         TermTypeTest.class,
-        UserDefinedCourseTest.class
+        UserDefinedCourseTest.class,
+        DataAccessTest.class
 })
 
 public class AllTests {
