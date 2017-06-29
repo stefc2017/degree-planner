@@ -13,11 +13,13 @@ import comp3350.degree_planner.objects.CoursePlan;
 import comp3350.degree_planner.objects.CourseResult;
 import comp3350.degree_planner.objects.Degree;
 import comp3350.degree_planner.objects.Department;
+import comp3350.degree_planner.objects.GradeType;
 import comp3350.degree_planner.objects.ScienceCourse;
+import comp3350.degree_planner.objects.Student;
 import comp3350.degree_planner.objects.TermType;
 import comp3350.degree_planner.objects.UserDefinedCourse;
 
-import static org.hsqldb.HsqlDateTime.e;
+import static android.R.attr.id;
 
 /**
  * Created by Tiffany Jiang on 2017-06-24.
@@ -93,6 +95,7 @@ public class DataAccessObject implements DataAccess {
         {
             processSQLError(e);
         }
+
         System.out.println("Opened " + dbType + " database " + dbPath);
     }
 
@@ -537,8 +540,44 @@ public class DataAccessObject implements DataAccess {
         return degree;
     }
 
-    public List<CourseResult> getCourseResultsByStudentId(int studentId) {
-        return null;
+    public List<CourseResult> getCourseResultsByStudentId(int studentId) throws Exception {
+        List<CourseResult> courseResults = new ArrayList<CourseResult>();
+        Course course;
+        Student student;
+        GradeType gradeType;
+        int id;
+        CourseResult cr;
+
+        cmdString = "SELECT * FROM Course_Result WHERE student_id = " + studentId;
+        rs3 = st2.executeQuery(cmdString);
+
+        while (rs3.next())
+        {
+            id = Integer.parseInt(rs3.getString("id"));
+            course = getCourseById(Integer.parseInt(rs3.getString("course_id")));
+            student = getStudentById(Integer.parseInt(rs3.getString("student_id")));
+            gradeType = getGradeTypeById(Integer.parseInt(rs3.getString("grade_type_id")));
+
+            cr = new CourseResult (id, course, student, gradeType);
+            courseResults.add(cr);
+        }
+        rs3.close();
+
+        return courseResults;
+    }
+
+    private GradeType getGradeTypeById (int gradeTypeId) throws Exception {
+        GradeType gradeType = null;
+
+        cmdString = "Select * from Grade_Type where id = " + gradeTypeId;
+        rs2 = st1.executeQuery(cmdString);
+
+        while (rs2.next()) {
+            gradeType = new GradeType(rs2.getInt("id"), rs2.getString("name"), rs2.getDouble("points"));
+        }
+        rs2.close();
+
+        return gradeType;
     }
 
     public List<CourseOffering> getAllCourseOfferings() {
@@ -722,24 +761,171 @@ public class DataAccessObject implements DataAccess {
         return eligibleDegreeCourses;
     }
 
-    public int addToCoursePlan (int courseId, int studentId, int termTypeId, int year) { return -1;
+    public void addToCoursePlan (int courseId, int studentId, int termTypeId, int year) throws Exception {
+        String newCoursePlanValues = courseId + ", " + studentId + ", " + termTypeId + ", " + year;
+        cmdString = "INSERT INTO Course_Plan (Course_Id, Student_Id, Term_Type_Id, Year) " + " VALUES (" + newCoursePlanValues + ")";
+        updateCount = st1.executeUpdate(cmdString);
     }
 
-    public boolean moveCourse (int coursePlanId, int newTermTypeId, int newYear) {
-        return false;
+    //These next few methods perform checks (as stated respectively) for adding and modify course plans
+
+    public boolean courseOffered (int courseId, int termTypeId) throws Exception {
+        boolean validTerm = false;
+
+        //For user-defined courses, let the user freely enter the the term and year
+        cmdString = "Select is_user_defined from Course where id = " + courseId;
+        rs4 = st2.executeQuery(cmdString);
+        while (rs4.next()) {
+            validTerm = rs4.getBoolean("is_user_defined");
+        }
+        rs4.close();
+
+        if (!validTerm) {
+            //Is the course historically offered in this term?
+            cmdString = "Select count(*) as courseOfferingCount from Course_Offering where course_id = " + courseId + " and term_type_id = " + termTypeId;
+            rs4 = st2.executeQuery(cmdString);
+            while (rs4.next()) {
+                validTerm = (rs4.getInt("courseOfferingCount") > 0);
+            }
+            rs4.close();
+        }
+
+        return validTerm;
     }
 
-    public boolean removeFromCoursePlan (int coursePlanId) {
-        return false;
+    public boolean isValidStudentId (int studentId) throws Exception {
+        boolean studentExists = false;
+
+        cmdString = "Select count(*) as studentCount from Student where id = " + studentId;
+        rs4 = st2.executeQuery(cmdString);
+        while (rs4.next()) {
+            studentExists = (rs4.getInt("studentCount") > 0);
+        }
+        rs4.close();
+
+        return studentExists;
     }
 
-    public CoursePlan getCoursePlanById (int coursePlanId) {
-        return null;
+    public boolean isValidCourseId (int courseId) throws Exception {
+        boolean courseExists = false;
+
+        cmdString = "Select count(*) as courseCount from Course where id = " + courseId;
+        rs4 = st2.executeQuery(cmdString);
+        while (rs4.next()) {
+            courseExists = (rs4.getInt("courseCount") > 0);
+        }
+        rs4.close();
+
+        return courseExists;
+    }
+
+    public boolean isValidTermTypeId (int termTypeId) throws Exception {
+        boolean termTypeExists = false;
+
+        cmdString = "Select count(*) as termTypeCount from Term_Type where id = " + termTypeId;
+        rs4 = st2.executeQuery(cmdString);
+        while (rs4.next()) {
+            termTypeExists = (rs4.getInt("termTypeCount") > 0);
+        }
+        rs4.close();
+
+        return termTypeExists;
+    }
+
+    public boolean coursePlanExists (int courseId, int studentId, int termTypeId, int year) throws Exception {
+        boolean coursePlanExists = false;
+
+        cmdString = "Select count(*) as coursePlanCount from Course_Plan where course_id = " + courseId + " and student_id = " + studentId + " and term_type_id = " + termTypeId + " and year = " + year;
+        rs4 = st2.executeQuery(cmdString);
+        while (rs4.next()) {
+            coursePlanExists = (rs4.getInt("coursePlanCount") > 0);
+        }
+        rs4.close();
+
+        return coursePlanExists;
+    }
+
+    public void moveCourse (int coursePlanId, int newTermTypeId, int newYear) throws Exception {
+        cmdString = "UPDATE Course_Plan SET term_type_id = " + newTermTypeId + ", year = " + newYear + " WHERE id = " + coursePlanId;
+        updateCount = st1.executeUpdate(cmdString);
+    }
+
+    public void removeFromCoursePlan (int coursePlanId) throws Exception {
+        cmdString = "DELETE FROM Course_Plan WHERE id = " + coursePlanId;
+        updateCount = st3.executeUpdate(cmdString);
+    }
+
+    public CoursePlan getCoursePlan (int courseId, int studentId, int termTypeId, int year) throws Exception {
+        CoursePlan cp = null;
+        Course course;
+        Student student;
+        TermType termType;
+
+        cmdString = "SELECT * FROM Course_Plan cp WHERE cp.course_id = " + courseId + " and cp.student_id = " + studentId + " and cp.term_type_id = " + termTypeId + " and cp.year = " + year;
+        rs4 = st2.executeQuery(cmdString);
+
+        while (rs4.next()) {
+            course = getCourseById(rs4.getInt("course_id"));
+            student = getStudentById(rs4.getInt("student_id"));
+            termType = getTermTypeById(rs4.getInt("term_type_id"));
+            cp = new CoursePlan(rs4.getInt("id"), course, student, termType, rs4.getInt("year"));
+        }
+        rs4.close();
+
+        return cp;
+    }
+
+    public CoursePlan getCoursePlan (int coursePlanId) throws Exception {
+        CoursePlan cp = null;
+        Course course;
+        Student student;
+        TermType termType;
+
+        cmdString = "SELECT * FROM Course_Plan WHERE id = " + coursePlanId;
+        rs4 = st2.executeQuery(cmdString);
+
+        while (rs4.next()) {
+            course = getCourseById(rs4.getInt("course_id"));
+            student = getStudentById(rs4.getInt("student_id"));
+            termType = getTermTypeById(rs4.getInt("term_type_id"));
+            cp = new CoursePlan(rs4.getInt("id"), course, student, termType, rs4.getInt("year"));
+        }
+        rs4.close();
+
+        return cp;
+    }
+
+    private Student getStudentById (int studentId) throws Exception {
+        Student student = null;
+
+        cmdString = "Select * from Student where id = " + studentId;
+        rs2 = st1.executeQuery(cmdString);
+
+        while (rs2.next()) {
+            student = new Student(rs2.getInt("id"), rs2.getInt("student_number"), rs2.getString("name"), rs2.getString("email"), rs2.getString("password"), rs2.getInt("degree_id"));
+        }
+        rs2.close();
+
+        return student;
+    }
+
+    private TermType getTermTypeById (int termTypeId) throws Exception {
+        TermType tt = null;
+
+        cmdString = "Select * from Term_Type where id = " + termTypeId;
+        rs2 = st1.executeQuery(cmdString);
+
+        while (rs2.next()) {
+            tt = new TermType(rs2.getInt("id"), rs2.getString("season"));
+        }
+        rs2.close();
+
+        return tt;
     }
 
     public Course getCourse(CourseResult courseResult, List<Course> allCourses){ return null; }
 
-    public String processSQLError(Exception e)
+    private String processSQLError(Exception e)
     {
         String result = "*** SQL Error: " + e.getMessage();
 
