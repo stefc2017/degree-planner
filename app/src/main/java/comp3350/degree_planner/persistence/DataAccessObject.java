@@ -687,7 +687,6 @@ public class DataAccessObject implements DataAccess {
         CourseOffering curr_offering;
         List<CourseOffering> courseOfferingsByTermList = new ArrayList<>();
         if (type != null) {
-            for (int i = 0; i < courseOfferings.size(); i++) {
                 try {
                     if (type.getId() == 1 || type.getId() == 2 || type.getId() == 3) {
                         try{//Read all entries with matching term_id
@@ -715,7 +714,6 @@ public class DataAccessObject implements DataAccess {
                 } catch (IllegalArgumentException e) {
                 }
             }
-        }
         return courseOfferingsByTermList;
     }
 
