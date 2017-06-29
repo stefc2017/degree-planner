@@ -26,7 +26,7 @@ Additional Packages:
   - CreditHours.java
 
 - comp3350.degree_planner.business.exceptions
-  contains custom exception classes for business layer to throw to presentation layer,
+  contains custom exception classes for business layer to throw to presentation layer, 
   mainly used for when the data access is modified
   - CourseAlreadyPlannedForTermException.java
   - CourseDoesNotExistException.java
