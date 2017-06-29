@@ -4,6 +4,8 @@
 
 [Repository](https://github.com/tiffcj/degree-planner.git)
 
+[User Stories](https://docs.google.com/document/d/1IxhGPwOgUdlWqZGTTWUEu0HilO-rmCI_imyEIydX6Lk/edit)
+
 ## Submission Contents:
 
 Main package: comp3350.degree_planner
@@ -118,7 +120,9 @@ Major Changes:
 - Unit tests has been added for persistence layer
 - Lists are now used in place of ArrayLists
 
-Incomplete Issues:
+Incomplete Issues/Tasks:
 
-- Use Mockitos as data source for unit tests: Issue-TBD
-- Change DepartmentId in ScienceCourses to be object instead of integer: Issue-TBD
+- Use Mockitos as data source for unit tests
+- Change DepartmentId in ScienceCourses to be object instead of integer
+- Pick degree
+- See my student information
