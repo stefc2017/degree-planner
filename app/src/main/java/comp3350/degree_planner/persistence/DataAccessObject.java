@@ -13,10 +13,13 @@ import comp3350.degree_planner.objects.CoursePlan;
 import comp3350.degree_planner.objects.CourseResult;
 import comp3350.degree_planner.objects.Degree;
 import comp3350.degree_planner.objects.Department;
+import comp3350.degree_planner.objects.GradeType;
 import comp3350.degree_planner.objects.ScienceCourse;
 import comp3350.degree_planner.objects.Student;
 import comp3350.degree_planner.objects.TermType;
 import comp3350.degree_planner.objects.UserDefinedCourse;
+
+import static android.R.attr.id;
 
 /**
  * Created by Tiffany Jiang on 2017-06-24.
@@ -537,8 +540,44 @@ public class DataAccessObject implements DataAccess {
         return degree;
     }
 
-    public List<CourseResult> getCourseResultsByStudentId(int studentId) {
-        return null;
+    public List<CourseResult> getCourseResultsByStudentId(int studentId) throws Exception {
+        List<CourseResult> courseResults = new ArrayList<CourseResult>();
+        Course course;
+        Student student;
+        GradeType gradeType;
+        int id;
+        CourseResult cr;
+
+        cmdString = "SELECT * FROM Course_Result WHERE student_id = " + studentId;
+        rs3 = st2.executeQuery(cmdString);
+
+        while (rs3.next())
+        {
+            id = Integer.parseInt(rs3.getString("id"));
+            course = getCourseById(Integer.parseInt(rs3.getString("course_id")));
+            student = getStudentById(Integer.parseInt(rs3.getString("student_id")));
+            gradeType = getGradeTypeById(Integer.parseInt(rs3.getString("grade_type_id")));
+
+            cr = new CourseResult (id, course, student, gradeType);
+            courseResults.add(cr);
+        }
+        rs3.close();
+
+        return courseResults;
+    }
+
+    private GradeType getGradeTypeById (int gradeTypeId) throws Exception {
+        GradeType gradeType = null;
+
+        cmdString = "Select * from Grade_Type where id = " + gradeTypeId;
+        rs2 = st1.executeQuery(cmdString);
+
+        while (rs2.next()) {
+            gradeType = new GradeType(rs2.getInt("id"), rs2.getString("name"), rs2.getDouble("points"));
+        }
+        rs2.close();
+
+        return gradeType;
     }
 
     public List<CourseOffering> getAllCourseOfferings() {
