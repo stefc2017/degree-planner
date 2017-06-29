@@ -53,8 +53,6 @@ public interface DataAccess {
 
     List<CourseResult> getCourseResultsByStudentId(int studentId);
 
-    CoursePlan getCoursePlanById (int coursePlanId);
-
     int getFailingGradeId();
 
     List<CourseOffering> getCourseOfferingsByTerm(TermType type);
@@ -63,10 +61,23 @@ public interface DataAccess {
 
     List<Course> getDegreeCourses(int degreeId);
 
-    int addToCoursePlan (int courseId, int studentId, int termTypeId, int year);
+    void addToCoursePlan (int courseId, int studentId, int termTypeId, int year) throws Exception;
 
-    boolean moveCourse (int coursePlanId, int newTermTypeId, int newYear);
+    boolean isValidStudentId (int studentId) throws Exception;
 
-    boolean removeFromCoursePlan (int coursePlanId);
+    boolean isValidCourseId (int courseId) throws Exception;
 
+    boolean isValidTermTypeId (int termTypeId) throws Exception;
+
+    boolean courseOffered (int courseId, int termTypeId) throws Exception;
+
+    boolean coursePlanExists (int courseId, int studentId, int termTypeId, int year) throws Exception;
+
+    void moveCourse (int coursePlanId, int newTermTypeId, int newYear) throws Exception;
+
+    void removeFromCoursePlan (int coursePlanId) throws Exception;
+
+    CoursePlan getCoursePlan (int courseId, int studentId, int termTypeId, int year) throws Exception;
+
+    CoursePlan getCoursePlan (int coursePlanId) throws Exception;
 }
