@@ -5,7 +5,7 @@
     <string name="progress">View Progress</string>
     <string name="degreePageTitle">Undergraduate Degrees</string>
     <string name="removeCourse">Remove Course</string>
-    <string name="confirmRemoveCourse">Are you sure you want to remove this course?</string>
+    <string name="confirmRemoveCourse">Are you sure you want to remove this course from your coursePlan?</string>
     <string name="cancel">Cancel</string>
     <string name="remove">Remove Course</string>
     <string name="fall">Fall</string>
