@@ -1,5 +1,7 @@
 package comp3350.degree_planner.business;
 
+import android.util.Log;
+
 import comp3350.degree_planner.business.exceptions.CourseAlreadyPlannedForTermException;
 import comp3350.degree_planner.business.exceptions.CourseNotOfferedInTermException;
 import comp3350.degree_planner.business.exceptions.CourseDoesNotExistException;
@@ -19,6 +21,7 @@ import java.util.ListIterator;
 import comp3350.degree_planner.objects.CoursePlan;
 import comp3350.degree_planner.objects.ScienceCourse;
 import comp3350.degree_planner.objects.UserDefinedCourse;
+import comp3350.degree_planner.presentation.CoursePlanAdapter;
 
 /**
  * Created by Tiffany Jiang on 2017-06-04.
@@ -28,7 +31,6 @@ import comp3350.degree_planner.objects.UserDefinedCourse;
 
 public class AccessCoursePlan {
     private DataAccess dataAccess;
-
     public AccessCoursePlan(DataAccess dataAccess) {
         this.dataAccess = dataAccess;
     }
