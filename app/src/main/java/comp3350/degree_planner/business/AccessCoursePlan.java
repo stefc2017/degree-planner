@@ -146,7 +146,6 @@ public class AccessCoursePlan {
                     switch (currentTerm.getSeason()){
                         case "Fall":
                             header.add(Season.FALL.ordinal());
-                            System.out.println("fall ordinal" + Season.FALL.ordinal());
                         case "Summer":
                             header.add(Season.SUMMER.ordinal());
                         case "Winter":

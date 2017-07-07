@@ -68,7 +68,6 @@ public class CoursePlanAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View view, ViewGroup viewGroup){
         String s;
-        System.out.println(position + " " + view);
         if(view == null){
             // Fill the basic layout
             switch (getItemViewType(position)){
@@ -110,8 +109,6 @@ public class CoursePlanAdapter extends BaseAdapter {
                 TextView headerYear = (TextView)view.findViewById(R.id.sectionHeaderYear);
                 int term = (Integer)((ArrayList)coursePlansAndHeaders.get(position)).get(0);
                 int year = (Integer)((ArrayList)coursePlansAndHeaders.get(position)).get(1);
-                System.out.println(term);
-                System.out.println(year);
                 if(term == Season.FALL.ordinal()){
                     headerTerm.setText(myContext.getText(R.string.fall));
                     headerYear.setText(year+"");
