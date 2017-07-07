@@ -78,22 +78,22 @@ public class GetCoursePlansAndHeadersTest {
                 scienceCourses = new ArrayList<ScienceCourse>();
                 userDefinedCourses = new ArrayList<UserDefinedCourse>();
 
-                tempScienceCourse = new ScienceCourse(1, "Introductory Computer Science I", 3.0, 1,
-                        1010, "Basic programming concepts.");
+                tempScienceCourse = new ScienceCourse(1, "Introductory Computer Science I", 3.0,
+                        departments.get(0), 1010, "Basic programming concepts.");
                 courses.add(tempScienceCourse);
                 scienceCourses.add(tempScienceCourse);
 
                 tempScienceCourse = new ScienceCourse(2, "Introductory Computer Science II", 3.0,
-                        1, 1020, "More basic programming concepts.");
+                        departments.get(0), 1020, "More basic programming concepts.");
                 courses.add(tempScienceCourse);
                 scienceCourses.add(tempScienceCourse);
 
-                tempScienceCourse = new ScienceCourse(3, "Object Orientation", 3.0, 1,
+                tempScienceCourse = new ScienceCourse(3, "Object Orientation", 3.0, departments.get(0),
                         2150, "Detailed look at proper object oriented programming.");
                 courses.add(tempScienceCourse);
                 scienceCourses.add(tempScienceCourse);
 
-                tempScienceCourse = new ScienceCourse(4, "Software Engineering I", 3.0, 1,
+                tempScienceCourse = new ScienceCourse(4, "Software Engineering I", 3.0, departments.get(0),
                         3350, "Good software development practices.");
                 courses.add(tempScienceCourse);
                 scienceCourses.add(tempScienceCourse);
@@ -109,8 +109,8 @@ public class GetCoursePlansAndHeadersTest {
                 // Create Students
 
                 students = new ArrayList<Student>();
-                students.add(new Student(1, 1234567, "Jim Bob", "jimbob@myumanitoba.ca", "helloworld1", 1));
-                students.add(new Student(2, 9999999, "DK", "dk@myumanitoba.ca", "password1", 1));
+                students.add(new Student(1, 1234567, "Jim Bob", "jimbob@myumanitoba.ca", "helloworld1", null));
+                students.add(new Student(2, 9999999, "DK", "dk@myumanitoba.ca", "password1", null));
 
                 // Create Course Plans
                 // Note that these are in sorted order, since that is how they will be retrieved

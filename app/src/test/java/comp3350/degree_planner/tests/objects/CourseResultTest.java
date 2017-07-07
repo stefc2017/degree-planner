@@ -28,8 +28,8 @@ public class CourseResultTest {
         System.out.println("\nStarting CourseOffering Test: constructor");
 
         CourseResult cr = new CourseResult(1, new ScienceCourse(1, "Introductory Computer Science I",
-                3.0, 1, 1010, "Basic programming concepts."), new Student(1, 1234567, "Jim Bob",
-                "jimbob@myumanitoba.ca", "helloworld1", 1), new GradeType(1, "A+", 4.5));
+                3.0, null, 1010, "Basic programming concepts."), new Student(1, 1234567, "Jim Bob",
+                "jimbob@myumanitoba.ca", "helloworld1", null), new GradeType(1, "A+", 4.5));
         assertNotNull(cr);
         assertEquals("ID was assigned incorrectly", 1, cr.getCourse().getId());
         assertEquals("Course ID was assigned incorrectly", 1, cr.getCourse().getId());

@@ -92,22 +92,22 @@ public class DataAccessStub implements DataAccess {
         scienceCourses = new ArrayList<ScienceCourse>();
         userDefinedCourses = new ArrayList<UserDefinedCourse>();
 
-        tempScienceCourse = new ScienceCourse(1, "Introductory Computer Science I", 3.0, 1,
-                1010, "Basic programming concepts.");
+        tempScienceCourse = new ScienceCourse(1, "Introductory Computer Science I", 3.0,
+                departments.get(0), 1010, "Basic programming concepts.");
         courses.add(tempScienceCourse);
         scienceCourses.add(tempScienceCourse);
 
         tempScienceCourse = new ScienceCourse(2, "Introductory Computer Science II", 3.0,
-                1, 1020, "More basic programming concepts.");
+                departments.get(0), 1020, "More basic programming concepts.");
         courses.add(tempScienceCourse);
         scienceCourses.add(tempScienceCourse);
 
-        tempScienceCourse = new ScienceCourse(3, "Object Orientation", 3.0, 1,
+        tempScienceCourse = new ScienceCourse(3, "Object Orientation", 3.0, departments.get(0),
                 2150, "Detailed look at proper object oriented programming.");
         courses.add(tempScienceCourse);
         scienceCourses.add(tempScienceCourse);
 
-        tempScienceCourse = new ScienceCourse(4, "Software Engineering I", 3.0, 1,
+        tempScienceCourse = new ScienceCourse(4, "Software Engineering I", 3.0, departments.get(0),
                 3350, "Good software development practices.");
         courses.add(tempScienceCourse);
         scienceCourses.add(tempScienceCourse);
@@ -129,76 +129,52 @@ public class DataAccessStub implements DataAccess {
         // Map courses to degrees
 
         degreeCourses = new ArrayList<DegreeCourse>();
-        degreeCourses.add(new DegreeCourse(degree, new ScienceCourse(1, "Introductory Computer Science I",
-                3.0, 1, 1010, "Basic programming concepts."), new DegreeCourseType(1, "Required")));
-        degreeCourses.add(new DegreeCourse(degree, new ScienceCourse(2, "Introductory Computer Science II", 3.0,
-                1, 1020, "More basic programming concepts."), new DegreeCourseType(1, "Required")));
-        degreeCourses.add(new DegreeCourse(degree, new ScienceCourse(3, "Object Orientation", 3.0, 1,
-                2150, "Detailed look at proper object oriented programming."), new DegreeCourseType(1, "Required")));
-        degreeCourses.add(new DegreeCourse(degree, new ScienceCourse(4, "Software Engineering I", 3.0, 1,
-                3350, "Good software development practices."), new DegreeCourseType(1, "Required")));
+        degreeCourses.add(new DegreeCourse(degree, scienceCourses.get(0), new DegreeCourseType(1, "Required")));
+        degreeCourses.add(new DegreeCourse(degree, scienceCourses.get(1), new DegreeCourseType(1, "Required")));
+        degreeCourses.add(new DegreeCourse(degree, scienceCourses.get(2), new DegreeCourseType(1, "Required")));
+        degreeCourses.add(new DegreeCourse(degree, scienceCourses.get(3), new DegreeCourseType(1, "Required")));
 
         // Create Students
 
         students = new ArrayList<Student>();
-        students.add(new Student(1, 1234567, "Jim Bob", "jimbob@myumanitoba.ca", "helloworld1", 1));
+        students.add(new Student(1, 1234567, "Jim Bob",
+                "jimbob@myumanitoba.ca", "helloworld1", degrees.get(0)));
 
         // Create Course Results
 
         courseResults = new ArrayList<CourseResult>();
-        courseResults.add(new CourseResult(1, new ScienceCourse(1, "Introductory Computer Science I",
-                3.0, 1, 1010, "Basic programming concepts."), new Student(1, 1234567, "Jim Bob",
-                "jimbob@myumanitoba.ca", "helloworld1", 1), new GradeType(1, "A+", 4.5)));
-        courseResults.add(new CourseResult(2, new ScienceCourse(2, "Introductory Computer Science II", 3.0,
-                1, 1020, "More basic programming concepts."), new Student(1, 1234567, "Jim Bob",
-                "jimbob@myumanitoba.ca", "helloworld1", 1), new GradeType(2, "A", 4.0)));
+        courseResults.add(new CourseResult(1, scienceCourses.get(0), students.get(0), new GradeType(1, "A+", 4.5)));
+        courseResults.add(new CourseResult(2, scienceCourses.get(1), students.get(0), new GradeType(2, "A", 4.0)));
 
         // Create Course Offerings
 
         courseOfferings = new ArrayList<CourseOffering>();
-        courseOfferings.add(new CourseOffering(new ScienceCourse(1, "Introductory Computer Science I",
-                3.0, 1, 1010, "Basic programming concepts."), new TermType(1, "Fall")));
-        courseOfferings.add(new CourseOffering(new ScienceCourse(1, "Introductory Computer Science I",
-                3.0, 1, 1010, "Basic programming concepts."), new TermType(2, "Winter")));
-        courseOfferings.add(new CourseOffering(new ScienceCourse(1, "Introductory Computer Science I",
-                3.0, 1, 1010, "Basic programming concepts."), new TermType(3, "Summer")));
-        courseOfferings.add(new CourseOffering(new ScienceCourse(2, "Introductory Computer Science II", 3.0,
-                1, 1020, "More basic programming concepts."), new TermType(1, "Fall")));
-        courseOfferings.add(new CourseOffering(new ScienceCourse(2, "Introductory Computer Science II", 3.0,
-                1, 1020, "More basic programming concepts."), new TermType(2, "Winter")));
-        courseOfferings.add(new CourseOffering(new ScienceCourse(2, "Introductory Computer Science II", 3.0,
-                1, 1020, "More basic programming concepts."), new TermType(3, "Summer")));
-        courseOfferings.add(new CourseOffering(new ScienceCourse(3, "Object Orientation", 3.0, 1,
-                2150, "Detailed look at proper object oriented programming."), new TermType(2, "Winter")));
-        courseOfferings.add(new CourseOffering(new ScienceCourse(4, "Software Engineering I", 3.0, 1,
-                3350, "Good software development practices."), new TermType(2, "Winter")));
-        courseOfferings.add(new CourseOffering(new ScienceCourse(4, "Software Engineering I", 3.0, 1,
-                3350, "Good software development practices."), new TermType(3, "Summer")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(0), new TermType(1, "Fall")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(0), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(0), new TermType(3, "Summer")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(1), new TermType(1, "Fall")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(1), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(1), new TermType(3, "Summer")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(2), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(3), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(3), new TermType(3, "Summer")));
 
         // Create Course Plans
 
         coursePlans = new ArrayList<CoursePlan>();
-        coursePlans.add(new CoursePlan(1, new ScienceCourse(3, "Object Orientation", 3.0, 1, 2150,
-                "Detailed look at proper object oriented programming."), new Student(1,
-                1234567, "Jim Bob", "jimbob@myumanitoba.ca", "helloworld1", 1), new TermType(2, "Winter"), 2018));
-        coursePlans.add(new CoursePlan(2, new ScienceCourse(1, "Introductory Computer Science I", 3.0, 1, 1010,
-                "Basic programming concepts."), new Student(1, 1234567, "Jim Bob", "jimbob@myumanitoba.ca", "helloworld1", 1),
+        coursePlans.add(new CoursePlan(1, scienceCourses.get(2), students.get(0),
+                new TermType(2, "Winter"), 2018));
+        coursePlans.add(new CoursePlan(2, scienceCourses.get(1), students.get(0),
                 new TermType(1, "Fall"), 2017));
         coursePlans.add(new CoursePlan(3, new UserDefinedCourse(5, "Cultural Anthropology", 3.0, "ANTH 1220"),
-                new Student(1, 1234567, "Jim Bob", "jimbob@myumanitoba.ca", "helloworld1", 1), new TermType(1, "Fall"), 2017));
+                students.get(0), new TermType(1, "Fall"), 2017));
 
         // Create Course Prerequisites
 
         coursePrerequisites = new ArrayList<CoursePrerequisite>();
-        coursePrerequisites.add(new CoursePrerequisite(new ScienceCourse(2, "Introductory Computer Science II", 3.0,
-                1, 1020, "More basic programming concepts."), new ScienceCourse(1, "Introductory Computer Science I",
-                3.0, 1, 1010, "Basic programming concepts.")));
-        coursePrerequisites.add(new CoursePrerequisite(new ScienceCourse(3, "Object Orientation", 3.0, 1,
-                2150, "Detailed look at proper object oriented programming."), new ScienceCourse(2,
-                "Introductory Computer Science II", 3.0, 1, 1020, "More basic programming concepts.")));
-        coursePrerequisites.add(new CoursePrerequisite(new ScienceCourse(4, "Software Engineering I", 3.0, 1,
-                3350, "Good software development practices."), new ScienceCourse(3, "Object Orientation", 3.0, 1,
-                2150, "Detailed look at proper object oriented programming.")));
+        coursePrerequisites.add(new CoursePrerequisite(scienceCourses.get(1), scienceCourses.get(0)));
+        coursePrerequisites.add(new CoursePrerequisite(scienceCourses.get(2), scienceCourses.get(1)));
+        coursePrerequisites.add(new CoursePrerequisite(scienceCourses.get(3), scienceCourses.get(2)));
 
         //Create Rating data
         ratingTypes = new ArrayList<RatingType>();
@@ -209,9 +185,8 @@ public class DataAccessStub implements DataAccess {
         ratingTypes.add (new RatingType(5, "Very Poor", 1));
 
         ratings = new ArrayList<Rating>();
-        ratings.add (new Rating(1, new Student(1, 1234567, "Jim Bob", "jimbob@myumanitoba.ca", "helloworld1", 1),
-                new ScienceCourse(1, "Introductory Computer Science I", 3.0, 1,
-                1010, "Basic programming concepts."), new RatingType(1, "Excellent", 5),
+        ratings.add (new Rating(1, students.get(0),
+                scienceCourses.get(0), new RatingType(1, "Excellent", 5),
                 "I learned a lot from this course!"));
 
         System.out.println("Opened " +dbType +" database " +dbName);

@@ -28,7 +28,7 @@ public class DegreeCourseTest {
         System.out.println("\nStarting DegreeCourse Test: constructor");
 
         DegreeCourse dc = new DegreeCourse(new Degree(1, "Computer Science Major", 120.0, 81.0, 2.0),
-                new ScienceCourse(1, "Introductory Computer Science I", 3.0, 1, 1010, "Basic programming concepts."),
+                new ScienceCourse(1, "Introductory Computer Science I", 3.0, null, 1010, "Basic programming concepts."),
                 new DegreeCourseType(1, "Required"));
         assertNotNull(dc);
         assertEquals("Degree ID was assigned incorrectly", 1, dc.getDegree().getId());

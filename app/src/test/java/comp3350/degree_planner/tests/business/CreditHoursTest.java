@@ -90,13 +90,13 @@ public class CreditHoursTest {
                 scienceCourses = new ArrayList<ScienceCourse>();
                 userDefinedCourses = new ArrayList<UserDefinedCourse>();
 
-                tempScienceCourse = new ScienceCourse(1, "Introductory Computer Science I", 3.0, 1,
-                        1010, "Basic programming concepts.");
+                tempScienceCourse = new ScienceCourse(1, "Introductory Computer Science I", 3.0,
+                        departments.get(0), 1010, "Basic programming concepts.");
                 courses.add(tempScienceCourse);
                 scienceCourses.add(tempScienceCourse);
 
                 tempScienceCourse = new ScienceCourse(2, "Introductory Computer Science II", 3.0,
-                        1, 1020, "More basic programming concepts.");
+                        departments.get(0), 1020, "More basic programming concepts.");
                 courses.add(tempScienceCourse);
                 scienceCourses.add(tempScienceCourse);
 
@@ -114,32 +114,30 @@ public class CreditHoursTest {
 
                 degreeCourses = new ArrayList<DegreeCourse>();
                 degreeCourses.add(new DegreeCourse(degree, new ScienceCourse(1, "Introductory Computer Science I",
-                        3.0, 1, 1010, "Basic programming concepts."), new DegreeCourseType(1, "Required")));
+                        3.0, departments.get(0), 1010, "Basic programming concepts."), new DegreeCourseType(1, "Required")));
                 degreeCourses.add(new DegreeCourse(degree, new ScienceCourse(2, "Introductory Computer Science II", 3.0,
-                        1, 1020, "More basic programming concepts."), new DegreeCourseType(1, "Required")));
+                        departments.get(0), 1020, "More basic programming concepts."), new DegreeCourseType(1, "Required")));
                 // Create Students
 
                 students = new ArrayList<Student>();
-                students.add(new Student(1, 1234567, "Jim Bob", "jimbob@myumanitoba.ca", "helloworld1", 1));
-                students.add(new Student(2, 9999999, "DK", "dk@myumanitoba.ca", "password1", 1));
+                students.add(new Student(1, 1234567, "Jim Bob", "jimbob@myumanitoba.ca", "helloworld1", degrees.get(0)));
+                students.add(new Student(2, 9999999, "DK", "dk@myumanitoba.ca", "password1", degrees.get(0)));
 
                 // Create Course Results
 
                 courseResults = new ArrayList<CourseResult>();
 
                 //Student 1 required degree course passed
-                courseResults.add(new CourseResult(1, new ScienceCourse(1, "Introductory Computer Science I",
-                        3.0, 1, 1010, "Basic programming concepts."), new Student(1, 1234567, "Jim Bob",
-                        "jimbob@myumanitoba.ca", "helloworld1", 1), new GradeType(1, "A+", 4.5)));
+                courseResults.add(new CourseResult(1, scienceCourses.get(0), students.get(0),
+                        new GradeType(1, "A+", 4.5)));
 
                 //Student 1 required degree course passed
-                courseResults.add(new CourseResult(2, new ScienceCourse(2, "Introductory Computer Science II", 3.0,
-                        1, 1020, "More basic programming concepts."), new Student(1, 1234567, "Jim Bob",
-                        "jimbob@myumanitoba.ca", "helloworld1", 1), new GradeType(1, "A+", 4.5)));
+                courseResults.add(new CourseResult(2, scienceCourses.get(1), students.get(0),
+                        new GradeType(1, "A+", 4.5)));
 
                 //Student 1 user-defined course passed
-                courseResults.add(new CourseResult(4, new UserDefinedCourse(3, "Cultural Anthropology", 3.0, "ANTH 1220"),
-                        new Student(1, 1234567, "Jim Bob", "jimbob@myumanitoba.ca", "helloworld1", 1), new GradeType(3, "B+", 3.5)));
+                courseResults.add(new CourseResult(4, userDefinedCourses.get(0),
+                        students.get(0), new GradeType(3, "B+", 3.5)));
             }
 
             @Override

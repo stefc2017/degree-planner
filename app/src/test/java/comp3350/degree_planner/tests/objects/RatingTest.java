@@ -27,8 +27,8 @@ public class RatingTest {
     public void testConstructor() {
         System.out.println("\nStarting Rating Test: constructor");
 
-        Rating r = new Rating(1, new Student(1, 1234567, "Jim Bob", "jimbob@myumanitoba.ca", "helloworld1", 1),
-                new ScienceCourse(2, "Introductory Computer Science II", 3.0, 1, 1020, "More basic programming concepts."),
+        Rating r = new Rating(1, new Student(1, 1234567, "Jim Bob", "jimbob@myumanitoba.ca", "helloworld1", null),
+                new ScienceCourse(2, "Introductory Computer Science II", 3.0, null, 1020, "More basic programming concepts."),
                 new RatingType(4, "Very Good", 4), "Test Comment");
         assertNotNull(r);
         assertEquals("ID was assigned incorrectly", 1, r.getId());

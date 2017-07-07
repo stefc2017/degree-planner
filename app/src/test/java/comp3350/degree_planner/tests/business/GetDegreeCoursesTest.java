@@ -48,13 +48,13 @@ public class GetDegreeCoursesTest {
                 scienceCourses = new ArrayList<ScienceCourse>();
                 userDefinedCourses = new ArrayList<UserDefinedCourse>();
 
-                tempScienceCourse = new ScienceCourse(1, "Introductory Computer Science I", 3.0, 1,
+                tempScienceCourse = new ScienceCourse(1, "Introductory Computer Science I", 3.0, null,
                         1010, "Basic programming concepts.");
                 courses.add(tempScienceCourse);
                 scienceCourses.add(tempScienceCourse);
 
                 tempScienceCourse = new ScienceCourse(2, "Introductory Computer Science II", 3.0,
-                        1, 1020, "More basic programming concepts.");
+                        null, 1020, "More basic programming concepts.");
                 courses.add(tempScienceCourse);
                 scienceCourses.add(tempScienceCourse);
 
@@ -73,10 +73,8 @@ public class GetDegreeCoursesTest {
                 // Map courses to degrees
 
                 degreeCourses = new ArrayList<DegreeCourse>();
-                degreeCourses.add(new DegreeCourse(degree, new ScienceCourse(1, "Introductory Computer Science I",
-                        3.0, 1, 1010, "Basic programming concepts."), new DegreeCourseType(1, "Required")));
-                degreeCourses.add(new DegreeCourse(degree, new ScienceCourse(2, "Introductory Computer Science II", 3.0,
-                        1, 1020, "More basic programming concepts."), new DegreeCourseType(1, "Required")));
+                degreeCourses.add(new DegreeCourse(degree, scienceCourses.get(0), new DegreeCourseType(1, "Required")));
+                degreeCourses.add(new DegreeCourse(degree, scienceCourses.get(1), new DegreeCourseType(1, "Required")));
             }
 
             @Override
