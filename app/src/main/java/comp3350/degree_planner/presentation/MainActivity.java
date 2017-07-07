@@ -97,4 +97,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, CoursePlansActivity.class);
         MainActivity.this.startActivity(intent);
     }
+
+    public void buttonDegreeProgressOnClick(View v){
+        Intent intent = new Intent(MainActivity.this, DegreeProgressActivity.class);
+        MainActivity.this.startActivity(intent);
+    }
 }

@@ -36,6 +36,9 @@
         <activity android:name=".presentation.CoursePlansActivity"
             android:label= "Course planning">
         </activity>
+        <activity android:name=".presentation.DegreeProgressActivity"
+            android:label= "Degree Progress">
+        </activity>
 
     </application>
 
