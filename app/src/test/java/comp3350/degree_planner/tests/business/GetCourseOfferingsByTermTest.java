@@ -34,22 +34,22 @@ public class GetCourseOfferingsByTermTest {
 
                 courseOfferings = new ArrayList<CourseOffering>();
                 courseOfferings.add(new CourseOffering(new ScienceCourse(1, "Introductory Computer Science I",
-                        3.0, 1, 1010, "Basic programming concepts."), new TermType(1, "Fall")));
+                        3.0, null, 1010, "Basic programming concepts."), new TermType(1, "Fall")));
                 courseOfferings.add(new CourseOffering(new ScienceCourse(1, "Introductory Computer Science I",
-                        3.0, 1, 1010, "Basic programming concepts."), new TermType(2, "Winter")));
+                        3.0, null, 1010, "Basic programming concepts."), new TermType(2, "Winter")));
                 courseOfferings.add(new CourseOffering(new ScienceCourse(1, "Introductory Computer Science I",
-                        3.0, 1, 1010, "Basic programming concepts."), new TermType(3, "Summer")));
+                        3.0, null, 1010, "Basic programming concepts."), new TermType(3, "Summer")));
                 courseOfferings.add(new CourseOffering(new ScienceCourse(2, "Introductory Computer Science II", 3.0,
-                        1, 1020, "More basic programming concepts."), new TermType(1, "Fall")));
+                        null, 1020, "More basic programming concepts."), new TermType(1, "Fall")));
                 courseOfferings.add(new CourseOffering(new ScienceCourse(2, "Introductory Computer Science II", 3.0,
-                        1, 1020, "More basic programming concepts."), new TermType(2, "Winter")));
+                        null, 1020, "More basic programming concepts."), new TermType(2, "Winter")));
                 courseOfferings.add(new CourseOffering(new ScienceCourse(2, "Introductory Computer Science II", 3.0,
-                        1, 1020, "More basic programming concepts."), new TermType(3, "Summer")));
-                courseOfferings.add(new CourseOffering(new ScienceCourse(3, "Object Orientation", 3.0, 1,
+                        null, 1020, "More basic programming concepts."), new TermType(3, "Summer")));
+                courseOfferings.add(new CourseOffering(new ScienceCourse(3, "Object Orientation", 3.0, null,
                         2150, "Detailed look at proper object oriented programming."), new TermType(2, "Winter")));
-                courseOfferings.add(new CourseOffering(new ScienceCourse(4, "Software Engineering I", 3.0, 1,
+                courseOfferings.add(new CourseOffering(new ScienceCourse(4, "Software Engineering I", 3.0, null,
                         3350, "Good software development practices."), new TermType(2, "Winter")));
-                courseOfferings.add(new CourseOffering(new ScienceCourse(4, "Software Engineering I", 3.0, 1,
+                courseOfferings.add(new CourseOffering(new ScienceCourse(4, "Software Engineering I", 3.0, null,
                         3350, "Good software development practices."), new TermType(3, "Summer")));
             }
 

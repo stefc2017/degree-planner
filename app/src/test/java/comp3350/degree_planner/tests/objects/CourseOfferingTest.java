@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import comp3350.degree_planner.objects.Course;
 import comp3350.degree_planner.objects.CourseOffering;
+import comp3350.degree_planner.objects.Department;
 import comp3350.degree_planner.objects.ScienceCourse;
 import comp3350.degree_planner.objects.TermType;
 
@@ -27,8 +28,8 @@ public class CourseOfferingTest {
     public void testConstructor() {
         System.out.println("\nStarting CourseOffering Test: constructor");
 
-        CourseOffering co = new CourseOffering(new ScienceCourse(1, "Introductory Computer Science I", 3.0, 1,
-                1010, "Basic programming concepts."), new TermType(1, "Fall"));
+        CourseOffering co = new CourseOffering(new ScienceCourse(1, "Introductory Computer Science I", 3.0,
+                null, 1010, "Basic programming concepts."), new TermType(1, "Fall"));
         assertNotNull(co);
         assertEquals("Course ID was assigned incorrectly", 1, co.getCourse().getId());
         assertEquals("Term Type ID was assigned incorrectly", 1, co.getTermType().getId());

@@ -14,15 +14,15 @@ public class Student {
     private String name;
     private String email;
     private String password;
-    private int degreeId;
+    private Degree degree;
 
-    public Student(int id, int studentNumber, String name, String email, String password, int degreeId) {
+    public Student(int id, int studentNumber, String name, String email, String password, Degree degree) {
         this.id = id;
         this.studentNumber = studentNumber;
         this.name = name;
         this.email = email;
         this.password = password;
-        this.degreeId = degreeId;
+        this.degree = degree;
     }
 
     public int getId() { return id; }
@@ -39,5 +39,5 @@ public class Student {
 
     public String getPassword() { return password; }
 
-    public int getDegreeId() { return degreeId; }
+    public Degree getDegree() { return degree; }
 }

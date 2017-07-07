@@ -58,7 +58,7 @@ import static android.R.attr.id;
 public class DataAccessObject implements DataAccess {
     private Statement st1, st2, st3;
     private Connection c1;
-    private ResultSet rs2, rs3, rs4, rs5;
+    private ResultSet rs2, rs3, rs4, rs5, rs6;
 
     private String dbName;
     private String dbType;
@@ -173,6 +173,7 @@ public class DataAccessObject implements DataAccess {
         String fullAbbreviation;
         Boolean isUserDefined;
         courses = new ArrayList<Course>();
+        Department department;
 
         result = null;
         try
@@ -201,7 +202,8 @@ public class DataAccessObject implements DataAccess {
                     course = new UserDefinedCourse(id, name, creditHours, fullAbbreviation);
                 }
                 else{
-                    course = new ScienceCourse(id, name, creditHours, departmentId, courseNumber, description);
+                    department = getDepartmentById(departmentId);
+                    course = new ScienceCourse(id, name, creditHours, department, courseNumber, description);
                 }
 
                courses.add(course);
@@ -245,6 +247,7 @@ public class DataAccessObject implements DataAccess {
         int departmentId;
         String fullAbbreviation;
         Boolean isUserDefined;
+        Department department;
 
         course = null;
         result = null;
@@ -273,7 +276,8 @@ public class DataAccessObject implements DataAccess {
                 course = new UserDefinedCourse(id, name, creditHours, fullAbbreviation);
             }
             else{
-                course = new ScienceCourse(id, name, creditHours, departmentId, courseNumber, description);
+                department = getDepartmentById(departmentId);
+                course = new ScienceCourse(id, name, creditHours, department, courseNumber, description);
             }
 
             preReqs_ofCourse = getAllPrerequisites(course);
@@ -322,6 +326,7 @@ public class DataAccessObject implements DataAccess {
         String fullAbbreviation;
         Boolean isUserDefined;
         courses = new ArrayList<Course>();
+        Department department;
 
         result = null;
         try
@@ -362,7 +367,8 @@ public class DataAccessObject implements DataAccess {
                     currentCourse = new UserDefinedCourse(id, name, creditHours, fullAbbreviation);
                 }
                 else{
-                    currentCourse = new ScienceCourse(id, name, creditHours, departmentId, courseNumber, description);
+                    department = getDepartmentById(departmentId);
+                    currentCourse = new ScienceCourse(id, name, creditHours, department, courseNumber, description);
                 }
 
                 courses.add(currentCourse);
@@ -388,6 +394,7 @@ public class DataAccessObject implements DataAccess {
         int departmentId;
         String fullAbbreviation;
         Boolean isUserDefined;
+        Department department;
 
         course = null;
         result = null;
@@ -415,7 +422,8 @@ public class DataAccessObject implements DataAccess {
                 course = new UserDefinedCourse(id, name, creditHours, fullAbbreviation);
             }
             else{
-                course = new ScienceCourse(id, name, creditHours, departmentId, courseNumber, description);
+                department = getDepartmentById(departmentId);
+                course = new ScienceCourse(id, name, creditHours, department, courseNumber, description);
             }
 
             rs2.close();
@@ -638,6 +646,7 @@ public class DataAccessObject implements DataAccess {
         int departmentId;
         String fullAbbreviation;
         Boolean isUserDefined;
+        Department department;
 
         course = null;
         result = null;
@@ -656,7 +665,7 @@ public class DataAccessObject implements DataAccess {
                 id = Integer.parseInt(rs2.getString("ID"));
                 name = rs2.getString("NAME");
                 creditHours = Double.parseDouble(rs2.getString("CREDIT_HOURS"));
-                departmentId = Integer.parseInt(rs2.getString("DEPARTMENT_ID"));
+                departmentId = rs2.getInt("DEPARTMENT_ID");
                 courseNumber = Integer.parseInt(rs2.getString("COURSE_NUMBER"));
                 description = rs2.getString("DESCRIPTION");
                 fullAbbreviation = rs2.getString("FULL_ABBREVIATION");
@@ -665,7 +674,8 @@ public class DataAccessObject implements DataAccess {
                 if (isUserDefined) {
                     course = new UserDefinedCourse(id, name, creditHours, fullAbbreviation);
                 } else {
-                    course = new ScienceCourse(id, name, creditHours, departmentId, courseNumber, description);
+                    department = getDepartmentById(departmentId);
+                    course = new ScienceCourse(id, name, creditHours, department, courseNumber, description);
                 }
             }
 
@@ -719,7 +729,35 @@ public class DataAccessObject implements DataAccess {
     }
 
     public Department getDepartmentById(int departmentId) {
-        return null;
+        Department department;
+        int id;
+        String name;
+        String abbreviation;
+
+        department = null;
+        result = null;
+
+        try {
+            cmdString = "Select * from DEPARTMENT where ID = " + departmentId;
+            rs6 = st1.executeQuery(cmdString);
+        }
+        catch (Exception e){
+            processSQLError(e);
+        }
+
+        try {
+            while (rs6.next()) {
+                id = rs6.getInt("ID");
+                name = rs6.getString("NAME");
+                abbreviation = rs6.getString("ABBREVIATION");
+                department = new Department(id, name, abbreviation);
+            }
+        }
+        catch (Exception e) {
+            result = processSQLError(e);
+        }
+
+        return department;
     }
 
     /*
@@ -974,12 +1012,14 @@ public class DataAccessObject implements DataAccess {
         Student student = null;
 
         cmdString = "Select * from Student where id = " + studentId;
-        rs2 = st1.executeQuery(cmdString);
+        rs3 = st1.executeQuery(cmdString);
 
-        while (rs2.next()) {
-            student = new Student(rs2.getInt("id"), rs2.getInt("student_number"), rs2.getString("name"), rs2.getString("email"), rs2.getString("password"), rs2.getInt("degree_id"));
+        while (rs3.next()) {
+            student = new Student(rs3.getInt("id"), rs3.getInt("student_number"), 
+                    rs3.getString("name"), rs3.getString("email"), rs3.getString("password"), 
+                    getDegreeById(rs3.getInt("degree_id")));
         }
-        rs2.close();
+        rs3.close();
 
         return student;
     }
@@ -1022,6 +1062,8 @@ public class DataAccessObject implements DataAccess {
         int courseDepartmentId = 0;
         String courseFullAbbreviation = null;
         boolean isUserDefined;
+
+        Department department;
 
         TermType termType;
         int termTypeId;
@@ -1071,9 +1113,13 @@ public class DataAccessObject implements DataAccess {
                     else {
                         courseNumber = rs5.getInt("COURSE_NUMBER");
                         courseDescription = rs5.getString("DESCRIPTION");
+
+                        // Get Department information
                         courseDepartmentId = rs5.getInt("DEPARTMENT_ID");
+                        department = getDepartmentById(courseDepartmentId);
+
                         course = new ScienceCourse(courseId, courseName, courseCreditHours,
-                                courseDepartmentId, courseNumber, courseDescription);
+                                department, courseNumber, courseDescription);
                     }
 
                     // Get the term type information

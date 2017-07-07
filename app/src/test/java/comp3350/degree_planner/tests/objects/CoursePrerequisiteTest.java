@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import comp3350.degree_planner.objects.CoursePrerequisite;
+import comp3350.degree_planner.objects.Department;
 import comp3350.degree_planner.objects.ScienceCourse;
 
 /**
@@ -26,8 +27,9 @@ public class CoursePrerequisiteTest {
         System.out.println("\nStarting CoursePrerequisite Test: constructor");
 
         CoursePrerequisite cp = new CoursePrerequisite(new ScienceCourse(2, "Introductory Computer Science II", 3.0,
-                1, 1020, "More basic programming concepts."), new ScienceCourse(1, "Introductory Computer Science I",
-                3.0, 1, 1010, "Basic programming concepts."));
+                null, 1020, "More basic programming concepts."),
+                new ScienceCourse(1, "Introductory Computer Science I",
+                3.0, null, 1010, "Basic programming concepts."));
         assertNotNull(cp);
         assertEquals("Course ID was assigned incorrectly", 2, cp.getCourse().getId());
         assertEquals("Prerequisite Course ID was assigned incorrectly", 1, cp.getPrereqCourse().getId());

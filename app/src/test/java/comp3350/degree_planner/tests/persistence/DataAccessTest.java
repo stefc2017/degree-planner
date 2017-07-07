@@ -53,8 +53,8 @@ public class DataAccessTest {
         List<Course> courses = dataAccess.getAllCourses();
         List<Course> noCourses = new ArrayList<Course>();
         CourseResult courseResult = new CourseResult(1, new ScienceCourse(1, "Introductory Computer Science I",
-                3.0, 1, 1010, "Basic programming concepts."), new Student(1, 1234567, "Jim Bob",
-                "jimbob@myumanitoba.ca", "helloworld1", 1), new GradeType(1, "A+", 4.5));
+                3.0, null, 1010, "Basic programming concepts."), new Student(1, 1234567, "Jim Bob",
+                "jimbob@myumanitoba.ca", "helloworld1", null), new GradeType(1, "A+", 4.5));
         Course result;
 
         System.out.println("Beginning getCourse tests");
@@ -91,7 +91,7 @@ public class DataAccessTest {
     @Test
     public void testGetAllPrerequisite() {
         Course course = new ScienceCourse(2, "Introductory Computer Science II", 3.0,
-                1, 1020, "More basic programming concepts.");
+                null, 1020, "More basic programming concepts.");
 
         // course has prerequisites
         List<Course> courses = dataAccess.getAllPrerequisites( course );
@@ -100,7 +100,7 @@ public class DataAccessTest {
         assertEquals( "Introductory Computer Science I", course.getName() );
 
         //course has no prerequisite
-        course = new ScienceCourse(1, "Introductory Computer Science I", 3.0, 1,
+        course = new ScienceCourse(1, "Introductory Computer Science I", 3.0, null,
                 1010, "Basic programming concepts.");
         courses = dataAccess.getAllPrerequisites( course );
         assertEquals( 0, courses.size() );
