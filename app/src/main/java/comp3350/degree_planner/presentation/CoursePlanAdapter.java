@@ -1,7 +1,6 @@
 package comp3350.degree_planner.presentation;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,6 @@ import java.util.List;
 
 import comp3350.degree_planner.R;
 import comp3350.degree_planner.business.Season;
-import comp3350.degree_planner.objects.Course;
 import comp3350.degree_planner.objects.CoursePlan;
 
 /**
@@ -27,19 +25,20 @@ import comp3350.degree_planner.objects.CoursePlan;
 
 public class CoursePlanAdapter extends BaseAdapter {
     private List coursePlansAndHeaders;
+    private CoursePlanClickListener listener;
     private static final int COURSEPLAN = 0;
     private static final int SECTION_HEADER = 1;
     private static final int VIEW_TYPE_COUNT = 2;
     private LayoutInflater inflater;
     private final Context myContext;
-    private int numberOfCoursePlans;
+    private boolean deleteMode = false;
     private static int nextColor = 0; // 0 means blue, 1 means red color for displaying coursePlans headers
 
-    public CoursePlanAdapter(Context c, List list){
+    public CoursePlanAdapter(Context c, List list, CoursePlanClickListener listener){
         myContext = c;
         coursePlansAndHeaders = list;
+        this.listener = listener;
         inflater = (LayoutInflater)c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        numberOfCoursePlans = 0;
     }
 
     @Override
@@ -68,6 +67,7 @@ public class CoursePlanAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View view, ViewGroup viewGroup){
         String s;
+
         if(view == null){
             // Fill the basic layout
             switch (getItemViewType(position)){
@@ -91,18 +91,30 @@ public class CoursePlanAdapter extends BaseAdapter {
         switch (getItemViewType(position)){
             case COURSEPLAN:
                 TextView courseName = (TextView)view.findViewById(R.id.text1);
-                Button courseButton = (Button) view.findViewById(R.id.button_text1);
-                CoursePlan coursePlan = ((CoursePlan)coursePlansAndHeaders.get(position));
+                LinearLayout deleteButton = (LinearLayout) view.findViewById(R.id.deleteButton_courses);
+                Button courseButton = (Button) deleteButton.findViewById(R.id.button_text1);
+                final CoursePlan coursePlan = ((CoursePlan)coursePlansAndHeaders.get(position));
 
                 // Display course name
                 courseName.setText(((CoursePlan)coursePlansAndHeaders.get(position)).getCourse().getName());
 
-                //Sets id of button in list view to be able to delete
-                    if(courseButton != null && coursePlan != null) {
-                        courseButton.setId(coursePlan.getId());
-                        numberOfCoursePlans++;
-                    }
+                // Toggle delete button in each row
+                if(deleteButton != null){
+                    deleteButton.setVisibility(deleteMode? View.VISIBLE : View.INVISIBLE);
+                }
 
+                if(courseButton != null && coursePlan != null) {
+                    courseButton.setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View v) {
+                            if(listener != null) {
+                                // Removal happens in CoursePlanActivity
+                                listener.onRemoveButtonClick(coursePlan.getId());
+                            }
+                        }
+                    });
+                }
                 break;
             case SECTION_HEADER:
                 TextView headerTerm = (TextView)view.findViewById(R.id.sectionHeaderTerm);
@@ -125,8 +137,12 @@ public class CoursePlanAdapter extends BaseAdapter {
         return view;
     }
 
-    public int getNumberOfCoursePlans(){
-        return numberOfCoursePlans;
+    public void toggleDeleteMode() { deleteMode = !deleteMode; }
+
+    public void refreshList(List items){
+        coursePlansAndHeaders = items;
+        // Notify adapter that the list has been updated, it should call getView again to refresh
+        notifyDataSetChanged();
     }
 
 }

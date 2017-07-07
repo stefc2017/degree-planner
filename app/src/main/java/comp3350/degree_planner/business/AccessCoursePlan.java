@@ -122,6 +122,7 @@ public class AccessCoursePlan {
         ArrayList<Integer> header = null;      // Header text for each section
         TermType currentTerm;   // Term for the current course plan, used in headers
         int currentYear;        // Year for the current course plan, used in headers
+        final int YEAR_POS = 1; // year is at position 1 in the tuple
         boolean newHeader;      // Shows if a new section header is needed
 
         try {
@@ -157,7 +158,7 @@ public class AccessCoursePlan {
 
                 if (currCP.getYear() != currentYear) {
                     currentYear = currCP.getYear();
-                    header.set(1, currentYear);
+                    header.set(YEAR_POS, currentYear);
                     newHeader = true;
                 }
 
@@ -176,4 +177,21 @@ public class AccessCoursePlan {
         }
         return coursePlansAndHeaders;
     }
+
+    //Retrieve a course plan
+    //Throws CoursePlanDoesNotExistException if coursePlanId parameter refers to a nonexistent Course Plan
+    public CoursePlan getCoursePlan(int coursePlanId) throws Exception {
+        CoursePlan cp = null;
+
+        try {
+            cp = dataAccess.getCoursePlan(coursePlanId);
+            if (cp == null) { throw new CoursePlanDoesNotExistException(); }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+
+        return cp;
+    }
+
 }

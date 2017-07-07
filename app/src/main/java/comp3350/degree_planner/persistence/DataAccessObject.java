@@ -666,7 +666,7 @@ public class DataAccessObject implements DataAccess {
                 name = rs2.getString("NAME");
                 creditHours = Double.parseDouble(rs2.getString("CREDIT_HOURS"));
                 departmentId = rs2.getInt("DEPARTMENT_ID");
-                courseNumber = Integer.parseInt(rs2.getString("COURSE_NUMBER"));
+                courseNumber = rs2.getInt("COURSE_NUMBER");
                 description = rs2.getString("DESCRIPTION");
                 fullAbbreviation = rs2.getString("FULL_ABBREVIATION");
                 isUserDefined = Boolean.parseBoolean(rs2.getString("IS_USER_DEFINED"));

@@ -20,8 +20,7 @@
         android:layout_width="50px"
         android:layout_height="100px"
         android:layout_marginLeft="200dp"
-        android:background="@drawable/remove"
-        android:onClick="confirmDelete"/>
+        android:background="@drawable/remove" />
 
     </LinearLayout>
 
