@@ -11,4 +11,6 @@
     <string name="fall">Fall</string>
     <string name="summer">Summer</string>
     <string name="winter">Winter</string>
+    <string name="label_add_required">Computer Science Course</string>
+    <string name="label_add_free_elective">Free Elective</string>
 </resources>
