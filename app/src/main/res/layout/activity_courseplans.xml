@@ -5,19 +5,28 @@
     android:layout_height="match_parent">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/courseplans_toolbar"
+        android:id="@+id/course_plan_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorBlack"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        android:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+        android:layout_height="wrap_content"
+        android:background="@color/colorLightBlue"
+        android:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="22dp"
+            android:textColor="@android:color/white"/>
+
+    </android.support.v7.widget.Toolbar>
 
     <ListView
         android:id="@+id/coursePlans"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/courseplans_toolbar" />
+        android:layout_below="@+id/course_plan_toolbar" />
 
     <com.github.clans.fab.FloatingActionMenu
         android:id="@+id/add_courseplan_menu"

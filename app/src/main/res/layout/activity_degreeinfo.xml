@@ -8,12 +8,21 @@
     tools:context="comp3350.degree_planner.presentation.DegreesActivity">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/degreeinfo_toolbar"
+        android:id="@+id/degree_info_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorBlack"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        android:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+        android:layout_height="wrap_content"
+        android:background="@color/colorLightBlue"
+        android:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="22dp"
+            android:textColor="@android:color/white"/>
+
+    </android.support.v7.widget.Toolbar>
 
     <GridLayout
         android:layout_width="match_parent"

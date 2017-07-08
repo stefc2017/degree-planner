@@ -34,6 +34,10 @@ public class DegreesActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.degrees_toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        TextView pageTitle = (TextView) findViewById(R.id.toolbar_title);
+        pageTitle.setText(R.string.degrees);
 
         accessDegrees = new AccessDegrees(Services.getDataAccess());
         degreeList = new ArrayList<Degree>();

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
@@ -31,8 +32,12 @@ public class DegreeProgressActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_degreeprogress);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.degreeProgress_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.degree_progress_toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        TextView pageTitle = (TextView) findViewById(R.id.toolbar_title);
+        pageTitle.setText(R.string.progress);
 
         creditHourChart = (PieChart) findViewById(R.id.credit_hours);
         creditHourChart.setUsePercentValues(true);

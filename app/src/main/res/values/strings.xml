@@ -2,7 +2,8 @@
     <string name="app_name">Degree Planner</string>
     <string name="degreeInfo">Degree Information</string>
     <string name="coursePlan">Course Planning</string>
-    <string name="progress">View Progress</string>
+    <string name="progress">Degree Progress</string>
+    <string name="degrees">All Degrees</string>
     <string name="degreePageTitle">Undergraduate Degrees</string>
     <string name="removeCourse">Remove Course</string>
     <string name="confirmRemoveCourse">Are you sure you want to remove this course from your coursePlan?</string>
@@ -13,4 +14,5 @@
     <string name="winter">Winter</string>
     <string name="label_add_required">Computer Science Course</string>
     <string name="label_add_free_elective">Free Elective</string>
+    <string name="addCourse">Add Course To Course Plan</string>
 </resources>

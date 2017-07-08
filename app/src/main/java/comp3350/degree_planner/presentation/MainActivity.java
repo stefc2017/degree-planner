@@ -9,6 +9,7 @@ import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -28,6 +29,10 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        TextView pageTitle = (TextView) findViewById(R.id.toolbar_title);
+        pageTitle.setText(R.string.app_name);
 
     }
 
