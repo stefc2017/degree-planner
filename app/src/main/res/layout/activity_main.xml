@@ -65,6 +65,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:background="@color/colorAccent"
+            android:onClick="buttonDegreeProgressOnClick"
             android:text="@string/progress"
             android:textColor="@android:color/white"
             android:textSize="20sp"
