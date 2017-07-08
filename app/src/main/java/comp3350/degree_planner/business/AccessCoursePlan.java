@@ -107,8 +107,8 @@ public class AccessCoursePlan {
     }
 
     /**
-     * Return a list of Strings and CoursePlans
-     * UI renders different ListItem layouts for CoursePlans and section headers(Ex. "Fall 2017")
+     * Return a list of int tuples and CoursePlans
+     * UI renders different ListItem layouts for CoursePlans and section headers(Ex. Fall 2017)
      * Parameters:
      * int studentId    Gives the student whose course plans will be returned
      */
@@ -144,13 +144,12 @@ public class AccessCoursePlan {
                     currentTerm = currCP.getTermType();
 
                     // Ordinals are WINTER(0) SUMMER(1) FALL(2)
-                    switch (currentTerm.getSeason()){
-                        case "Fall":
-                            header.add(Season.FALL.ordinal());
-                        case "Summer":
-                            header.add(Season.SUMMER.ordinal());
-                        case "Winter":
-                            header.add(Season.WINTER.ordinal());
+                    if(currentTerm.getSeason().equalsIgnoreCase("Fall")){
+                        header.add(Season.FALL.ordinal());
+                    }else if(currentTerm.getSeason().equalsIgnoreCase("Summer")){
+                        header.add(Season.SUMMER.ordinal());
+                    }else if(currentTerm.getSeason().equalsIgnoreCase("Winter")){
+                        header.add(Season.WINTER.ordinal());
                     }
                     header.add(currentYear);
                     newHeader = true;
