@@ -314,18 +314,16 @@ public class DataAccessStub implements DataAccess {
             while (hasPreReqs && outer_index < coursePreReqs.size()) { //goes through each preReq Course
                 currentPreReq = coursePreReqs.get(outer_index);
 
-                if (currentPreReq != null) {
-                    preReqId = currentPreReq.getId();
-                    inner_index = 0; //initialize inner_index to 0
+                preReqId = currentPreReq.getId();
+                inner_index = 0; //initialize inner_index to 0
 
-                    while (hasPreReqs && inner_index < coursesTaken.size() && preReqId !=
-                            (coursesTaken.get(inner_index)).getCourse().getId()) { //goes through each course that the student has taken
-                        inner_index++;
-                    }//end while
+                while (hasPreReqs && inner_index < coursesTaken.size() && preReqId !=
+                        (coursesTaken.get(inner_index)).getCourse().getId()) { //goes through each course that the student has taken
+                    inner_index++;
+                }//end while
 
-                    if (inner_index >= coursesTaken.size()) { //if we searched through all the courses the student has taken but they
-                        hasPreReqs = false;                   //don't have the prerequisite.
-                    }//end if
+                if (inner_index >= coursesTaken.size()) { //if we searched through all the courses the student has taken but they
+                    hasPreReqs = false;                   //don't have the prerequisite.
                 }//end if
 
                 outer_index++;
@@ -349,7 +347,7 @@ public class DataAccessStub implements DataAccess {
 
         for (int i = 0; i < numberOfCoursePrereqs; i++) {
             if ((coursePrerequisites.get(i)).getCourse().getId() == courseId) { //if this is a prerequisite for the course
-                currentCourse = getCourseById((coursePrerequisites.get(i)).getPrereqCourse().getId()); //get the course
+                currentCourse = coursePrerequisites.get(i).getPrereqCourse(); //get the course
                 prerequisites.add(currentCourse); //add the course to the list of prerequisites
             }//end if
         }//end for
