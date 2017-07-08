@@ -3,6 +3,7 @@ package comp3350.degree_planner.persistence;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,7 @@ import comp3350.degree_planner.objects.TermType;
 import comp3350.degree_planner.objects.UserDefinedCourse;
 
 import static android.R.attr.id;
+import static org.hsqldb.HsqlDateTime.e;
 
 /**
  * Created by Tiffany Jiang on 2017-06-24.
@@ -129,7 +131,7 @@ public class DataAccessObject implements DataAccess {
         try
         {
             cmdString = "Select COURSE_ID from COURSE_RESULT where STUDENT_ID = " + studentNumber;
-            rs2 = st1.executeQuery(cmdString);
+            rs3 = st2.executeQuery(cmdString);
         }
         catch (Exception e)
         {
@@ -138,16 +140,19 @@ public class DataAccessObject implements DataAccess {
 
         try
         {
-            while(rs2.next()){
+            while(rs3.next()){
                 course = getCourseById(Integer.parseInt(rs3.getString("COURSE_ID")));
                 coursesTaken.add(course);
             }
 
             allCourses = getAllCourses();
 
+            String test = allCourses.toString();
+            String test2 = coursesTaken.toString();
+
             for(int i = 0; i < coursesTaken.size(); i++){
                 for(int j = 0; j < allCourses.size(); j++){ //search and delete course in all Courses list
-                    if(allCourses.get(i) == coursesTaken.get(i)){
+                    if(allCourses.get(j).getId() == coursesTaken.get(i).getId()){
                         allCourses.remove(i);
                     }
                 }
@@ -192,8 +197,8 @@ public class DataAccessObject implements DataAccess {
                 id = Integer.parseInt(rs2.getString("ID"));
                 name = rs2.getString("NAME");
                 creditHours = Double.parseDouble(rs2.getString("CREDIT_HOURS"));
-                departmentId = Integer.parseInt(rs2.getString("DEPARTMENT_ID"));
-                courseNumber = Integer.parseInt(rs2.getString("COURSE_NUMBER"));
+                departmentId = rs2.getInt("DEPARTMENT_ID");
+                courseNumber = rs2.getInt("COURSE_NUMBER");
                 description = rs2.getString("DESCRIPTION");
                 fullAbbreviation = rs2.getString("FULL_ABBREVIATION");
                 isUserDefined = Boolean.parseBoolean(rs2.getString("IS_USER_DEFINED"));
@@ -235,7 +240,7 @@ public class DataAccessObject implements DataAccess {
     }
 
     public boolean hasPrerequisites(int studentNumber, String courseName) {
-        boolean hasPreReqs = true;
+        boolean hasPreReqs = false;
         List<Course> preReqs_ofCourse = null;
         List<Course> coursesTaken = new ArrayList<Course>();
         Course course;
@@ -248,13 +253,14 @@ public class DataAccessObject implements DataAccess {
         String fullAbbreviation;
         Boolean isUserDefined;
         Department department;
+        int prereqs_taken_count = 0;
 
         course = null;
         result = null;
 
         try
         {
-            cmdString = "Select * from Course where NAME = " + courseName;
+            cmdString = "Select * from Course where NAME = '" + courseName + "'";
             rs2 = st1.executeQuery(cmdString);
         }
         catch (Exception e)
@@ -263,28 +269,29 @@ public class DataAccessObject implements DataAccess {
         }
         try
         {
-            id = Integer.parseInt(rs2.getString("ID"));
-            name = rs2.getString("NAME");
-            creditHours = Double.parseDouble(rs2.getString("CREDIT_HOURS"));
-            departmentId = Integer.parseInt(rs2.getString("DEPARTMENT_ID"));
-            courseNumber = Integer.parseInt(rs2.getString("COURSE_NUMBER"));
-            description = rs2.getString("DESCRIPTION");
-            fullAbbreviation = rs2.getString("FULL_ABBREVIATION");
-            isUserDefined = Boolean.parseBoolean(rs2.getString("IS_USER_DEFINED"));
+            while (rs2.next()) {
+                id = Integer.parseInt(rs2.getString("ID"));
+                name = rs2.getString("NAME");
+                creditHours = Double.parseDouble(rs2.getString("CREDIT_HOURS"));
+                departmentId = rs2.getInt("DEPARTMENT_ID");
+                courseNumber = rs2.getInt("COURSE_NUMBER");
+                description = rs2.getString("DESCRIPTION");
+                fullAbbreviation = rs2.getString("FULL_ABBREVIATION");
+                isUserDefined = Boolean.parseBoolean(rs2.getString("IS_USER_DEFINED"));
 
-            if(isUserDefined){
-                course = new UserDefinedCourse(id, name, creditHours, fullAbbreviation);
-            }
-            else{
-                department = getDepartmentById(departmentId);
-                course = new ScienceCourse(id, name, creditHours, department, courseNumber, description);
-            }
+                if (isUserDefined) {
+                    course = new UserDefinedCourse(id, name, creditHours, fullAbbreviation);
+                } else {
+                    department = getDepartmentById(departmentId);
+                    course = new ScienceCourse(id, name, creditHours, department, courseNumber, description);
+                }
 
-            preReqs_ofCourse = getAllPrerequisites(course);
+                preReqs_ofCourse = getAllPrerequisites(course);
+            }
 
             try
             {
-                cmdString = "Select COURSE_ID from CourseResult where STUDENT_ID = " + studentNumber;
+                cmdString = "Select COURSE_ID from Course_Result where STUDENT_ID = " + studentNumber;
                 rs3 = st2.executeQuery(cmdString);
             }
             catch (Exception e)
@@ -298,10 +305,14 @@ public class DataAccessObject implements DataAccess {
             }
 
             for(int i = 0; i < preReqs_ofCourse.size(); i++) {
-                if(!coursesTaken.contains(preReqs_ofCourse.get(i))){
-                    hasPreReqs = false;
+                for (int j = 0; j<coursesTaken.size(); j++) {
+                    if (coursesTaken.get(j).getId() == preReqs_ofCourse.get(i).getId()) {
+                        prereqs_taken_count++;
+                        break;
+                    }
                 }
             }
+            hasPreReqs = (prereqs_taken_count == preReqs_ofCourse.size());
 
             rs2.close();
             rs3.close();
@@ -331,7 +342,7 @@ public class DataAccessObject implements DataAccess {
         result = null;
         try
         {
-            cmdString = "Select PREREQ_COURSE_ID from CoursePrerequisite where COURSE_ID = " + course.getId();
+            cmdString = "Select PREREQ_COURSE_ID from Course_Prerequisite where COURSE_ID = " + course.getId();
             rs2 = st1.executeQuery(cmdString);
         }
         catch (Exception e)
@@ -346,7 +357,7 @@ public class DataAccessObject implements DataAccess {
 
                 try
                 {
-                    cmdString = "Select * from Course where COURSE_ID = " + prereqId;
+                    cmdString = "Select * from Course where ID = " + prereqId;
                     rs3 = st2.executeQuery(cmdString);
                 }
                 catch (Exception e)
@@ -354,24 +365,25 @@ public class DataAccessObject implements DataAccess {
                     processSQLError(e);
                 }
 
-                id = Integer.parseInt(rs3.getString("ID"));
-                name = rs3.getString("NAME");
-                creditHours = Double.parseDouble(rs3.getString("CREDIT_HOURS"));
-                departmentId = Integer.parseInt(rs3.getString("DEPARTMENT_ID"));
-                courseNumber = Integer.parseInt(rs3.getString("COURSE_NUMBER"));
-                description = rs3.getString("DESCRIPTION");
-                fullAbbreviation = rs3.getString("FULL_ABBREVIATION");
-                isUserDefined = Boolean.parseBoolean(rs3.getString("IS_USER_DEFINED"));
+                while (rs3.next()) {
+                    id = Integer.parseInt(rs3.getString("ID"));
+                    name = rs3.getString("NAME");
+                    creditHours = Double.parseDouble(rs3.getString("CREDIT_HOURS"));
+                    departmentId = rs3.getInt("DEPARTMENT_ID");
+                    courseNumber = rs3.getInt("COURSE_NUMBER");
+                    description = rs3.getString("DESCRIPTION");
+                    fullAbbreviation = rs3.getString("FULL_ABBREVIATION");
+                    isUserDefined = Boolean.parseBoolean(rs3.getString("IS_USER_DEFINED"));
 
-                if(isUserDefined){
-                    currentCourse = new UserDefinedCourse(id, name, creditHours, fullAbbreviation);
-                }
-                else{
-                    department = getDepartmentById(departmentId);
-                    currentCourse = new ScienceCourse(id, name, creditHours, department, courseNumber, description);
-                }
+                    if (isUserDefined) {
+                        currentCourse = new UserDefinedCourse(id, name, creditHours, fullAbbreviation);
+                    } else {
+                        department = getDepartmentById(departmentId);
+                        currentCourse = new ScienceCourse(id, name, creditHours, department, courseNumber, description);
+                    }
 
-                courses.add(currentCourse);
+                    courses.add(currentCourse);
+                }
             }
             rs2.close();
             rs3.close();
@@ -400,7 +412,7 @@ public class DataAccessObject implements DataAccess {
         result = null;
         try
         {
-            cmdString = "Select * from Course where NAME = " + courseName;
+            cmdString = "Select * from Course where NAME = '" + courseName + "'";
             rs2 = st1.executeQuery(cmdString);
         }
         catch (Exception e)
@@ -409,21 +421,22 @@ public class DataAccessObject implements DataAccess {
         }
         try
         {
-            id = Integer.parseInt(rs2.getString("ID"));
-            name = rs2.getString("NAME");
-            creditHours = Double.parseDouble(rs2.getString("CREDIT_HOURS"));
-            departmentId = Integer.parseInt(rs2.getString("DEPARTMENT_ID"));
-            courseNumber = Integer.parseInt(rs2.getString("COURSE_NUMBER"));
-            description = rs2.getString("DESCRIPTION");
-            fullAbbreviation = rs2.getString("FULL_ABBREVIATION");
-            isUserDefined = Boolean.parseBoolean(rs2.getString("IS_USER_DEFINED"));
+            while (rs2.next()) {
+                id = Integer.parseInt(rs2.getString("ID"));
+                name = rs2.getString("NAME");
+                creditHours = Double.parseDouble(rs2.getString("CREDIT_HOURS"));
+                departmentId = rs2.getInt("DEPARTMENT_ID");
+                courseNumber = rs2.getInt("COURSE_NUMBER");
+                description = rs2.getString("DESCRIPTION");
+                fullAbbreviation = rs2.getString("FULL_ABBREVIATION");
+                isUserDefined = Boolean.parseBoolean(rs2.getString("IS_USER_DEFINED"));
 
-            if(isUserDefined){
-                course = new UserDefinedCourse(id, name, creditHours, fullAbbreviation);
-            }
-            else{
-                department = getDepartmentById(departmentId);
-                course = new ScienceCourse(id, name, creditHours, department, courseNumber, description);
+                if (isUserDefined) {
+                    course = new UserDefinedCourse(id, name, creditHours, fullAbbreviation);
+                } else {
+                    department = getDepartmentById(departmentId);
+                    course = new ScienceCourse(id, name, creditHours, department, courseNumber, description);
+                }
             }
 
             rs2.close();
@@ -485,7 +498,7 @@ public class DataAccessObject implements DataAccess {
         result = null;
         try
         {
-            cmdString = "Select * from Degree where name = " +degreeName;
+            cmdString = "Select * from Degree where name = '" + degreeName + "'";
             rs2 = st1.executeQuery(cmdString);
         }
         catch (Exception e)
@@ -494,12 +507,14 @@ public class DataAccessObject implements DataAccess {
         }
         try
         {
+            while (rs2.next()) {
                 id = Integer.parseInt(rs2.getString("ID"));
                 name = rs2.getString("NAME");
                 creditHours = Double.parseDouble(rs2.getString("CREDIT_HOURS"));
                 majorCreditHours = Double.parseDouble(rs2.getString("MAJOR_CREDIT_HOURS"));
                 gpaRequired = Double.parseDouble(rs2.getString("GPA_REQUIRED"));
                 degree = new Degree(id, name, creditHours, majorCreditHours, gpaRequired);
+            }
 
             rs2.close();
         }
@@ -601,8 +616,8 @@ public class DataAccessObject implements DataAccess {
         result = null;
         try
         {
-            cmdString = "Select * from CourseOffering";
-            rs2 = st1.executeQuery(cmdString);
+            cmdString = "Select * from Course_Offering";
+            rs3 = st2.executeQuery(cmdString);
         }
         catch (Exception e)
         {
@@ -610,17 +625,17 @@ public class DataAccessObject implements DataAccess {
         }
         try
         {
-            while (rs2.next())
+            while (rs3.next())
             {
 
-                courseID=Integer.parseInt(rs2.getString("COURSE_ID"));
-                termTypeID=Integer.parseInt(rs2.getString("TERM_TYPE_ID"));
+                courseID=Integer.parseInt(rs3.getString("COURSE_ID"));
+                termTypeID=Integer.parseInt(rs3.getString("TERM_TYPE_ID"));
                 course=getCourseById(courseID);
                 termType=getTermTypeById(termTypeID);
                 courseOffering=new CourseOffering(course,termType);
                 courseOfferings.add(courseOffering);
             }
-            rs2.close();
+            rs3.close();
         }
         catch (Exception e)
         {
@@ -632,8 +647,18 @@ public class DataAccessObject implements DataAccess {
 
 
 
-    public int getFailingGradeId() {
-        return -1;
+    public int getFailingGradeId() throws SQLException {
+        int failingGradeId = -1;
+
+        cmdString = "Select * from Grade_Type where Name = 'F'";
+        rs2 = st1.executeQuery(cmdString);
+
+        while (rs2.next()) {
+            failingGradeId = rs2.getInt("ID");
+        }
+        rs2.close();
+
+        return failingGradeId;
     }
 
     public Course getCourseById(int courseId) {
@@ -696,35 +721,35 @@ public class DataAccessObject implements DataAccess {
         Course curr_course;
         CourseOffering curr_offering;
         List<CourseOffering> courseOfferingsByTermList = new ArrayList<>();
+
         if (type != null) {
-                try {
-                    if (type.getId() == 1 || type.getId() == 2 || type.getId() == 3) {
-                        try{//Read all entries with matching term_id
-                            cmdString = "Select * from COURSE_OFFERING where TERM_TYPE_ID = " + type.getId();
-                            rs2 = st1.executeQuery(cmdString);
-                        }catch (Exception e){
-                            processSQLError(e);
-                        }
-
-                        try{
-                            while (rs2.next()){
-                                curr_term_ID=Integer.parseInt((rs2.getString("TERM_TYPE_ID")));
-                                curr_course_ID=Integer.parseInt((rs2.getString("COURSE_ID")));
-                                curr_term=getTermTypeById(curr_term_ID);
-                                curr_course=getCourseById(curr_course_ID);
-                                curr_offering=new CourseOffering(curr_course,curr_term);
-                                courseOfferingsByTermList.add(curr_offering);
-                            }
-                            rs2.close();
-                        }catch (Exception e){
-                            processSQLError(e);
-                        }
-
-
+            try {
+                if (type.getId() == 1 || type.getId() == 2 || type.getId() == 3) {
+                    try{
+                        //Read all entries with matching term_id
+                        cmdString = "Select * from COURSE_OFFERING where TERM_TYPE_ID = " + type.getId();
+                        rs3 = st2.executeQuery(cmdString);
+                    }catch (Exception e){
+                        processSQLError(e);
                     }
-                } catch (IllegalArgumentException e) {
+
+                    try{
+                        while (rs3.next()){
+                            curr_term_ID=Integer.parseInt(rs3.getString("TERM_TYPE_ID"));
+                            curr_course_ID=Integer.parseInt(rs3.getString("COURSE_ID"));
+                            curr_term=getTermTypeById(curr_term_ID);
+                            curr_course=getCourseById(curr_course_ID);
+                            curr_offering=new CourseOffering(curr_course,curr_term);
+                            courseOfferingsByTermList.add(curr_offering);
+                        }
+                        rs3.close();
+                    }catch (Exception e){
+                        processSQLError(e);
+                    }
                 }
+            } catch (IllegalArgumentException e) {
             }
+        }
         return courseOfferingsByTermList;
     }
 
@@ -772,7 +797,7 @@ public class DataAccessObject implements DataAccess {
         try
         {
             cmdString = "Select COURSE_ID from Course_Result where STUDENT_ID = " + studentId;
-            rs2 = st1.executeQuery(cmdString);
+            rs3 = st2.executeQuery(cmdString);
         }
         catch (Exception e)
         {
@@ -780,11 +805,11 @@ public class DataAccessObject implements DataAccess {
         }
         try
         {
-            while(rs2.next()){
+            while(rs3.next()){
                 course = getCourseById(Integer.parseInt(rs3.getString("COURSE_ID")));
                 coursesTaken.add(course);
             }
-            rs2.close();
+            rs3.close();
         }
         catch (Exception e)
         {
@@ -804,8 +829,11 @@ public class DataAccessObject implements DataAccess {
         List<Course> takenDegreeCourses = new ArrayList<Course>();
 
         for (Course degreeCourse : degreeCourses) {
-            if (coursesTaken.contains(degreeCourse)) {
-                takenDegreeCourses.add(degreeCourse);
+            for (Course courseTaken : coursesTaken) {
+                if (courseTaken.getId() == degreeCourse.getId()) {
+                    takenDegreeCourses.add(degreeCourse);
+                    break;
+                }
             }
         }
 
@@ -858,11 +886,19 @@ public class DataAccessObject implements DataAccess {
         List<Course> degreeCourses = getDegreeCourses(degreeId);
         List<Course> notTakenDegreeCourses = new ArrayList<Course>();
         List<Course> eligibleDegreeCourses = new ArrayList<Course>();
+        boolean takenDegreeCourse = false;
 
         for (Course degreeCourse : degreeCourses) {
-            if (!(coursesTaken.contains(degreeCourse))) {
+            for (Course courseTaken : coursesTaken) {
+                if (courseTaken.getId() == degreeCourse.getId()) {
+                    takenDegreeCourse = true;
+                    break;
+                }
+            }
+            if (!takenDegreeCourse) {
                 notTakenDegreeCourses.add(degreeCourse);
             }
+            takenDegreeCourse = false;
         }
 
         for (Course course : notTakenDegreeCourses) {
@@ -1012,14 +1048,14 @@ public class DataAccessObject implements DataAccess {
         Student student = null;
 
         cmdString = "Select * from Student where id = " + studentId;
-        rs3 = st1.executeQuery(cmdString);
+        rs2 = st1.executeQuery(cmdString);
 
-        while (rs3.next()) {
-            student = new Student(rs3.getInt("id"), rs3.getInt("student_number"), 
-                    rs3.getString("name"), rs3.getString("email"), rs3.getString("password"), 
-                    getDegreeById(rs3.getInt("degree_id")));
+        while (rs2.next()) {
+            student = new Student(rs2.getInt("id"), rs2.getInt("student_number"),
+                    rs2.getString("name"), rs2.getString("email"), rs2.getString("password"),
+                    getDegreeById(rs2.getInt("degree_id")));
         }
-        rs3.close();
+        rs2.close();
 
         return student;
     }
@@ -1038,7 +1074,22 @@ public class DataAccessObject implements DataAccess {
         return tt;
     }
 
-    public Course getCourse(CourseResult courseResult, List<Course> allCourses){ return null; }
+    public Course getCourse(CourseResult courseResult, List<Course> allCourses){
+        Course course = null;
+        int courseId = courseResult.getCourse().getId();
+        int numberOfCourses = allCourses.size();
+        int index = 0;
+
+        while (index < numberOfCourses && (allCourses.get(index)).getId() != courseId) {
+            index++;
+        }//end while
+
+        if (index < numberOfCourses && (allCourses.get(index)).getId() == courseId) {
+            course = allCourses.get(index);
+        }//end if
+
+        return course;
+    }
 
     /**
      * getCoursePlansByStudentId

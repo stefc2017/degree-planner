@@ -4,6 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,11 +57,6 @@ public class DataAccessTest {
         System.out.println("\nStart testing Persistence interface");
         Services.createDataAccess(dataAccess);
 //        dataAccess = Services.getDataAccess();
-    }
-
-    @After
-    public void takeDown() {
-        Services.closeDataAccess();
     }
 
     @Test
@@ -205,7 +201,7 @@ public class DataAccessTest {
     @Test
     public void testGetCourseByName() {
         final String COURSE_NAME = "Introductory Computer Science II";
-        final String INVALID_COURSE = "I DON'T EXIST";
+        final String INVALID_COURSE = "I DO NOT EXIST";
         Course course;
 
         // valid course name
@@ -220,7 +216,7 @@ public class DataAccessTest {
     @Test
     public void testGetDegreeByName() {
         final String DEGREE_NAME = "Computer Science Major";
-        final String INVALID_DEGREE = "I DON'T EXIST";
+        final String INVALID_DEGREE = "I DO NOT EXIST";
         Degree degree;
 
         // valid degree name
@@ -311,7 +307,7 @@ public class DataAccessTest {
     }
 
     @Test
-    public void testGetFailingGradeId() {
+    public void testGetFailingGradeId() throws SQLException {
         // if gradetype was not found, -1 is returned
         int result = dataAccess.getFailingGradeId();
         assertNotEquals( -1, result );
@@ -438,15 +434,23 @@ public class DataAccessTest {
         dataAccess.addToCoursePlan( COURSE_ID, STUD_NUM, TERM_ID, YEAR );
         result = dataAccess.getCoursePlan( COURSE_ID, STUD_NUM, TERM_ID, YEAR );
         assertNotNull( result );
+
+        //Restore
+        dataAccess.removeFromCoursePlan(result.getId());
     }
 
     @Test
     public void testMoveCourse() throws Exception {
-        CoursePlan COURSE_PLAN = dataAccess.getCoursePlan( 3, 1, 2, 2018 );
-        final int COURSE_PLAN_ID = COURSE_PLAN.getId();
+        CoursePlan coursePlan = dataAccess.getCoursePlan( 3, 1, 2, 2018 );
+        final int COURSE_PLAN_ID = coursePlan.getId();
 
         dataAccess.moveCourse( COURSE_PLAN_ID, 1, 2017 );
-        assertEquals( 2017, COURSE_PLAN.getYear() );
+        CoursePlan modifiedCoursePlan = dataAccess.getCoursePlan(COURSE_PLAN_ID);
+        assertEquals( 2017, modifiedCoursePlan.getYear() );
+        assertEquals( 1, modifiedCoursePlan.getTermType().getId() );
+
+        //Restore
+        dataAccess.moveCourse( COURSE_PLAN_ID, 2, 2018 );
     }
 
     @Test
@@ -457,6 +461,9 @@ public class DataAccessTest {
         dataAccess.removeFromCoursePlan( COURSE_PLAN_ID );
         result = dataAccess.getCoursePlan( COURSE_PLAN_ID );
         assertNull( result );
+
+        //Restore
+        dataAccess.addToCoursePlan(3, 1, 2, 2018);
     }
 
     @Test
