@@ -193,52 +193,43 @@ public class BusinessPersistenceSeamTest {
         System.out.println("Starting Integration test of GetCoursePlanAndHeaders to persistence");
         AccessCoursePlan acp = new AccessCoursePlan(dataAccess);
 
-//        System.out.println("\nStarting GetCoursePlansAndHeaders Test: invalid student id");
-//        assertEquals("Completed courses list was not empty", 0, acp.getCoursePlansAndHeaders(-1).size());
-//        System.out.println("Finished GetCoursePlansAndHeaders Test: invalid student id");
-//
-//        System.out.println("\nStarting GetCoursePlansAndHeaders Test: valid student id and empty course results");
-//        assertEquals("Completed courses list was not empty", 0, acp.getCoursePlansAndHeaders(2).size());
-//        System.out.println("Finished GetCoursePlansAndHeaders Test: valid student id and empty course results");
-//
-//
-//        System.out.println("\nStarted GetCoursePlansAndHeaders Test: valid student id and non-empty course results");
-//        coursePlansAndHeaders = acp.getCoursePlansAndHeaders(1);
-////        System.out.println (coursePlansAndHeaders.toString());
-//        for (int i = 0; i<coursePlansAndHeaders.size(); i++) {
-//            System.out.println (coursePlansAndHeaders.get(i).toString());
-//        }
-//
-//        assertNotNull("Course Plans and Headers array is null", coursePlansAndHeaders);
-//        assertEquals("Result length is not the same as expected result length",
-//                NB_LIST_SIZE_FOR_STUDENT_1, coursePlansAndHeaders.size());
-//
-//        assertTrue("No starting header", coursePlansAndHeaders.get(0) instanceof ArrayList);
-//        assertEquals("Header at index 0 is incorrect", Season.FALL.ordinal(), ((ArrayList)coursePlansAndHeaders.get(0)).get(0));
-//
-//        assertTrue("Value at index 1 is not a CoursePlan", coursePlansAndHeaders.get(1) instanceof CoursePlan);
-//        tempCP = (CoursePlan)(coursePlansAndHeaders.get(1));
-//        assertEquals("CoursePlan at index 1 is incorrect", 1, tempCP.getId());
-//
-//        assertTrue("Value at index 2 is not a CoursePlan", coursePlansAndHeaders.get(2) instanceof CoursePlan);
-//        tempCP = (CoursePlan)(coursePlansAndHeaders.get(2));
-//        assertEquals("CoursePlan at index 2 is incorrect", 2, tempCP.getId());
-//
-//        assertTrue("Value at index 3 is not a header", coursePlansAndHeaders.get(3) instanceof ArrayList);
-//        assertEquals("Header at index 3 is incorrect", Season.WINTER.ordinal(), ((ArrayList)coursePlansAndHeaders.get(3)).get(0));
-//
-//        assertTrue("Value at index 4 is not a CoursePlan", coursePlansAndHeaders.get(4) instanceof CoursePlan);
-//        tempCP = (CoursePlan)(coursePlansAndHeaders.get(4));
-//        assertEquals("CoursePlan at index 4 is incorrect", 3, tempCP.getId());
-//
-//        assertTrue("Value at index 5 is not a header", coursePlansAndHeaders.get(5) instanceof ArrayList);
-//        assertEquals("Header at index 5 is incorrect", Season.SUMMER.ordinal(), ((ArrayList)coursePlansAndHeaders.get(5)).get(0));
-//
-//        assertTrue("Value at index 6 is not a CoursePlan", coursePlansAndHeaders.get(6) instanceof CoursePlan);
-//        tempCP = (CoursePlan)(coursePlansAndHeaders.get(6));
-//        assertEquals("CoursePlan at index 6 is incorrect", 4, tempCP.getId());
-//
-//        System.out.println("Finished GetCoursePlansAndHeaders Test: valid student id and non-empty course results");
+        System.out.println("\nStarting GetCoursePlansAndHeaders Test: invalid student id");
+        assertEquals("Completed courses list was not empty", 0, acp.getCoursePlansAndHeaders(-1).size());
+        System.out.println("Finished GetCoursePlansAndHeaders Test: invalid student id");
+
+        System.out.println("\nStarting GetCoursePlansAndHeaders Test: valid student id and empty course results");
+        assertEquals("Completed courses list was not empty", 0, acp.getCoursePlansAndHeaders(2).size());
+        System.out.println("Finished GetCoursePlansAndHeaders Test: valid student id and empty course results");
+
+
+        //Testing valid data
+        System.out.println("\nStarted GetCoursePlansAndHeaders Test: valid student id and non-empty course results");
+        coursePlansAndHeaders = acp.getCoursePlansAndHeaders(1);
+
+        assertNotNull("Course Plans and Headers array is null", coursePlansAndHeaders);
+        assertEquals("Result length is not the same as expected result length",
+                NB_LIST_SIZE_FOR_STUDENT_1, coursePlansAndHeaders.size());
+
+        assertTrue("No starting header", coursePlansAndHeaders.get(0) instanceof ArrayList);
+        assertEquals("Header at index 0 is incorrect", Season.FALL.ordinal(), ((ArrayList)coursePlansAndHeaders.get(0)).get(0));
+
+        assertTrue("Value at index 1 is not a CoursePlan", coursePlansAndHeaders.get(1) instanceof CoursePlan);
+        tempCP = (CoursePlan)(coursePlansAndHeaders.get(1));
+        assertEquals("CoursePlan at index 1 is incorrect", 3, tempCP.getId());
+
+        assertTrue("Value at index 2 is not a CoursePlan", coursePlansAndHeaders.get(2) instanceof CoursePlan);
+        tempCP = (CoursePlan)(coursePlansAndHeaders.get(2));
+        assertEquals("CoursePlan at index 2 is incorrect", 2, tempCP.getId());
+
+        assertTrue("Value at index 3 is not a header", coursePlansAndHeaders.get(3) instanceof ArrayList);
+        assertEquals("Header at index 3 is incorrect", Season.SUMMER.ordinal(), ((ArrayList)coursePlansAndHeaders.get(3)).get(0));
+
+        assertTrue("Value at index 4 is not a CoursePlan", coursePlansAndHeaders.get(4) instanceof CoursePlan);
+        tempCP = (CoursePlan)(coursePlansAndHeaders.get(4));
+        assertEquals("CoursePlan at index 4 is incorrect", 1, tempCP.getId());
+
+        System.out.println("Finished GetCoursePlansAndHeaders Test: valid student id and non-empty course results");
+
 
         System.out.println("\nFinished Integration test of GetCoursePlanAndHeaders to persistence");
     }
