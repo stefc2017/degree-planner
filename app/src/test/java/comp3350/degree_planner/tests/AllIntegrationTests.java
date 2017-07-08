@@ -12,8 +12,8 @@ import comp3350.degree_planner.tests.integration.DataAccessHSQLDBTest;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        BusinessPersistenceSeamTest.class,
-        DataAccessHSQLDBTest.class
+        DataAccessHSQLDBTest.class,
+        BusinessPersistenceSeamTest.class
 })
 public class AllIntegrationTests {
 }

@@ -166,7 +166,9 @@ public class GetCoursePlansAndHeadersTest {
         System.out.println("\nStarted GetCoursePlansAndHeaders Test: valid student id and non-empty course results");
 
         List coursePlansAndHeaders = acp.getCoursePlansAndHeaders(1);
-
+        for (int i = 0; i<coursePlansAndHeaders.size(); i++) {
+            System.out.println (coursePlansAndHeaders.get(i).toString());
+        }
         assertNotNull("Course Plans and Headers array is null", coursePlansAndHeaders);
         assertEquals("Result length is not the same as expected result length",
                 NB_LIST_SIZE_FOR_STUDENT_1, coursePlansAndHeaders.size());
