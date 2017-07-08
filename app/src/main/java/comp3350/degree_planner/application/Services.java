@@ -26,7 +26,7 @@ public class Services {
         return dataAccessService;
     }
 
-    public static DataAccess createDataAccess(DataAccess alternateDataAccessService)
+    public static DataAccess createDataAccess(final DataAccess alternateDataAccessService)
     {
         if (dataAccessService == null)
         {
@@ -34,6 +34,10 @@ public class Services {
             dataAccessService.open(Main.getDBPathName());
         }
         return dataAccessService;
+    }
+
+    public static void setDataAccessService (final DataAccess newDataAccessService) {
+        dataAccessService = newDataAccessService;
     }
 
     public static DataAccess getDataAccess()

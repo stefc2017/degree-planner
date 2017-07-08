@@ -6,14 +6,12 @@ import org.junit.runners.Suite;
 import comp3350.degree_planner.tests.business.AddToCoursePlanTest;
 import comp3350.degree_planner.tests.business.CreditHoursTest;
 import comp3350.degree_planner.tests.business.GetCompletedCoursesTest;
-//import comp3350.degree_planner.tests.business.MoveCourseTest;
-//import comp3350.degree_planner.tests.business.RemoveFromCoursePlanTest;
+import comp3350.degree_planner.tests.business.MoveCourseTest;
+import comp3350.degree_planner.tests.business.RemoveFromCoursePlanTest;
 import comp3350.degree_planner.tests.business.GetCoursePlansAndHeadersTest;
 import comp3350.degree_planner.tests.business.GetDegreeCoursesTest;
 import comp3350.degree_planner.tests.business.GetDegreesTest;
 import comp3350.degree_planner.tests.business.GetCourseOfferingsByTermTest;
-import comp3350.degree_planner.tests.business.MoveCourseTest;
-import comp3350.degree_planner.tests.business.RemoveFromCoursePlanTest;
 import comp3350.degree_planner.tests.objects.CourseOfferingTest;
 import comp3350.degree_planner.tests.objects.CoursePlanTest;
 import comp3350.degree_planner.tests.objects.CoursePrerequisiteTest;
@@ -67,5 +65,5 @@ import comp3350.degree_planner.tests.persistence.DataAccessTest;
         DataAccessTest.class
 })
 
-public class AllTests {
+public class AllUnitTests {
 }

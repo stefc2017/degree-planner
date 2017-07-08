@@ -1,7 +1,5 @@
 package comp3350.degree_planner.tests.persistence;
 
-import android.provider.ContactsContract;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,17 +37,34 @@ public class DataAccessTest {
     private static String dbName = Main.dbName;
     private DataAccess dataAccess;
 
+    public DataAccessTest() {
+        dataAccess = new DataAccessStub(dbName);
+//        Services.createDataAccess(new DataAccessStub(dbName));
+//        this.dataAccess = Services.getDataAccess();
+    }
+
+    public void setDataAccess (final DataAccess dataAccess) {
+        this.dataAccess = dataAccess;
+//        Services.createDataAccess(dataAccess);
+//        this.dataAccess = Services.getDataAccess();
+    }
+
     @Before
     public void setUp(){
         Services.closeDataAccess();
 
-        System.out.println("\nStart testing Persistence interface with DataAccessStub");
-        Services.createDataAccess(new DataAccessStub(dbName));
-        dataAccess = Services.getDataAccess();
+        System.out.println("\nStart testing Persistence interface");
+        Services.createDataAccess(dataAccess);
+//        dataAccess = Services.getDataAccess();
+    }
+
+    @After
+    public void takeDown() {
+        Services.closeDataAccess();
     }
 
     @Test
-    public void testgetCourse() {
+    public void testGetCourse() {
         List<Course> courses = dataAccess.getAllCourses();
         List<Course> noCourses = new ArrayList<Course>();
         CourseResult courseResult = new CourseResult(1, new ScienceCourse(1, "Introductory Computer Science I",
