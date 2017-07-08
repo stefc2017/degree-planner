@@ -92,16 +92,16 @@ public class GetCourseOfferingsByTermTest {
 
     @Test
     public void testGetCourseOfferingsByInvalidTerm() {
-        System.out.println("\nStarting Get Course Offerings Test: Get degree by invalid Term vals");
+        System.out.println("\nStarting Get Course Offerings Test: Get Course Offerings by invalid Term vals");
         assertEquals("Returned CourseOfferingsByTerm list should be empty when TermId is invalid", 0, courseOfferings.getCourseOfferingsByTerm(new TermType(4,"ImaginativeTerm")).size());
         assertEquals("Returned CourseOfferingsByTerm list should be empty when Term is null", 0, courseOfferings.getCourseOfferingsByTerm(null).size());
-        System.out.println("Finished Get Degrees Test: Get degree by invalid Term vals");
+        System.out.println("Finished Get Degrees Test: Get Course Offerings by invalid Term vals");
 
     }
 
     @Test
-    public void testGetDegreeByValidTerm(){
-        System.out.println("\nStarting Get Course Offerings Test: Get degree by valid Term");
+    public void testGetCourseOfferingsByValidTerm(){
+        System.out.println("\nStarting Get Course Offerings Test: Get Course Offerings by valid Term");
         assertNotNull("Returned Course Offerings list should not be null", courseOfferings.getCourseOfferingsByTerm(new TermType(1,"Fall")));//A little bit of a hack, has to take from dataStub in the future
         System.out.println("Finished Get Course Offerings Test: Get Course Offerings by valid Term");
     }

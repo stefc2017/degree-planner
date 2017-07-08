@@ -147,9 +147,6 @@ public class DataAccessObject implements DataAccess {
 
             allCourses = getAllCourses();
 
-            String test = allCourses.toString();
-            String test2 = coursesTaken.toString();
-
             for(int i = 0; i < coursesTaken.size(); i++){
                 for(int j = 0; j < allCourses.size(); j++){ //search and delete course in all Courses list
                     if(allCourses.get(j).getId() == coursesTaken.get(i).getId()){
