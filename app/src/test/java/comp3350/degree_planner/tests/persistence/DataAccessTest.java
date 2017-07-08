@@ -32,6 +32,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by pennyhe on 2017-06-28.
  * Modified by Matthew Provencher on 2017-06-28
+ * Modified by Tiffany Jiang on 2017-07-07
  */
 
 public class DataAccessTest {
@@ -40,14 +41,10 @@ public class DataAccessTest {
 
     public DataAccessTest() {
         dataAccess = new DataAccessStub(dbName);
-//        Services.createDataAccess(new DataAccessStub(dbName));
-//        this.dataAccess = Services.getDataAccess();
     }
 
     public void setDataAccess (final DataAccess dataAccess) {
         this.dataAccess = dataAccess;
-//        Services.createDataAccess(dataAccess);
-//        this.dataAccess = Services.getDataAccess();
     }
 
     @Before
@@ -56,7 +53,6 @@ public class DataAccessTest {
 
         System.out.println("\nStart testing Persistence interface");
         Services.createDataAccess(dataAccess);
-//        dataAccess = Services.getDataAccess();
     }
 
     @Test
@@ -435,7 +431,7 @@ public class DataAccessTest {
         result = dataAccess.getCoursePlan( COURSE_ID, STUD_NUM, TERM_ID, YEAR );
         assertNotNull( result );
 
-        //Restore
+        //Restore data access to before this test
         dataAccess.removeFromCoursePlan(result.getId());
     }
 
@@ -449,21 +445,21 @@ public class DataAccessTest {
         assertEquals( 2017, modifiedCoursePlan.getYear() );
         assertEquals( 1, modifiedCoursePlan.getTermType().getId() );
 
-        //Restore
+        //Restore data access to before this test
         dataAccess.moveCourse( COURSE_PLAN_ID, 2, 2018 );
     }
 
     @Test
     public void testRemoveFromCoursePlan() throws Exception {
-        final int COURSE_PLAN_ID = dataAccess.getCoursePlan( 3, 1, 2, 2018 ).getId();
+        int coursePlanId;
         CoursePlan result;
 
-        dataAccess.removeFromCoursePlan( COURSE_PLAN_ID );
-        result = dataAccess.getCoursePlan( COURSE_PLAN_ID );
-        assertNull( result );
+        dataAccess.addToCoursePlan( 5, 1, 3, 2019 ); //So can restore data access to before this test
+        coursePlanId = dataAccess.getCoursePlan( 5, 1, 3, 2019 ).getId();
 
-        //Restore
-        dataAccess.addToCoursePlan(3, 1, 2, 2018);
+        dataAccess.removeFromCoursePlan( coursePlanId );
+        result = dataAccess.getCoursePlan( coursePlanId );
+        assertNull( result );
     }
 
     @Test

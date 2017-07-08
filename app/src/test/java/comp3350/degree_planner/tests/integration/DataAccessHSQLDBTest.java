@@ -14,8 +14,6 @@ import comp3350.degree_planner.tests.persistence.DataAccessTest;
  */
 
 public class DataAccessHSQLDBTest {
-    private static String dbName = Main.dbName;
-
     @Test
     public void testDataAccess() throws Exception
     {
@@ -24,7 +22,7 @@ public class DataAccessHSQLDBTest {
         System.out.println("\nStarting Integration test DataAccess (using default DB)");
 
         Services.closeDataAccess();
-        Services.createDataAccess(dbName);
+        Services.createDataAccess(Main.dbName);
         dataAccess = Services.getDataAccess();
 
         DataAccessTest dataAccessTest = new DataAccessTest();
