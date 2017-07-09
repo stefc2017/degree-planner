@@ -46,14 +46,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             fab:fab_size="mini"
-            fab:fab_label="@string/label_add_required" />
+            fab:fab_label="@string/label_add_required"
+            android:onClick="buttonCompSciCoursesOnClick"/>
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/add_free_elective_to_plan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             fab:fab_size="mini"
-            fab:fab_label="@string/label_add_free_elective" />
+            fab:fab_label="@string/label_add_free_elective"
+            android:onClick="buttonFreeElectiveOnClick"/>
     </com.github.clans.fab.FloatingActionMenu>
 
 

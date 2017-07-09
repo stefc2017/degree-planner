@@ -18,6 +18,9 @@
     <string name="addCourse">Add Course To Course Plan</string>
     <string name="year">Year</string>
     <string name="term">Term</string>
+    <string name="name">Course Name</string>
+    <string name="credithr">Credit Hours</string>
+    <string name="abbrev">Abbreviation</string>
     <string name="viewcourseplan">View Course Plan</string>
     <string name="required_course_added">Course added</string>
     <string name="error_duplicate_course">Error: Duplicate course</string>
