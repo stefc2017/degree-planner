@@ -1,10 +1,12 @@
 package comp3350.degree_planner.presentation;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -73,7 +75,23 @@ public class AddCourseActivity extends AppCompatActivity {
             courseId.setText(identifier);
         }
 
+        EditText editYear = (EditText) findViewById(R.id.year);
+        // Hide keyboard when click outside of edit field
+        editYear.setOnFocusChangeListener(new View.OnFocusChangeListener(){
+            @Override
+            public void onFocusChange(View v, boolean hasFocus){
+                if(!hasFocus){ hideKeyboard(v); }
+            }
+        });
+
         AutoCompleteTextView autocompleteview = (AutoCompleteTextView)findViewById(R.id.term);
+        // Hide keyboard when click outside of edit field
+        autocompleteview.setOnFocusChangeListener(new View.OnFocusChangeListener(){
+            @Override
+            public void onFocusChange(View v, boolean hasFocus){
+                if(!hasFocus){ hideKeyboard(v); }
+            }
+        });
 
         // Set up term list for auto filling
         termsArray = getResources().getStringArray(R.array.season_list);
@@ -150,6 +168,11 @@ public class AddCourseActivity extends AppCompatActivity {
 
 
     private boolean validate(String text){ return text.length() > 0; }
+
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
 
     private void replaceButtons(){
         Button add = (Button)findViewById(R.id.add_course_button);
