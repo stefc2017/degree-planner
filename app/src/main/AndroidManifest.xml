@@ -34,6 +34,8 @@
 
         <activity android:name=".presentation.AddCourseActivity"></activity>
 
+        <activity android:name=".presentation.ViewElectivesActivity"></activity>
+
         <activity android:name=".presentation.AddFreeElectiveActivity"></activity>
 
         <activity android:name=".presentation.CreateElectiveActivity"></activity>
