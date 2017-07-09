@@ -23,10 +23,6 @@ import comp3350.degree_planner.presentation.MainActivity;
 
 @RunWith(AndroidJUnit4.class)
 public class ViewDegreesTest {
-
-    private static final String DEGREE_1 = "Computer Science Major";
-    private static final String DEGREE_2 = "Computer Science Honours";
-
     @Rule
     public ActivityTestRule<MainActivity> activityTestRule =
             new ActivityTestRule<>(MainActivity.class);
@@ -46,12 +42,17 @@ public class ViewDegreesTest {
 
     @Test
     public void testViewDegrees() throws Exception {
+        final String DEGREE_1 = "Computer Science Major";
+        final String DEGREE_2 = "Computer Science Honours";
+
+        //Navigate to Degree Information
         solo.unlockScreen();
         solo.waitForActivity("MainActivity");
         solo.clickOnButton(solo.getString(R.string.degreeInfo));
         solo.assertCurrentActivity("Expected Degrees Activity", DegreesActivity.class);
-        solo.takeScreenshot();
-        assertTrue ("First degree was not found", solo.searchText(DEGREE_1));
-        assertTrue ("Second degree was not found", solo.searchText(DEGREE_2));
+
+        //Verify list of Computer Science degrees are shown
+        assertTrue (DEGREE_1 + " degree was not found", solo.searchText(DEGREE_1));
+        assertTrue (DEGREE_2 + " degree was not found", solo.searchText(DEGREE_2));
     }
 }
