@@ -126,6 +126,8 @@ public class DataAccessStub implements DataAccess {
         degrees = new ArrayList<Degree>();
         Degree degree = new Degree(1, "Computer Science Major", 120.0, 81.0, 2.0);
         degrees.add(degree);
+        degree = new Degree(1, "Computer Science Honours", 120.0, 81.0, 3.0);
+        degrees.add(degree);
 
         // Map courses to degrees
 
