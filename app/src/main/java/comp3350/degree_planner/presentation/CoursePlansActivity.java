@@ -9,7 +9,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -122,4 +121,13 @@ public class CoursePlansActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    public void buttonCompSciCoursesOnClick(View v){
+        Intent intent = new Intent(CoursePlansActivity.this, DegreesActivity.class);
+        CoursePlansActivity.this.startActivity(intent);
+    }
+
+    public void buttonFreeElectiveOnClick(View v){
+        Intent intent = new Intent(CoursePlansActivity.this, AddFreeElectiveActivity.class);
+        CoursePlansActivity.this.startActivity(intent);
+    }
 }
