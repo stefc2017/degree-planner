@@ -178,7 +178,7 @@ public class AddCourseActivity extends AppCompatActivity {
         Button add = (Button)findViewById(R.id.add_course_button);
         Button toCoursePlan = (Button)findViewById(R.id.view_course_plan);
 
-        add.setVisibility(View.GONE);
+        add.setVisibility(View.INVISIBLE);
         toCoursePlan.setVisibility(View.VISIBLE);
     }
 

@@ -7,6 +7,7 @@
         android:layout_width="600px"
         android:layout_height="100px"
         android:paddingTop="10dip"
+        android:layout_marginLeft="40px"
         android:paddingBottom="3dip"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 

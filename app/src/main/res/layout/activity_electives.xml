@@ -2,12 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:fab="http://schemas.android.com/apk/res-auto">
+    android:clickable="true"
+    android:focusableInTouchMode="true">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/add_electives_toolbar"
+        android:id="@+id/add_elective_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:background="@color/colorLightBlue"
         android:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
@@ -16,9 +17,80 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textSize="20dp"
+            android:textSize="22dp"
             android:textColor="@android:color/white"/>
 
     </android.support.v7.widget.Toolbar>
+
+    <TextView
+        android:id="@+id/abbreviation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textSize="24dp"
+        android:layout_marginTop="50dp"
+        android:layout_below="@+id/add_elective_toolbar"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/courseName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textSize="24dp"
+        android:layout_marginTop="22dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/abbreviation" />
+
+    <EditText
+        android:id="@+id/year"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/year"
+        android:layout_marginTop="82dp"
+        android:layout_below="@+id/courseName"
+        android:layout_centerHorizontal="true" />
+
+    <android.support.v7.widget.AppCompatAutoCompleteTextView
+        android:id="@+id/term"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/term"
+        android:layout_marginTop="118dp"
+        android:layout_below="@+id/year"
+        android:layout_alignStart="@+id/year" />
+
+    <Button
+        android:id="@+id/add_course_button"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:onClick="buttonAddOnClick"
+        android:text="@string/add"
+        android:layout_below="@+id/term"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp" />
+
+    <Button
+        android:id="@+id/view_course_plan"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/term"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:onClick="buttonViewCoursePlanOnClick"
+        android:visibility="invisible"
+        android:text="@string/viewcourseplan" />
+
+    <Button
+        android:id="@+id/back_button"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:text="@string/cancel"
+        android:layout_below="@+id/view_course_plan"
+        android:layout_alignTop="@+id/add_course_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="93dp"
+        android:onClick="buttonCancelOnClick"/>
+
 
 </RelativeLayout>
