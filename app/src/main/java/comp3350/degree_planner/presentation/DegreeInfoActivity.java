@@ -43,7 +43,7 @@ public class DegreeInfoActivity extends AppCompatActivity {
         pageTitle.setText(R.string.degreeInfo);
 
         Bundle b = getIntent().getExtras();
-        int degreeId = b.getInt("degreeId");
+        final int degreeId = b.getInt("degreeId");
 
         accessCourses = new AccessCourses(Services.getDataAccess());
         accessDegrees = new AccessDegrees(Services.getDataAccess());
@@ -86,6 +86,7 @@ public class DegreeInfoActivity extends AppCompatActivity {
                     Intent intent = new Intent(DegreeInfoActivity.this, AddCourseActivity.class);
                     Bundle b = new Bundle();
                     b.putInt("courseId", courseId);
+                    b.putInt("degreeId", degreeId);
                     intent.putExtras(b);
                     DegreeInfoActivity.this.startActivity(intent);
                 }
