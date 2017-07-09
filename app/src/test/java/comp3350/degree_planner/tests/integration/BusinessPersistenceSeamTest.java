@@ -211,7 +211,7 @@ public class BusinessPersistenceSeamTest {
                 NB_LIST_SIZE_FOR_STUDENT_1, coursePlansAndHeaders.size());
 
         assertTrue("No starting header", coursePlansAndHeaders.get(0) instanceof ArrayList);
-        assertEquals("Header at index 0 is incorrect", Season.FALL.ordinal(), ((ArrayList)coursePlansAndHeaders.get(0)).get(0));
+        assertEquals("Header at index 0 is incorrect", Season.FALL.getValue(), ((ArrayList)coursePlansAndHeaders.get(0)).get(0));
 
         assertTrue("Value at index 1 is not a CoursePlan", coursePlansAndHeaders.get(1) instanceof CoursePlan);
         tempCP = (CoursePlan)(coursePlansAndHeaders.get(1));
@@ -222,7 +222,7 @@ public class BusinessPersistenceSeamTest {
         assertEquals("CoursePlan at index 2 is incorrect", 2, tempCP.getId());
 
         assertTrue("Value at index 3 is not a header", coursePlansAndHeaders.get(3) instanceof ArrayList);
-        assertEquals("Header at index 3 is incorrect", Season.SUMMER.ordinal(), ((ArrayList)coursePlansAndHeaders.get(3)).get(0));
+        assertEquals("Header at index 3 is incorrect", Season.SUMMER.getValue(), ((ArrayList)coursePlansAndHeaders.get(3)).get(0));
 
         assertTrue("Value at index 4 is not a CoursePlan", coursePlansAndHeaders.get(4) instanceof CoursePlan);
         tempCP = (CoursePlan)(coursePlansAndHeaders.get(4));
