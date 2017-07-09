@@ -86,7 +86,7 @@ public class BusinessPersistenceSeamTest {
 
         System.out.println("\nStarting Get Degrees Test: Get all available degree programs");
         assertNotNull("Degree list should not be null", degrees.getAllDegrees());
-        assertEquals("Degree list should have size one", 1, degrees.getAllDegrees().size());
+        assertEquals("Degree list should have size two", 2, degrees.getAllDegrees().size());
         assertEquals("Wrong degree in degree list", "Computer Science Major", degrees.getAllDegrees().get(0).getName());
         System.out.println("Finished Get Degrees Test: Get all available degree programs");
 

@@ -89,7 +89,7 @@ public class DataAccessTest {
 
     @Test
     public void testGetAllDegrees() {
-        final int NUM_DEGREES = 1;
+        final int NUM_DEGREES = 2;
 
         List<Degree> degrees = dataAccess.getAllDegrees();
         assertEquals(NUM_DEGREES, degrees.size());
