@@ -135,6 +135,10 @@ public class DataAccessStub implements DataAccess {
         degreeCourses.add(new DegreeCourse(degrees.get(0), scienceCourses.get(1), new DegreeCourseType(1, "Required")));
         degreeCourses.add(new DegreeCourse(degrees.get(0), scienceCourses.get(2), new DegreeCourseType(1, "Required")));
         degreeCourses.add(new DegreeCourse(degrees.get(0), scienceCourses.get(3), new DegreeCourseType(1, "Required")));
+        degreeCourses.add(new DegreeCourse(degrees.get(1), scienceCourses.get(0), new DegreeCourseType(1, "Required")));
+        degreeCourses.add(new DegreeCourse(degrees.get(1), scienceCourses.get(1), new DegreeCourseType(1, "Required")));
+        degreeCourses.add(new DegreeCourse(degrees.get(1), scienceCourses.get(2), new DegreeCourseType(1, "Required")));
+        degreeCourses.add(new DegreeCourse(degrees.get(1), scienceCourses.get(3), new DegreeCourseType(1, "Required")));
 
         // Create Students
 
