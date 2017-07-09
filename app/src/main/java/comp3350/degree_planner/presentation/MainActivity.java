@@ -27,13 +27,6 @@ public class MainActivity extends AppCompatActivity {
         Main.startUp();
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-
-        TextView pageTitle = (TextView) findViewById(R.id.toolbar_title);
-        pageTitle.setText(R.string.app_name);
-
     }
 
     private void copyDatabaseToDevice() {
