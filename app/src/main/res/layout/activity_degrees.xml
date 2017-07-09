@@ -11,7 +11,7 @@
         android:id="@+id/degrees_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorLightBlue"
+        android:background="@color/colorPrimary"
         android:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
         <TextView
@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textSize="22dp"
+            android:textSize="20dp"
             android:textColor="@android:color/white"/>
 
     </android.support.v7.widget.Toolbar>
@@ -28,8 +28,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
         android:columnCount="1"
         android:rowCount="1">
 
