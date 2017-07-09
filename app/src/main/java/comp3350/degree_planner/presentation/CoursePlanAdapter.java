@@ -118,18 +118,16 @@ public class CoursePlanAdapter extends BaseAdapter {
                 break;
             case SECTION_HEADER:
                 TextView headerTerm = (TextView)view.findViewById(R.id.sectionHeaderTerm);
-                TextView headerYear = (TextView)view.findViewById(R.id.sectionHeaderYear);
+
                 int term = (Integer)((ArrayList)coursePlansAndHeaders.get(position)).get(0);
                 int year = (Integer)((ArrayList)coursePlansAndHeaders.get(position)).get(1);
-                if(term == Season.FALL.ordinal()){
-                    headerTerm.setText(myContext.getText(R.string.fall));
-                    headerYear.setText(year+"");
-                }else if(term == Season.SUMMER.ordinal()){
-                    headerTerm.setText(myContext.getText(R.string.summer));
-                    headerYear.setText(year+"");
+
+                if(term == Season.FALL.getValue()){
+                    headerTerm.setText(myContext.getText(R.string.fall).toString() + " " + year);
+                }else if(term == Season.SUMMER.getValue()){
+                    headerTerm.setText(myContext.getText(R.string.summer).toString() + " " + year);
                 }else{
-                    headerTerm.setText(myContext.getText(R.string.winter));
-                    headerYear.setText(year+"");
+                    headerTerm.setText(myContext.getText(R.string.winter).toString() + " " + year);
                 }
                 break;
         }
