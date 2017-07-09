@@ -126,16 +126,16 @@ public class DataAccessStub implements DataAccess {
         degrees = new ArrayList<Degree>();
         Degree degree = new Degree(1, "Computer Science Major", 120.0, 81.0, 2.0);
         degrees.add(degree);
-        degree = new Degree(1, "Computer Science Honours", 120.0, 81.0, 3.0);
+        degree = new Degree(2, "Computer Science Honours", 120.0, 81.0, 3.0);
         degrees.add(degree);
 
         // Map courses to degrees
 
         degreeCourses = new ArrayList<DegreeCourse>();
-        degreeCourses.add(new DegreeCourse(degree, scienceCourses.get(0), new DegreeCourseType(1, "Required")));
-        degreeCourses.add(new DegreeCourse(degree, scienceCourses.get(1), new DegreeCourseType(1, "Required")));
-        degreeCourses.add(new DegreeCourse(degree, scienceCourses.get(2), new DegreeCourseType(1, "Required")));
-        degreeCourses.add(new DegreeCourse(degree, scienceCourses.get(3), new DegreeCourseType(1, "Required")));
+        degreeCourses.add(new DegreeCourse(degrees.get(0), scienceCourses.get(0), new DegreeCourseType(1, "Required")));
+        degreeCourses.add(new DegreeCourse(degrees.get(0), scienceCourses.get(1), new DegreeCourseType(1, "Required")));
+        degreeCourses.add(new DegreeCourse(degrees.get(0), scienceCourses.get(2), new DegreeCourseType(1, "Required")));
+        degreeCourses.add(new DegreeCourse(degrees.get(0), scienceCourses.get(3), new DegreeCourseType(1, "Required")));
 
         // Create Students
 
