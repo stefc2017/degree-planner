@@ -34,8 +34,12 @@ public class CoursePlansActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_courseplans);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.courseplans_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.course_plan_toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        TextView pageTitle = (TextView) findViewById(R.id.toolbar_title);
+        pageTitle.setText(R.string.coursePlan);
 
         ListView coursePlanList = (ListView)findViewById(R.id.coursePlans);
         accessCoursePlan = new AccessCoursePlan(Services.getDataAccess());

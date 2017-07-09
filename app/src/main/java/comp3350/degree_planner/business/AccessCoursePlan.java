@@ -119,7 +119,7 @@ public class AccessCoursePlan {
         ListIterator cpIterator;    // Used to iterate over coursePlans
         CoursePlan currCP;  // Current course plan in coursePlans
 
-        ArrayList<Integer> header = null;      // Header text for each section
+        ArrayList<Integer> header = new ArrayList<>();      // Header text for each section
         TermType currentTerm;   // Term for the current course plan, used in headers
         int currentYear;        // Year for the current course plan, used in headers
         final int YEAR_POS = 1; // year is at position 1 in the tuple
@@ -138,22 +138,26 @@ public class AccessCoursePlan {
             while (cpIterator.hasNext()) {
                 currCP = (CoursePlan)cpIterator.next();
 
+                header = new ArrayList<>();
                 // Update the header text if the term / year has changed
                 if (currentTerm == null || !currCP.getTermType().equals(currentTerm)) {
-                    header = new ArrayList<>();
                     currentTerm = currCP.getTermType();
 
-                    // Ordinals are WINTER(0) SUMMER(1) FALL(2)
+                    // Ordinals are WINTER(1) SUMMER(2) FALL(3)
                     if(currentTerm.getSeason().equalsIgnoreCase("Fall")){
-                        header.add(Season.FALL.ordinal());
+                        header.add(Season.FALL.getValue());
                     }else if(currentTerm.getSeason().equalsIgnoreCase("Summer")){
-                        header.add(Season.SUMMER.ordinal());
+                        header.add(Season.SUMMER.getValue());
                     }else if(currentTerm.getSeason().equalsIgnoreCase("Winter")){
-                        header.add(Season.WINTER.ordinal());
+                        header.add(Season.WINTER.getValue());
                     }
-                    header.add(currentYear);
+
                     newHeader = true;
+                }else{
+                    header.add(currentTerm.getId());
                 }
+
+                header.add(currentYear);
 
                 if (currCP.getYear() != currentYear) {
                     currentYear = currCP.getYear();
@@ -163,7 +167,6 @@ public class AccessCoursePlan {
 
                 if (newHeader) {
                     coursePlansAndHeaders.add(header);
-                    header = null;
                     newHeader = false;
                 }
 
@@ -174,6 +177,7 @@ public class AccessCoursePlan {
             e.printStackTrace();
             throw e;
         }
+
         return coursePlansAndHeaders;
     }
 

@@ -9,6 +9,7 @@ import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -25,9 +26,6 @@ public class MainActivity extends AppCompatActivity {
         copyDatabaseToDevice();
         Main.startUp();
         setContentView(R.layout.activity_main);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
-        setSupportActionBar(toolbar);
 
     }
 
