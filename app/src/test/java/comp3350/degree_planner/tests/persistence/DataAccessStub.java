@@ -38,6 +38,7 @@ public class DataAccessStub implements DataAccess {
 
     private String dbName;
     private String dbType = "stub";
+    private int courseId = 1;
 
     public DataAccessStub() {
         this.dbName = Main.dbName;
@@ -93,31 +94,31 @@ public class DataAccessStub implements DataAccess {
         scienceCourses = new ArrayList<ScienceCourse>();
         userDefinedCourses = new ArrayList<UserDefinedCourse>();
 
-        tempScienceCourse = new ScienceCourse(1, "Introductory Computer Science I", 3.0,
+        tempScienceCourse = new ScienceCourse(courseId++, "Introductory Computer Science I", 3.0,
                 departments.get(0), 1010, "Basic programming concepts.");
         courses.add(tempScienceCourse);
         scienceCourses.add(tempScienceCourse);
 
-        tempScienceCourse = new ScienceCourse(2, "Introductory Computer Science II", 3.0,
+        tempScienceCourse = new ScienceCourse(courseId++, "Introductory Computer Science II", 3.0,
                 departments.get(0), 1020, "More basic programming concepts.");
         courses.add(tempScienceCourse);
         scienceCourses.add(tempScienceCourse);
 
-        tempScienceCourse = new ScienceCourse(3, "Object Orientation", 3.0, departments.get(0),
+        tempScienceCourse = new ScienceCourse(courseId++, "Object Orientation", 3.0, departments.get(0),
                 2150, "Detailed look at proper object oriented programming.");
         courses.add(tempScienceCourse);
         scienceCourses.add(tempScienceCourse);
 
-        tempScienceCourse = new ScienceCourse(4, "Software Engineering I", 3.0, departments.get(0),
+        tempScienceCourse = new ScienceCourse(courseId++, "Software Engineering I", 3.0, departments.get(0),
                 3350, "Good software development practices.");
         courses.add(tempScienceCourse);
         scienceCourses.add(tempScienceCourse);
 
-        tempUserDefinedCourse = new UserDefinedCourse(5, "Cultural Anthropology", 3.0, "ANTH 1220");
+        tempUserDefinedCourse = new UserDefinedCourse(courseId++, "Cultural Anthropology", 3.0, "ANTH 1220");
         courses.add(tempUserDefinedCourse);
         userDefinedCourses.add(tempUserDefinedCourse);
 
-        tempUserDefinedCourse = new UserDefinedCourse(6, "Language and Culture", 3.0, "ANTH 2370");
+        tempUserDefinedCourse = new UserDefinedCourse(courseId++, "Language and Culture", 3.0, "ANTH 2370");
         courses.add(tempUserDefinedCourse);
         userDefinedCourses.add(tempUserDefinedCourse);
 
@@ -839,5 +840,47 @@ public class DataAccessStub implements DataAccess {
         Collections.sort(studentCPs);
 
         return studentCPs;
+    }
+
+    public List<Course> getAllUserDefinedCourses(){
+        ArrayList<Course> allUserDefines = new ArrayList<Course>();
+
+        for(Course c : courses){
+            if(c instanceof UserDefinedCourse){
+                allUserDefines.add(c);
+            }
+        }
+        return allUserDefines;
+    }
+
+    public void removeUserDefinedCourse(int courseId){
+        removeCoursePlansByCourseId(courseId);
+        removeCourseResultsByCourseId(courseId);
+        for(int i = 0; i < courses.size(); i++){
+            if(courses.get(i).getId() == courseId){
+                courses.remove(i);
+                break;
+            }
+        }
+    }
+
+    private void removeCoursePlansByCourseId(int courseId){
+        for(int i = 0; i < coursePlans.size(); i++){
+            if(coursePlans.get(i).getCourse().getId() == courseId){
+                coursePlans.remove(i);
+            }
+        }
+    }
+
+    private void removeCourseResultsByCourseId(int courseId){
+        for(int i = 0; i < courseResults.size(); i++){
+            if(courseResults.get(i).getCourse().getId() == courseId){
+                courseResults.remove(i);
+            }
+        }
+    }
+
+    public void createUserDefinedCourse(String name, double creditHours, String fullAbbreviation){
+        courses.add(new UserDefinedCourse(courseId++, name, creditHours, fullAbbreviation));
     }
 }

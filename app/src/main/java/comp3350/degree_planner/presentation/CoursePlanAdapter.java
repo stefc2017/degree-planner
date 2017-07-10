@@ -25,7 +25,7 @@ import comp3350.degree_planner.objects.CoursePlan;
 
 public class CoursePlanAdapter extends BaseAdapter {
     private List coursePlansAndHeaders;
-    private CoursePlanClickListener listener;
+    private CourseItemClickListener listener;
     private static final int COURSEPLAN = 0;
     private static final int SECTION_HEADER = 1;
     private static final int VIEW_TYPE_COUNT = 2;
@@ -34,7 +34,7 @@ public class CoursePlanAdapter extends BaseAdapter {
     private boolean deleteMode = false;
     private static int nextColor = 0; // 0 means blue, 1 means red color for displaying coursePlans headers
 
-    public CoursePlanAdapter(Context c, List list, CoursePlanClickListener listener){
+    public CoursePlanAdapter(Context c, List list, CourseItemClickListener listener){
         myContext = c;
         coursePlansAndHeaders = list;
         this.listener = listener;

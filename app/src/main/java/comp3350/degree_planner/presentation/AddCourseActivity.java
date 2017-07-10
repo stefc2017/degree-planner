@@ -156,6 +156,7 @@ public class AddCourseActivity extends AppCompatActivity {
     public void buttonViewCoursePlanOnClick(View v){
         Intent intent = new Intent(AddCourseActivity.this, CoursePlansActivity.class);
         AddCourseActivity.this.startActivity(intent);
+        finish();
     }
 
     public void buttonCancelOnClick(View v){

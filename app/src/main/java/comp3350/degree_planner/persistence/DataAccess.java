@@ -62,6 +62,12 @@ public interface DataAccess {
 
     List<Course> getDegreeCourses(int degreeId);
 
+    List<Course> getAllUserDefinedCourses();
+
+    void removeUserDefinedCourse(int courseId);
+
+    void createUserDefinedCourse(String name, double creditHours, String fullAbbreviation);
+
     void addToCoursePlan (int courseId, int studentId, int termTypeId, int year) throws Exception;
 
     boolean isValidStudentId (int studentId) throws Exception;

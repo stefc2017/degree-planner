@@ -6,7 +6,7 @@
     <string name="degrees">All Degrees</string>
     <string name="degreePageTitle">Undergraduate Degrees</string>
     <string name="removeCourse">Remove Course</string>
-    <string name="confirmRemoveCourse">Are you sure you want to remove this course from your coursePlan?</string>
+    <string name="confirmRemoveCourse">Are you sure you want to remove this course?</string>
     <string name="add">Add To Plan</string>
     <string name="cancel">Back</string>
     <string name="remove">Remove Course</string>

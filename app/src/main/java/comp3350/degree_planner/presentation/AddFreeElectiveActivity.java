@@ -161,11 +161,13 @@ public class AddFreeElectiveActivity extends AppCompatActivity {
     public void buttonViewCoursePlanOnClick(View v) {
         Intent intent = new Intent(AddFreeElectiveActivity.this, CoursePlansActivity.class);
         AddFreeElectiveActivity.this.startActivity(intent);
+        finish();
     }
 
     public void buttonCancelOnClick(View v) {
         Intent intent = new Intent(AddFreeElectiveActivity.this, ViewElectivesActivity.class);
         AddFreeElectiveActivity.this.startActivity(intent);
+        finish();
     }
 
 

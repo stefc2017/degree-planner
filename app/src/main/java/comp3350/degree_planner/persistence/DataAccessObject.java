@@ -1202,4 +1202,12 @@ public class DataAccessObject implements DataAccess {
 
         return result;
     }
+
+    public void createUserDefinedCourse(String name, double creditHours, String fullAbbreviation){
+
+    }
+
+    public void removeUserDefinedCourse(int courseId){}
+
+    public List<Course> getAllUserDefinedCourses(){return null;}
 }

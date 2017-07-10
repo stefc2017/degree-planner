@@ -20,7 +20,7 @@ public class Services {
     {
         if (dataAccessService == null)
         {
-            dataAccessService = new DataAccessObject(dbName);
+            dataAccessService = new DataAccessStub(dbName);
             dataAccessService.open(Main.getDBPathName());
         }
         return dataAccessService;

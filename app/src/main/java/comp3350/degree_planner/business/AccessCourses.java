@@ -18,21 +18,16 @@ public class AccessCourses {
     public List<Course> getDegreeCourses(int degreeId) { return dataAccess.getDegreeCourses(degreeId); }
 
 	public List<Course> getAllUserDefinedCourses() {
-		courses.add(new UserDefinedCourse(5, "Cultural Anthropology", 3.0, "ANTH 1220"));
-		courses.add(new UserDefinedCourse(6, "Language and Culture", 3.0, "ANTH 2370"));
-		return courses;
+//		courses.add(new UserDefinedCourse(5, "Cultural Anthropology", 3.0, "ANTH 1220"));
+//		courses.add(new UserDefinedCourse(6, "Language and Culture", 3.0, "ANTH 2370"));
+//		return courses;
+		return dataAccess.getAllUserDefinedCourses();
 	}
 
-	public void removeUserDefinedCourse(int courseId) {
-		for(Course c : courses){
-			if(c.getId() == courseId){
-				courses.remove(c);
-			}
-		}
-	}
+	public void removeUserDefinedCourse(int courseId) { dataAccess.removeUserDefinedCourse(courseId); }
 
 	public void addUserDefinedCourse(String name, double creditHours, String abbreviation){
-		courses.add(new UserDefinedCourse(++id, name, creditHours, abbreviation));
+		dataAccess.createUserDefinedCourse(name, creditHours, abbreviation);
 	}
 
 	public Course getCourseById(int courseId) { return dataAccess.getCourseById(courseId); }

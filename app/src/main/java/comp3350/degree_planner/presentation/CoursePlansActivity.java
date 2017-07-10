@@ -50,7 +50,7 @@ public class CoursePlansActivity extends AppCompatActivity {
             setContentView(R.layout.generic_error);
         }
 
-        coursePlanAdapter = new CoursePlanAdapter(this, coursePlansAndHeaders, new CoursePlanClickListener() {
+        coursePlanAdapter = new CoursePlanAdapter(this, coursePlansAndHeaders, new CourseItemClickListener() {
             @Override
             public void onRemoveButtonClick(int id) {
                 confirmDelete(id);
@@ -73,6 +73,9 @@ public class CoursePlansActivity extends AppCompatActivity {
                 coursePlanAdapter.toggleDeleteMode();
                 coursePlanAdapter.notifyDataSetChanged();
                 break;
+            case R.id.home_toolbar:
+                Intent intent = new Intent(CoursePlansActivity.this, MainActivity.class);
+                CoursePlansActivity.this.startActivity(intent);
         }
         return true;
     }
