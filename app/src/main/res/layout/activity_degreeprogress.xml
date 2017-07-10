@@ -20,9 +20,41 @@
 
     </android.support.v7.widget.Toolbar>
 
-    <com.github.mikephil.charting.charts.PieChart
-        android:id="@+id/credit_hours"
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/degree_progress_toolbar"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/gridLayout">
+
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/credit_hours"
+            android:layout_width="match_parent"
+            android:layout_height="237dp"
+            android:layout_alignBottom="@+id/listView2"
+            android:layout_below="@+id/degree_progress_toolbar" />
+
+    </GridLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/degree_progress_toolbar" />
+        android:orientation="horizontal"
+        android:layout_below="@+id/gridLayout">
+
+        <ListView
+            android:id="@+id/course_taken_list"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/gridLayout"
+            android:layout_width ="0dp"
+            android:layout_weight =".5" />
+
+        <ListView
+            android:id="@+id/eligible_req_course_list"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/gridLayout"
+            android:layout_width ="0dp"
+            android:layout_weight =".5" />
+    </LinearLayout>
+
 </RelativeLayout>
