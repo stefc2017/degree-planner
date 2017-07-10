@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -61,7 +62,7 @@ public class CoursePlansActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.menu_items, menu);
+        getMenuInflater().inflate(R.menu.courseplans_menu_items, menu);
         return true;
     }
 
@@ -76,6 +77,9 @@ public class CoursePlansActivity extends AppCompatActivity {
             case R.id.home_toolbar:
                 Intent intent = new Intent(CoursePlansActivity.this, MainActivity.class);
                 CoursePlansActivity.this.startActivity(intent);
+                break;
+            case R.id.move_toolbar:
+                Toast.makeText(this, "clicked move", Toast.LENGTH_SHORT).show();
         }
         return true;
     }

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/move_toolbar"
+        android:title=""
+        android:icon="@drawable/move_icon"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/garbagebin_toolbar"
+        android:icon="@drawable/garbagebin_toolbar"
+        android:title=""
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/home_toolbar"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title=""
+        app:showAsAction="always"/>
+</menu>

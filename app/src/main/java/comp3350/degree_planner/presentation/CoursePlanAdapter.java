@@ -78,7 +78,7 @@ public class CoursePlanAdapter extends BaseAdapter {
                     view = inflater.inflate(R.layout.listview_header, null);
                     // Alternate color between section headers
                     if(nextColor == 0){
-                        view.setBackgroundResource(R.color.colorLightBlue);
+                        view.setBackgroundResource(R.color.colorSkyBlue);
                         nextColor++;
                     }else if(nextColor == 1){
                         view.setBackgroundResource(R.color.colorAccent);
