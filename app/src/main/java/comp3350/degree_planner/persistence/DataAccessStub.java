@@ -97,26 +97,268 @@ public class DataAccessStub implements DataAccess {
         courses.add(tempScienceCourse);
         scienceCourses.add(tempScienceCourse);
 
-        tempScienceCourse = new ScienceCourse(2, "Introductory Computer Science II", 3.0,
+        tempScienceCourse = new ScienceCourse(2, "Computer Programming for Scientists and Engineers ", 3.0,
+                departments.get(0), 1012, "Basic programming concepts (Python).");
+        courses.add(tempScienceCourse);
+        scienceCourses.add(tempScienceCourse);
+
+        tempScienceCourse = new ScienceCourse(3, "Introductory Computer Science II", 3.0,
                 departments.get(0), 1020, "More basic programming concepts.");
         courses.add(tempScienceCourse);
         scienceCourses.add(tempScienceCourse);
 
-        tempScienceCourse = new ScienceCourse(3, "Object Orientation", 3.0, departments.get(0),
+        tempScienceCourse = new ScienceCourse(4, "Computing: Ideas and Innovation", 3.0,
+                departments.get(0), 1500, "An introduction to the topics of Computer Science and problem solving");
+        courses.add(tempScienceCourse);
+        scienceCourses.add(tempScienceCourse);
+
+        tempScienceCourse = new ScienceCourse(5, "Navigating Your Digital World ", 3.0,
+                departments.get(0), 1600, "Topics related to digital society such as security, encryption and data storage");
+        courses.add(tempScienceCourse);
+        scienceCourses.add(tempScienceCourse);
+
+        //2nd Year
+        tempScienceCourse = new ScienceCourse(6, "Analysis of Algorithms", 3.0, departments.get(0),
+                2080, "Methods of analyzing the time and space requirements of algorithms.");
+        courses.add(tempScienceCourse);
+        scienceCourses.add(tempScienceCourse);
+
+        tempScienceCourse = new ScienceCourse(7, "Discrete Mathematics for Computer Science ", 3.0, departments.get(0),
+                2130, "An introduction to the set theory, logic, integers, combinatorics and functions for today's computer scientists.");
+        courses.add(tempScienceCourse);
+        scienceCourses.add(tempScienceCourse);
+
+        tempScienceCourse = new ScienceCourse(8, "Data Structures and Algorithms ", 3.0, departments.get(0),
+                2140, "Introduction to the representation and manipulation of data structures.");
+        courses.add(tempScienceCourse);
+        scienceCourses.add(tempScienceCourse);
+
+        tempScienceCourse = new ScienceCourse(9, "Object Orientation", 3.0, departments.get(0),
                 2150, "Detailed look at proper object oriented programming.");
         courses.add(tempScienceCourse);
         scienceCourses.add(tempScienceCourse);
 
-        tempScienceCourse = new ScienceCourse(4, "Software Engineering I", 3.0, departments.get(0),
+        tempScienceCourse = new ScienceCourse(10, "Programming Practices", 3.0, departments.get(0),
+                2160, "Introduction to issues involved in real-world computing.");
+        courses.add(tempScienceCourse);
+        scienceCourses.add(tempScienceCourse);
+
+        tempScienceCourse = new ScienceCourse(11, "Introduction to Scientific Computing ", 3.0, departments.get(0),
+                2190, "An applied computational course.");
+        courses.add(tempScienceCourse);
+        scienceCourses.add(tempScienceCourse);
+
+        tempScienceCourse = new ScienceCourse(12, "Introduction to Computer Systems", 3.0, departments.get(0),
+                2280, "Data representation and manipulation, machine-level representation of programs.");
+        courses.add(tempScienceCourse);
+        scienceCourses.add(tempScienceCourse);
+
+        tempScienceCourse = new ScienceCourse(13, "Workterm 1", 0.0, departments.get(0),
+                2980, "Work assignment in business, industry, or government.");
+        courses.add(tempScienceCourse);
+        scienceCourses.add(tempScienceCourse);
+
+        //3rd Year
+        tempScienceCourse = new ScienceCourse(14, "Distributed Computing ", 3.0, departments.get(0),
+                3010, "An introduction to the development of client server and peer-to-peer systems.");
+        courses.add(tempScienceCourse);
+        scienceCourses.add(tempScienceCourse);
+
+        tempScienceCourse = new ScienceCourse(15, "Human-Computer Interaction 1", 3.0, departments.get(0),
+                3020, "Human-computer interaction: human factors and usability, user-centered design, prototyping, usability evaluation.");
+        courses.add(tempScienceCourse);
+        scienceCourses.add(tempScienceCourse);
+
+        tempScienceCourse = new ScienceCourse(16, "Automata Theory and Formal Languages", 3.0, departments.get(0),
+                3030, "An introduction to automata theory, grammars, formal languages and their applications. ");
+        courses.add(tempScienceCourse);
+        scienceCourses.add(tempScienceCourse);
+
+        tempScienceCourse = new ScienceCourse(17, "Technical Communication in Computer Science ", 3.0, departments.get(0),
+                3040, "This course is designed to help students become more effective and confident writers in the context of the computing profession");
+        courses.add(tempScienceCourse);
+        scienceCourses.add(tempScienceCourse);
+
+        tempScienceCourse = new ScienceCourse(18, "Digital Logic 2", 3.0, departments.get(0),
+                3090, "Design and implementation of digital circuits.");
+        courses.add(tempScienceCourse);
+        scienceCourses.add(tempScienceCourse);
+
+        tempScienceCourse = new ScienceCourse(19, "Analysis of Algorithms and Data Structures", 3.0, departments.get(0),
+                3170, "Fundamental algorithms for sorting, searching, storage management, graphs, databases and computational geometry");
+        courses.add(tempScienceCourse);
+        scienceCourses.add(tempScienceCourse);
+
+        tempScienceCourse = new ScienceCourse(20, "Introduction to Artificial Intelligence", 3.0, departments.get(0),
+                3190, "Principles of artificial intelligence: problem solving, knowledge representation and manipulation");
+        courses.add(tempScienceCourse);
+        scienceCourses.add(tempScienceCourse);
+
+        tempScienceCourse = new ScienceCourse(21, "Introduction to Compiler Construction", 3.0, departments.get(0),
+                3290, "Introduction to the standard compiler phases");
+        courses.add(tempScienceCourse);
+        scienceCourses.add(tempScienceCourse);
+
+        tempScienceCourse = new ScienceCourse(22, "Software Engineering I", 3.0, departments.get(0),
                 3350, "Good software development practices.");
         courses.add(tempScienceCourse);
         scienceCourses.add(tempScienceCourse);
 
-        tempUserDefinedCourse = new UserDefinedCourse(5, "Cultural Anthropology", 3.0, "ANTH 1220");
+        tempScienceCourse = new ScienceCourse(23, "Computer Organization", 3.0, departments.get(0),
+                3370, "Principles of computer systems architecture, organization and design.");
+        courses.add(tempScienceCourse);
+        scienceCourses.add(tempScienceCourse);
+
+        tempScienceCourse = new ScienceCourse(24, "Databases Concepts and Usage ", 3.0, departments.get(0),
+                3380, "An introduction to database systems.");
+        courses.add(tempScienceCourse);
+        scienceCourses.add(tempScienceCourse);
+
+        tempScienceCourse = new ScienceCourse(25, "Operating Systems", 3.0, departments.get(0),
+                3430, "Operating systems, their design, implementation, and usage.");
+        courses.add(tempScienceCourse);
+        scienceCourses.add(tempScienceCourse);
+
+        tempScienceCourse = new ScienceCourse(26, "Programming Language Concepts", 3.0, departments.get(0),
+                3440, "An introduction to major concepts involved in the design of modern programming languages.");
+        courses.add(tempScienceCourse);
+        scienceCourses.add(tempScienceCourse);
+
+        tempScienceCourse = new ScienceCourse(27, "Computer Graphics 1", 3.0, departments.get(0),
+                3490, "An introductory course in computer graphics");
+        courses.add(tempScienceCourse);
+        scienceCourses.add(tempScienceCourse);
+
+        tempScienceCourse = new ScienceCourse(28, "Introduction to Bioinformatics Algorithms ", 3.0, departments.get(0),
+                3820, "An introduction to problems in molecular biology and computational solutions");
+        courses.add(tempScienceCourse);
+        scienceCourses.add(tempScienceCourse);
+
+        tempScienceCourse = new ScienceCourse(29, "Workterm 2", 0.0, departments.get(0),
+                3980, "Work assignment in business, industry, or government");
+        courses.add(tempScienceCourse);
+        scienceCourses.add(tempScienceCourse);
+
+        //4th Year
+        tempScienceCourse = new ScienceCourse(30, "Human-Computer Interaction 2", 3.0, departments.get(0),
+                4020, "Advanced issues in the field of human-computer interaction");
+        courses.add(tempScienceCourse);
+        scienceCourses.add(tempScienceCourse);
+
+        tempScienceCourse = new ScienceCourse(31, "Project Management ", 3.0, departments.get(0),
+                4050, "Introduction to the issues involved in managing large, complex software projects. ");
+        courses.add(tempScienceCourse);
+        scienceCourses.add(tempScienceCourse);
+
+        tempScienceCourse = new ScienceCourse(32, "Topics in Computer Science", 3.0, departments.get(0),
+                4060, "This course will examine topics of interest at the fourth-year level. ");
+        courses.add(tempScienceCourse);
+        scienceCourses.add(tempScienceCourse);
+
+        tempScienceCourse = new ScienceCourse(33, "Introduction to Cryptography and Cryptosystems", 3.0, departments.get(0),
+                4140, "Description and analysis of cryptographic methods used in the authentication and protection of data.");
+        courses.add(tempScienceCourse);
+        scienceCourses.add(tempScienceCourse);
+
+        tempScienceCourse = new ScienceCourse(34, "Intelligent Mobile Robotics", 3.0, departments.get(0),
+                4180, "Topics include artificial intelligence, computer vision, human-robot interaction, and multi-robot systems.");
+        courses.add(tempScienceCourse);
+        scienceCourses.add(tempScienceCourse);
+
+        tempScienceCourse = new ScienceCourse(35, "Artificial Intelligence ", 3.0, departments.get(0),
+                4190, "Reasoning with temporal knowledge; causal reasoning; plausible reasoning.");
+        courses.add(tempScienceCourse);
+        scienceCourses.add(tempScienceCourse);
+
+        tempScienceCourse = new ScienceCourse(36, "Expert Systems", 3.0, departments.get(0),
+                4200, "Organization of expert systems; knowledge representation in expert system.");
+        courses.add(tempScienceCourse);
+        scienceCourses.add(tempScienceCourse);
+
+        tempScienceCourse = new ScienceCourse(37, "Computer Networks ", 3.0, departments.get(0),
+                4300, "This course examines the principles of computer networks.");
+        courses.add(tempScienceCourse);
+        scienceCourses.add(tempScienceCourse);
+
+        tempScienceCourse = new ScienceCourse(38, "Graph Theory Algorithms 1", 3.0, departments.get(0),
+                4340, "Spanning trees, connectivity, planar graphs, directed graphs, networks, colouring problems and tours.");
+        courses.add(tempScienceCourse);
+        scienceCourses.add(tempScienceCourse);
+
+        tempScienceCourse = new ScienceCourse(39, "Software Engineering 2 ", 3.0, departments.get(0),
+                4350, "Advanced treatment of software development methods.");
+        courses.add(tempScienceCourse);
+        scienceCourses.add(tempScienceCourse);
+
+        tempScienceCourse = new ScienceCourse(40, "Machine Learning  ", 3.0, departments.get(0),
+                4360, "Learning strategies; evaluation of learning; learning in symbolic systems.");
+        courses.add(tempScienceCourse);
+        scienceCourses.add(tempScienceCourse);
+
+        tempScienceCourse = new ScienceCourse(41, "Database Implementation", 3.0, departments.get(0),
+                4380, "Implementation of modern database systems.");
+        courses.add(tempScienceCourse);
+        scienceCourses.add(tempScienceCourse);
+
+        tempScienceCourse = new ScienceCourse(42, "Advanced Design and Analysis of Algorithms ", 3.0, departments.get(0),
+                4420, "Algorithm design with emphasis on formal techniques in analysis and proof of correctness.");
+        courses.add(tempScienceCourse);
+        scienceCourses.add(tempScienceCourse);
+
+        tempScienceCourse = new ScienceCourse(43, "Operating Systems 2", 3.0, departments.get(0),
+                4430, "Design and implementation of modern operating system.");
+        courses.add(tempScienceCourse);
+        scienceCourses.add(tempScienceCourse);
+
+        tempScienceCourse = new ScienceCourse(44, "Computer Graphics 2", 3.0, departments.get(0),
+                4490, "Methods in computer graphics.");
+        courses.add(tempScienceCourse);
+        scienceCourses.add(tempScienceCourse);
+
+        tempScienceCourse = new ScienceCourse(45, "Introduction to Parallel Computation ", 3.0, departments.get(0),
+                4510, "An overview of the architectures of current parallel processors and the techniques used to program them.");
+        courses.add(tempScienceCourse);
+        scienceCourses.add(tempScienceCourse);
+
+        tempScienceCourse = new ScienceCourse(46, "Undergraduate Honours Project", 3.0, departments.get(0),
+                4520, "A research based project on a specific area of computer science");
+        courses.add(tempScienceCourse);
+        scienceCourses.add(tempScienceCourse);
+
+        tempScienceCourse = new ScienceCourse(47, "Real-Time Systems", 3.0, departments.get(0),
+                4550, "An introduction to the theory and practice of real-time systems");
+        courses.add(tempScienceCourse);
+        scienceCourses.add(tempScienceCourse);
+
+        tempScienceCourse = new ScienceCourse(48, "Industrial Project", 3.0, departments.get(0),
+                4560, "Students will work in teams on an industrial project");
+        courses.add(tempScienceCourse);
+        scienceCourses.add(tempScienceCourse);
+
+        tempScienceCourse = new ScienceCourse(49, "Computer Security", 3.0, departments.get(0),
+                4580, "Computer security and information management");
+        courses.add(tempScienceCourse);
+        scienceCourses.add(tempScienceCourse);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        tempUserDefinedCourse = new UserDefinedCourse(8, "Cultural Anthropology", 3.0, "ANTH 1220");
         courses.add(tempUserDefinedCourse);
         userDefinedCourses.add(tempUserDefinedCourse);
 
-        tempUserDefinedCourse = new UserDefinedCourse(6, "Language and Culture", 3.0, "ANTH 2370");
+        tempUserDefinedCourse = new UserDefinedCourse(9, "Language and Culture", 3.0, "ANTH 2370");
         courses.add(tempUserDefinedCourse);
         userDefinedCourses.add(tempUserDefinedCourse);
 
@@ -132,13 +374,31 @@ public class DataAccessStub implements DataAccess {
 
         degreeCourses = new ArrayList<DegreeCourse>();
         degreeCourses.add(new DegreeCourse(degrees.get(0), scienceCourses.get(0), new DegreeCourseType(1, "Required")));
-        degreeCourses.add(new DegreeCourse(degrees.get(0), scienceCourses.get(1), new DegreeCourseType(1, "Required")));
         degreeCourses.add(new DegreeCourse(degrees.get(0), scienceCourses.get(2), new DegreeCourseType(1, "Required")));
-        degreeCourses.add(new DegreeCourse(degrees.get(0), scienceCourses.get(3), new DegreeCourseType(1, "Required")));
+        degreeCourses.add(new DegreeCourse(degrees.get(0), scienceCourses.get(5), new DegreeCourseType(1, "Required")));
+        degreeCourses.add(new DegreeCourse(degrees.get(0), scienceCourses.get(6), new DegreeCourseType(1, "Required")));
+        degreeCourses.add(new DegreeCourse(degrees.get(0), scienceCourses.get(7), new DegreeCourseType(1, "Required")));
+        degreeCourses.add(new DegreeCourse(degrees.get(0), scienceCourses.get(8), new DegreeCourseType(1, "Required")));
+        degreeCourses.add(new DegreeCourse(degrees.get(0), scienceCourses.get(9), new DegreeCourseType(1, "Required")));
+        degreeCourses.add(new DegreeCourse(degrees.get(0), scienceCourses.get(11), new DegreeCourseType(1, "Required")));
+        degreeCourses.add(new DegreeCourse(degrees.get(0), scienceCourses.get(21), new DegreeCourseType(1, "Required")));
+        degreeCourses.add(new DegreeCourse(degrees.get(0), scienceCourses.get(22), new DegreeCourseType(1, "Required")));
+        degreeCourses.add(new DegreeCourse(degrees.get(0), scienceCourses.get(24), new DegreeCourseType(1, "Required")));
+
+
         degreeCourses.add(new DegreeCourse(degrees.get(1), scienceCourses.get(0), new DegreeCourseType(1, "Required")));
-        degreeCourses.add(new DegreeCourse(degrees.get(1), scienceCourses.get(1), new DegreeCourseType(1, "Required")));
         degreeCourses.add(new DegreeCourse(degrees.get(1), scienceCourses.get(2), new DegreeCourseType(1, "Required")));
-        degreeCourses.add(new DegreeCourse(degrees.get(1), scienceCourses.get(3), new DegreeCourseType(1, "Required")));
+        degreeCourses.add(new DegreeCourse(degrees.get(1), scienceCourses.get(5), new DegreeCourseType(1, "Required")));
+        degreeCourses.add(new DegreeCourse(degrees.get(1), scienceCourses.get(6), new DegreeCourseType(1, "Required")));
+        degreeCourses.add(new DegreeCourse(degrees.get(1), scienceCourses.get(7), new DegreeCourseType(1, "Required")));
+        degreeCourses.add(new DegreeCourse(degrees.get(1), scienceCourses.get(8), new DegreeCourseType(1, "Required")));
+        degreeCourses.add(new DegreeCourse(degrees.get(1), scienceCourses.get(9), new DegreeCourseType(1, "Required")));
+        degreeCourses.add(new DegreeCourse(degrees.get(1), scienceCourses.get(11), new DegreeCourseType(1, "Required")));
+        degreeCourses.add(new DegreeCourse(degrees.get(1), scienceCourses.get(21), new DegreeCourseType(1, "Required")));
+        degreeCourses.add(new DegreeCourse(degrees.get(1), scienceCourses.get(22), new DegreeCourseType(1, "Required")));
+        degreeCourses.add(new DegreeCourse(degrees.get(1), scienceCourses.get(24), new DegreeCourseType(1, "Required")));
+        degreeCourses.add(new DegreeCourse(degrees.get(1), scienceCourses.get(15), new DegreeCourseType(1, "Required")));
+        degreeCourses.add(new DegreeCourse(degrees.get(1), scienceCourses.get(18), new DegreeCourseType(1, "Required")));
 
         // Create Students
 
@@ -164,6 +424,55 @@ public class DataAccessStub implements DataAccess {
         courseOfferings.add(new CourseOffering(scienceCourses.get(2), new TermType(2, "Winter")));
         courseOfferings.add(new CourseOffering(scienceCourses.get(3), new TermType(2, "Winter")));
         courseOfferings.add(new CourseOffering(scienceCourses.get(3), new TermType(3, "Summer")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(4), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(5), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(6), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(7), new TermType(2, "Winter")));
+        //
+        courseOfferings.add(new CourseOffering(scienceCourses.get(8), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(9), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(10), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(11), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(12), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(13), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(14), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(15), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(16), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(17), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(18), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(19), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(20), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(21), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(22), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(23), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(24), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(25), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(26), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(27), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(28), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(29), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(30), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(31), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(32), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(33), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(34), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(35), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(36), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(37), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(38), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(39), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(40), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(41), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(42), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(43), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(44), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(45), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(46), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(47), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(48), new TermType(2, "Winter")));
+
+
+
 
         // Create Course Plans
 
@@ -178,9 +487,47 @@ public class DataAccessStub implements DataAccess {
         // Create Course Prerequisites
 
         coursePrerequisites = new ArrayList<CoursePrerequisite>();
-        coursePrerequisites.add(new CoursePrerequisite(scienceCourses.get(1), scienceCourses.get(0)));
-        coursePrerequisites.add(new CoursePrerequisite(scienceCourses.get(2), scienceCourses.get(1)));
-        coursePrerequisites.add(new CoursePrerequisite(scienceCourses.get(3), scienceCourses.get(2)));
+        coursePrerequisites.add(new CoursePrerequisite(scienceCourses.get(2), scienceCourses.get(0)));
+        coursePrerequisites.add(new CoursePrerequisite(scienceCourses.get(5), scienceCourses.get(6)));
+        coursePrerequisites.add(new CoursePrerequisite(scienceCourses.get(6), scienceCourses.get(2)));
+        coursePrerequisites.add(new CoursePrerequisite(scienceCourses.get(7), scienceCourses.get(2)));
+        coursePrerequisites.add(new CoursePrerequisite(scienceCourses.get(8), scienceCourses.get(9)));
+        coursePrerequisites.add(new CoursePrerequisite(scienceCourses.get(9), scienceCourses.get(2)));
+        coursePrerequisites.add(new CoursePrerequisite(scienceCourses.get(10), scienceCourses.get(2)));
+        coursePrerequisites.add(new CoursePrerequisite(scienceCourses.get(11), scienceCourses.get(7)));
+        coursePrerequisites.add(new CoursePrerequisite(scienceCourses.get(13), scienceCourses.get(8)));
+        coursePrerequisites.add(new CoursePrerequisite(scienceCourses.get(14), scienceCourses.get(7)));
+        coursePrerequisites.add(new CoursePrerequisite(scienceCourses.get(15), scienceCourses.get(5)));
+        coursePrerequisites.add(new CoursePrerequisite(scienceCourses.get(17), scienceCourses.get(11)));
+        coursePrerequisites.add(new CoursePrerequisite(scienceCourses.get(18), scienceCourses.get(7)));
+        coursePrerequisites.add(new CoursePrerequisite(scienceCourses.get(19), scienceCourses.get(7)));
+        coursePrerequisites.add(new CoursePrerequisite(scienceCourses.get(20), scienceCourses.get(7)));
+        coursePrerequisites.add(new CoursePrerequisite(scienceCourses.get(21), scienceCourses.get(8)));
+        coursePrerequisites.add(new CoursePrerequisite(scienceCourses.get(22), scienceCourses.get(11)));
+        coursePrerequisites.add(new CoursePrerequisite(scienceCourses.get(23), scienceCourses.get(7)));
+        coursePrerequisites.add(new CoursePrerequisite(scienceCourses.get(24), scienceCourses.get(7)));
+        coursePrerequisites.add(new CoursePrerequisite(scienceCourses.get(25), scienceCourses.get(7)));
+        coursePrerequisites.add(new CoursePrerequisite(scienceCourses.get(26), scienceCourses.get(7)));
+        coursePrerequisites.add(new CoursePrerequisite(scienceCourses.get(27), scienceCourses.get(5)));
+        coursePrerequisites.add(new CoursePrerequisite(scienceCourses.get(28), scienceCourses.get(12)));
+        coursePrerequisites.add(new CoursePrerequisite(scienceCourses.get(29), scienceCourses.get(15)));
+        coursePrerequisites.add(new CoursePrerequisite(scienceCourses.get(30), scienceCourses.get(21)));
+        coursePrerequisites.add(new CoursePrerequisite(scienceCourses.get(32), scienceCourses.get(6)));
+        coursePrerequisites.add(new CoursePrerequisite(scienceCourses.get(33), scienceCourses.get(9)));
+        coursePrerequisites.add(new CoursePrerequisite(scienceCourses.get(34), scienceCourses.get(19)));
+        coursePrerequisites.add(new CoursePrerequisite(scienceCourses.get(35), scienceCourses.get(19)));
+        coursePrerequisites.add(new CoursePrerequisite(scienceCourses.get(36), scienceCourses.get(11)));
+        coursePrerequisites.add(new CoursePrerequisite(scienceCourses.get(37), scienceCourses.get(18)));
+        coursePrerequisites.add(new CoursePrerequisite(scienceCourses.get(38), scienceCourses.get(21)));
+        coursePrerequisites.add(new CoursePrerequisite(scienceCourses.get(39), scienceCourses.get(19)));
+        coursePrerequisites.add(new CoursePrerequisite(scienceCourses.get(40), scienceCourses.get(23)));
+        coursePrerequisites.add(new CoursePrerequisite(scienceCourses.get(41), scienceCourses.get(18)));
+        coursePrerequisites.add(new CoursePrerequisite(scienceCourses.get(42), scienceCourses.get(9)));
+        coursePrerequisites.add(new CoursePrerequisite(scienceCourses.get(43), scienceCourses.get(26)));
+        coursePrerequisites.add(new CoursePrerequisite(scienceCourses.get(44), scienceCourses.get(22)));
+        coursePrerequisites.add(new CoursePrerequisite(scienceCourses.get(46), scienceCourses.get(24)));
+        coursePrerequisites.add(new CoursePrerequisite(scienceCourses.get(47), scienceCourses.get(21)));
+        coursePrerequisites.add(new CoursePrerequisite(scienceCourses.get(48), scienceCourses.get(24)));
 
         //Create Rating data
         ratingTypes = new ArrayList<RatingType>();
