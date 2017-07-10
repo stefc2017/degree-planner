@@ -13,12 +13,12 @@ package comp3350.degree_planner.objects;
 public class ScienceCourse extends Course {
     private int courseNumber;       // e.g. 3350, uniquely identifies a course within a department
     private String description;
-    private int departmentId;
+    private Department department;
 
-    public ScienceCourse(int id, String name, double creditHours, int departmentId,
+    public ScienceCourse(int id, String name, double creditHours, Department department,
                          int courseNumber, String description) {
         super(id, name, creditHours);
-        this.departmentId = departmentId;
+        this.department = department;
         this.courseNumber = courseNumber;
         this.description = description;
     }
@@ -29,5 +29,5 @@ public class ScienceCourse extends Course {
         return description;
     }
 
-    public int getDepartmentId() { return departmentId; }
+    public Department getDepartment() { return department; }
 }

@@ -7,6 +7,7 @@ package comp3350.degree_planner.business;
 
 import java.util.List;
 
+import comp3350.degree_planner.objects.Course;
 import comp3350.degree_planner.objects.CourseResult;
 import comp3350.degree_planner.persistence.DataAccess;
 
@@ -22,5 +23,9 @@ public class CompletedCourses {
      */
     public List<CourseResult> getCompletedCourses(int studentId) throws Exception {
         return dataAccess.getCourseResultsByStudentId(studentId);
+    }
+
+    public List<Course> getCoursesTaken( int studentId ){
+        return dataAccess.getCoursesTaken( studentId );
     }
 }

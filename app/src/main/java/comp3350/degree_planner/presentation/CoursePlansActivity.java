@@ -9,14 +9,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.List;
 
 import comp3350.degree_planner.R;
 import comp3350.degree_planner.application.Services;
 import comp3350.degree_planner.business.AccessCoursePlan;
+import comp3350.degree_planner.objects.CoursePlan;
 
 /**
  * Created by Penny He on 6/20/2017.
@@ -32,8 +33,12 @@ public class CoursePlansActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_courseplans);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.courseplans_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.course_plan_toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        TextView pageTitle = (TextView) findViewById(R.id.toolbar_title);
+        pageTitle.setText(R.string.coursePlan);
 
         ListView coursePlanList = (ListView)findViewById(R.id.coursePlans);
         accessCoursePlan = new AccessCoursePlan(Services.getDataAccess());
@@ -45,7 +50,12 @@ public class CoursePlansActivity extends AppCompatActivity {
             setContentView(R.layout.generic_error);
         }
 
-        coursePlanAdapter = new CoursePlanAdapter(this, coursePlansAndHeaders);
+        coursePlanAdapter = new CoursePlanAdapter(this, coursePlansAndHeaders, new CoursePlanClickListener() {
+            @Override
+            public void onRemoveButtonClick(int id) {
+                confirmDelete(id);
+            }
+        });
         coursePlanList.setAdapter(coursePlanAdapter);
     }
 
@@ -53,60 +63,71 @@ public class CoursePlansActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.menu_items, menu);
         return true;
-    }//end onCreateOptionsMenu
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case R.id.garbagebin_toolbar:
-                LinearLayout deleteButtons;
-                int numberOfCourses = coursePlanAdapter.getNumberOfCoursePlans();
-                for(int i = 0; i < numberOfCourses; i++){
-                    deleteButtons = (LinearLayout) findViewById(R.id.deleteButton_courses);
-                    deleteButtons.setVisibility(View.VISIBLE);
-                    deleteButtons.setId(-1);
-                }
+                // Delete mode on, remind adapter to refresh and show delete buttons
+                coursePlanAdapter.toggleDeleteMode();
+                coursePlanAdapter.notifyDataSetChanged();
+                break;
         }
         return true;
-    }//end onCreateOptionsMenu
+    }
 
-    public void confirmDelete(View view) {
+    public void confirmDelete(int id) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        final int coursePlanId = view.getId();
-        //Add the buttons
+        final int coursePlanId = id;
+        String name = "";
+
+        try{
+            CoursePlan cp = accessCoursePlan.getCoursePlan(id);
+            name = cp.getCourse().getName();
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+        // Add the buttons
         builder.setPositiveButton(R.string.remove, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                //proceed with deletion/removing course
+                // Proceed with deletion/removing course
                 try {
                     accessCoursePlan.removeFromCoursePlan(coursePlanId);
-                    refreshPage();
                 }catch(Exception e){
                     e.printStackTrace();
                 }
 
+                try {
+                    coursePlanAdapter.refreshList(accessCoursePlan.getCoursePlansAndHeaders(1));
+                }
+                catch (Exception e) {
+                    setContentView(R.layout.generic_error);
+                }
             }//end onClick
-        });//end confirmButton
+        });
 
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                //User clicked cancel
+                // User clicked cancel, dialog dismissed
             }//end onClick
-        });//end confirmButton
+        });
 
         builder.setMessage(R.string.confirmRemoveCourse)
-                .setTitle(R.string.removeCourse)
+                .setTitle(name)
                 .setIcon(R.drawable.question);
 
         AlertDialog dialog = builder.create();
         dialog.show();
     }
 
-    public void refreshPage(){
-        Intent intent = new Intent(CoursePlansActivity.this, CoursePlansActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+    public void buttonCompSciCoursesOnClick(View v){
+        Intent intent = new Intent(CoursePlansActivity.this, DegreesActivity.class);
+        CoursePlansActivity.this.startActivity(intent);
+    }
 
-        startActivity(intent);
-        overridePendingTransition(0,0);
-        finish();
+    public void buttonFreeElectiveOnClick(View v){
+        Intent intent = new Intent(CoursePlansActivity.this, ViewElectivesActivity.class);
+        CoursePlansActivity.this.startActivity(intent);
     }
 }

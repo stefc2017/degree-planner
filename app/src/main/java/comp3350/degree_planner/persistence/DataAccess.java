@@ -1,5 +1,6 @@
 package comp3350.degree_planner.persistence;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import comp3350.degree_planner.objects.Course;
@@ -53,7 +54,7 @@ public interface DataAccess {
 
     List<CourseResult> getCourseResultsByStudentId(int studentId) throws Exception;
 
-    int getFailingGradeId();
+    int getFailingGradeId() throws SQLException;
 
     List<CourseOffering> getCourseOfferingsByTerm(TermType type);
 

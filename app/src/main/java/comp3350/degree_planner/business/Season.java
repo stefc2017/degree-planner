@@ -5,5 +5,11 @@ package comp3350.degree_planner.business;
  */
 
 public enum Season {
-    WINTER, SUMMER, FALL
+    WINTER(1), SUMMER(2), FALL(3);
+
+    private int id;
+
+    Season(int id){ this.id = id; }
+
+    public int getValue(){ return this.id; }
 }

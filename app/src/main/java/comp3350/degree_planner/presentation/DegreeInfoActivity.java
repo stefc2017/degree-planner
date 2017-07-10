@@ -1,9 +1,11 @@
 package comp3350.degree_planner.presentation;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -33,11 +35,15 @@ public class DegreeInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_degreeinfo);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.degreeinfo_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.degree_info_toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        TextView pageTitle = (TextView) findViewById(R.id.toolbar_title);
+        pageTitle.setText(R.string.degreeInfo);
 
         Bundle b = getIntent().getExtras();
-        int degreeId = b.getInt("degreeId");
+        final int degreeId = b.getInt("degreeId");
 
         accessCourses = new AccessCourses(Services.getDataAccess());
         accessDegrees = new AccessDegrees(Services.getDataAccess());
@@ -70,6 +76,21 @@ public class DegreeInfoActivity extends AppCompatActivity {
             };
             ListView degreeRequiredCourses = (ListView)findViewById(R.id.degreeRequiredCourses);
             degreeRequiredCourses.setAdapter(courseListAdapter);
+
+            degreeRequiredCourses.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    // Get the selected degree course and pass its id to add course page
+                    Course c = (Course)parent.getItemAtPosition(position);
+                    int courseId = c.getId();
+                    Intent intent = new Intent(DegreeInfoActivity.this, AddCourseActivity.class);
+                    Bundle b = new Bundle();
+                    b.putInt("courseId", courseId);
+                    b.putInt("degreeId", degreeId);
+                    intent.putExtras(b);
+                    DegreeInfoActivity.this.startActivity(intent);
+                }
+            });
         }
     }//end onCreate
 }

@@ -1,11 +1,10 @@
 package comp3350.degree_planner.tests.persistence;
 
-import android.provider.ContactsContract;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,28 +32,36 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by pennyhe on 2017-06-28.
  * Modified by Matthew Provencher on 2017-06-28
+ * Modified by Tiffany Jiang on 2017-07-07
  */
 
 public class DataAccessTest {
     private static String dbName = Main.dbName;
     private DataAccess dataAccess;
 
+    public DataAccessTest() {
+        dataAccess = new DataAccessStub(dbName);
+    }
+
+    public void setDataAccess (final DataAccess dataAccess) {
+        this.dataAccess = dataAccess;
+    }
+
     @Before
     public void setUp(){
         Services.closeDataAccess();
 
-        System.out.println("\nStart testing Persistence interface with DataAccessStub");
-        Services.createDataAccess(new DataAccessStub(dbName));
-        dataAccess = Services.getDataAccess();
+        System.out.println("\nStart testing Persistence interface");
+        Services.createDataAccess(dataAccess);
     }
 
     @Test
-    public void testgetCourse() {
+    public void testGetCourse() {
         List<Course> courses = dataAccess.getAllCourses();
         List<Course> noCourses = new ArrayList<Course>();
         CourseResult courseResult = new CourseResult(1, new ScienceCourse(1, "Introductory Computer Science I",
-                3.0, 1, 1010, "Basic programming concepts."), new Student(1, 1234567, "Jim Bob",
-                "jimbob@myumanitoba.ca", "helloworld1", 1), new GradeType(1, "A+", 4.5));
+                3.0, null, 1010, "Basic programming concepts."), new Student(1, 1234567, "Jim Bob",
+                "jimbob@myumanitoba.ca", "helloworld1", null), new GradeType(1, "A+", 4.5));
         Course result;
 
         System.out.println("Beginning getCourse tests");
@@ -82,7 +89,7 @@ public class DataAccessTest {
 
     @Test
     public void testGetAllDegrees() {
-        final int NUM_DEGREES = 1;
+        final int NUM_DEGREES = 2;
 
         List<Degree> degrees = dataAccess.getAllDegrees();
         assertEquals(NUM_DEGREES, degrees.size());
@@ -91,7 +98,7 @@ public class DataAccessTest {
     @Test
     public void testGetAllPrerequisite() {
         Course course = new ScienceCourse(2, "Introductory Computer Science II", 3.0,
-                1, 1020, "More basic programming concepts.");
+                null, 1020, "More basic programming concepts.");
 
         // course has prerequisites
         List<Course> courses = dataAccess.getAllPrerequisites( course );
@@ -100,7 +107,7 @@ public class DataAccessTest {
         assertEquals( "Introductory Computer Science I", course.getName() );
 
         //course has no prerequisite
-        course = new ScienceCourse(1, "Introductory Computer Science I", 3.0, 1,
+        course = new ScienceCourse(1, "Introductory Computer Science I", 3.0, null,
                 1010, "Basic programming concepts.");
         courses = dataAccess.getAllPrerequisites( course );
         assertEquals( 0, courses.size() );
@@ -190,7 +197,7 @@ public class DataAccessTest {
     @Test
     public void testGetCourseByName() {
         final String COURSE_NAME = "Introductory Computer Science II";
-        final String INVALID_COURSE = "I DON'T EXIST";
+        final String INVALID_COURSE = "I DO NOT EXIST";
         Course course;
 
         // valid course name
@@ -205,7 +212,7 @@ public class DataAccessTest {
     @Test
     public void testGetDegreeByName() {
         final String DEGREE_NAME = "Computer Science Major";
-        final String INVALID_DEGREE = "I DON'T EXIST";
+        final String INVALID_DEGREE = "I DO NOT EXIST";
         Degree degree;
 
         // valid degree name
@@ -296,7 +303,7 @@ public class DataAccessTest {
     }
 
     @Test
-    public void testGetFailingGradeId() {
+    public void testGetFailingGradeId() throws SQLException {
         // if gradetype was not found, -1 is returned
         int result = dataAccess.getFailingGradeId();
         assertNotEquals( -1, result );
@@ -423,24 +430,35 @@ public class DataAccessTest {
         dataAccess.addToCoursePlan( COURSE_ID, STUD_NUM, TERM_ID, YEAR );
         result = dataAccess.getCoursePlan( COURSE_ID, STUD_NUM, TERM_ID, YEAR );
         assertNotNull( result );
+
+        //Restore data access to before this test
+        dataAccess.removeFromCoursePlan(result.getId());
     }
 
     @Test
     public void testMoveCourse() throws Exception {
-        CoursePlan COURSE_PLAN = dataAccess.getCoursePlan( 3, 1, 2, 2018 );
-        final int COURSE_PLAN_ID = COURSE_PLAN.getId();
+        CoursePlan coursePlan = dataAccess.getCoursePlan( 3, 1, 2, 2018 );
+        final int COURSE_PLAN_ID = coursePlan.getId();
 
         dataAccess.moveCourse( COURSE_PLAN_ID, 1, 2017 );
-        assertEquals( 2017, COURSE_PLAN.getYear() );
+        CoursePlan modifiedCoursePlan = dataAccess.getCoursePlan(COURSE_PLAN_ID);
+        assertEquals( 2017, modifiedCoursePlan.getYear() );
+        assertEquals( 1, modifiedCoursePlan.getTermType().getId() );
+
+        //Restore data access to before this test
+        dataAccess.moveCourse( COURSE_PLAN_ID, 2, 2018 );
     }
 
     @Test
     public void testRemoveFromCoursePlan() throws Exception {
-        final int COURSE_PLAN_ID = dataAccess.getCoursePlan( 3, 1, 2, 2018 ).getId();
+        int coursePlanId;
         CoursePlan result;
 
-        dataAccess.removeFromCoursePlan( COURSE_PLAN_ID );
-        result = dataAccess.getCoursePlan( COURSE_PLAN_ID );
+        dataAccess.addToCoursePlan( 5, 1, 3, 2019 ); //So can restore data access to before this test
+        coursePlanId = dataAccess.getCoursePlan( 5, 1, 3, 2019 ).getId();
+
+        dataAccess.removeFromCoursePlan( coursePlanId );
+        result = dataAccess.getCoursePlan( coursePlanId );
         assertNull( result );
     }
 

@@ -78,22 +78,22 @@ public class GetCoursePlansAndHeadersTest {
                 scienceCourses = new ArrayList<ScienceCourse>();
                 userDefinedCourses = new ArrayList<UserDefinedCourse>();
 
-                tempScienceCourse = new ScienceCourse(1, "Introductory Computer Science I", 3.0, 1,
-                        1010, "Basic programming concepts.");
+                tempScienceCourse = new ScienceCourse(1, "Introductory Computer Science I", 3.0,
+                        departments.get(0), 1010, "Basic programming concepts.");
                 courses.add(tempScienceCourse);
                 scienceCourses.add(tempScienceCourse);
 
                 tempScienceCourse = new ScienceCourse(2, "Introductory Computer Science II", 3.0,
-                        1, 1020, "More basic programming concepts.");
+                        departments.get(0), 1020, "More basic programming concepts.");
                 courses.add(tempScienceCourse);
                 scienceCourses.add(tempScienceCourse);
 
-                tempScienceCourse = new ScienceCourse(3, "Object Orientation", 3.0, 1,
+                tempScienceCourse = new ScienceCourse(3, "Object Orientation", 3.0, departments.get(0),
                         2150, "Detailed look at proper object oriented programming.");
                 courses.add(tempScienceCourse);
                 scienceCourses.add(tempScienceCourse);
 
-                tempScienceCourse = new ScienceCourse(4, "Software Engineering I", 3.0, 1,
+                tempScienceCourse = new ScienceCourse(4, "Software Engineering I", 3.0, departments.get(0),
                         3350, "Good software development practices.");
                 courses.add(tempScienceCourse);
                 scienceCourses.add(tempScienceCourse);
@@ -109,8 +109,8 @@ public class GetCoursePlansAndHeadersTest {
                 // Create Students
 
                 students = new ArrayList<Student>();
-                students.add(new Student(1, 1234567, "Jim Bob", "jimbob@myumanitoba.ca", "helloworld1", 1));
-                students.add(new Student(2, 9999999, "DK", "dk@myumanitoba.ca", "password1", 1));
+                students.add(new Student(1, 1234567, "Jim Bob", "jimbob@myumanitoba.ca", "helloworld1", null));
+                students.add(new Student(2, 9999999, "DK", "dk@myumanitoba.ca", "password1", null));
 
                 // Create Course Plans
                 // Note that these are in sorted order, since that is how they will be retrieved
@@ -166,13 +166,15 @@ public class GetCoursePlansAndHeadersTest {
         System.out.println("\nStarted GetCoursePlansAndHeaders Test: valid student id and non-empty course results");
 
         List coursePlansAndHeaders = acp.getCoursePlansAndHeaders(1);
-
+        for (int i = 0; i<coursePlansAndHeaders.size(); i++) {
+            System.out.println (coursePlansAndHeaders.get(i).toString());
+        }
         assertNotNull("Course Plans and Headers array is null", coursePlansAndHeaders);
         assertEquals("Result length is not the same as expected result length",
                 NB_LIST_SIZE_FOR_STUDENT_1, coursePlansAndHeaders.size());
 
         assertTrue("No starting header", coursePlansAndHeaders.get(0) instanceof ArrayList);
-        assertEquals("Header at index 0 is incorrect", Season.FALL.ordinal(), ((ArrayList)coursePlansAndHeaders.get(0)).get(0));
+        assertEquals("Header at index 0 is incorrect", Season.FALL.getValue(), ((ArrayList)coursePlansAndHeaders.get(0)).get(0));
 
         assertTrue("Value at index 1 is not a CoursePlan", coursePlansAndHeaders.get(1) instanceof CoursePlan);
         tempCP = (CoursePlan)(coursePlansAndHeaders.get(1));
@@ -183,14 +185,14 @@ public class GetCoursePlansAndHeadersTest {
         assertEquals("CoursePlan at index 2 is incorrect", 2, tempCP.getId());
 
         assertTrue("Value at index 3 is not a header", coursePlansAndHeaders.get(3) instanceof ArrayList);
-        assertEquals("Header at index 3 is incorrect", Season.WINTER.ordinal(), ((ArrayList)coursePlansAndHeaders.get(3)).get(0));
+        assertEquals("Header at index 3 is incorrect", Season.WINTER.getValue(), ((ArrayList)coursePlansAndHeaders.get(3)).get(0));
 
         assertTrue("Value at index 4 is not a CoursePlan", coursePlansAndHeaders.get(4) instanceof CoursePlan);
         tempCP = (CoursePlan)(coursePlansAndHeaders.get(4));
         assertEquals("CoursePlan at index 4 is incorrect", 3, tempCP.getId());
 
         assertTrue("Value at index 5 is not a header", coursePlansAndHeaders.get(5) instanceof ArrayList);
-        assertEquals("Header at index 5 is incorrect", Season.SUMMER.ordinal(), ((ArrayList)coursePlansAndHeaders.get(5)).get(0));
+        assertEquals("Header at index 5 is incorrect", Season.SUMMER.getValue(), ((ArrayList)coursePlansAndHeaders.get(5)).get(0));
 
         assertTrue("Value at index 6 is not a CoursePlan", coursePlansAndHeaders.get(6) instanceof CoursePlan);
         tempCP = (CoursePlan)(coursePlansAndHeaders.get(6));

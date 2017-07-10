@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:focusableInTouchMode="true">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/create_elective_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/colorLightBlue"
+        android:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="20dp"
+            android:textColor="@android:color/white"/>
+
+    </android.support.v7.widget.Toolbar>
+
+    <EditText
+        android:id="@+id/name"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/name"
+        android:layout_below="@+id/create_elective_toolbar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="94dp" />
+
+    <EditText
+        android:id="@+id/credithours"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/credithr"
+        android:layout_below="@+id/name"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="94dp" />
+
+    <EditText
+        android:id="@+id/abbrev"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/abbrev"
+        android:layout_below="@+id/credithours"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="94dp" />
+
+    <Button
+        android:id="@+id/add_elective_button"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:text="@string/add"
+        android:onClick="buttonAddOnClick"
+        android:layout_alignBaseline="@+id/view_free_electives"
+        android:layout_alignBottom="@+id/view_free_electives"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/view_free_electives"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:text="@string/viewelectives"
+        android:layout_below="@+id/abbrev"
+        android:layout_alignStart="@+id/add_elective_button"
+        android:layout_marginTop="113dp"
+        android:onClick="buttonViewFreeElectivesOnClick"/>
+
+
+</RelativeLayout>

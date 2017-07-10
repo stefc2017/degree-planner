@@ -2,13 +2,43 @@
     <string name="app_name">Degree Planner</string>
     <string name="degreeInfo">Degree Information</string>
     <string name="coursePlan">Course Planning</string>
-    <string name="progress">View Progress</string>
+    <string name="progress">Degree Progress</string>
+    <string name="degrees">All Degrees</string>
     <string name="degreePageTitle">Undergraduate Degrees</string>
     <string name="removeCourse">Remove Course</string>
     <string name="confirmRemoveCourse">Are you sure you want to remove this course from your coursePlan?</string>
-    <string name="cancel">Cancel</string>
+    <string name="add">Add To Plan</string>
+    <string name="cancel">Back</string>
     <string name="remove">Remove Course</string>
     <string name="fall">Fall</string>
     <string name="summer">Summer</string>
     <string name="winter">Winter</string>
+    <string name="label_add_required">Computer Science Course</string>
+    <string name="label_add_free_elective">Free Elective</string>
+    <string name="addCourse">Add Course To Course Plan</string>
+    <string name="year">Year</string>
+    <string name="term">Term</string>
+    <string name="name">Course Name</string>
+    <string name="credithr">Credit Hours</string>
+    <string name="abbrev">Abbreviation</string>
+    <string name="viewcourseplan">Go To Course Plan</string>
+    <string name="viewelectives">Go To Free Electives</string>
+    <string name="required_course_added">Course Added</string>
+    <string name="elective_added">New Free Elective Added </string>
+    <string name="error_duplicate_course">Error: Duplicate course</string>
+    <string name="error_student_not_exist">Error: Student does not exist</string>
+    <string name="error_course_not_offered">Error: Course not available in this term</string>
+    <string name="error_termtype_not_exist">Error: Term not exist</string>
+    <string name="error_course_not_exist">Error: Course not exist</string>
+    <string name="error_invalid_term">Please enter a valid term</string>
+    <string name="error_no_term">Please enter a term</string>
+    <string name="error_no_year">Please enter a year</string>
+    <string name="error_no_name">Please enter a name</string>
+    <string name="error_no_credit_hours">Please enter credit hours</string>
+    <string name="error_no_abbrev">Please enter the full abbreviation</string>
+    <string-array name="season_list">
+        <item>Winter</item>
+        <item>Summer</item>
+        <item>Fall</item>
+    </string-array>
 </resources>

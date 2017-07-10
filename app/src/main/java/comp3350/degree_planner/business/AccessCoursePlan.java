@@ -107,8 +107,8 @@ public class AccessCoursePlan {
     }
 
     /**
-     * Return a list of Strings and CoursePlans
-     * UI renders different ListItem layouts for CoursePlans and section headers(Ex. "Fall 2017")
+     * Return a list of int tuples and CoursePlans
+     * UI renders different ListItem layouts for CoursePlans and section headers(Ex. Fall 2017)
      * Parameters:
      * int studentId    Gives the student whose course plans will be returned
      */
@@ -119,9 +119,10 @@ public class AccessCoursePlan {
         ListIterator cpIterator;    // Used to iterate over coursePlans
         CoursePlan currCP;  // Current course plan in coursePlans
 
-        ArrayList<Integer> header = null;      // Header text for each section
+        ArrayList<Integer> header = new ArrayList<>();      // Header text for each section
         TermType currentTerm;   // Term for the current course plan, used in headers
         int currentYear;        // Year for the current course plan, used in headers
+        final int YEAR_POS = 1; // year is at position 1 in the tuple
         boolean newHeader;      // Shows if a new section header is needed
 
         try {
@@ -137,34 +138,35 @@ public class AccessCoursePlan {
             while (cpIterator.hasNext()) {
                 currCP = (CoursePlan)cpIterator.next();
 
+                header = new ArrayList<>();
                 // Update the header text if the term / year has changed
                 if (currentTerm == null || !currCP.getTermType().equals(currentTerm)) {
-                    header = new ArrayList<>();
                     currentTerm = currCP.getTermType();
 
-                    // Ordinals are WINTER(0) SUMMER(1) FALL(2)
-                    switch (currentTerm.getSeason()){
-                        case "Fall":
-                            header.add(Season.FALL.ordinal());
-                            System.out.println("fall ordinal" + Season.FALL.ordinal());
-                        case "Summer":
-                            header.add(Season.SUMMER.ordinal());
-                        case "Winter":
-                            header.add(Season.WINTER.ordinal());
+                    // Ordinals are WINTER(1) SUMMER(2) FALL(3)
+                    if(currentTerm.getSeason().equalsIgnoreCase("Fall")){
+                        header.add(Season.FALL.getValue());
+                    }else if(currentTerm.getSeason().equalsIgnoreCase("Summer")){
+                        header.add(Season.SUMMER.getValue());
+                    }else if(currentTerm.getSeason().equalsIgnoreCase("Winter")){
+                        header.add(Season.WINTER.getValue());
                     }
-                    header.add(currentYear);
+
                     newHeader = true;
+                }else{
+                    header.add(currentTerm.getId());
                 }
+
+                header.add(currentYear);
 
                 if (currCP.getYear() != currentYear) {
                     currentYear = currCP.getYear();
-                    header.set(1, currentYear);
+                    header.set(YEAR_POS, currentYear);
                     newHeader = true;
                 }
 
                 if (newHeader) {
                     coursePlansAndHeaders.add(header);
-                    header = null;
                     newHeader = false;
                 }
 
@@ -175,6 +177,24 @@ public class AccessCoursePlan {
             e.printStackTrace();
             throw e;
         }
+
         return coursePlansAndHeaders;
     }
+
+    //Retrieve a course plan
+    //Throws CoursePlanDoesNotExistException if coursePlanId parameter refers to a nonexistent Course Plan
+    public CoursePlan getCoursePlan(int coursePlanId) throws Exception {
+        CoursePlan cp = null;
+
+        try {
+            cp = dataAccess.getCoursePlan(coursePlanId);
+            if (cp == null) { throw new CoursePlanDoesNotExistException(); }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+
+        return cp;
+    }
+
 }
