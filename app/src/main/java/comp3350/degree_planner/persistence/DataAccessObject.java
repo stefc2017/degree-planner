@@ -1214,7 +1214,6 @@ public class DataAccessObject implements DataAccess {
     }
 
     public void removeUserDefinedCourse(int courseId){
-        System.out.println("remove " + courseId);
         try {
             cmdString = "DELETE FROM Course_Plan WHERE Course_Id = " + courseId;
             updateCount = st1.executeUpdate(cmdString);
@@ -1231,6 +1230,7 @@ public class DataAccessObject implements DataAccess {
 
         try{
             cmdString = "DELETE FROM Course where id = " + courseId;
+            updateCount = st3.executeUpdate(cmdString);
         }catch (Exception e){
             processSQLError(e);
         }
@@ -1270,7 +1270,6 @@ public class DataAccessObject implements DataAccess {
                     courses.add(course);
                 }
             }
-            for(Course c : courses) { System.out.println(c.getName() + " " + c.getId()); }
             rs2.close();
         }
         catch (Exception e)
