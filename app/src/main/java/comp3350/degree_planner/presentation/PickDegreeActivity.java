@@ -33,6 +33,7 @@ public class PickDegreeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pick_degree);
         Toolbar toolbar = (Toolbar) findViewById(R.id.pick_degree_toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         accessDegrees = new AccessDegrees(Services.getDataAccess());
         degreeList = new ArrayList<Degree>();
