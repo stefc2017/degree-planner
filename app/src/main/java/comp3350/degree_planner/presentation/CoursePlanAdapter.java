@@ -32,6 +32,7 @@ public class CoursePlanAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private final Context myContext;
     private boolean deleteMode = false;
+    private boolean editMode = false;
     private static int nextColor = 0; // 0 means blue, 1 means red color for displaying coursePlans headers
 
     public CoursePlanAdapter(Context c, List list, CourseItemClickListener listener){
@@ -91,16 +92,20 @@ public class CoursePlanAdapter extends BaseAdapter {
         switch (getItemViewType(position)){
             case COURSEPLAN:
                 TextView courseName = (TextView)view.findViewById(R.id.text1);
-                LinearLayout deleteButton = (LinearLayout) view.findViewById(R.id.deleteButton_courses);
-                Button courseButton = (Button) deleteButton.findViewById(R.id.button_text1);
+                Button courseButton = (Button) view.findViewById(R.id.button_text1);
+                Button moveCourseButton = (Button) view.findViewById(R.id.button_move);
                 final CoursePlan coursePlan = ((CoursePlan)coursePlansAndHeaders.get(position));
 
                 // Display course name
                 courseName.setText(((CoursePlan)coursePlansAndHeaders.get(position)).getCourse().getName());
 
                 // Toggle delete button in each row
-                if(deleteButton != null){
-                    deleteButton.setVisibility(deleteMode? View.VISIBLE : View.INVISIBLE);
+                if(courseButton != null){
+                    courseButton.setVisibility(editMode? View.VISIBLE : View.INVISIBLE);
+                }
+
+                if(moveCourseButton != null){
+                    moveCourseButton.setVisibility(editMode? View.VISIBLE : View.INVISIBLE);
                 }
 
                 if(courseButton != null && coursePlan != null) {
@@ -111,6 +116,18 @@ public class CoursePlanAdapter extends BaseAdapter {
                             if(listener != null) {
                                 // Removal happens in CoursePlanActivity
                                 listener.onRemoveButtonClick(coursePlan.getId());
+                            }
+                        }
+                    });
+                }
+
+                if(moveCourseButton != null){
+                    moveCourseButton.setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View v) {
+                            if(listener != null) {
+                                listener.onMoveButtonClick(coursePlan.getId());
                             }
                         }
                     });
@@ -135,7 +152,10 @@ public class CoursePlanAdapter extends BaseAdapter {
         return view;
     }
 
-    public void toggleDeleteMode() { deleteMode = !deleteMode; }
+    public void toggleEditMode() {
+        deleteMode = !deleteMode;
+        editMode = !editMode;
+    }
 
     public void refreshList(List items){
         coursePlansAndHeaders = items;
