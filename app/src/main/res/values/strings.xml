@@ -39,9 +39,13 @@
     <string name="error_no_abbrev">Please enter the full abbreviation</string>
     <string name="move_plan_to">Move Course To</string>
     <string name="confirm">Confirm</string>
+    <string name="pick_degree">Pick Degree</string>
+    <string name="pick_degree_title">Pick a Degree</string>
+    <string name="ok">OK</string>
     <string-array name="season_list">
         <item>Winter</item>
         <item>Summer</item>
         <item>Fall</item>
     </string-array>
+    <string name="action_settings">Settings</string>
 </resources>

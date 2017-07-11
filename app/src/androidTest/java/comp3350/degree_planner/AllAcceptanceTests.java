@@ -3,6 +3,8 @@ package comp3350.degree_planner;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
+import comp3350.degree_planner.acceptance.PickDegreeTest;
+import comp3350.degree_planner.acceptance.PlanCoursesForFutureTermsTest;
 import comp3350.degree_planner.acceptance.ViewDegreeRequirementsTest;
 import comp3350.degree_planner.acceptance.ViewDegreesTest;
 
@@ -23,7 +25,9 @@ import comp3350.degree_planner.acceptance.ViewDegreesTest;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
         ViewDegreesTest.class,
-        ViewDegreeRequirementsTest.class
+        ViewDegreeRequirementsTest.class,
+        PlanCoursesForFutureTermsTest.class,
+        PickDegreeTest.class
 })
 public class AllAcceptanceTests {
 }
