@@ -1204,10 +1204,80 @@ public class DataAccessObject implements DataAccess {
     }
 
     public void createUserDefinedCourse(String name, double creditHours, String fullAbbreviation){
-
+        String newUserDefinedCourse = name + ", " + creditHours + ", " + "NULL" + ", " + "NULL" + ", " + "NULL" + ", " + fullAbbreviation + ", " + "true";
+        cmdString = "INSERT INTO Course (Name, Credit_Hours, Department_Id, Course_Number, " +
+                "Description, Full_Abbreviation, Is_User_Defined" + " VALUES (" + newUserDefinedCourse + ")";
+        try {
+            updateCount = st1.executeUpdate(cmdString);
+        }catch(Exception e){
+            processSQLError(e);
+        }
     }
 
-    public void removeUserDefinedCourse(int courseId){}
+    public void removeUserDefinedCourse(int courseId){
+        try {
+            cmdString = "DELETE FROM Course_Plan WHERE Course_Id = " + courseId;
+            updateCount = st1.executeUpdate(cmdString);
+        }catch(Exception e){
+            processSQLError(e);
+        }
 
-    public List<Course> getAllUserDefinedCourses(){return null;}
+        try {
+            cmdString = "DELETE FROM Course_Result WHERE Course_Id = " + courseId;
+            updateCount = st2.executeUpdate(cmdString);
+        }catch(Exception e) {
+            processSQLError(e);
+        }
+
+        try{
+            cmdString = "DELETE FROM Course where id = " + courseId;
+        }catch (Exception e){
+            processSQLError(e);
+        }
+    }
+
+    public List<Course> getAllUserDefinedCourses(){
+        Course course;
+        int id;
+        String name;
+        double creditHours;
+        String fullAbbreviation;
+        Boolean isUserDefined;
+        courses = new ArrayList<Course>();
+
+        result = null;
+        try
+        {
+            cmdString = "Select * from Course WHERE is_user_defined = true" ;
+            rs2 = st1.executeQuery(cmdString);
+        }
+        catch (Exception e)
+        {
+            processSQLError(e);
+        }
+        try
+        {
+            while (rs2.next())
+            {
+                id = Integer.parseInt(rs2.getString("ID"));
+                name = rs2.getString("NAME");
+                creditHours = Double.parseDouble(rs2.getString("CREDIT_HOURS"));
+                fullAbbreviation = rs2.getString("FULL_ABBREVIATION");
+                isUserDefined = Boolean.parseBoolean(rs2.getString("IS_USER_DEFINED"));
+
+                if(isUserDefined){
+                    course = new UserDefinedCourse(id, name, creditHours, fullAbbreviation);
+                    courses.add(course);
+                }
+            }
+            for(Course c : courses) { System.out.println(c.getName()); }
+            rs2.close();
+        }
+        catch (Exception e)
+        {
+            result = processSQLError(e);
+        }
+
+        return courses;
+    }
 }
