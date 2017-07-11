@@ -1,5 +1,6 @@
 package comp3350.degree_planner.presentation;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -119,5 +120,10 @@ public class DegreeProgressActivity extends AppCompatActivity {
         creditHourChart.setData(chartData);
         creditHourChart.setEntryLabelColor(ContextCompat.getColor(this, R.color.colorBlack));
         creditHourChart.setEntryLabelTextSize(20f);
+    }
+
+    public void buttonPickDegreeOnClick(View v){
+        Intent intent = new Intent(DegreeProgressActivity.this, PickDegreeActivity.class);
+        DegreeProgressActivity.this.startActivity(intent);
     }
 }

@@ -8,9 +8,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-
         android:theme="@style/AppTheme">
-        <activity android:name=".presentation.Splash" android:noHistory="true">
+        <activity
+            android:name=".presentation.Splash"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,22 +25,15 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".presentation.DegreesActivity"></activity>
-
-        <activity android:name=".presentation.DegreeInfoActivity"></activity>
-
-        <activity android:name=".presentation.CoursePlansActivity"></activity>
-
-        <activity android:name=".presentation.DegreeProgressActivity"></activity>
-
-        <activity android:name=".presentation.AddCourseActivity"></activity>
-
-        <activity android:name=".presentation.ViewElectivesActivity"></activity>
-
-        <activity android:name=".presentation.AddFreeElectiveActivity"></activity>
-
-        <activity android:name=".presentation.CreateElectiveActivity"></activity>
+        <activity android:name=".presentation.DegreesActivity" />
+        <activity android:name=".presentation.DegreeInfoActivity" />
+        <activity android:name=".presentation.CoursePlansActivity" />
+        <activity android:name=".presentation.DegreeProgressActivity" />
+        <activity android:name=".presentation.AddCourseActivity" />
+        <activity android:name=".presentation.ViewElectivesActivity" />
+        <activity android:name=".presentation.AddFreeElectiveActivity" />
+        <activity android:name=".presentation.CreateElectiveActivity" />
+        <activity android:name=".presentation.PickDegreeActivity" />
     </application>
 
 </manifest>

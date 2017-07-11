@@ -36,9 +36,13 @@
     <string name="error_no_name">Please enter a name</string>
     <string name="error_no_credit_hours">Please enter credit hours</string>
     <string name="error_no_abbrev">Please enter the full abbreviation</string>
+    <string name="pick_degree">Pick Degree</string>
+    <string name="pick_degree_title">Pick a Degree</string>
+    <string name="ok">OK</string>
     <string-array name="season_list">
         <item>Winter</item>
         <item>Summer</item>
         <item>Fall</item>
     </string-array>
+    <string name="action_settings">Settings</string>
 </resources>
