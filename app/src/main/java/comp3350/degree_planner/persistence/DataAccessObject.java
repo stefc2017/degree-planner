@@ -1204,9 +1204,8 @@ public class DataAccessObject implements DataAccess {
     }
 
     public void createUserDefinedCourse(String name, double creditHours, String fullAbbreviation){
-        String newUserDefinedCourse = name + ", " + creditHours + ", " + "NULL" + ", " + "NULL" + ", " + "NULL" + ", " + fullAbbreviation + ", " + "true";
-        cmdString = "INSERT INTO Course (Name, Credit_Hours, Department_Id, Course_Number, " +
-                "Description, Full_Abbreviation, Is_User_Defined" + " VALUES (" + newUserDefinedCourse + ")";
+        String newUserDefinedCourse = "'" + name + "', " + creditHours + ", " + "NULL" + ", " + "NULL" + ", " + "NULL" + ", '" + fullAbbreviation + "', " + "true";
+        cmdString = "INSERT INTO Course (Name, Credit_Hours, Department_Id, Course_Number, " + "Description, Full_Abbreviation, Is_User_Defined )" + " VALUES (" + newUserDefinedCourse + ")";
         try {
             updateCount = st1.executeUpdate(cmdString);
         }catch(Exception e){
@@ -1215,6 +1214,7 @@ public class DataAccessObject implements DataAccess {
     }
 
     public void removeUserDefinedCourse(int courseId){
+        System.out.println("remove " + courseId);
         try {
             cmdString = "DELETE FROM Course_Plan WHERE Course_Id = " + courseId;
             updateCount = st1.executeUpdate(cmdString);
@@ -1270,7 +1270,7 @@ public class DataAccessObject implements DataAccess {
                     courses.add(course);
                 }
             }
-            for(Course c : courses) { System.out.println(c.getName()); }
+            for(Course c : courses) { System.out.println(c.getName() + " " + c.getId()); }
             rs2.close();
         }
         catch (Exception e)
