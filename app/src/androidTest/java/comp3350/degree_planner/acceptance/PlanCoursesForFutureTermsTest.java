@@ -18,6 +18,14 @@ import comp3350.degree_planner.presentation.CoursePlansActivity;
 import comp3350.degree_planner.presentation.DegreesActivity;
 import comp3350.degree_planner.presentation.MainActivity;
 
+/**
+ * For removing courses, solo.clickOnButton(0); will click the remove course button.
+ * Therefore, if you need to change it, the number in the () has to be a even number.
+ * Example:
+ * Row 1: 0
+ * Row 2: 2
+ * Row 3: 4 and so on..
+ */
 @RunWith(AndroidJUnit4.class)
 public class PlanCoursesForFutureTermsTest {
     private static final String COURSE_1 = "Cultural Anthropology";
@@ -54,7 +62,7 @@ public class PlanCoursesForFutureTermsTest {
         assertTrue (COURSE_2 + " course was not found", solo.searchText(COURSE_2));
         assertTrue (COURSE_3 + " course was not found", solo.searchText(COURSE_3));
 
-        solo.clickOnView(solo.getView(R.id.garbagebin_toolbar));
+        solo.clickOnView(solo.getView(R.id.move_toolbar));
 
         solo.clickOnButton(0); //click on first course remove button (Cultural anthropology)
         assertTrue (COURSE_1 + " remove course confirmation dialog did not appear", solo.searchText(COURSE_1));
@@ -78,9 +86,9 @@ public class PlanCoursesForFutureTermsTest {
         assertTrue (COURSE_2 + " course was not found", solo.searchText(COURSE_2));
         assertTrue (COURSE_3 + " course was not found", solo.searchText(COURSE_3));
 
-        solo.clickOnView(solo.getView(R.id.garbagebin_toolbar));
+        solo.clickOnView(solo.getView(R.id.move_toolbar));
 
-        solo.clickOnButton(1); //click on second course remove button (Introductory Computer Science II)
+        solo.clickOnButton(2); //click on second course remove button (Introductory Computer Science II)
         assertTrue (COURSE_2 + " remove course confirmation dialog did not appear", solo.searchText(COURSE_2));
         solo.clickOnButton(solo.getString(R.string.remove));
 
