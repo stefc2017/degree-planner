@@ -37,6 +37,7 @@ import comp3350.degree_planner.objects.CoursePlan;
 
 public class CoursePlansActivity extends AppCompatActivity {
     private AccessCoursePlan accessCoursePlan;
+    private AlertDialog dialog = null;
     private List coursePlansAndHeaders;
     private CoursePlanAdapter coursePlanAdapter;
 
@@ -194,7 +195,9 @@ public class CoursePlansActivity extends AppCompatActivity {
                 if(dataIsValid){
                     try{
                         accessCoursePlan.moveCourse(coursePlanId, termTypeId, year);
-                        Toast.makeText(CoursePlansActivity.this, R.string.required_course_added, Toast.LENGTH_SHORT).show();
+                        coursePlanAdapter.refreshList(accessCoursePlan.getCoursePlansAndHeaders(1));
+                        Toast.makeText(CoursePlansActivity.this, R.string.course_plan_moved, Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
                     }catch(Exception e){
                         displayErrorMessage(e);
                     }
@@ -202,7 +205,7 @@ public class CoursePlansActivity extends AppCompatActivity {
             }
         });
         builder.setView(v);
-        AlertDialog dialog = builder.create();
+        dialog = builder.create();
         dialog.show();
     }
 
@@ -233,4 +236,5 @@ public class CoursePlansActivity extends AppCompatActivity {
             Toast.makeText(this, R.string.error_course_not_offered, Toast.LENGTH_SHORT).show();
         }
     }
+
 }
