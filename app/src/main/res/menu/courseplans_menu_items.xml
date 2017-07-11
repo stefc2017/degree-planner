@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/garbagebin_toolbar"
-        android:icon="@drawable/garbagebin_toolbar"
+        android:id="@+id/move_toolbar"
         android:title=""
+        android:icon="@drawable/move_icon"
         app:showAsAction="always" />
     <item
         android:id="@+id/home_toolbar"

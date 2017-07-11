@@ -8,7 +8,7 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/add_elective_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
         android:background="@color/colorLightBlue"
         android:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
@@ -62,19 +62,25 @@
 
     <Button
         android:id="@+id/add_course_button"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
         android:onClick="buttonAddOnClick"
         android:text="@string/add"
+        android:textSize="15dp"
+        android:textColor="@android:color/white"
+        android:background="@drawable/confirm"
         android:layout_below="@+id/term"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="60dp" />
 
     <Button
         android:id="@+id/view_course_plan"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
         android:layout_below="@+id/term"
+        android:textSize="15dp"
+        android:textColor="@android:color/white"
+        android:background="@drawable/confirm"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="60dp"
         android:onClick="buttonViewCoursePlanOnClick"
@@ -83,9 +89,12 @@
 
     <Button
         android:id="@+id/back_button"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
         android:text="@string/cancel"
+        android:textSize="15dp"
+        android:textColor="@android:color/white"
+        android:background="@drawable/cancel"
         android:layout_below="@+id/view_course_plan"
         android:layout_alignTop="@+id/add_course_button"
         android:layout_centerHorizontal="true"

@@ -1,28 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:weightSum="1">
 
     <TextView android:id="@+id/text1"
-        android:layout_width="600px"
-        android:layout_height="100px"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
         android:paddingTop="10dip"
         android:layout_marginLeft="40px"
         android:paddingBottom="3dip"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <LinearLayout android:id="@+id/deleteButton_courses"
-        android:orientation="horizontal" android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone">
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_marginStart="28dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:id="@+id/button_text1"
         android:layout_width="50px"
         android:layout_height="100px"
         android:layout_marginLeft="200dp"
-        android:background="@drawable/remove" />
+        android:background="@drawable/remove"
+        android:layout_marginEnd="27dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:visibility="invisible"/>
 
-    </LinearLayout>
+    <Button
+        android:id="@+id/button_move"
+        android:layout_width="50px"
+        android:layout_height="80px"
+        android:layout_marginLeft="200dp"
+        android:background="@drawable/move_course_icon"
+        android:layout_marginEnd="30dp"
+        android:layout_alignBaseline="@+id/button_text1"
+        android:layout_alignBottom="@+id/button_text1"
+        android:layout_toStartOf="@+id/button_text1"
+        android:visibility="invisible"/>
 
-</LinearLayout>
+</RelativeLayout>

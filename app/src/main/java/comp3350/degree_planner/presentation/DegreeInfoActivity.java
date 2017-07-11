@@ -89,6 +89,7 @@ public class DegreeInfoActivity extends AppCompatActivity {
                     b.putInt("degreeId", degreeId);
                     intent.putExtras(b);
                     DegreeInfoActivity.this.startActivity(intent);
+                    finish();
                 }
             });
         }

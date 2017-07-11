@@ -117,6 +117,7 @@ public class CreateElectiveActivity extends AppCompatActivity {
     public void buttonViewFreeElectivesOnClick(View v){
         Intent intent = new Intent(CreateElectiveActivity.this, ViewElectivesActivity.class);
         CreateElectiveActivity.this.startActivity(intent);
+        finish();
     }
 
     private boolean validate(String text){ return text.length() > 0; }

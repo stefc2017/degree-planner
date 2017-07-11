@@ -25,16 +25,17 @@ import comp3350.degree_planner.objects.CoursePlan;
 
 public class CoursePlanAdapter extends BaseAdapter {
     private List coursePlansAndHeaders;
-    private CoursePlanClickListener listener;
+    private CourseItemClickListener listener;
     private static final int COURSEPLAN = 0;
     private static final int SECTION_HEADER = 1;
     private static final int VIEW_TYPE_COUNT = 2;
     private LayoutInflater inflater;
     private final Context myContext;
     private boolean deleteMode = false;
+    private boolean editMode = false;
     private static int nextColor = 0; // 0 means blue, 1 means red color for displaying coursePlans headers
 
-    public CoursePlanAdapter(Context c, List list, CoursePlanClickListener listener){
+    public CoursePlanAdapter(Context c, List list, CourseItemClickListener listener){
         myContext = c;
         coursePlansAndHeaders = list;
         this.listener = listener;
@@ -78,7 +79,7 @@ public class CoursePlanAdapter extends BaseAdapter {
                     view = inflater.inflate(R.layout.listview_header, null);
                     // Alternate color between section headers
                     if(nextColor == 0){
-                        view.setBackgroundResource(R.color.colorLightBlue);
+                        view.setBackgroundResource(R.color.colorSkyBlue);
                         nextColor++;
                     }else if(nextColor == 1){
                         view.setBackgroundResource(R.color.colorAccent);
@@ -91,16 +92,20 @@ public class CoursePlanAdapter extends BaseAdapter {
         switch (getItemViewType(position)){
             case COURSEPLAN:
                 TextView courseName = (TextView)view.findViewById(R.id.text1);
-                LinearLayout deleteButton = (LinearLayout) view.findViewById(R.id.deleteButton_courses);
-                Button courseButton = (Button) deleteButton.findViewById(R.id.button_text1);
+                Button courseButton = (Button) view.findViewById(R.id.button_text1);
+                Button moveCourseButton = (Button) view.findViewById(R.id.button_move);
                 final CoursePlan coursePlan = ((CoursePlan)coursePlansAndHeaders.get(position));
 
                 // Display course name
                 courseName.setText(((CoursePlan)coursePlansAndHeaders.get(position)).getCourse().getName());
 
                 // Toggle delete button in each row
-                if(deleteButton != null){
-                    deleteButton.setVisibility(deleteMode? View.VISIBLE : View.INVISIBLE);
+                if(courseButton != null){
+                    courseButton.setVisibility(editMode? View.VISIBLE : View.INVISIBLE);
+                }
+
+                if(moveCourseButton != null){
+                    moveCourseButton.setVisibility(editMode? View.VISIBLE : View.INVISIBLE);
                 }
 
                 if(courseButton != null && coursePlan != null) {
@@ -111,6 +116,18 @@ public class CoursePlanAdapter extends BaseAdapter {
                             if(listener != null) {
                                 // Removal happens in CoursePlanActivity
                                 listener.onRemoveButtonClick(coursePlan.getId());
+                            }
+                        }
+                    });
+                }
+
+                if(moveCourseButton != null){
+                    moveCourseButton.setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View v) {
+                            if(listener != null) {
+                                listener.onMoveButtonClick(coursePlan.getId());
                             }
                         }
                     });
@@ -135,7 +152,10 @@ public class CoursePlanAdapter extends BaseAdapter {
         return view;
     }
 
-    public void toggleDeleteMode() { deleteMode = !deleteMode; }
+    public void toggleEditMode() {
+        deleteMode = !deleteMode;
+        editMode = !editMode;
+    }
 
     public void refreshList(List items){
         coursePlansAndHeaders = items;
