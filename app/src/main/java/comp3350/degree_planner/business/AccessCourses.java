@@ -12,7 +12,7 @@ import comp3350.degree_planner.persistence.DataAccess;
 public class AccessCourses {
 	private DataAccess dataAccess;
 	private List<Course> courses = new ArrayList<>();
-	int id = 6;
+
 	public AccessCourses(DataAccess dataAccess) { this.dataAccess = dataAccess; }
 
     public List<Course> getDegreeCourses(int degreeId) { return dataAccess.getDegreeCourses(degreeId); }

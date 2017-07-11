@@ -8,4 +8,5 @@ package comp3350.degree_planner.presentation;
 
 public interface CourseItemClickListener {
     void onRemoveButtonClick(int courseId);
+    void onMoveButtonClick(int courseId);
 }

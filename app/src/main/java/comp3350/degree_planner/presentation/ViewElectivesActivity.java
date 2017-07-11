@@ -55,6 +55,9 @@ public class ViewElectivesActivity extends AppCompatActivity {
                 public void onRemoveButtonClick(int courseId) {
                     removeElective(courseId);
                 }
+
+                @Override
+                public void onMoveButtonClick(int id) {}
             });
 
             freeElectivesList.setAdapter(electivesAdapter);

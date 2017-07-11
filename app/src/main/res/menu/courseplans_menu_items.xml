@@ -8,11 +8,6 @@
         android:icon="@drawable/move_icon"
         app:showAsAction="always" />
     <item
-        android:id="@+id/garbagebin_toolbar"
-        android:icon="@drawable/garbagebin_toolbar"
-        android:title=""
-        app:showAsAction="always" />
-    <item
         android:id="@+id/home_toolbar"
         android:icon="@drawable/ic_home_black_24dp"
         android:title=""

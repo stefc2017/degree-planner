@@ -48,16 +48,14 @@ public class ElectivesAdapter extends BaseAdapter {
         if(view == null){ view = inflater.inflate(R.layout.simple_list_item, null); }
 
         TextView courseName = (TextView)view.findViewById(R.id.text1);
-        LinearLayout deleteButton = (LinearLayout) view.findViewById(R.id.deleteButton_courses);
-        Button courseButton = (Button) deleteButton.findViewById(R.id.button_text1);
-
+        Button courseButton = (Button) view.findViewById(R.id.button_text1);
         final UserDefinedCourse elective = ((UserDefinedCourse)electives.get(position));
 
         courseName.setText(elective.getName());
 
         // Toggle delete button in each row
-        if(deleteButton != null){
-            deleteButton.setVisibility(deleteMode? View.VISIBLE : View.INVISIBLE);
+        if(courseButton != null){
+            courseButton.setVisibility(deleteMode? View.VISIBLE : View.INVISIBLE);
         }
 
         if(courseButton != null && elective != null) {

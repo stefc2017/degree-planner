@@ -9,15 +9,21 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Arrays;
 import java.util.List;
 
 import comp3350.degree_planner.R;
 import comp3350.degree_planner.application.Services;
 import comp3350.degree_planner.business.AccessCoursePlan;
+import comp3350.degree_planner.business.Season;
 import comp3350.degree_planner.objects.CoursePlan;
 
 /**
@@ -56,6 +62,11 @@ public class CoursePlansActivity extends AppCompatActivity {
             public void onRemoveButtonClick(int id) {
                 confirmDelete(id);
             }
+
+            @Override
+            public void onMoveButtonClick(int id) {
+                moveCoursePlan(id);
+            }
         });
         coursePlanList.setAdapter(coursePlanAdapter);
     }
@@ -69,17 +80,13 @@ public class CoursePlansActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
-            case R.id.garbagebin_toolbar:
-                // Delete mode on, remind adapter to refresh and show delete buttons
-                coursePlanAdapter.toggleDeleteMode();
-                coursePlanAdapter.notifyDataSetChanged();
-                break;
             case R.id.home_toolbar:
                 Intent intent = new Intent(CoursePlansActivity.this, MainActivity.class);
                 CoursePlansActivity.this.startActivity(intent);
                 break;
             case R.id.move_toolbar:
-                Toast.makeText(this, "clicked move", Toast.LENGTH_SHORT).show();
+                coursePlanAdapter.toggleEditMode();
+                coursePlanAdapter.notifyDataSetChanged();
         }
         return true;
     }
@@ -128,13 +135,68 @@ public class CoursePlansActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    public void moveCoursePlan(int id){
+        final int coursePlanId = id;
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View v = getLayoutInflater().inflate(R.layout.dialog_move_course, null);
+        final EditText editYear = (EditText) v.findViewById(R.id.year);
+        Button moveBtn = (Button) v.findViewById(R.id.confirm_move_button);
+        final AutoCompleteTextView autocompleteview = (AutoCompleteTextView)v.findViewById(R.id.term);
+
+        // Set up term list for auto filling
+        String[] termsArray = getResources().getStringArray(R.array.season_list);
+        List<String> termsList = Arrays.asList(termsArray);
+
+        ArrayAdapter<String> termAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_dropdown_item_1line, termsList);
+
+        autocompleteview.setAdapter(termAdapter);
+
+        moveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int year = -1;
+                String termSelected = autocompleteview.getText().toString();
+                int termTypeId = -1;
+                if(termSelected.equalsIgnoreCase("Winter")){
+                    termTypeId = Season.WINTER.getValue();
+                }else if(termSelected.equalsIgnoreCase("Summer")){
+                    termTypeId = Season.SUMMER.getValue();
+                }else if(termSelected.equalsIgnoreCase("Fall")){
+                    termTypeId = Season.FALL.getValue();
+                }
+
+                try{
+                    if(editYear.getText().toString().length() > 0) { year = Integer.parseInt(editYear.getText().toString()); }
+                    accessCoursePlan.moveCourse(coursePlanId, termTypeId, year);
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+
+                try {
+                    coursePlanAdapter.refreshList(accessCoursePlan.getCoursePlansAndHeaders(1));
+                }
+                catch (Exception e) {
+                    setContentView(R.layout.generic_error);
+                }
+            }
+        });
+        builder.setView(v);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
     public void buttonCompSciCoursesOnClick(View v){
         Intent intent = new Intent(CoursePlansActivity.this, DegreesActivity.class);
         CoursePlansActivity.this.startActivity(intent);
+        finish();
     }
 
     public void buttonFreeElectiveOnClick(View v){
         Intent intent = new Intent(CoursePlansActivity.this, ViewElectivesActivity.class);
         CoursePlansActivity.this.startActivity(intent);
+        finish();
     }
+
+    public void confirmed(String s){ Toast.makeText(this, s, Toast.LENGTH_SHORT).show();}
 }

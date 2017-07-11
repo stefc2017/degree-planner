@@ -343,11 +343,11 @@ public class DataAccessStub implements DataAccess {
 
 
         // User Defined Courses
-        tempUserDefinedCourse = new UserDefinedCourse(8, "Cultural Anthropology", 3.0, "ANTH 1220");
+        tempUserDefinedCourse = new UserDefinedCourse(courseId++, "Cultural Anthropology", 3.0, "ANTH 1220");
         courses.add(tempUserDefinedCourse);
         userDefinedCourses.add(tempUserDefinedCourse);
 
-        tempUserDefinedCourse = new UserDefinedCourse(9, "Language and Culture", 3.0, "ANTH 2370");
+        tempUserDefinedCourse = new UserDefinedCourse(courseId++, "Language and Culture", 3.0, "ANTH 2370");
         courses.add(tempUserDefinedCourse);
         userDefinedCourses.add(tempUserDefinedCourse);
 
@@ -404,61 +404,61 @@ public class DataAccessStub implements DataAccess {
         // Create Course Offerings
 
         courseOfferings = new ArrayList<CourseOffering>();
-        courseOfferings.add(new CourseOffering(scienceCourses.get(0), new TermType(1, "Fall")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(0), new TermType(2, "Winter")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(0), new TermType(3, "Summer")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(1), new TermType(1, "Fall")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(1), new TermType(2, "Winter")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(1), new TermType(3, "Summer")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(2), new TermType(2, "Winter")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(3), new TermType(2, "Winter")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(3), new TermType(3, "Summer")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(4), new TermType(2, "Winter")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(5), new TermType(2, "Winter")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(6), new TermType(2, "Winter")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(7), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(0), new TermType(3, "Fall")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(0), new TermType(1, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(0), new TermType(2, "Summer")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(1), new TermType(3, "Fall")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(1), new TermType(1, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(1), new TermType(2, "Summer")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(2), new TermType(1, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(3), new TermType(1, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(3), new TermType(2, "Summer")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(4), new TermType(1, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(5), new TermType(1, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(6), new TermType(1, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(7), new TermType(1, "Winter")));
         //
-        courseOfferings.add(new CourseOffering(scienceCourses.get(8), new TermType(2, "Winter")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(9), new TermType(2, "Winter")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(10), new TermType(2, "Winter")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(11), new TermType(2, "Winter")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(12), new TermType(2, "Winter")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(13), new TermType(2, "Winter")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(14), new TermType(2, "Winter")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(15), new TermType(2, "Winter")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(16), new TermType(2, "Winter")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(17), new TermType(2, "Winter")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(18), new TermType(2, "Winter")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(19), new TermType(2, "Winter")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(20), new TermType(2, "Winter")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(21), new TermType(2, "Winter")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(22), new TermType(2, "Winter")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(23), new TermType(2, "Winter")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(24), new TermType(2, "Winter")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(25), new TermType(2, "Winter")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(26), new TermType(2, "Winter")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(27), new TermType(2, "Winter")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(28), new TermType(2, "Winter")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(29), new TermType(2, "Winter")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(30), new TermType(2, "Winter")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(31), new TermType(2, "Winter")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(32), new TermType(2, "Winter")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(33), new TermType(2, "Winter")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(34), new TermType(2, "Winter")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(35), new TermType(2, "Winter")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(36), new TermType(2, "Winter")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(37), new TermType(2, "Winter")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(38), new TermType(2, "Winter")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(39), new TermType(2, "Winter")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(40), new TermType(2, "Winter")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(41), new TermType(2, "Winter")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(42), new TermType(2, "Winter")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(43), new TermType(2, "Winter")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(44), new TermType(2, "Winter")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(45), new TermType(2, "Winter")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(46), new TermType(2, "Winter")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(47), new TermType(2, "Winter")));
-        courseOfferings.add(new CourseOffering(scienceCourses.get(48), new TermType(2, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(8), new TermType(1, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(9), new TermType(1, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(10), new TermType(1, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(11), new TermType(1, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(12), new TermType(1, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(13), new TermType(1, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(14), new TermType(1, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(15), new TermType(1, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(16), new TermType(1, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(17), new TermType(1, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(18), new TermType(1, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(19), new TermType(1, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(20), new TermType(1, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(21), new TermType(1, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(22), new TermType(1, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(23), new TermType(1, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(24), new TermType(1, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(25), new TermType(1, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(26), new TermType(1, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(27), new TermType(1, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(28), new TermType(1, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(29), new TermType(1, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(30), new TermType(1, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(31), new TermType(1, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(32), new TermType(1, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(33), new TermType(1, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(34), new TermType(1, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(35), new TermType(1, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(36), new TermType(1, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(37), new TermType(1, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(38), new TermType(1, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(39), new TermType(1, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(40), new TermType(1, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(41), new TermType(1, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(42), new TermType(1, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(43), new TermType(1, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(44), new TermType(1, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(45), new TermType(1, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(46), new TermType(1, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(47), new TermType(1, "Winter")));
+        courseOfferings.add(new CourseOffering(scienceCourses.get(48), new TermType(1, "Winter")));
 
 
 
@@ -467,11 +467,11 @@ public class DataAccessStub implements DataAccess {
 
         coursePlans = new ArrayList<CoursePlan>();
         coursePlans.add(new CoursePlan(1, scienceCourses.get(2), students.get(0),
-                new TermType(2, "Winter"), 2018));
+                new TermType(1, "Winter"), 2018));
         coursePlans.add(new CoursePlan(2, scienceCourses.get(1), students.get(0),
-                new TermType(1, "Fall"), 2017));
-        coursePlans.add(new CoursePlan(3, new UserDefinedCourse(5, "Cultural Anthropology", 3.0, "ANTH 1220"),
-                students.get(0), new TermType(1, "Fall"), 2017));
+                new TermType(3, "Fall"), 2017));
+        coursePlans.add(new CoursePlan(3, new UserDefinedCourse(50, "Cultural Anthropology", 3.0, "ANTH 1220"),
+                students.get(0), new TermType(3, "Fall"), 2017));
 
         // Create Course Prerequisites
 
