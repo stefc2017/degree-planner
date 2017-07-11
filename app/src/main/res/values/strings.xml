@@ -24,6 +24,7 @@
     <string name="viewcourseplan">Go To Course Plan</string>
     <string name="viewelectives">Go To Free Electives</string>
     <string name="required_course_added">Course Added</string>
+    <string name="course_plan_moved">Course moved</string>
     <string name="elective_added">New Free Elective Added </string>
     <string name="error_duplicate_course">Error: Duplicate course</string>
     <string name="error_student_not_exist">Error: Student does not exist</string>
