@@ -24,6 +24,11 @@ import comp3350.degree_planner.R;
 import comp3350.degree_planner.application.Services;
 import comp3350.degree_planner.business.AccessCoursePlan;
 import comp3350.degree_planner.business.Season;
+import comp3350.degree_planner.business.exceptions.CourseAlreadyPlannedForTermException;
+import comp3350.degree_planner.business.exceptions.CourseDoesNotExistException;
+import comp3350.degree_planner.business.exceptions.CourseNotOfferedInTermException;
+import comp3350.degree_planner.business.exceptions.StudentDoesNotExistException;
+import comp3350.degree_planner.business.exceptions.TermTypeDoesNotExistException;
 import comp3350.degree_planner.objects.CoursePlan;
 
 /**
@@ -156,28 +161,43 @@ public class CoursePlansActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 int year = -1;
-                String termSelected = autocompleteview.getText().toString();
+                boolean dataIsValid = true;
+                String termSelected = "";
                 int termTypeId = -1;
-                if(termSelected.equalsIgnoreCase("Winter")){
-                    termTypeId = Season.WINTER.getValue();
-                }else if(termSelected.equalsIgnoreCase("Summer")){
-                    termTypeId = Season.SUMMER.getValue();
-                }else if(termSelected.equalsIgnoreCase("Fall")){
-                    termTypeId = Season.FALL.getValue();
+
+                // Validate year entered by user
+                if(validate(editYear.getText().toString())){
+                    year = Integer.parseInt(editYear.getText().toString());
+                    // Validate term entered by user
+                    if(validate(autocompleteview.getText().toString())){
+                        termSelected = autocompleteview.getText().toString();
+                        if(termSelected.equalsIgnoreCase("Winter")){
+                            termTypeId = Season.WINTER.getValue();
+                        }else if(termSelected.equalsIgnoreCase("Summer")){
+                            termTypeId = Season.SUMMER.getValue();
+                        }else if(termSelected.equalsIgnoreCase("Fall")){
+                            termTypeId = Season.FALL.getValue();
+                        }else{
+                            dataIsValid = false;
+                            Toast.makeText(CoursePlansActivity.this, R.string.error_invalid_term, Toast.LENGTH_SHORT).show();
+                        }
+                    }else{
+                        dataIsValid = false;
+                        Toast.makeText(CoursePlansActivity.this, R.string.error_no_term, Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    dataIsValid = false;
+                    Toast.makeText(CoursePlansActivity.this, R.string.error_no_year, Toast.LENGTH_SHORT).show();
                 }
 
-                try{
-                    if(editYear.getText().toString().length() > 0) { year = Integer.parseInt(editYear.getText().toString()); }
-                    accessCoursePlan.moveCourse(coursePlanId, termTypeId, year);
-                }catch(Exception e){
-                    e.printStackTrace();
-                }
-
-                try {
-                    coursePlanAdapter.refreshList(accessCoursePlan.getCoursePlansAndHeaders(1));
-                }
-                catch (Exception e) {
-                    setContentView(R.layout.generic_error);
+                // Add to course plan
+                if(dataIsValid){
+                    try{
+                        accessCoursePlan.moveCourse(coursePlanId, termTypeId, year);
+                        Toast.makeText(CoursePlansActivity.this, R.string.required_course_added, Toast.LENGTH_SHORT).show();
+                    }catch(Exception e){
+                        displayErrorMessage(e);
+                    }
                 }
             }
         });
@@ -198,5 +218,19 @@ public class CoursePlansActivity extends AppCompatActivity {
         finish();
     }
 
-    public void confirmed(String s){ Toast.makeText(this, s, Toast.LENGTH_SHORT).show();}
+    private boolean validate(String text){ return text.length() > 0; }
+
+    private void displayErrorMessage(Exception e){
+        if(e instanceof CourseAlreadyPlannedForTermException){
+            Toast.makeText(this, R.string.error_duplicate_course, Toast.LENGTH_SHORT).show();
+        }else if(e instanceof StudentDoesNotExistException){
+            Toast.makeText(this, R.string.error_student_not_exist, Toast.LENGTH_SHORT).show();
+        }else if(e instanceof CourseDoesNotExistException){
+            Toast.makeText(this, R.string.error_course_not_exist, Toast.LENGTH_SHORT).show();
+        }else if(e instanceof TermTypeDoesNotExistException){
+            Toast.makeText(this, R.string.error_termtype_not_exist, Toast.LENGTH_SHORT).show();
+        }else if(e instanceof CourseNotOfferedInTermException){
+            Toast.makeText(this, R.string.error_course_not_offered, Toast.LENGTH_SHORT).show();
+        }
+    }
 }
