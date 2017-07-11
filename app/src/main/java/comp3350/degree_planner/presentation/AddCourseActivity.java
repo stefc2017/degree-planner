@@ -165,6 +165,7 @@ public class AddCourseActivity extends AppCompatActivity {
         b.putInt("degreeId", degreeId);
         intent.putExtras(b);
         AddCourseActivity.this.startActivity(intent);
+        finish();
     }
 
 
