@@ -8,7 +8,7 @@
     tools:context="comp3350.degree_planner.presentation.DegreesActivity">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/degrees_toolbar"
+        android:id="@+id/pick_degree_toolbar"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:background="@color/colorPrimary"
@@ -32,7 +32,7 @@
         android:rowCount="1">
 
         <TextView
-            android:id="@+id/degreesPageTitle"
+            android:id="@+id/PickDegreePageTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:height="200dp"
@@ -51,10 +51,4 @@
         android:layout_height="match_parent"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"/>
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Button" />
 </LinearLayout>

@@ -44,4 +44,5 @@
         <item>Summer</item>
         <item>Fall</item>
     </string-array>
+    <string name="action_settings">Settings</string>
 </resources>
