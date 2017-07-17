@@ -6,14 +6,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import comp3350.degree_planner.R;
-import comp3350.degree_planner.business.Season;
+import comp3350.degree_planner.application.Services;
+import comp3350.degree_planner.business.AccessTermTypes;
 import comp3350.degree_planner.objects.CoursePlan;
 
 /**
@@ -25,6 +25,7 @@ import comp3350.degree_planner.objects.CoursePlan;
 
 public class CoursePlanAdapter extends BaseAdapter {
     private List coursePlansAndHeaders;
+    private AccessTermTypes accessTermTypes;
     private CourseItemClickListener listener;
     private static final int COURSEPLAN = 0;
     private static final int SECTION_HEADER = 1;
@@ -40,6 +41,7 @@ public class CoursePlanAdapter extends BaseAdapter {
         coursePlansAndHeaders = list;
         this.listener = listener;
         inflater = (LayoutInflater)c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        accessTermTypes = new AccessTermTypes(Services.getDataAccess());
     }
 
     @Override
@@ -139,12 +141,12 @@ public class CoursePlanAdapter extends BaseAdapter {
                 int term = (Integer)((ArrayList)coursePlansAndHeaders.get(position)).get(0);
                 int year = (Integer)((ArrayList)coursePlansAndHeaders.get(position)).get(1);
 
-                if(term == Season.FALL.getValue()){
-                    headerTerm.setText(myContext.getText(R.string.fall).toString() + " " + year);
-                }else if(term == Season.SUMMER.getValue()){
+                if(term == accessTermTypes.getTermTypeIdByName("Winter")){
+                    headerTerm.setText(myContext.getText(R.string.winter).toString() + " " + year);
+                }else if(term == accessTermTypes.getTermTypeIdByName("Summer")){
                     headerTerm.setText(myContext.getText(R.string.summer).toString() + " " + year);
                 }else{
-                    headerTerm.setText(myContext.getText(R.string.winter).toString() + " " + year);
+                    headerTerm.setText(myContext.getText(R.string.fall).toString() + " " + year);
                 }
                 break;
         }

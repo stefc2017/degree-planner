@@ -69,9 +69,9 @@ public class DataAccessStub implements DataAccess {
         degreeCourseTypes.add(new DegreeCourseType(2, "Elective for Major"));
 
         termTypes = new ArrayList<TermType>();
-        termTypes.add(new TermType(1, "Fall"));
-        termTypes.add(new TermType(2, "Winter"));
-        termTypes.add(new TermType(3, "Summer"));
+        termTypes.add(new TermType(1, "Winter"));
+        termTypes.add(new TermType(2, "Summer"));
+        termTypes.add(new TermType(3, "Fall"));
 
         gradeTypes = new ArrayList<GradeType>();
         gradeTypes.add(new GradeType(1, "A+", 4.5));
@@ -504,6 +504,19 @@ public class DataAccessStub implements DataAccess {
         }
 
         return failingGradeId;
+    }
+
+    public int getTermTypeIdByName(String termType) {
+        int termTypeId = -1;
+
+        for(int i = 0; i < termTypes.size(); i++) {
+            if(termTypes.get(i).getSeason().equalsIgnoreCase(termType)){
+                termTypeId = termTypes.get(i).getId();
+                break;
+            }
+        }
+
+        return termTypeId;
     }
 
     /*
