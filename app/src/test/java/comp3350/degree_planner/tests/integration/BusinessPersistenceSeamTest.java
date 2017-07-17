@@ -16,7 +16,6 @@ import comp3350.degree_planner.business.AccessCourses;
 import comp3350.degree_planner.business.AccessDegrees;
 import comp3350.degree_planner.business.CompletedCourses;
 import comp3350.degree_planner.business.CreditHours;
-import comp3350.degree_planner.business.Season;
 import comp3350.degree_planner.business.exceptions.CourseAlreadyPlannedForTermException;
 import comp3350.degree_planner.business.exceptions.CourseDoesNotExistException;
 import comp3350.degree_planner.business.exceptions.CourseNotOfferedInTermException;
@@ -187,6 +186,7 @@ public class BusinessPersistenceSeamTest {
     @Test
     public void testGetCoursePlanAndHeaders() throws Exception {
         final int NB_LIST_SIZE_FOR_STUDENT_1 = 5;
+        int[] termTypeIds = {1, 2, 3}; // Winter(1) Summer(2) Fall(3)
         CoursePlan tempCP;  // Used for checking the ID's of CoursePlans
         List coursePlansAndHeaders;
 
@@ -211,7 +211,7 @@ public class BusinessPersistenceSeamTest {
                 NB_LIST_SIZE_FOR_STUDENT_1, coursePlansAndHeaders.size());
 
         assertTrue("No starting header", coursePlansAndHeaders.get(0) instanceof ArrayList);
-        assertEquals("Header at index 0 is incorrect", Season.FALL.getValue(), ((ArrayList)coursePlansAndHeaders.get(0)).get(0));
+        assertEquals("Header at index 0 is incorrect", termTypeIds[2], ((ArrayList)coursePlansAndHeaders.get(0)).get(0));
 
         assertTrue("Value at index 1 is not a CoursePlan", coursePlansAndHeaders.get(1) instanceof CoursePlan);
         tempCP = (CoursePlan)(coursePlansAndHeaders.get(1));
@@ -222,7 +222,7 @@ public class BusinessPersistenceSeamTest {
         assertEquals("CoursePlan at index 2 is incorrect", 2, tempCP.getId());
 
         assertTrue("Value at index 3 is not a header", coursePlansAndHeaders.get(3) instanceof ArrayList);
-        assertEquals("Header at index 3 is incorrect", Season.SUMMER.getValue(), ((ArrayList)coursePlansAndHeaders.get(3)).get(0));
+        assertEquals("Header at index 3 is incorrect", termTypeIds[1], ((ArrayList)coursePlansAndHeaders.get(3)).get(0));
 
         assertTrue("Value at index 4 is not a CoursePlan", coursePlansAndHeaders.get(4) instanceof CoursePlan);
         tempCP = (CoursePlan)(coursePlansAndHeaders.get(4));

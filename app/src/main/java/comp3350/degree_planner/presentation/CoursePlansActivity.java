@@ -23,7 +23,7 @@ import java.util.List;
 import comp3350.degree_planner.R;
 import comp3350.degree_planner.application.Services;
 import comp3350.degree_planner.business.AccessCoursePlan;
-import comp3350.degree_planner.business.Season;
+import comp3350.degree_planner.business.AccessTermTypes;
 import comp3350.degree_planner.business.exceptions.CourseAlreadyPlannedForTermException;
 import comp3350.degree_planner.business.exceptions.CourseDoesNotExistException;
 import comp3350.degree_planner.business.exceptions.CourseNotOfferedInTermException;
@@ -37,6 +37,7 @@ import comp3350.degree_planner.objects.CoursePlan;
 
 public class CoursePlansActivity extends AppCompatActivity {
     private AccessCoursePlan accessCoursePlan;
+    private AccessTermTypes accessTermTypes;
     private AlertDialog dialog = null;
     private List coursePlansAndHeaders;
     private CoursePlanAdapter coursePlanAdapter;
@@ -55,6 +56,7 @@ public class CoursePlansActivity extends AppCompatActivity {
 
         ListView coursePlanList = (ListView)findViewById(R.id.coursePlans);
         accessCoursePlan = new AccessCoursePlan(Services.getDataAccess());
+        accessTermTypes = new AccessTermTypes(Services.getDataAccess());
 
         try {
             coursePlansAndHeaders = accessCoursePlan.getCoursePlansAndHeaders(1);
@@ -173,11 +175,11 @@ public class CoursePlansActivity extends AppCompatActivity {
                     if(validate(autocompleteview.getText().toString())){
                         termSelected = autocompleteview.getText().toString();
                         if(termSelected.equalsIgnoreCase("Winter")){
-                            termTypeId = Season.WINTER.getValue();
+                            termTypeId = accessTermTypes.getTermTypeIdByName("Winter");
                         }else if(termSelected.equalsIgnoreCase("Summer")){
-                            termTypeId = Season.SUMMER.getValue();
+                            termTypeId = accessTermTypes.getTermTypeIdByName("Summer");
                         }else if(termSelected.equalsIgnoreCase("Fall")){
-                            termTypeId = Season.FALL.getValue();
+                            termTypeId = accessTermTypes.getTermTypeIdByName("Fall");
                         }else{
                             dataIsValid = false;
                             Toast.makeText(CoursePlansActivity.this, R.string.error_invalid_term, Toast.LENGTH_SHORT).show();

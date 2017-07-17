@@ -658,6 +658,20 @@ public class DataAccessObject implements DataAccess {
         return failingGradeId;
     }
 
+    public int getTermTypeIdByName(String termType) throws SQLException {
+        int termTypeId = -1;
+
+        cmdString = "Select * from Term_Type where Season = " + "'" + termType + "'";
+        rs2 = st1.executeQuery(cmdString);
+
+        while(rs2.next()) {
+            termTypeId = rs2.getInt("ID");
+        }
+        rs2.close();
+
+        return termTypeId;
+    }
+
     public Course getCourseById(int courseId) {
         Course course;
         int id;
