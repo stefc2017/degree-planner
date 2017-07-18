@@ -160,7 +160,7 @@ public class GetCompletedCoursesTest {
                 while (crIterator.hasNext()) {
                     currCR = crIterator.next();
 
-                    if (currCR.getStudent().getId() == studentId) {
+                    if (currCR.getStudentId() == studentId) {
                         crByStudentId.add (currCR);
                     }
                 }
@@ -199,7 +199,7 @@ public class GetCompletedCoursesTest {
         assertEquals("Result length is not the same as expected result length", NB_COMPLETED_COURSES_FOR_STUDENT_1, courseResults.size());
 
         for (int i = 0; i < NB_COMPLETED_COURSES_FOR_STUDENT_1; i++) {
-            assertEquals("Expected result and result are not equal at index " + i, courseResults.get(i).getCourse().getId(), i+1);
+            assertEquals("Expected result and result are not equal at index " + i, courseResults.get(i).getCourseId(), i+1);
         }
 
         System.out.println("Finished Get Completed Courses Test: valid student id and non-empty course results");

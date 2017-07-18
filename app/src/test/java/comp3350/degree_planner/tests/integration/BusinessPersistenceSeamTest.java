@@ -71,7 +71,7 @@ public class BusinessPersistenceSeamTest {
         assertNotNull("Completed courses array is null", courseResults);
         assertEquals("Result length is not the same as expected result length", NB_COMPLETED_COURSES_FOR_STUDENT_1, courseResults.size());
         for (int i = 0; i < NB_COMPLETED_COURSES_FOR_STUDENT_1; i++) {
-            assertEquals("Expected result and result are not equal at index " + i, courseResults.get(i).getCourse().getId(), i+1);
+            assertEquals("Expected result and result are not equal at index " + i, courseResults.get(i).getCourseId(), i+1);
         }
         System.out.println("Finished Get Completed Courses Test: valid student id and non-empty course results");
 
@@ -298,9 +298,9 @@ public class BusinessPersistenceSeamTest {
 
         added = dataAccess.getCoursePlan(SCIENCE_COURSE_ID, STUDENT_ID, TERM_TYPE_ID, YEAR);
         assertNotNull("Course plan was not added", added);
-        assertEquals ("Course IDs weren't equal", added.getCourse().getId(), SCIENCE_COURSE_ID);
-        assertEquals ("Student IDs weren't equal", added.getStudent().getId(), STUDENT_ID);
-        assertEquals ("Term Type IDs weren't equal", added.getTermType().getId(), TERM_TYPE_ID);
+        assertEquals ("Course IDs weren't equal", added.getCourseId(), SCIENCE_COURSE_ID);
+        assertEquals ("Student IDs weren't equal", added.getStudentId(), STUDENT_ID);
+        assertEquals ("Term Type IDs weren't equal", added.getTermTypeId(), TERM_TYPE_ID);
         assertEquals ("Years weren't equal", added.getYear(), YEAR);
 
         //Restore db to before this test
@@ -311,9 +311,9 @@ public class BusinessPersistenceSeamTest {
 
         added = dataAccess.getCoursePlan(USER_DEFINED_COURSE_ID, STUDENT_ID, USER_DEFINED_TERM_TYPE_ID, YEAR);
         assertNotNull("Course plan was not added", added);
-        assertEquals ("Course IDs weren't equal", added.getCourse().getId(), USER_DEFINED_COURSE_ID);
-        assertEquals ("Student IDs weren't equal", added.getStudent().getId(), STUDENT_ID);
-        assertEquals ("Term Type IDs weren't equal", added.getTermType().getId(), USER_DEFINED_TERM_TYPE_ID);
+        assertEquals ("Course IDs weren't equal", added.getCourseId(), USER_DEFINED_COURSE_ID);
+        assertEquals ("Student IDs weren't equal", added.getStudentId(), STUDENT_ID);
+        assertEquals ("Term Type IDs weren't equal", added.getTermTypeId(), USER_DEFINED_TERM_TYPE_ID);
         assertEquals ("Years weren't equal", added.getYear(), YEAR);
 
         //Restore db to before this test
@@ -371,7 +371,7 @@ public class BusinessPersistenceSeamTest {
         acp.moveCourse(COURSE_PLAN_ID, TERM_TYPE_ID, YEAR);
         coursePlan = dataAccess.getCoursePlan(COURSE_PLAN_ID);
         assertNotNull("Error occurred with modification", coursePlan);
-        assertEquals("Term Type IDs weren't equal", coursePlan.getTermType().getId(), TERM_TYPE_ID);
+        assertEquals("Term Type IDs weren't equal", coursePlan.getTermTypeId(), TERM_TYPE_ID);
         assertEquals ("Years weren't equal", coursePlan.getYear(), YEAR);
         acp.moveCourse(COURSE_PLAN_ID, 2, 2018); //Restore db to before this test
         System.out.println("Finished Move Course Test: valid data");

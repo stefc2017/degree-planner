@@ -40,4 +40,6 @@ public class Student {
     public String getPassword() { return password; }
 
     public Degree getDegree() { return degree; }
+
+    public int getDegreeId() { return this.degree.getId(); }
 }

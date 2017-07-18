@@ -150,7 +150,7 @@ public class CreditHoursTest {
                 while (crIterator.hasNext()) {
                     currCR = crIterator.next();
 
-                    if (currCR.getStudent().getId() == studentId) {
+                    if (currCR.getStudentId() == studentId) {
                         crByStudentId.add (currCR);
                     }
                 }
@@ -164,7 +164,7 @@ public class CreditHoursTest {
                 List<CourseResult> crByStudentId = getCourseResultsByStudentId(studentId);
 
                 for (CourseResult result : crByStudentId) {
-                    coursesTaken.add(getCourseById(result.getCourse().getId()));
+                    coursesTaken.add(getCourseById(result.getCourseId()));
                 }
 
                 return coursesTaken;
@@ -176,8 +176,8 @@ public class CreditHoursTest {
                 List<Course> reqCourseList = new ArrayList<Course>();
 
                 for( DegreeCourse course : degreeCourses ){
-                    if( course.getDegree().getId() == degreeId && course.getDegreeCourseType().getId() == REQUIRED_COURSE){
-                        reqCourseList.add( getCourseById( course.getCourse().getId() ) );
+                    if( course.getDegreeId() == degreeId && course.getDegreeCourseTypeId() == REQUIRED_COURSE){
+                        reqCourseList.add( getCourseById( course.getCourseId() ) );
                     }
                 }
 

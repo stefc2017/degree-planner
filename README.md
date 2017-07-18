@@ -6,6 +6,8 @@
 
 [User Stories](https://docs.google.com/document/d/1IxhGPwOgUdlWqZGTTWUEu0HilO-rmCI_imyEIydX6Lk/edit)
 
+[Retrospective](https://docs.google.com/document/d/12ASD9879N6Ze83E326FPG84pZJWNqVVYP67Y0YrRJMk/edit?usp=sharing)
+
 ## Submission Contents:
 
 Main package: comp3350.degree_planner
@@ -132,3 +134,9 @@ Incomplete Issues/Tasks:
 - Database file locations
   - Local copy of the database is in degree-planner/database
   - Original copy of the database is in degree-planner/app/src/main/assets
+  
+Major Changes
+- Pick Degree User Story has been implemented
+- Acceptance Tests have been added
+- Integration tests have been added / updated
+- Several Big User Stories have been scrapped, see the User Stories Document

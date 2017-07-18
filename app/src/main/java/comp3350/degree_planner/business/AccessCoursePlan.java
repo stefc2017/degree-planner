@@ -71,9 +71,9 @@ public class AccessCoursePlan {
             if (cp != null) { //Course Plan exists
                 if (!dataAccess.isValidTermTypeId(newTermTypeId)) {
                     throw new TermTypeDoesNotExistException();
-                } else if (!dataAccess.courseOffered(cp.getCourse().getId(), newTermTypeId)) {
+                } else if (!dataAccess.courseOffered(cp.getCourseId(), newTermTypeId)) {
                     throw new CourseNotOfferedInTermException();
-                } else if (dataAccess.coursePlanExists(cp.getCourse().getId(), cp.getStudent().getId(), newTermTypeId, newYear)) {
+                } else if (dataAccess.coursePlanExists(cp.getCourseId(), cp.getStudentId(), newTermTypeId, newYear)) {
                     throw new CourseAlreadyPlannedForTermException();
                 } else {
                     dataAccess.moveCourse(coursePlanId, newTermTypeId, newYear);
