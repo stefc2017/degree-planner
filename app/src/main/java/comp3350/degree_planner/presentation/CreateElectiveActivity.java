@@ -77,17 +77,22 @@ public class CreateElectiveActivity extends AppCompatActivity {
         EditText editCreditHours = (EditText)findViewById(R.id.credithours);
         EditText editAbbrev = (EditText)findViewById(R.id.abbrev);
 
-        // Validate year entered by user
+        // Validate name entered by user
         if(validate(editName.getText().toString())){
             name = editName.getText().toString();
-            // Validate term entered by user
+            // Validate credit hours entered by user
             if(validate(editCreditHours.getText().toString())){
                 creditHrs = Double.parseDouble(editCreditHours.getText().toString());
-                if(validate(editAbbrev.getText().toString())){
-                    abbreviation = editAbbrev.getText().toString();
+                if(creditHrs >= 0){
+                    if(validate(editAbbrev.getText().toString())){
+                        abbreviation = editAbbrev.getText().toString();
+                    }else{
+                        dataIsValid = false;
+                        Toast.makeText(this, R.string.error_no_abbrev, Toast.LENGTH_SHORT).show();
+                    }
                 }else{
                     dataIsValid = false;
-                    Toast.makeText(this, R.string.error_no_abbrev, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.error_invalid_credit_hours, Toast.LENGTH_SHORT).show();
                 }
             }else{
                 dataIsValid = false;
