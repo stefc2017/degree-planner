@@ -31,9 +31,9 @@ public class DegreeCourseTest {
                 new ScienceCourse(1, "Introductory Computer Science I", 3.0, null, 1010, "Basic programming concepts."),
                 new DegreeCourseType(1, "Required"));
         assertNotNull(dc);
-        assertEquals("Degree ID was assigned incorrectly", 1, dc.getDegree().getId());
-        assertEquals("Course ID was assigned incorrectly", 1, dc.getCourse().getId());
-        assertEquals("Degree Course Type ID was assigned incorrectly", 1, dc.getDegreeCourseType().getId());
+        assertEquals("Degree ID was assigned incorrectly", 1, dc.getDegreeId());
+        assertEquals("Course ID was assigned incorrectly", 1, dc.getCourseId());
+        assertEquals("Degree Course Type ID was assigned incorrectly", 1, dc.getDegreeCourseTypeId());
 
         System.out.println("Finished DegreeCourse Test: constructor");
     }

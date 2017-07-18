@@ -883,7 +883,7 @@ public class DataAccessObject implements DataAccess {
 
     public Course getCourse(CourseResult courseResult, List<Course> allCourses) {
         Course course = null;
-        int courseId = courseResult.getCourse().getId();
+        int courseId = courseResult.getCourseId();
         int numberOfCourses = allCourses.size();
         int index = 0;
 

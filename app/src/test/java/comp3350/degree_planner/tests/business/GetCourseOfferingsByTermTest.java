@@ -66,7 +66,7 @@ public class GetCourseOfferingsByTermTest {
                     for (int i = 0; i < courseOfferings.size(); i++) {
                         try {
                             if (term.getId() == 1 || term.getId() == 2 || term.getId() == 3) {
-                                if (term.getId() == courseOfferings.get(i).getTermType().getId()) {
+                                if (term.getId() == courseOfferings.get(i).getTermTypeId()) {
                                     //Adds course offering based on courseID from CourseOfferings and matching TermID
                                     courseOfferingsByTermList.add(courseOfferings.get(i));
                                 }

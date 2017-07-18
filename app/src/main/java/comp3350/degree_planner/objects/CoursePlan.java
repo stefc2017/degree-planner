@@ -43,6 +43,12 @@ public class CoursePlan implements Comparable<CoursePlan> {
 
     public void setYear (int year) { this.year = year; }
 
+    public int getCourseId() { return this.course.getId(); }
+
+    public int getStudentId() { return this.student.getId(); }
+
+    public int getTermTypeId() { return this.termType.getId(); }
+
     /*
      * compareTo
      *

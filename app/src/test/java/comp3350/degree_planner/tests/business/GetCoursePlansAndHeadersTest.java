@@ -129,7 +129,7 @@ public class GetCoursePlansAndHeadersTest {
 
                 for (int i = 0; i < coursePlans.size(); i++) {
                     currPlan = coursePlans.get(i);
-                    if (currPlan.getStudent().getId() == studentId) {
+                    if (currPlan.getStudentId() == studentId) {
                         studentCoursePlans.add(currPlan);
                     }
                 }

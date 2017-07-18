@@ -456,7 +456,7 @@ public class DataAccessTest {
         dataAccess.moveCourse( COURSE_PLAN_ID, 1, 2017 );
         CoursePlan modifiedCoursePlan = dataAccess.getCoursePlan(COURSE_PLAN_ID);
         assertEquals( 2017, modifiedCoursePlan.getYear() );
-        assertEquals( 1, modifiedCoursePlan.getTermType().getId() );
+        assertEquals( 1, modifiedCoursePlan.getTermTypeId() );
 
         //Restore data access to before this test
         dataAccess.moveCourse( COURSE_PLAN_ID, 2, 2018 );

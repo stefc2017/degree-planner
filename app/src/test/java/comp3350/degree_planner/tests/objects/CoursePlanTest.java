@@ -31,9 +31,9 @@ public class CoursePlanTest {
                 null, 2150, "Detailed look at proper object oriented programming."), new Student(1, 1234567,
                 "Jim Bob", "jimbob@myumanitoba.ca", "helloworld1", null), new TermType(2, "Winter"), 2018);
         assertNotNull(cp);
-        assertEquals("Course ID was assigned incorrectly", 3, cp.getCourse().getId());
-        assertEquals("Student ID was assigned incorrectly", 1, cp.getStudent().getId());
-        assertEquals("Term Type ID was assigned incorrectly", 2, cp.getTermType().getId());
+        assertEquals("Course ID was assigned incorrectly", 3, cp.getCourseId());
+        assertEquals("Student ID was assigned incorrectly", 1, cp.getStudentId());
+        assertEquals("Term Type ID was assigned incorrectly", 2, cp.getTermTypeId());
         assertEquals("Year was assigned incorrectly", 2018, cp.getYear());
 
         System.out.println("Finished CoursePlan Test: constructor");
