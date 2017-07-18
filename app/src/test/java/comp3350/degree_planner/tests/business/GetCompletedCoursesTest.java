@@ -35,7 +35,7 @@ public class GetCompletedCoursesTest {
 
     //Sets up test data with the entries we need for all tests below
     @Before
-    public void setUp() {
+    public void setUp() throws Exception {
 
         /*
          * Most of the stuff here is copied from DataAccessStub.java, see there for comments etc.

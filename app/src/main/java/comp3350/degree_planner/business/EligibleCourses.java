@@ -1,5 +1,6 @@
 package comp3350.degree_planner.business;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import comp3350.degree_planner.objects.Course;
@@ -14,5 +15,7 @@ public class EligibleCourses {
 
     public EligibleCourses(DataAccess dataAccess) { this.dataAccess = dataAccess; }
 
-    public List<Course> getEligibleRequiredCourse(int studentId, int degreeId) { return dataAccess.getEligibleRequiredCourse( studentId, degreeId); }
+    public List<Course> getEligibleRequiredCourse(int studentId, int degreeId) throws SQLException {
+        return dataAccess.getEligibleRequiredCourse( studentId, degreeId);
+    }
 }

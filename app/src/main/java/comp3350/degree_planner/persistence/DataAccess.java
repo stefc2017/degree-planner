@@ -18,77 +18,77 @@ import comp3350.degree_planner.objects.TermType;
  */
 
 public interface DataAccess {
-    void open(String dbName);
+    void open(String dbName) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException;
 
-    void close();
+    void close() throws SQLException;
 
     Course getCourse(CourseResult courseResult, List<Course> allCourses);
 
-    List<Course> getAllCourses();
+    List<Course> getAllCourses() throws SQLException;
 
-    List<Degree> getAllDegrees();
+    List<Degree> getAllDegrees() throws SQLException;
 
-    List<Course> getAllPrerequisites(Course course);
+    List<Course> getAllPrerequisites(Course course) throws SQLException;
 
-    List<CourseOffering> getAllCourseOfferings();
+    List<CourseOffering> getAllCourseOfferings() throws SQLException;
 
-    List<Course> getCoursesTaken(int studentId);
+    List<Course> getCoursesTaken(int studentId) throws SQLException;
 
-    List<Course> getCoursesNotTaken(int studentNumber);
+    List<Course> getCoursesNotTaken(int studentNumber) throws SQLException;
 
-    List<Course> getCoursesCanTake(int studentNumber);
+    List<Course> getCoursesCanTake(int studentNumber) throws SQLException;
 
-    List<Course> getEligibleRequiredCourse(int studentNum, int degreeId);
+    List<Course> getEligibleRequiredCourse(int studentNum, int degreeId) throws SQLException;
 
-    boolean hasPrerequisites(int studentNumber, String courseName);
+    boolean hasPrerequisites(int studentNumber, String courseName) throws SQLException;
 
-    Course getCourseByName(String courseName);
+    Course getCourseByName(String courseName) throws SQLException;
 
-    Degree getDegreeByName(String degreeName);
+    Degree getDegreeByName(String degreeName) throws SQLException;
 
-    Course getCourseById(int courseId);
+    Course getCourseById(int courseId) throws SQLException;
 
-    Degree getDegreeById(int degreeId);
+    Degree getDegreeById(int degreeId) throws SQLException;
 
-    Department getDepartmentById(int departmentId);
+    Department getDepartmentById(int departmentId) throws SQLException;
 
-    List<CourseResult> getCourseResultsByStudentId(int studentId) throws Exception;
+    List<CourseResult> getCourseResultsByStudentId(int studentId) throws SQLException;
 
     int getFailingGradeId() throws SQLException;
 
+    List<CourseOffering> getCourseOfferingsByTerm(TermType type) throws SQLException;
+
     int getTermTypeIdByName(String termType) throws Exception;
 
-    List<CourseOffering> getCourseOfferingsByTerm(TermType type);
+    List<Course> getDegreeCoursesTaken(int studentId, int degreeId) throws SQLException;
 
-    List<Course> getDegreeCoursesTaken(int studentId, int degreeId);
+    List<Course> getDegreeCourses(int degreeId) throws SQLException;
 
-    List<Course> getDegreeCourses(int degreeId);
+    List<Course> getAllUserDefinedCourses() throws SQLException;
 
-    List<Course> getAllUserDefinedCourses();
+    void removeUserDefinedCourse(int courseId) throws SQLException;
 
-    void removeUserDefinedCourse(int courseId);
+    void createUserDefinedCourse(String name, double creditHours, String fullAbbreviation) throws SQLException;
 
-    void createUserDefinedCourse(String name, double creditHours, String fullAbbreviation);
+    void addToCoursePlan (int courseId, int studentId, int termTypeId, int year) throws SQLException;
 
-    void addToCoursePlan (int courseId, int studentId, int termTypeId, int year) throws Exception;
+    boolean isValidStudentId (int studentId) throws SQLException;
 
-    boolean isValidStudentId (int studentId) throws Exception;
+    boolean isValidCourseId (int courseId) throws SQLException;
 
-    boolean isValidCourseId (int courseId) throws Exception;
+    boolean isValidTermTypeId (int termTypeId) throws SQLException;
 
-    boolean isValidTermTypeId (int termTypeId) throws Exception;
+    boolean courseOffered (int courseId, int termTypeId) throws SQLException;
 
-    boolean courseOffered (int courseId, int termTypeId) throws Exception;
+    boolean coursePlanExists (int courseId, int studentId, int termTypeId, int year) throws SQLException;
 
-    boolean coursePlanExists (int courseId, int studentId, int termTypeId, int year) throws Exception;
+    void moveCourse (int coursePlanId, int newTermTypeId, int newYear) throws SQLException;
 
-    void moveCourse (int coursePlanId, int newTermTypeId, int newYear) throws Exception;
+    void removeFromCoursePlan (int coursePlanId) throws SQLException;
 
-    void removeFromCoursePlan (int coursePlanId) throws Exception;
+    CoursePlan getCoursePlan (int courseId, int studentId, int termTypeId, int year) throws SQLException;
 
-    CoursePlan getCoursePlan (int courseId, int studentId, int termTypeId, int year) throws Exception;
+    CoursePlan getCoursePlan (int coursePlanId) throws SQLException;
 
-    CoursePlan getCoursePlan (int coursePlanId) throws Exception;
-
-    List<CoursePlan> getCoursePlansByStudentId (int studentId) throws Exception;
+    List<CoursePlan> getCoursePlansByStudentId (int studentId) throws SQLException;
 }

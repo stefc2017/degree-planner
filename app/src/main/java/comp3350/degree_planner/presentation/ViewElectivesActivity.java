@@ -15,12 +15,19 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import comp3350.degree_planner.R;
 import comp3350.degree_planner.application.Services;
 import comp3350.degree_planner.business.AccessCourses;
+import comp3350.degree_planner.business.exceptions.CourseAlreadyPlannedForTermException;
+import comp3350.degree_planner.business.exceptions.CourseDoesNotExistException;
+import comp3350.degree_planner.business.exceptions.CourseNotOfferedInTermException;
+import comp3350.degree_planner.business.exceptions.StudentDoesNotExistException;
+import comp3350.degree_planner.business.exceptions.TermTypeDoesNotExistException;
 import comp3350.degree_planner.objects.Course;
 
 /**
@@ -44,7 +51,11 @@ public class ViewElectivesActivity extends AppCompatActivity {
         pageTitle.setText("Free Electives");
 
         accessCourses = new AccessCourses(Services.getDataAccess());
-        freeElectives = accessCourses.getAllUserDefinedCourses();
+        try {
+            freeElectives = accessCourses.getAllUserDefinedCourses();
+        } catch (SQLException e) {
+            Toast.makeText(this, R.string.error_sql_exception, Toast.LENGTH_SHORT).show();
+        }
 
         if (freeElectives != null && freeElectives.size() > 0) {
 
@@ -109,11 +120,16 @@ public class ViewElectivesActivity extends AppCompatActivity {
         }catch(Exception e){
             e.printStackTrace();
         }
+
         // Add confirm button
         builder.setPositiveButton(R.string.remove, new DialogInterface.OnClickListener(){
-            public void onClick(DialogInterface dialog, int id){
-                accessCourses.removeUserDefinedCourse(electiveCourseId);
-                electivesAdapter.refreshList(accessCourses.getAllUserDefinedCourses());
+            public void onClick(DialogInterface dialog, int id) {
+                try {
+                    accessCourses.removeUserDefinedCourse(electiveCourseId);
+                    electivesAdapter.refreshList(accessCourses.getAllUserDefinedCourses());
+                } catch (SQLException e) {
+                    displayErrorMessage(e);
+                }
             }
         });
 
@@ -126,6 +142,12 @@ public class ViewElectivesActivity extends AppCompatActivity {
                 .setIcon(R.drawable.question);
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    private void displayErrorMessage(Exception e){
+        if (e instanceof SQLException) {
+            Toast.makeText(this, R.string.error_sql_exception, Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void buttonAddNewElectiveOnClick(View v) {

@@ -1,5 +1,7 @@
 package comp3350.degree_planner.application;
 
+import java.sql.SQLException;
+
 import comp3350.degree_planner.persistence.DataAccess;
 import comp3350.degree_planner.persistence.DataAccessObject;
 import comp3350.degree_planner.persistence.DataAccessStub;
@@ -21,7 +23,11 @@ public class Services {
         if (dataAccessService == null)
         {
             dataAccessService = new DataAccessObject(dbName);
-            dataAccessService.open(Main.getDBPathName());
+            try {
+                dataAccessService.open(Main.getDBPathName());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         return dataAccessService;
     }
@@ -31,7 +37,11 @@ public class Services {
         if (dataAccessService == null)
         {
             dataAccessService = alternateDataAccessService;
-            dataAccessService.open(Main.getDBPathName());
+            try {
+                dataAccessService.open(Main.getDBPathName());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         return dataAccessService;
     }
@@ -54,7 +64,11 @@ public class Services {
     {
         if (dataAccessService != null)
         {
-            dataAccessService.close();
+            try {
+                dataAccessService.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         dataAccessService = null;
     }

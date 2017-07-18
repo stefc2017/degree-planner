@@ -1,5 +1,6 @@
 package comp3350.degree_planner.business;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import comp3350.degree_planner.application.Services;
@@ -27,12 +28,12 @@ public class CreditHours {
         return cHours;
     }
 
-    public int getCreditHoursTaken( int studentId ){
+    public int getCreditHoursTaken( int studentId ) throws SQLException {
         List<Course> courses = dataAccess.getCoursesTaken( studentId );
 
         return calculateCreditHours( courses );
     }
-    public int getRequiredCreditHoursTaken( int studentId, int degreeId ){
+    public int getRequiredCreditHoursTaken( int studentId, int degreeId ) throws SQLException {
         List<Course> courses = dataAccess.getDegreeCoursesTaken( studentId, degreeId );
 
         return calculateCreditHours( courses );

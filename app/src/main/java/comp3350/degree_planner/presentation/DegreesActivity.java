@@ -9,7 +9,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +43,11 @@ public class DegreesActivity extends AppCompatActivity {
 
         accessDegrees = new AccessDegrees(Services.getDataAccess());
         degreeList = new ArrayList<Degree>();
-        degreeList = accessDegrees.getAllDegrees();
+        try {
+            degreeList = accessDegrees.getAllDegrees();
+        } catch (SQLException e) {
+            displayErrorMessage(e);
+        }
         if(degreeList != null){
             degreeListAdapter = new ArrayAdapter<Degree>(this, android.R.layout.simple_list_item_1, android.R.id.text1, degreeList){
                 @Override
@@ -70,6 +76,12 @@ public class DegreesActivity extends AppCompatActivity {
                     DegreesActivity.this.startActivity(intent);
                 }
             });
+        }
+    }
+
+    private void displayErrorMessage(Exception e){
+        if (e instanceof SQLException) {
+            Toast.makeText(this, R.string.error_sql_exception, Toast.LENGTH_SHORT).show();
         }
     }
 }

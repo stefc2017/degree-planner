@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -63,7 +64,11 @@ public class AddFreeElectiveActivity extends AppCompatActivity {
         accessCourses = new AccessCourses(Services.getDataAccess());
         accessCoursePlan = new AccessCoursePlan(Services.getDataAccess());
         accessTermTypes = new AccessTermTypes(Services.getDataAccess());
-        selectedElective = accessCourses.getCourseById(courseId);
+        try {
+            selectedElective = accessCourses.getCourseById(courseId);
+        } catch (SQLException e) {
+            displayErrorMessage(e);
+        }
 
         if (selectedElective != null) {
             TextView courseName = (TextView) findViewById(R.id.courseName);
@@ -197,6 +202,8 @@ public class AddFreeElectiveActivity extends AppCompatActivity {
             Toast.makeText(this, R.string.error_termtype_not_exist, Toast.LENGTH_SHORT).show();
         } else if (e instanceof CourseNotOfferedInTermException) {
             Toast.makeText(this, R.string.error_course_not_offered, Toast.LENGTH_SHORT).show();
+        } else if (e instanceof SQLException ){
+            Toast.makeText(this, R.string.error_sql_exception, Toast.LENGTH_SHORT).show();
         }
     }
 }
