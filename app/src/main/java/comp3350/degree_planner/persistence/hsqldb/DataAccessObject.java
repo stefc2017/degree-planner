@@ -1,4 +1,4 @@
-package comp3350.degree_planner.persistence;
+package comp3350.degree_planner.persistence.hsqldb;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -19,6 +19,7 @@ import comp3350.degree_planner.objects.ScienceCourse;
 import comp3350.degree_planner.objects.Student;
 import comp3350.degree_planner.objects.TermType;
 import comp3350.degree_planner.objects.UserDefinedCourse;
+import comp3350.degree_planner.persistence.DataAccess;
 
 /**
  * Created by Tiffany Jiang on 2017-06-24.
@@ -97,6 +98,10 @@ public class DataAccessObject implements DataAccess {
         c1.close();
 
         System.out.println("Closed " + dbType + " database " + dbName);
+    }
+
+    public Connection getDataAccessConnection() {
+        return c1;
     }
 
     public List<Course> getCoursesNotTaken(int studentNumber) throws SQLException {
@@ -898,6 +903,55 @@ public class DataAccessObject implements DataAccess {
         return course;
     }
 
+    public void createUserDefinedCourse(String name, double creditHours, String fullAbbreviation) throws SQLException {
+        String newUserDefinedCourse = "'" + name + "', " + creditHours + ", " + "NULL" + ", " + "NULL" + ", " + "NULL" + ", '" + fullAbbreviation + "', " + "true";
+        cmdString = "INSERT INTO Course (Name, Credit_Hours, Department_Id, Course_Number, " + "Description, Full_Abbreviation, Is_User_Defined )" + " VALUES (" + newUserDefinedCourse + ")";
+
+        updateCount = st1.executeUpdate(cmdString);
+    }
+
+    public void removeUserDefinedCourse(int courseId) throws SQLException {
+        cmdString = "DELETE FROM Course_Plan WHERE Course_Id = " + courseId;
+        updateCount = st1.executeUpdate(cmdString);
+
+        cmdString = "DELETE FROM Course_Result WHERE Course_Id = " + courseId;
+        updateCount = st2.executeUpdate(cmdString);
+
+        cmdString = "DELETE FROM Course where id = " + courseId;
+        updateCount = st3.executeUpdate(cmdString);
+    }
+
+    public List<Course> getAllUserDefinedCourses() throws SQLException {
+        Course course;
+        int id;
+        String name;
+        double creditHours;
+        String fullAbbreviation;
+        Boolean isUserDefined;
+        courses = new ArrayList<Course>();
+
+        result = null;
+
+        cmdString = "Select * from Course WHERE is_user_defined = true";
+        rs2 = st1.executeQuery(cmdString);
+
+        while (rs2.next()) {
+            id = Integer.parseInt(rs2.getString("ID"));
+            name = rs2.getString("NAME");
+            creditHours = Double.parseDouble(rs2.getString("CREDIT_HOURS"));
+            fullAbbreviation = rs2.getString("FULL_ABBREVIATION");
+            isUserDefined = Boolean.parseBoolean(rs2.getString("IS_USER_DEFINED"));
+
+            if (isUserDefined) {
+                course = new UserDefinedCourse(id, name, creditHours, fullAbbreviation);
+                courses.add(course);
+            }
+        }
+        rs2.close();
+
+        return courses;
+    }
+
     /**
      * getCoursePlansByStudentId
      *
@@ -980,54 +1034,5 @@ public class DataAccessObject implements DataAccess {
         rs5.close();
 
         return coursePlans;
-    }
-
-    public void createUserDefinedCourse(String name, double creditHours, String fullAbbreviation) throws SQLException {
-        String newUserDefinedCourse = "'" + name + "', " + creditHours + ", " + "NULL" + ", " + "NULL" + ", " + "NULL" + ", '" + fullAbbreviation + "', " + "true";
-        cmdString = "INSERT INTO Course (Name, Credit_Hours, Department_Id, Course_Number, " + "Description, Full_Abbreviation, Is_User_Defined )" + " VALUES (" + newUserDefinedCourse + ")";
-
-        updateCount = st1.executeUpdate(cmdString);
-    }
-
-    public void removeUserDefinedCourse(int courseId) throws SQLException {
-        cmdString = "DELETE FROM Course_Plan WHERE Course_Id = " + courseId;
-        updateCount = st1.executeUpdate(cmdString);
-
-        cmdString = "DELETE FROM Course_Result WHERE Course_Id = " + courseId;
-        updateCount = st2.executeUpdate(cmdString);
-
-        cmdString = "DELETE FROM Course where id = " + courseId;
-        updateCount = st3.executeUpdate(cmdString);
-    }
-
-    public List<Course> getAllUserDefinedCourses() throws SQLException {
-        Course course;
-        int id;
-        String name;
-        double creditHours;
-        String fullAbbreviation;
-        Boolean isUserDefined;
-        courses = new ArrayList<Course>();
-
-        result = null;
-
-        cmdString = "Select * from Course WHERE is_user_defined = true";
-        rs2 = st1.executeQuery(cmdString);
-
-        while (rs2.next()) {
-            id = Integer.parseInt(rs2.getString("ID"));
-            name = rs2.getString("NAME");
-            creditHours = Double.parseDouble(rs2.getString("CREDIT_HOURS"));
-            fullAbbreviation = rs2.getString("FULL_ABBREVIATION");
-            isUserDefined = Boolean.parseBoolean(rs2.getString("IS_USER_DEFINED"));
-
-            if (isUserDefined) {
-                course = new UserDefinedCourse(id, name, creditHours, fullAbbreviation);
-                courses.add(course);
-            }
-        }
-        rs2.close();
-
-        return courses;
     }
 }

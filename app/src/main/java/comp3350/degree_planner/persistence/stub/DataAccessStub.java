@@ -1,12 +1,14 @@
-package comp3350.degree_planner.persistence;
+package comp3350.degree_planner.persistence.stub;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Collections;
+import java.sql.Connection;
 
 import comp3350.degree_planner.application.Main;
 import comp3350.degree_planner.objects.*;
+import comp3350.degree_planner.persistence.DataAccess;
 
 /**
  * Created by Kaleigh on 2017-05-31.
@@ -536,6 +538,10 @@ public class DataAccessStub implements DataAccess {
 
     public void close() {
         System.out.println("Closed " +dbType +" database " +dbName);
+    }
+
+    public Connection getDataAccessConnection() {
+        return null; //Stub has no connection
     }
 
     /**

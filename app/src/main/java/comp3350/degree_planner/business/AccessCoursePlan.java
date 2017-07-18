@@ -21,6 +21,7 @@ import java.util.ListIterator;
 import comp3350.degree_planner.objects.CoursePlan;
 import comp3350.degree_planner.objects.ScienceCourse;
 import comp3350.degree_planner.objects.UserDefinedCourse;
+import comp3350.degree_planner.persistence.DataAccessCoursePlan;
 import comp3350.degree_planner.presentation.CoursePlanAdapter;
 
 /**
@@ -30,8 +31,8 @@ import comp3350.degree_planner.presentation.CoursePlanAdapter;
  */
 
 public class AccessCoursePlan {
-    private DataAccess dataAccess;
-    public AccessCoursePlan(DataAccess dataAccess) {
+    private DataAccessCoursePlan dataAccess;
+    public AccessCoursePlan(DataAccessCoursePlan dataAccess) {
         this.dataAccess = dataAccess;
     }
 

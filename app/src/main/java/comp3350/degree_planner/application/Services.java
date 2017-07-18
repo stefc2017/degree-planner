@@ -3,8 +3,7 @@ package comp3350.degree_planner.application;
 import java.sql.SQLException;
 
 import comp3350.degree_planner.persistence.DataAccess;
-import comp3350.degree_planner.persistence.DataAccessObject;
-import comp3350.degree_planner.persistence.DataAccessStub;
+import comp3350.degree_planner.persistence.hsqldb.DataAccessObject;
 
 /**
  * Created by Kaleigh on 2017-06-01.

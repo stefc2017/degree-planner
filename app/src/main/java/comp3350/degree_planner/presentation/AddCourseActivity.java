@@ -32,6 +32,7 @@ import comp3350.degree_planner.business.exceptions.StudentDoesNotExistException;
 import comp3350.degree_planner.business.exceptions.TermTypeDoesNotExistException;
 import comp3350.degree_planner.objects.Course;
 import comp3350.degree_planner.objects.ScienceCourse;
+import comp3350.degree_planner.persistence.hsqldb.DataAccessCoursePlanObject;
 
 /**
  * Created by Penny He on 7/8/2017.
@@ -64,7 +65,11 @@ public class AddCourseActivity extends AppCompatActivity {
         degreeId = b.getInt("degreeId");
 
         accessCourses = new AccessCourses(Services.getDataAccess());
-        accessCoursePlan = new AccessCoursePlan(Services.getDataAccess());
+        try {
+            accessCoursePlan = new AccessCoursePlan(new DataAccessCoursePlanObject());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         accessTermTypes = new AccessTermTypes(Services.getDataAccess());
         try {
             selectedRequiredCourse = accessCourses.getCourseById(courseId);

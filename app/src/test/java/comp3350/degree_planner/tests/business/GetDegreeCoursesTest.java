@@ -16,7 +16,7 @@ import comp3350.degree_planner.objects.DegreeCourseType;
 import comp3350.degree_planner.objects.ScienceCourse;
 import comp3350.degree_planner.objects.UserDefinedCourse;
 import comp3350.degree_planner.persistence.DataAccess;
-import comp3350.degree_planner.persistence.DataAccessStub;
+import comp3350.degree_planner.persistence.stub.DataAccessStub;
 
 /**
  * Created by Penny He on 6/7/2017.

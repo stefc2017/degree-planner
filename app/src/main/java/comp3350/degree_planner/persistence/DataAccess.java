@@ -2,6 +2,7 @@ package comp3350.degree_planner.persistence;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.sql.Connection;
 
 import comp3350.degree_planner.objects.Course;
 import comp3350.degree_planner.objects.CoursePlan;
@@ -14,13 +15,15 @@ import comp3350.degree_planner.objects.TermType;
 /**
  * Created by Tiffany Jiang on 2017-06-06.
  *
- * Interface for data access
+ * Interface for opening and closing the data access
  */
 
 public interface DataAccess {
     void open(String dbName) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException;
 
     void close() throws SQLException;
+
+    Connection getDataAccessConnection();
 
     Course getCourse(CourseResult courseResult, List<Course> allCourses);
 

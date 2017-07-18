@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,6 +31,8 @@ import comp3350.degree_planner.business.exceptions.CourseNotOfferedInTermExcepti
 import comp3350.degree_planner.business.exceptions.StudentDoesNotExistException;
 import comp3350.degree_planner.business.exceptions.TermTypeDoesNotExistException;
 import comp3350.degree_planner.objects.CoursePlan;
+import comp3350.degree_planner.persistence.DataAccessCoursePlan;
+import comp3350.degree_planner.persistence.hsqldb.DataAccessCoursePlanObject;
 
 /**
  * Created by Penny He on 6/20/2017.
@@ -55,7 +58,11 @@ public class CoursePlansActivity extends AppCompatActivity {
         pageTitle.setText(R.string.coursePlan);
 
         ListView coursePlanList = (ListView)findViewById(R.id.coursePlans);
-        accessCoursePlan = new AccessCoursePlan(Services.getDataAccess());
+        try {
+            accessCoursePlan = new AccessCoursePlan(new DataAccessCoursePlanObject());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         accessTermTypes = new AccessTermTypes(Services.getDataAccess());
 
         try {

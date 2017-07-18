@@ -12,7 +12,7 @@ import comp3350.degree_planner.application.Main;
 import comp3350.degree_planner.business.AccessCourses;
 import comp3350.degree_planner.objects.ScienceCourse;
 import comp3350.degree_planner.persistence.DataAccess;
-import comp3350.degree_planner.persistence.DataAccessStub;
+import comp3350.degree_planner.persistence.stub.DataAccessStub;
 import comp3350.degree_planner.objects.CourseOffering;
 import comp3350.degree_planner.objects.TermType;
 

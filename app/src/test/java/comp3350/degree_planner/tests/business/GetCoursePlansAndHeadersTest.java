@@ -16,7 +16,7 @@ import comp3350.degree_planner.objects.Student;
 import comp3350.degree_planner.objects.TermType;
 import comp3350.degree_planner.objects.UserDefinedCourse;
 import comp3350.degree_planner.persistence.DataAccess;
-import comp3350.degree_planner.persistence.DataAccessStub;
+import comp3350.degree_planner.persistence.stub.DataAccessStub;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

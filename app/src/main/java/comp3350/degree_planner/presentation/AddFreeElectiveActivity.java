@@ -32,6 +32,7 @@ import comp3350.degree_planner.business.exceptions.StudentDoesNotExistException;
 import comp3350.degree_planner.business.exceptions.TermTypeDoesNotExistException;
 import comp3350.degree_planner.objects.Course;
 import comp3350.degree_planner.objects.UserDefinedCourse;
+import comp3350.degree_planner.persistence.hsqldb.DataAccessCoursePlanObject;
 
 /**
  * Created by Penny He on 7/9/2017.
@@ -62,7 +63,11 @@ public class AddFreeElectiveActivity extends AppCompatActivity {
         courseId = b.getInt("courseId");
 
         accessCourses = new AccessCourses(Services.getDataAccess());
-        accessCoursePlan = new AccessCoursePlan(Services.getDataAccess());
+        try {
+            accessCoursePlan = new AccessCoursePlan(new DataAccessCoursePlanObject());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         accessTermTypes = new AccessTermTypes(Services.getDataAccess());
         try {
             selectedElective = accessCourses.getCourseById(courseId);
