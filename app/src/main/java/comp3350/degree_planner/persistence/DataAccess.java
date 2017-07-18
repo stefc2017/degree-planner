@@ -91,4 +91,6 @@ public interface DataAccess {
     CoursePlan getCoursePlan (int coursePlanId) throws SQLException;
 
     List<CoursePlan> getCoursePlansByStudentId (int studentId) throws SQLException;
+
+    public Degree pickDegree (int degreeId) throws SQLException;
 }

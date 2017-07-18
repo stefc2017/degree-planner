@@ -1030,4 +1030,20 @@ public class DataAccessObject implements DataAccess {
 
         return courses;
     }
+
+    public Degree pickDegree (int degreeId) throws SQLException {
+        Degree degree;
+        //int id;
+        degree=getDegreeById(degreeId);
+
+        return degree;
+    }
+
+//    public Degree pickDegree (Degree degree) throws SQLException {
+//        Degree degree;
+//        //int id;
+//        degree=getDegreeById(degreeId);
+//
+//        return degree;
+//    }
 }

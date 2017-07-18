@@ -1229,4 +1229,12 @@ public class DataAccessStub implements DataAccess {
     public void createUserDefinedCourse(String name, double creditHours, String fullAbbreviation){
         courses.add(new UserDefinedCourse(courseId++, name, creditHours, fullAbbreviation));
     }
+
+    public Degree pickDegree (int degreeId) {
+        Degree degree;
+        //int id;
+        degree=getDegreeById(degreeId);
+
+        return degree;
+    }
 }

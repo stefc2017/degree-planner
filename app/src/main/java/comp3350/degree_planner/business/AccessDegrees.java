@@ -24,4 +24,8 @@ public class AccessDegrees {
     {
         return dataAccess.getDegreeById(degreeId);
     }
+
+    public Degree pickDegree(int degreeID) throws SQLException{
+        return dataAccess.pickDegree(degreeID);
+    }
 }
