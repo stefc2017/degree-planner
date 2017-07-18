@@ -137,6 +137,9 @@ Incomplete Issues/Tasks:
   
 Major Changes
 - Pick Degree User Story has been implemented
+- View Degree Progress User Story has been implemented
+- Move Courses has been Implemented
+- Add / Remove Courses has been Implemented
 - Acceptance Tests have been added
 - Integration tests have been added
 - Several Big User Stories have been scrapped, see the User Stories Document
