@@ -279,8 +279,8 @@ public class AddToCoursePlanTest {
                 if (course instanceof ScienceCourse) {
                     //Is the course historically offered in this term?
                     for (int i = 0; i < courseOfferings.size(); i++) {
-                        if (courseOfferings.get(i).getCourse().getId() == courseId &&
-                                courseOfferings.get(i).getTermType().getId() == termTypeId) {
+                        if (courseOfferings.get(i).getCourseId() == courseId &&
+                                courseOfferings.get(i).getTermTypeId() == termTypeId) {
                             validTerm = true;
                             break;
                         }
@@ -301,8 +301,8 @@ public class AddToCoursePlanTest {
                 for (int i = 0; i<coursePlans.size(); i++) {
                     currCoursePlan = coursePlans.get(i);
 
-                    if (currCoursePlan.getCourse().getId() == courseId && currCoursePlan.getStudent().getId() == studentId
-                            && currCoursePlan.getTermType().getId() == termTypeId && currCoursePlan.getYear() == year) {
+                    if (currCoursePlan.getCourseId() == courseId && currCoursePlan.getStudentId() == studentId
+                            && currCoursePlan.getTermTypeId() == termTypeId && currCoursePlan.getYear() == year) {
                         coursePlanExists = true;
                         break;
                     }
@@ -333,8 +333,8 @@ public class AddToCoursePlanTest {
                 for (int i = 0; i<coursePlans.size(); i++) {
                     currCoursePlan = coursePlans.get(i);
 
-                    if (currCoursePlan.getCourse().getId() == courseId && currCoursePlan.getStudent().getId() == studentId
-                            && currCoursePlan.getTermType().getId() == termTypeId && currCoursePlan.getYear() == year) {
+                    if (currCoursePlan.getCourseId() == courseId && currCoursePlan.getStudentId() == studentId
+                            && currCoursePlan.getTermTypeId() == termTypeId && currCoursePlan.getYear() == year) {
                         result = currCoursePlan;
                         break;
                     }
@@ -422,9 +422,9 @@ public class AddToCoursePlanTest {
 
         added = testData.getCoursePlan(SCIENCE_COURSE_ID, STUDENT_ID, TERM_TYPE_ID, YEAR);
         assertNotNull("Course plan was not added", added);
-        assertEquals ("Course IDs weren't equal", added.getCourse().getId(), SCIENCE_COURSE_ID);
-        assertEquals ("Student IDs weren't equal", added.getStudent().getId(), STUDENT_ID);
-        assertEquals ("Term Type IDs weren't equal", added.getTermType().getId(), TERM_TYPE_ID);
+        assertEquals ("Course IDs weren't equal", added.getCourseId(), SCIENCE_COURSE_ID);
+        assertEquals ("Student IDs weren't equal", added.getStudentId(), STUDENT_ID);
+        assertEquals ("Term Type IDs weren't equal", added.getTermTypeId(), TERM_TYPE_ID);
         assertEquals ("Years weren't equal", added.getYear(), YEAR);
 
         //Testing user-defined course
@@ -432,9 +432,9 @@ public class AddToCoursePlanTest {
 
         added = testData.getCoursePlan(USER_DEFINED_COURSE_ID, STUDENT_ID, USER_DEFINED_TERM_TYPE_ID, YEAR);
         assertNotNull("Course plan was not added", added);
-        assertEquals ("Course IDs weren't equal", added.getCourse().getId(), USER_DEFINED_COURSE_ID);
-        assertEquals ("Student IDs weren't equal", added.getStudent().getId(), STUDENT_ID);
-        assertEquals ("Term Type IDs weren't equal", added.getTermType().getId(), USER_DEFINED_TERM_TYPE_ID);
+        assertEquals ("Course IDs weren't equal", added.getCourseId(), USER_DEFINED_COURSE_ID);
+        assertEquals ("Student IDs weren't equal", added.getStudentId(), STUDENT_ID);
+        assertEquals ("Term Type IDs weren't equal", added.getTermTypeId(), USER_DEFINED_TERM_TYPE_ID);
         assertEquals ("Years weren't equal", added.getYear(), YEAR);
 
         System.out.println("Finished Add to Course Plan Test: valid data");

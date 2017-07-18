@@ -23,4 +23,7 @@ public class CourseOffering {
 
     public TermType getTermType() { return this.termType; }
 
+    public int getCourseId() { return this.course.getId(); }
+
+    public int getTermTypeId() { return this.termType.getId(); }
 }
