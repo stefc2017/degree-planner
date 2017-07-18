@@ -92,5 +92,5 @@ public interface DataAccess {
 
     List<CoursePlan> getCoursePlansByStudentId (int studentId) throws SQLException;
 
-    public Degree pickDegree (int degreeId) throws SQLException;
+    public void pickDegree (int degreeId, int studentId) throws SQLException;
 }

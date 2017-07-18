@@ -65,11 +65,18 @@ public class PickDegreeActivity extends AppCompatActivity {
                     // Get the selected degree
                     Degree d = (Degree)parent.getItemAtPosition(position);
                     int degreeId = d.getId();
+                    int studentId=1;
                     Intent intent = new Intent(PickDegreeActivity.this, DegreeProgressActivity.class);
                     Bundle b = new Bundle();
                     b.putInt("degreeId", degreeId);
                     intent.putExtras(b);
-                    PickDegreeActivity.this.startActivity(intent);
+                    try{
+                        accessDegrees.pickDegree(degreeId, studentId);
+                        PickDegreeActivity.this.startActivity(intent);
+                    } catch (SQLException e) {
+                        displayErrorMessage(e);
+                    }
+
                 }
             });
         }

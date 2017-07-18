@@ -1031,12 +1031,16 @@ public class DataAccessObject implements DataAccess {
         return courses;
     }
 
-    public Degree pickDegree (int degreeId) throws SQLException {
-        Degree degree;
+    public void pickDegree (int degreeId, int studentId) throws SQLException {
         //int id;
-        degree=getDegreeById(degreeId);
+        //degree=getDegreeById(degreeId);
 
-        return degree;
+
+        result = null;
+
+        cmdString = "UPDATE Student SET degree_id = " + degreeId + " WHERE id = " + studentId;
+        updateCount = st1.executeUpdate(cmdString);
+
     }
 
 //    public Degree pickDegree (Degree degree) throws SQLException {
