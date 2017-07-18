@@ -897,11 +897,7 @@ public class DataAccessStub implements DataAccess {
         courses.add(new UserDefinedCourse(courseId++, name, creditHours, fullAbbreviation));
     }
 
-    public Degree pickDegree (int degreeId) {
-        Degree degree;
-        //int id;
-        degree=getDegreeById(degreeId);
-
-        return degree;
+    public void pickDegree (int degreeId, int studentId) {
+        students.get(0).setDegree(getDegreeById(degreeId));
     }
 }

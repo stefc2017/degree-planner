@@ -33,7 +33,7 @@ public class StudentTest {
         assertEquals("Name was assigned incorrectly", "Test Student", s.getName());
         assertEquals("Email was assigned incorrectly", "email@ex.com", s.getEmail());
         assertEquals("Password was assigned incorrectly", "pa55word", s.getPassword());
-        assertEquals("Degree ID was assigned incorrectly", 23, s.getDegreeId());
+        assertEquals("Degree ID was assigned incorrectly", 23, s.getId());
 
         System.out.println("Finished Student Test: constructor");
     }
