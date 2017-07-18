@@ -28,7 +28,7 @@ public class GetDegreeCoursesTest {
 
     // Sets up test data with the entries we need for all tests below
     @Before
-    public void setUp() {
+    public void setUp() throws Exception {
         final DataAccess testData = new DataAccessStub() {
             private List<Course> courses;
             private List<Degree> degrees;
@@ -111,14 +111,14 @@ public class GetDegreeCoursesTest {
     }// end setUp
 
     @Test
-    public void testInvalidDegreeId(){
+    public void testInvalidDegreeId() throws Exception {
         System.out.println("\nStarting Get Degree Courses Test: Invalid degree Id");
         assertEquals("Course list should be empty when degreeId is invalid", 0, degreeReqCourses.getDegreeCourses(-5).size());
         System.out.println("Finished Get Degree Courses Test: Invalid degree Id");
     }
 
     @Test
-    public void testValidDegreeId(){
+    public void testValidDegreeId() throws Exception {
         System.out.println("\nStarting Get Degree Courses Test: Valid degree Id");
         String[] expectedCourses = {"Introductory Computer Science I", "Introductory Computer Science II"};
 

@@ -39,7 +39,7 @@ public class RemoveFromCoursePlanTest {
     private DataAccess testData;
 
     @Before
-    public void setUp() {
+    public void setUp() throws Exception {
         //Setting up test data for the remove
         //Mostly copied over from DataAccessStub.java
         testData = new DataAccessStub() {

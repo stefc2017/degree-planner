@@ -1,5 +1,6 @@
 package comp3350.degree_planner.business;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import comp3350.degree_planner.objects.Degree;
@@ -14,12 +15,12 @@ public class AccessDegrees {
 
     public AccessDegrees(DataAccess dataAccess){ this.dataAccess = dataAccess; }
 
-    public List<Degree> getAllDegrees()
+    public List<Degree> getAllDegrees() throws SQLException
     {
         return dataAccess.getAllDegrees();
     }
 
-    public Degree getDegreeById(int degreeId)
+    public Degree getDegreeById(int degreeId) throws SQLException
     {
         return dataAccess.getDegreeById(degreeId);
     }

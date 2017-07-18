@@ -48,4 +48,5 @@
         <item>Fall</item>
     </string-array>
     <string name="action_settings">Settings</string>
+    <string name="error_sql_exception">An error has occurred with the request. Please try again.</string>
 </resources>

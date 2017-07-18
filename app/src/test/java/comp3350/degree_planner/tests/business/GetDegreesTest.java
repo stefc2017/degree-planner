@@ -24,7 +24,7 @@ public class GetDegreesTest {
 
     // Sets up test data with the entries we need for all tests below
     @Before
-    public void setUp() {
+    public void setUp() throws Exception {
         final DataAccess testData = new DataAccessStub() {
             private List<Degree> degrees;
 
@@ -65,7 +65,7 @@ public class GetDegreesTest {
     }// end setUp
 
     @Test
-    public void testGetAllDegrees() {
+    public void testGetAllDegrees() throws Exception {
         System.out.println("\nStarting Get Degrees Test: Get all available degree programs");
         assertNotNull("Degree list should not be null", degrees.getAllDegrees());
         assertEquals("Degree list should have size one", 1, degrees.getAllDegrees().size());
@@ -74,7 +74,7 @@ public class GetDegreesTest {
     }
 
     @Test
-    public void testGetDegreeByInvalidDegreeId() {
+    public void testGetDegreeByInvalidDegreeId() throws Exception {
         System.out.println("\nStarting Get Degrees Test: Get degree by invalid degree Id");
         assertNull("Returned Degree should be null when degreeId is invalid", degrees.getDegreeById(-5));
         System.out.println("Finished Get Degrees Test: Get degree by invalid degree Id");
@@ -82,7 +82,7 @@ public class GetDegreesTest {
     }
 
     @Test
-    public void testGetDegreeByValidDegreeId(){
+    public void testGetDegreeByValidDegreeId() throws Exception {
         System.out.println("\nStarting Get Degrees Test: Get degree by valid degree Id");
         assertNotNull("Returned Degree should not be null", degrees.getDegreeById(1));
         assertEquals("Wrong degree returned", "Computer Science Major", degrees.getDegreeById(1).getName());

@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class GetCourseOfferingsByTermTest {
 
     // Sets up test data with the entries we need for all tests below
     @Before
-    public void setUp() {
+    public void setUp() throws Exception {
         final DataAccess testData = new DataAccessStub() {
             private List<CourseOffering> courseOfferings;
 
@@ -83,7 +84,7 @@ public class GetCourseOfferingsByTermTest {
     }// end setUp
 
     @Test
-    public void testGetAllCourseOfferings() {
+    public void testGetAllCourseOfferings() throws Exception {
         System.out.println("\nStarting Get All Course Offerings: Get all available course offerings");
         assertNotNull("Course Offerings list should not be null", courseOfferings.getAllCourseOfferings());
         assertEquals("Course Offerings list should have size nine", 9, courseOfferings.getAllCourseOfferings().size());
@@ -91,7 +92,7 @@ public class GetCourseOfferingsByTermTest {
     }
 
     @Test
-    public void testGetCourseOfferingsByInvalidTerm() {
+    public void testGetCourseOfferingsByInvalidTerm() throws Exception {
         System.out.println("\nStarting Get Course Offerings Test: Get Course Offerings by invalid Term vals");
         assertEquals("Returned CourseOfferingsByTerm list should be empty when TermId is invalid", 0, courseOfferings.getCourseOfferingsByTerm(new TermType(4,"ImaginativeTerm")).size());
         assertEquals("Returned CourseOfferingsByTerm list should be empty when Term is null", 0, courseOfferings.getCourseOfferingsByTerm(null).size());
@@ -100,7 +101,7 @@ public class GetCourseOfferingsByTermTest {
     }
 
     @Test
-    public void testGetCourseOfferingsByValidTerm(){
+    public void testGetCourseOfferingsByValidTerm() throws Exception {
         System.out.println("\nStarting Get Course Offerings Test: Get Course Offerings by valid Term");
         assertNotNull("Returned Course Offerings list should not be null", courseOfferings.getCourseOfferingsByTerm(new TermType(1,"Fall")));//A little bit of a hack, has to take from dataStub in the future
         System.out.println("Finished Get Course Offerings Test: Get Course Offerings by valid Term");

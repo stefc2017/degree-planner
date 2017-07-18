@@ -10,12 +10,14 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,8 +44,8 @@ public class DegreeProgressActivity extends AppCompatActivity {
     private CreditHours creditHours = new CreditHours();
     private int studentId = 1;
     private int degreeId = 1;
-    private int takenCreditHours = creditHours.getCreditHoursTaken( studentId );
-    private int requiredCreditHours = creditHours.getRequiredCreditHoursTaken( studentId, degreeId );
+    private int takenCreditHours;
+    private int requiredCreditHours;
     private CompletedCourses completedCourses = new CompletedCourses( Services.getDataAccess() );
     private EligibleCourses eligibleCourses = new EligibleCourses( Services.getDataAccess() );
 
@@ -54,6 +56,13 @@ public class DegreeProgressActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_degreeprogress);
 
+        try {
+            takenCreditHours = creditHours.getCreditHoursTaken(studentId);
+            requiredCreditHours = creditHours.getRequiredCreditHoursTaken(studentId, degreeId);
+        } catch (SQLException e) {
+            displayErrorMessage(e);
+        }
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.degree_progress_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -61,7 +70,11 @@ public class DegreeProgressActivity extends AppCompatActivity {
         TextView pageTitle = (TextView) findViewById(R.id.toolbar_title);
         pageTitle.setText(R.string.progress);
 
-        coursesTaken = completedCourses.getCoursesTaken( studentId );
+        try {
+            coursesTaken = completedCourses.getCoursesTaken(studentId);
+        } catch (SQLException e) {
+            displayErrorMessage(e);
+        }
         courseTakenList = (ListView) findViewById( R.id.course_taken_list );
         courseTakenList.setAdapter( new ArrayAdapter<Course>(this, android.R.layout.simple_list_item_1, android.R.id.text1, coursesTaken ){
             @Override
@@ -77,7 +90,11 @@ public class DegreeProgressActivity extends AppCompatActivity {
         courseTakenTitle.setText("Courses Taken");
         courseTakenList.addHeaderView( courseTakenTitle );
 
-        eligibleReqCourses = eligibleCourses.getEligibleRequiredCourse( studentId, degreeId );
+        try {
+            eligibleReqCourses = eligibleCourses.getEligibleRequiredCourse(studentId, degreeId);
+        } catch (SQLException e) {
+            displayErrorMessage(e);
+        }
         eligibleReqCourseList = (ListView) findViewById( R.id.eligible_req_course_list );
         eligibleReqCourseList.setAdapter( new ArrayAdapter<Course>(this, android.R.layout.simple_list_item_1, android.R.id.text1, eligibleReqCourses ){
             @Override
@@ -125,5 +142,11 @@ public class DegreeProgressActivity extends AppCompatActivity {
     public void buttonPickDegreeOnClick(View v){
         Intent intent = new Intent(DegreeProgressActivity.this, PickDegreeActivity.class);
         DegreeProgressActivity.this.startActivity(intent);
+    }
+
+    private void displayErrorMessage(Exception e){
+        if (e instanceof SQLException) {
+            Toast.makeText(this, R.string.error_sql_exception, Toast.LENGTH_SHORT).show();
+        }
     }
 }

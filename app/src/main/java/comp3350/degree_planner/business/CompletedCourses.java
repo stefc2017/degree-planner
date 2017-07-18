@@ -5,6 +5,7 @@ package comp3350.degree_planner.business;
  * Modified on 2017-06-07.
  */
 
+import java.sql.SQLException;
 import java.util.List;
 
 import comp3350.degree_planner.objects.Course;
@@ -25,7 +26,7 @@ public class CompletedCourses {
         return dataAccess.getCourseResultsByStudentId(studentId);
     }
 
-    public List<Course> getCoursesTaken( int studentId ){
+    public List<Course> getCoursesTaken( int studentId ) throws SQLException {
         return dataAccess.getCoursesTaken( studentId );
     }
 }

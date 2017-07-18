@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.SQLException;
 
 import static org.junit.Assert.*;
 
@@ -79,7 +80,7 @@ public class BusinessPersistenceSeamTest {
     }
 
     @Test
-    public void testAccessDegrees() {
+    public void testAccessDegrees() throws SQLException {
         System.out.println("Starting Integration test of AccessDegrees to persistence");
 
         AccessDegrees degrees = new AccessDegrees(dataAccess);
@@ -103,7 +104,7 @@ public class BusinessPersistenceSeamTest {
     }
 
     @Test
-    public void testCreditHours() {
+    public void testCreditHours() throws SQLException {
         //*
         final int NB_NONREQ_CREDITHOURS = 6;
         final int NB_REQ_CREDITHOURS = 6;
@@ -140,7 +141,7 @@ public class BusinessPersistenceSeamTest {
     //AccessCourses tests
 
     @Test
-    public void testGetCourseOfferingsByTerm() {
+    public void testGetCourseOfferingsByTerm() throws SQLException {
         System.out.println("Starting Integration test of GetCourseOfferingsByTerm to persistence");
         AccessCourses accessCourses = new AccessCourses(dataAccess);
 
@@ -162,7 +163,7 @@ public class BusinessPersistenceSeamTest {
     }
 
     @Test
-    public void testGetDegreeCourses() {
+    public void testGetDegreeCourses() throws SQLException {
         String[] expectedCourses = {"Introductory Computer Science I", "Introductory Computer Science II"};
 
         System.out.println("Starting Integration test of GetDegreeCourses to persistence");

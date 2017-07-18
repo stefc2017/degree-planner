@@ -9,7 +9,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,9 +51,13 @@ public class DegreeInfoActivity extends AppCompatActivity {
         accessDegrees = new AccessDegrees(Services.getDataAccess());
         courseList = new ArrayList<Course>();
 
-
-        courseList = accessCourses.getDegreeCourses(degreeId);
-        Degree currDegree = accessDegrees.getDegreeById(degreeId);
+        Degree currDegree = null;
+        try {
+            courseList = accessCourses.getDegreeCourses(degreeId);
+            currDegree = accessDegrees.getDegreeById(degreeId);
+        } catch (SQLException e) {
+            displayErrorMessage(e);
+        }
 
         if(currDegree != null){
             TextView degName = (TextView)findViewById(R.id.degreeName);
@@ -94,4 +100,10 @@ public class DegreeInfoActivity extends AppCompatActivity {
             });
         }
     }//end onCreate
+
+    private void displayErrorMessage(Exception e){
+        if (e instanceof SQLException) {
+            Toast.makeText(this, R.string.error_sql_exception, Toast.LENGTH_SHORT).show();
+        }
+    }
 }

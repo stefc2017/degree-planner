@@ -56,7 +56,7 @@ public class DataAccessTest {
     }
 
     @Test
-    public void testGetCourse() {
+    public void testGetCourse() throws SQLException {
         List<Course> courses = dataAccess.getAllCourses();
         List<Course> noCourses = new ArrayList<Course>();
         CourseResult courseResult = new CourseResult(1, new ScienceCourse(1, "Introductory Computer Science I",
@@ -80,7 +80,7 @@ public class DataAccessTest {
     }
 
     @Test
-    public void testGetAllCourses() {
+    public void testGetAllCourses() throws SQLException {
         final int NUM_COURSE = 6;
 
         List<Course> courses = dataAccess.getAllCourses();
@@ -88,7 +88,7 @@ public class DataAccessTest {
     }
 
     @Test
-    public void testGetAllDegrees() {
+    public void testGetAllDegrees() throws SQLException {
         final int NUM_DEGREES = 2;
 
         List<Degree> degrees = dataAccess.getAllDegrees();
@@ -96,7 +96,7 @@ public class DataAccessTest {
     }
 
     @Test
-    public void testGetAllPrerequisite() {
+    public void testGetAllPrerequisite() throws SQLException {
         Course course = new ScienceCourse(2, "Introductory Computer Science II", 3.0,
                 null, 1020, "More basic programming concepts.");
 
@@ -114,7 +114,7 @@ public class DataAccessTest {
     }
 
     @Test
-    public void testGetAllCourseOfferings() {
+    public void testGetAllCourseOfferings() throws SQLException {
         final int NUM_OFFERED = 9;
 
         List<CourseOffering> courseOfferings = dataAccess.getAllCourseOfferings();
@@ -122,7 +122,7 @@ public class DataAccessTest {
     }
 
     @Test
-    public void testGetCoursesTaken() {
+    public void testGetCoursesTaken() throws SQLException {
         final int COURSES_TAKEN = 2;
         final int STUD_NUM = 1;
         final int INVALID_STUD_NUM = -1;
@@ -137,7 +137,7 @@ public class DataAccessTest {
     }
 
     @Test
-    public void testGetCoursesNotTaken() {
+    public void testGetCoursesNotTaken() throws SQLException {
         final int NOT_TAKEN = 4;
         final int STUD_NUM = 1;
         final int INVALID_STUD_NUM = -1;
@@ -152,7 +152,7 @@ public class DataAccessTest {
     }
 
     @Test
-    public void testGetCourseCanTake() {
+    public void testGetCourseCanTake() throws SQLException {
         final int CAN_TAKE = 3;
         final int STUD_NUM = 1;
         final int INVALID_STUD_NUM = -1;
@@ -165,7 +165,7 @@ public class DataAccessTest {
     }
 
     @Test
-    public void testGetEligibleRequiredCourse() {
+    public void testGetEligibleRequiredCourse() throws SQLException {
         final int CAN_TAKE = 1;
         final int STUD_NUM = 1;
         final int INVALID_STUD_NUM = -1;
@@ -179,7 +179,7 @@ public class DataAccessTest {
     }
 
     @Test
-    public void testHasPrerequisite() {
+    public void testHasPrerequisite() throws SQLException {
         final int STUD_NUM = 1;
         final String COURSE_NAME = "Introductory Computer Science II";
         final String PREREQS_NEEDED_COURSE = "Software Engineering I";
@@ -195,7 +195,7 @@ public class DataAccessTest {
     }
 
     @Test
-    public void testGetCourseByName() {
+    public void testGetCourseByName() throws SQLException {
         final String COURSE_NAME = "Introductory Computer Science II";
         final String INVALID_COURSE = "I DO NOT EXIST";
         Course course;
@@ -210,7 +210,7 @@ public class DataAccessTest {
     }
 
     @Test
-    public void testGetDegreeByName() {
+    public void testGetDegreeByName() throws SQLException {
         final String DEGREE_NAME = "Computer Science Major";
         final String INVALID_DEGREE = "I DO NOT EXIST";
         Degree degree;
@@ -225,7 +225,7 @@ public class DataAccessTest {
     }
 
     @Test
-    public void testGetCourseById() {
+    public void testGetCourseById() throws SQLException {
         final int COURSE_ID = 1;
         final int INVALID_ID = -1;
         final String COURSE_NAME = "Introductory Computer Science I";
@@ -241,7 +241,7 @@ public class DataAccessTest {
     }
 
     @Test
-    public void testDegreeById() {
+    public void testDegreeById() throws SQLException {
         final int DEGREE_ID = 1;
         final int INVALID_ID = -1;
         final String DEGREE_NAME = "Computer Science Major";
@@ -257,7 +257,7 @@ public class DataAccessTest {
     }
 
     @Test
-    public void testGetDepartmentById() {
+    public void testGetDepartmentById() throws SQLException {
         final int DEPT_ID = 1;
         final int INVALID_ID = -1;
         final String DEPT_NAME = "Computer Science";
@@ -310,7 +310,7 @@ public class DataAccessTest {
     }
 
     @Test
-    public void testGetCourseOfferingsByTerm() {
+    public void testGetCourseOfferingsByTerm() throws SQLException {
         final int NUM_OFFERINGS = 2;
         TermType FALL_TERM = new TermType(1, "Fall");
 
@@ -319,7 +319,7 @@ public class DataAccessTest {
     }
 
     @Test
-    public void testGetDegreeCoursesTaken() {
+    public void testGetDegreeCoursesTaken() throws SQLException {
         final int NUM_TAKEN = 2;
         final int STUD_NUM = 1;
         final int INVALID_STUD_NUM = -1;
@@ -339,7 +339,7 @@ public class DataAccessTest {
     }
 
     @Test
-    public void testGetDegreeCourses() {
+    public void testGetDegreeCourses() throws SQLException {
         final int NUM_DEGREE_COURSES = 4;
         final int DEGREE_ID = 1;
         final int INVALID_DEGREE = -1;

@@ -3,6 +3,7 @@ package comp3350.degree_planner.tests.business;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -34,7 +35,7 @@ public class CreditHoursTest {
 
     //Sets up test data with the entries we need for all tests below
     @Before
-    public void setUp() {
+    public void setUp() throws Exception {
 
         /*
          * Most of the stuff here is copied from DataAccessStub.java, see there for comments etc.
@@ -222,7 +223,7 @@ public class CreditHoursTest {
     }
 
     @Test
-    public void testInvalidStudentId() {
+    public void testInvalidStudentId() throws Exception {
         System.out.println("\nStarting Credit Hours Test: invalid student id");
 
         int result = creditHours.getCreditHoursTaken(-1);
@@ -232,7 +233,7 @@ public class CreditHoursTest {
     }
 
     @Test
-    public void testInvalidDegreeId() {
+    public void testInvalidDegreeId() throws Exception {
         System.out.println("\nStarting Credit Hours Test: invalid degree id");
 
         int result = creditHours.getRequiredCreditHoursTaken( 1, -1 );
@@ -242,7 +243,7 @@ public class CreditHoursTest {
     }
 
     @Test
-    public void testEmptyCourseResults() {
+    public void testEmptyCourseResults() throws Exception {
         System.out.println("\nStarting Credit Hours Test: valid student id and empty course list");
 
         int result = creditHours.getCreditHoursTaken(2);
@@ -252,7 +253,7 @@ public class CreditHoursTest {
     }
 
     @Test
-    public void testValidData() {
+    public void testValidData() throws Exception {
         System.out.println("\nStarted Credit Hours Test: valid student id and has taken courses");
         final int NB_NONREQ_CREDITHOURS = 9;
         final int NB_REQ_CREDITHOURS = 6;
