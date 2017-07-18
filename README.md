@@ -129,5 +129,5 @@ Incomplete Issues/Tasks:
 - Add / remove courses from course plan
 
 ## Iteration 3
-Local copy of the database is in degree-planner/database
-Original copy of the database is in degree-planner/app/src/main/assets
+- Local copy of the database is in degree-planner/database
+- Original copy of the database is in degree-planner/app/src/main/assets
