@@ -84,7 +84,7 @@ public class GetCourseOfferingsByTermTest {
     }// end setUp
 
     @Test
-    public void testGetAllCourseOfferings() throws Exception {
+    public void testGetAllCourseOfferings() throws SQLException {
         System.out.println("\nStarting Get All Course Offerings: Get all available course offerings");
         assertNotNull("Course Offerings list should not be null", courseOfferings.getAllCourseOfferings());
         assertEquals("Course Offerings list should have size nine", 9, courseOfferings.getAllCourseOfferings().size());
@@ -92,7 +92,7 @@ public class GetCourseOfferingsByTermTest {
     }
 
     @Test
-    public void testGetCourseOfferingsByInvalidTerm() throws Exception {
+    public void testGetCourseOfferingsByInvalidTerm() throws SQLException {
         System.out.println("\nStarting Get Course Offerings Test: Get Course Offerings by invalid Term vals");
         assertEquals("Returned CourseOfferingsByTerm list should be empty when TermId is invalid", 0, courseOfferings.getCourseOfferingsByTerm(new TermType(4,"ImaginativeTerm")).size());
         assertEquals("Returned CourseOfferingsByTerm list should be empty when Term is null", 0, courseOfferings.getCourseOfferingsByTerm(null).size());
@@ -101,7 +101,7 @@ public class GetCourseOfferingsByTermTest {
     }
 
     @Test
-    public void testGetCourseOfferingsByValidTerm() throws Exception {
+    public void testGetCourseOfferingsByValidTerm() throws SQLException {
         System.out.println("\nStarting Get Course Offerings Test: Get Course Offerings by valid Term");
         assertNotNull("Returned Course Offerings list should not be null", courseOfferings.getCourseOfferingsByTerm(new TermType(1,"Fall")));//A little bit of a hack, has to take from dataStub in the future
         System.out.println("Finished Get Course Offerings Test: Get Course Offerings by valid Term");

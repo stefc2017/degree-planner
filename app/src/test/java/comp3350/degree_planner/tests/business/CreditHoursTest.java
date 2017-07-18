@@ -223,7 +223,7 @@ public class CreditHoursTest {
     }
 
     @Test
-    public void testInvalidStudentId() throws Exception {
+    public void testInvalidStudentId() throws SQLException {
         System.out.println("\nStarting Credit Hours Test: invalid student id");
 
         int result = creditHours.getCreditHoursTaken(-1);
@@ -233,7 +233,7 @@ public class CreditHoursTest {
     }
 
     @Test
-    public void testInvalidDegreeId() throws Exception {
+    public void testInvalidDegreeId() throws SQLException {
         System.out.println("\nStarting Credit Hours Test: invalid degree id");
 
         int result = creditHours.getRequiredCreditHoursTaken( 1, -1 );
@@ -243,7 +243,7 @@ public class CreditHoursTest {
     }
 
     @Test
-    public void testEmptyCourseResults() throws Exception {
+    public void testEmptyCourseResults() throws SQLException {
         System.out.println("\nStarting Credit Hours Test: valid student id and empty course list");
 
         int result = creditHours.getCreditHoursTaken(2);
@@ -253,7 +253,7 @@ public class CreditHoursTest {
     }
 
     @Test
-    public void testValidData() throws Exception {
+    public void testValidData() throws SQLException {
         System.out.println("\nStarted Credit Hours Test: valid student id and has taken courses");
         final int NB_NONREQ_CREDITHOURS = 9;
         final int NB_REQ_CREDITHOURS = 6;

@@ -66,7 +66,6 @@ public class AddCourseActivity extends AppCompatActivity {
         accessCourses = new AccessCourses(Services.getDataAccess());
         accessCoursePlan = new AccessCoursePlan(Services.getDataAccess());
         accessTermTypes = new AccessTermTypes(Services.getDataAccess());
-        selectedRequiredCourse = accessCourses.getCourseById(courseId);
         try {
             selectedRequiredCourse = accessCourses.getCourseById(courseId);
         } catch (SQLException e) {
