@@ -84,8 +84,8 @@ public class GetDegreeCoursesTest {
                 ArrayList<Course> reqCourseList = new ArrayList<Course>();
 
                 for( DegreeCourse course : degreeCourses ){
-                    if( course.getDegree().getId() == degreeId && course.getDegreeCourseType().getId() == REQUIRED_COURSE){
-                        reqCourseList.add( getCourseById( course.getCourse().getId() ) );
+                    if( course.getDegreeId() == degreeId && course.getDegreeCourseTypeId() == REQUIRED_COURSE){
+                        reqCourseList.add( getCourseById( course.getCourseId() ) );
                     }
                 }
 

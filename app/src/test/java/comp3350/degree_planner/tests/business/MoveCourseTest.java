@@ -248,8 +248,8 @@ public class MoveCourseTest {
                 if (course instanceof ScienceCourse) {
                     //Is the course historically offered in this term?
                     for (int i = 0; i < courseOfferings.size(); i++) {
-                        if (courseOfferings.get(i).getCourse().getId() == courseId &&
-                                courseOfferings.get(i).getTermType().getId() == termTypeId) {
+                        if (courseOfferings.get(i).getCourseId() == courseId &&
+                                courseOfferings.get(i).getTermTypeId() == termTypeId) {
                             validTerm = true;
                             break;
                         }
@@ -271,8 +271,8 @@ public class MoveCourseTest {
                 for (int i = 0; i<coursePlans.size(); i++) {
                     currCoursePlan = coursePlans.get(i);
 
-                    if (currCoursePlan.getCourse().getId() == courseId && currCoursePlan.getStudent().getId() == studentId
-                            && currCoursePlan.getTermType().getId() == termTypeId && currCoursePlan.getYear() == year) {
+                    if (currCoursePlan.getCourseId() == courseId && currCoursePlan.getStudentId() == studentId
+                            && currCoursePlan.getTermTypeId() == termTypeId && currCoursePlan.getYear() == year) {
                         coursePlanExists = true;
                         break;
                     }
@@ -289,8 +289,8 @@ public class MoveCourseTest {
                 for (int i = 0; i<coursePlans.size(); i++) {
                     currCoursePlan = coursePlans.get(i);
 
-                    if (currCoursePlan.getCourse().getId() == courseId && currCoursePlan.getStudent().getId() == studentId
-                            && currCoursePlan.getTermType().getId() == termTypeId && currCoursePlan.getYear() == year) {
+                    if (currCoursePlan.getCourseId() == courseId && currCoursePlan.getStudentId() == studentId
+                            && currCoursePlan.getTermTypeId() == termTypeId && currCoursePlan.getYear() == year) {
                         result = currCoursePlan;
                         break;
                     }
@@ -377,7 +377,7 @@ public class MoveCourseTest {
 
         coursePlan = testData.getCoursePlan(COURSE_PLAN_ID);
         assertNotNull("Error occurred with modification", coursePlan);
-        assertEquals("Term Type IDs weren't equal", coursePlan.getTermType().getId(), TERM_TYPE_ID);
+        assertEquals("Term Type IDs weren't equal", coursePlan.getTermTypeId(), TERM_TYPE_ID);
         assertEquals ("Years weren't equal", coursePlan.getYear(), YEAR);
 
         System.out.println("Finished Move Course Test: valid data");

@@ -31,8 +31,8 @@ public class CourseOfferingTest {
         CourseOffering co = new CourseOffering(new ScienceCourse(1, "Introductory Computer Science I", 3.0,
                 null, 1010, "Basic programming concepts."), new TermType(1, "Fall"));
         assertNotNull(co);
-        assertEquals("Course ID was assigned incorrectly", 1, co.getCourse().getId());
-        assertEquals("Term Type ID was assigned incorrectly", 1, co.getTermType().getId());
+        assertEquals("Course ID was assigned incorrectly", 1, co.getCourseId());
+        assertEquals("Term Type ID was assigned incorrectly", 1, co.getTermTypeId());
 
         System.out.println("Finished CourseOffering Test: constructor");
     }

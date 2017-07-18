@@ -247,7 +247,7 @@ public class DataAccessStub implements DataAccess {
      **/
     public Course getCourse(CourseResult courseResult, List<Course> allCourses) {
         Course course = null;
-        int courseId = courseResult.getCourse().getId();
+        int courseId = courseResult.getCourseId();
         int numberOfCourses = allCourses.size();
         int index = 0;
 
@@ -326,7 +326,7 @@ public class DataAccessStub implements DataAccess {
                 inner_index = 0; //initialize inner_index to 0
 
                 while (hasPreReqs && inner_index < coursesTaken.size() && preReqId !=
-                        (coursesTaken.get(inner_index)).getCourse().getId()) { //goes through each course that the student has taken
+                        (coursesTaken.get(inner_index)).getCourseId()) { //goes through each course that the student has taken
                     inner_index++;
                 }//end while
 
@@ -354,7 +354,7 @@ public class DataAccessStub implements DataAccess {
         Course currentCourse; //to keep track of the current course
 
         for (int i = 0; i < numberOfCoursePrereqs; i++) {
-            if ((coursePrerequisites.get(i)).getCourse().getId() == courseId) { //if this is a prerequisite for the course
+            if ((coursePrerequisites.get(i)).getCourseId() == courseId) { //if this is a prerequisite for the course
                 currentCourse = coursePrerequisites.get(i).getPrereqCourse(); //get the course
                 prerequisites.add(currentCourse); //add the course to the list of prerequisites
             }//end if
@@ -453,7 +453,7 @@ public class DataAccessStub implements DataAccess {
         while (crIterator.hasNext()) {
             currCR = crIterator.next();
 
-            if (currCR.getStudent().getId() == studentId) {
+            if (currCR.getStudentId() == studentId) {
                 crByStudentId.add (currCR);
             }
         }
@@ -475,7 +475,7 @@ public class DataAccessStub implements DataAccess {
             for (int i = 0; i < courseOfferings.size(); i++) {
                 try {
                     if (term.getId() == 1 || term.getId() == 2 || term.getId() == 3) {
-                        if (term.getId() == (courseOfferings.get(i)).getTermType().getId()) {
+                        if (term.getId() == (courseOfferings.get(i)).getTermTypeId()) {
                             //Adds course offering based on courseID from CourseOfferings and matching TermID
                             courseOfferingsByTermList.add(courseOfferings.get(i));
                         }
@@ -565,7 +565,7 @@ public class DataAccessStub implements DataAccess {
         List<CourseResult> crByStudentId = getCourseResultsByStudentId(studentId);
 
         for (CourseResult result : crByStudentId) {
-            coursesTaken.add(getCourseById(result.getCourse().getId()));
+            coursesTaken.add(getCourseById(result.getCourseId()));
         }
 
         return coursesTaken;
@@ -600,8 +600,8 @@ public class DataAccessStub implements DataAccess {
         List<Course> reqCourseList = new ArrayList<Course>();
 
         for( DegreeCourse course : degreeCourses ){
-            if( course.getDegree().getId() == degreeId && course.getDegreeCourseType().getId() == REQUIRED_COURSE){
-                reqCourseList.add( getCourseById( course.getCourse().getId() ) );
+            if( course.getDegreeId() == degreeId && course.getDegreeCourseTypeId() == REQUIRED_COURSE){
+                reqCourseList.add( getCourseById( course.getCourseId() ) );
             }
         }
 
@@ -734,8 +734,8 @@ public class DataAccessStub implements DataAccess {
         if (course instanceof ScienceCourse) {
             //Is the course historically offered in this term?
             for (int i = 0; i < courseOfferings.size(); i++) {
-                if (courseOfferings.get(i).getCourse().getId() == courseId &&
-                        courseOfferings.get(i).getTermType().getId() == termTypeId) {
+                if (courseOfferings.get(i).getCourseId() == courseId &&
+                        courseOfferings.get(i).getTermTypeId() == termTypeId) {
                     validTerm = true;
                     break;
                 }
@@ -756,8 +756,8 @@ public class DataAccessStub implements DataAccess {
         for (int i = 0; i<coursePlans.size(); i++) {
             currCoursePlan = coursePlans.get(i);
 
-            if (currCoursePlan.getCourse().getId() == courseId && currCoursePlan.getStudent().getId() == studentId
-                    && currCoursePlan.getTermType().getId() == termTypeId && currCoursePlan.getYear() == year) {
+            if (currCoursePlan.getCourseId() == courseId && currCoursePlan.getStudentId() == studentId
+                    && currCoursePlan.getTermTypeId() == termTypeId && currCoursePlan.getYear() == year) {
                 coursePlanExists = true;
                 break;
             }
@@ -820,8 +820,8 @@ public class DataAccessStub implements DataAccess {
         for (int i = 0; i<coursePlans.size(); i++) {
             currCoursePlan = coursePlans.get(i);
 
-            if (currCoursePlan.getCourse().getId() == courseId && currCoursePlan.getStudent().getId() == studentId
-                    && currCoursePlan.getTermType().getId() == termTypeId && currCoursePlan.getYear() == year) {
+            if (currCoursePlan.getCourseId() == courseId && currCoursePlan.getStudentId() == studentId
+                    && currCoursePlan.getTermTypeId() == termTypeId && currCoursePlan.getYear() == year) {
                 result = currCoursePlan;
                 break;
             }
@@ -844,7 +844,7 @@ public class DataAccessStub implements DataAccess {
         for (int i = 0; i < coursePlans.size(); i++) {
             currCoursePlan = coursePlans.get(i);
 
-            if (currCoursePlan.getStudent().getId() == studentId) {
+            if (currCoursePlan.getStudentId() == studentId) {
                 studentCPs.add(currCoursePlan);
             }
         }
@@ -879,7 +879,7 @@ public class DataAccessStub implements DataAccess {
 
     private void removeCoursePlansByCourseId(int courseId){
         for(int i = 0; i < coursePlans.size(); i++){
-            if(coursePlans.get(i).getCourse().getId() == courseId){
+            if(coursePlans.get(i).getCourseId() == courseId){
                 coursePlans.remove(i);
             }
         }
@@ -887,7 +887,7 @@ public class DataAccessStub implements DataAccess {
 
     private void removeCourseResultsByCourseId(int courseId){
         for(int i = 0; i < courseResults.size(); i++){
-            if(courseResults.get(i).getCourse().getId() == courseId){
+            if(courseResults.get(i).getCourseId() == courseId){
                 courseResults.remove(i);
             }
         }
@@ -895,5 +895,13 @@ public class DataAccessStub implements DataAccess {
 
     public void createUserDefinedCourse(String name, double creditHours, String fullAbbreviation){
         courses.add(new UserDefinedCourse(courseId++, name, creditHours, fullAbbreviation));
+    }
+
+    public Degree pickDegree (int degreeId) {
+        Degree degree;
+        //int id;
+        degree=getDegreeById(degreeId);
+
+        return degree;
     }
 }

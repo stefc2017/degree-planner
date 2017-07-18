@@ -31,10 +31,10 @@ public class CourseResultTest {
                 3.0, null, 1010, "Basic programming concepts."), new Student(1, 1234567, "Jim Bob",
                 "jimbob@myumanitoba.ca", "helloworld1", null), new GradeType(1, "A+", 4.5));
         assertNotNull(cr);
-        assertEquals("ID was assigned incorrectly", 1, cr.getCourse().getId());
-        assertEquals("Course ID was assigned incorrectly", 1, cr.getCourse().getId());
-        assertEquals("Student ID was assigned incorrectly", 1, cr.getStudent().getId());
-        assertEquals("Grade ID was assigned incorrectly", 1, cr.getGrade().getId());
+        assertEquals("ID was assigned incorrectly", 1, cr.getId());
+        assertEquals("Course ID was assigned incorrectly", 1, cr.getCourseId());
+        assertEquals("Student ID was assigned incorrectly", 1, cr.getStudentId());
+        assertEquals("Grade ID was assigned incorrectly", 1, cr.getGradeId());
 
         System.out.println("Finished CourseOffering Test: constructor");
     }

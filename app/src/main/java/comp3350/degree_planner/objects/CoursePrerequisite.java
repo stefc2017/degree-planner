@@ -20,4 +20,8 @@ public class CoursePrerequisite {
     public Course getCourse(){ return this.course; }
 
     public Course getPrereqCourse(){ return prereqCourse; }
+
+    public int getCourseId() { return this.course.getId(); }
+
+    public int getPrereqCourseId() { return this.prereqCourse.getId(); }
 }

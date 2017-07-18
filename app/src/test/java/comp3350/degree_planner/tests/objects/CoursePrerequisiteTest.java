@@ -31,8 +31,8 @@ public class CoursePrerequisiteTest {
                 new ScienceCourse(1, "Introductory Computer Science I",
                 3.0, null, 1010, "Basic programming concepts."));
         assertNotNull(cp);
-        assertEquals("Course ID was assigned incorrectly", 2, cp.getCourse().getId());
-        assertEquals("Prerequisite Course ID was assigned incorrectly", 1, cp.getPrereqCourse().getId());
+        assertEquals("Course ID was assigned incorrectly", 2, cp.getCourseId());
+        assertEquals("Prerequisite Course ID was assigned incorrectly", 1, cp.getPrereqCourseId());
 
         System.out.println("Finished CoursePrerequisite Test: constructor");
     }

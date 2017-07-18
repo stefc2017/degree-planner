@@ -25,4 +25,10 @@ public class DegreeCourse {
     public Course getCourse() { return course; }
 
     public DegreeCourseType getDegreeCourseType() { return degreeCourseType; }
+
+    public int getCourseId() { return this.course.getId(); }
+
+    public int getDegreeId() { return this.degree.getId(); }
+
+    public int getDegreeCourseTypeId() { return this.degreeCourseType.getId(); }
 }

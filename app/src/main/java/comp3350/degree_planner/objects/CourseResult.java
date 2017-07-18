@@ -33,4 +33,10 @@ public class CourseResult {
     }
 
     public GradeType getGrade() { return gradeType; }
+
+    public int getCourseId() { return this.course.getId(); }
+
+    public int getStudentId() { return this.student.getId(); }
+
+    public int getGradeId() { return this.gradeType.getId(); }
 }
