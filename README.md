@@ -140,3 +140,6 @@ Major Changes
 - Acceptance Tests have been added
 - Integration tests have been added
 - Several Big User Stories have been scrapped, see the User Stories Document
+
+Incomplete Issues/Tasks:
+- We tried separating out the DataAccess interface into different interfaces (see Branch issue-142 for partial work) but ran into some errors and couldn't get it complete in time - this may be completed after
