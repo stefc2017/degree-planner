@@ -15,6 +15,8 @@ import comp3350.degree_planner.persistence.hsqldb.DataAccessObject;
 import comp3350.degree_planner.persistence.hsqldb.DataAccessStudentsObject;
 import comp3350.degree_planner.persistence.hsqldb.DataAccessTermTypesObject;
 
+import static org.hsqldb.HsqlDateTime.e;
+
 /**
  * Created by Kaleigh on 2017-06-01.
  *
@@ -33,23 +35,19 @@ public class Services {
     private static DataAccessCourseOfferings dataAccessCourseOfferings;
 
     //Default
-    public static DataAccess createDataAccess(String dbName)
+    public static DataAccess createDataAccess(String dbName) throws Exception
     {
         if (dataAccessService == null)
         {
             dataAccessService = new DataAccessObject(dbName);
-            try {
-                String test = Main.getDBPathName();
-                dataAccessService.open(Main.getDBPathName());
-//
-//                dataAccessCoursePlans = new DataAccessCoursePlansObject();
-//                dataAccessStudents = new DataAccessStudentsObject();
-//                dataAccessTermTypes = new DataAccessTermTypesObject();
-//                dataAccessCourses = new DataAccessCoursesObject();
-//                dataAccessCourseOfferings = new DataAccessCourseOfferingsObject();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+
+            dataAccessService.open(Main.getDBPathName());
+
+            dataAccessCoursePlans = new DataAccessCoursePlansObject();
+            dataAccessStudents = new DataAccessStudentsObject();
+            dataAccessTermTypes = new DataAccessTermTypesObject();
+            dataAccessCourses = new DataAccessCoursesObject();
+            dataAccessCourseOfferings = new DataAccessCourseOfferingsObject();
         }
         return dataAccessService;
     }

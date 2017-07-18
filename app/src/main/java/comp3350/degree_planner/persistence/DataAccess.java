@@ -73,25 +73,25 @@ public interface DataAccess {
 
     void createUserDefinedCourse(String name, double creditHours, String fullAbbreviation) throws SQLException;
 
-    void addToCoursePlan (int courseId, int studentId, int termTypeId, int year) throws SQLException;
-
-    boolean isValidStudentId (int studentId) throws SQLException;
-
-    boolean isValidCourseId (int courseId) throws SQLException;
-
-    boolean isValidTermTypeId (int termTypeId) throws SQLException;
-
-    boolean courseOffered (int courseId, int termTypeId) throws SQLException;
-
-    boolean coursePlanExists (int courseId, int studentId, int termTypeId, int year) throws SQLException;
-
-    void moveCourse (int coursePlanId, int newTermTypeId, int newYear) throws SQLException;
-
-    void removeFromCoursePlan (int coursePlanId) throws SQLException;
-
-    CoursePlan getCoursePlan (int courseId, int studentId, int termTypeId, int year) throws SQLException;
-
-    CoursePlan getCoursePlan (int coursePlanId) throws SQLException;
-
-    List<CoursePlan> getCoursePlansByStudentId (int studentId) throws SQLException;
+//    void addToCoursePlan (int courseId, int studentId, int termTypeId, int year) throws SQLException;
+//
+//    boolean isValidStudentId (int studentId) throws SQLException;
+//
+//    boolean isValidCourseId (int courseId) throws SQLException;
+//
+//    boolean isValidTermTypeId (int termTypeId) throws SQLException;
+//
+//    boolean courseOffered (int courseId, int termTypeId) throws SQLException;
+//
+//    boolean coursePlanExists (int courseId, int studentId, int termTypeId, int year) throws SQLException;
+//
+//    void moveCourse (int coursePlanId, int newTermTypeId, int newYear) throws SQLException;
+//
+//    void removeFromCoursePlan (int coursePlanId) throws SQLException;
+//
+//    CoursePlan getCoursePlan (int courseId, int studentId, int termTypeId, int year) throws SQLException;
+//
+//    CoursePlan getCoursePlan (int coursePlanId) throws SQLException;
+//
+//    List<CoursePlan> getCoursePlansByStudentId (int studentId) throws SQLException;
 }

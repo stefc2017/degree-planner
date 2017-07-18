@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -24,7 +25,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         copyDatabaseToDevice();
-        Main.startUp();
+
+        try {
+            Main.startUp();
+        } catch (Exception e) {
+            Toast.makeText(this, R.string.error_main_startup, Toast.LENGTH_SHORT).show();
+            Main.shutDown();
+        }
         setContentView(R.layout.activity_main);
 
     }

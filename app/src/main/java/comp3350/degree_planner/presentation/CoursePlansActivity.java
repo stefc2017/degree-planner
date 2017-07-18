@@ -61,11 +61,7 @@ public class CoursePlansActivity extends AppCompatActivity {
         pageTitle.setText(R.string.coursePlan);
 
         ListView coursePlanList = (ListView)findViewById(R.id.coursePlans);
-//        try {
             accessCoursePlan = new AccessCoursePlan(Services.getDataAccessCoursePlans(), Services.getDataAccessStudents(), Services.getDataAccessTermTypes(), Services.getDataAccessCourses(), Services.getDataAccessCourseOfferings());
-//        } catch (SQLException e) {
-//            displayErrorMessage(e);
-//        }
         accessTermTypes = new AccessTermTypes(Services.getDataAccess());
 
         try {

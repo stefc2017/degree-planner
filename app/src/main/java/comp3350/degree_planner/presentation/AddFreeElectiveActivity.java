@@ -67,11 +67,7 @@ public class AddFreeElectiveActivity extends AppCompatActivity {
         courseId = b.getInt("courseId");
 
         accessCourses = new AccessCourses(Services.getDataAccess());
-//        try {
             accessCoursePlan = new AccessCoursePlan(Services.getDataAccessCoursePlans(), Services.getDataAccessStudents(), Services.getDataAccessTermTypes(), Services.getDataAccessCourses(), Services.getDataAccessCourseOfferings());
-//        } catch (Exception e) {
-//            displayErrorMessage(e);
-//        }
         accessTermTypes = new AccessTermTypes(Services.getDataAccess());
         try {
             selectedElective = accessCourses.getCourseById(courseId);
