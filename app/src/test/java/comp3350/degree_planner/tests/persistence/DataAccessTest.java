@@ -310,6 +310,19 @@ public class DataAccessTest {
     }
 
     @Test
+    public void testGetTermTypeIdByName() throws Exception {
+        int termId = dataAccess.getTermTypeIdByName("Winter");
+        assertEquals("Winter id does not equal 1", 1, termId);
+        termId = dataAccess.getTermTypeIdByName("Summer");
+        assertEquals("Summer id does not equal 2", 2, termId);
+        termId = dataAccess.getTermTypeIdByName("Fall");
+        assertEquals("Fall id does not equal 3", 3, termId);
+        // Test invalid term name
+        termId = dataAccess.getTermTypeIdByName("InvalidName");
+        assertEquals("Invalid term name does not return -1", -1, termId);
+    }
+
+    @Test
     public void testGetCourseOfferingsByTerm() throws SQLException {
         final int NUM_OFFERINGS = 2;
         TermType FALL_TERM = new TermType(1, "Fall");

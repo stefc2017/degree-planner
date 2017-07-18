@@ -145,11 +145,11 @@ public class AccessCoursePlan {
 
                     // Ordinals are WINTER(1) SUMMER(2) FALL(3)
                     if(currentTerm.getSeason().equalsIgnoreCase("Fall")){
-                        header.add(Season.FALL.getValue());
+                        header.add(dataAccess.getTermTypeIdByName("Fall"));
                     }else if(currentTerm.getSeason().equalsIgnoreCase("Summer")){
-                        header.add(Season.SUMMER.getValue());
+                        header.add(dataAccess.getTermTypeIdByName("Summer"));
                     }else if(currentTerm.getSeason().equalsIgnoreCase("Winter")){
-                        header.add(Season.WINTER.getValue());
+                        header.add(dataAccess.getTermTypeIdByName("Winter"));
                     }
 
                     newHeader = true;

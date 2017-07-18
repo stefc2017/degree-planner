@@ -7,19 +7,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Calendar;
-import java.util.Date;
 
 import comp3350.degree_planner.R;
 import comp3350.degree_planner.application.Services;
 import comp3350.degree_planner.business.AccessCourses;
-import comp3350.degree_planner.business.Season;
 
 /**
  * Created by Penny He on 7/9/2017.

@@ -6,14 +6,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,14 +24,13 @@ import comp3350.degree_planner.R;
 import comp3350.degree_planner.application.Services;
 import comp3350.degree_planner.business.AccessCoursePlan;
 import comp3350.degree_planner.business.AccessCourses;
-import comp3350.degree_planner.business.Season;
+import comp3350.degree_planner.business.AccessTermTypes;
 import comp3350.degree_planner.business.exceptions.CourseAlreadyPlannedForTermException;
 import comp3350.degree_planner.business.exceptions.CourseDoesNotExistException;
 import comp3350.degree_planner.business.exceptions.CourseNotOfferedInTermException;
 import comp3350.degree_planner.business.exceptions.StudentDoesNotExistException;
 import comp3350.degree_planner.business.exceptions.TermTypeDoesNotExistException;
 import comp3350.degree_planner.objects.Course;
-import comp3350.degree_planner.objects.ScienceCourse;
 import comp3350.degree_planner.objects.UserDefinedCourse;
 
 /**
@@ -44,6 +40,7 @@ import comp3350.degree_planner.objects.UserDefinedCourse;
 public class AddFreeElectiveActivity extends AppCompatActivity {
     private AccessCourses accessCourses;
     private AccessCoursePlan accessCoursePlan;
+    private AccessTermTypes accessTermTypes;
     private int courseId = -1;
     private Course selectedElective;
     private String[] termsArray = null;
@@ -66,6 +63,7 @@ public class AddFreeElectiveActivity extends AppCompatActivity {
 
         accessCourses = new AccessCourses(Services.getDataAccess());
         accessCoursePlan = new AccessCoursePlan(Services.getDataAccess());
+        accessTermTypes = new AccessTermTypes(Services.getDataAccess());
         try {
             selectedElective = accessCourses.getCourseById(courseId);
         } catch (SQLException e) {
@@ -132,11 +130,11 @@ public class AddFreeElectiveActivity extends AppCompatActivity {
             if (validate(editTerm.getText().toString())) {
                 String termSelected = editTerm.getText().toString();
                 if (termSelected.equalsIgnoreCase("Winter")) {
-                    termTypeId = Season.WINTER.getValue();
+                    termTypeId = accessTermTypes.getTermTypeIdByName("Winter");
                 } else if (termSelected.equalsIgnoreCase("Summer")) {
-                    termTypeId = Season.SUMMER.getValue();
+                    termTypeId = accessTermTypes.getTermTypeIdByName("Summer");
                 } else if (termSelected.equalsIgnoreCase("Fall")) {
-                    termTypeId = Season.FALL.getValue();
+                    termTypeId = accessTermTypes.getTermTypeIdByName("Fall");
                 } else {
                     dataIsValid = false;
                     Toast.makeText(this, R.string.error_invalid_term, Toast.LENGTH_SHORT).show();

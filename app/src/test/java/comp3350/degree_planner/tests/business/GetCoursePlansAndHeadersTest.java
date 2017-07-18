@@ -8,8 +8,6 @@ import java.util.List;
 
 import comp3350.degree_planner.application.Main;
 import comp3350.degree_planner.business.AccessCoursePlan;
-import comp3350.degree_planner.business.CompletedCourses;
-import comp3350.degree_planner.business.Season;
 import comp3350.degree_planner.objects.Course;
 import comp3350.degree_planner.objects.CoursePlan;
 import comp3350.degree_planner.objects.Department;
@@ -138,6 +136,19 @@ public class GetCoursePlansAndHeadersTest {
 
                 return studentCoursePlans;
             }
+
+            public int getTermTypeIdByName(String termType) {
+                int termTypeId = -1;
+
+                for(int i = 0; i < termTypes.size(); i++) {
+                    if(termTypes.get(i).getSeason().equalsIgnoreCase(termType)){
+                        termTypeId = termTypes.get(i).getId();
+                        break;
+                    }
+                }
+
+                return termTypeId;
+            }
         };
 
         acp = new AccessCoursePlan(testData);
@@ -161,6 +172,7 @@ public class GetCoursePlansAndHeadersTest {
     @Test
     public void testValidData() throws Exception {
         final int NB_LIST_SIZE_FOR_STUDENT_1 = 7;
+        int[] termTypeIds = {1, 2, 3}; // Winter(1) Summer(2) Fall(3)
         CoursePlan tempCP;  // Used for checking the ID's of CoursePlans
 
         System.out.println("\nStarted GetCoursePlansAndHeaders Test: valid student id and non-empty course results");
@@ -174,7 +186,7 @@ public class GetCoursePlansAndHeadersTest {
                 NB_LIST_SIZE_FOR_STUDENT_1, coursePlansAndHeaders.size());
 
         assertTrue("No starting header", coursePlansAndHeaders.get(0) instanceof ArrayList);
-        assertEquals("Header at index 0 is incorrect", Season.FALL.getValue(), ((ArrayList)coursePlansAndHeaders.get(0)).get(0));
+        assertEquals("Header at index 0 is incorrect", termTypeIds[2], ((ArrayList)coursePlansAndHeaders.get(0)).get(0));
 
         assertTrue("Value at index 1 is not a CoursePlan", coursePlansAndHeaders.get(1) instanceof CoursePlan);
         tempCP = (CoursePlan)(coursePlansAndHeaders.get(1));
@@ -185,14 +197,14 @@ public class GetCoursePlansAndHeadersTest {
         assertEquals("CoursePlan at index 2 is incorrect", 2, tempCP.getId());
 
         assertTrue("Value at index 3 is not a header", coursePlansAndHeaders.get(3) instanceof ArrayList);
-        assertEquals("Header at index 3 is incorrect", Season.WINTER.getValue(), ((ArrayList)coursePlansAndHeaders.get(3)).get(0));
+        assertEquals("Header at index 3 is incorrect", termTypeIds[0], ((ArrayList)coursePlansAndHeaders.get(3)).get(0));
 
         assertTrue("Value at index 4 is not a CoursePlan", coursePlansAndHeaders.get(4) instanceof CoursePlan);
         tempCP = (CoursePlan)(coursePlansAndHeaders.get(4));
         assertEquals("CoursePlan at index 4 is incorrect", 3, tempCP.getId());
 
         assertTrue("Value at index 5 is not a header", coursePlansAndHeaders.get(5) instanceof ArrayList);
-        assertEquals("Header at index 5 is incorrect", Season.SUMMER.getValue(), ((ArrayList)coursePlansAndHeaders.get(5)).get(0));
+        assertEquals("Header at index 5 is incorrect", termTypeIds[1], ((ArrayList)coursePlansAndHeaders.get(5)).get(0));
 
         assertTrue("Value at index 6 is not a CoursePlan", coursePlansAndHeaders.get(6) instanceof CoursePlan);
         tempCP = (CoursePlan)(coursePlansAndHeaders.get(6));

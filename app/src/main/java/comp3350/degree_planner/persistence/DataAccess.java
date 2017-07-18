@@ -57,6 +57,9 @@ public interface DataAccess {
     int getFailingGradeId() throws SQLException;
 
     List<CourseOffering> getCourseOfferingsByTerm(TermType type) throws SQLException;
+    int getTermTypeIdByName(String termType) throws Exception;
+
+    List<CourseOffering> getCourseOfferingsByTerm(TermType type);
 
     List<Course> getDegreeCoursesTaken(int studentId, int degreeId) throws SQLException;
 

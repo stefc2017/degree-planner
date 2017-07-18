@@ -53,9 +53,9 @@ public class PickDegreeTest {
         solo.assertCurrentActivity("Expected Degree Progress Activity", DegreeProgressActivity.class);
 
         solo.clickOnButton(solo.getString(R.string.pick_degree));
-        assertTrue ("Pick Degree screen has pop up", solo.searchText(PICK_DEGREE_TITLE));
-        assertTrue (DEGREE_1 + " degree was found", solo.searchText(DEGREE_1));
-        assertTrue (DEGREE_2 + " degree was found", solo.searchText(DEGREE_2));
+        assertTrue ("Pick Degree screen has not appeared", solo.searchText(PICK_DEGREE_TITLE));
+        assertTrue (DEGREE_1 + " degree not was found", solo.searchText(DEGREE_1));
+        assertTrue (DEGREE_2 + " degree not was found", solo.searchText(DEGREE_2));
 
         solo.clickOnText(DEGREE_1);
         solo.assertCurrentActivity("Expected Degree Progress Activity", DegreeProgressActivity.class);
@@ -71,9 +71,9 @@ public class PickDegreeTest {
         solo.assertCurrentActivity("Expected Degree Progress Activity", DegreeProgressActivity.class);
 
         solo.clickOnButton(solo.getString(R.string.pick_degree));
-        assertTrue ("Pick Degree screen has pop up", solo.searchText(PICK_DEGREE_TITLE));
-        assertTrue (DEGREE_1 + " degree was found", solo.searchText(DEGREE_1));
-        assertTrue (DEGREE_2 + " degree was found", solo.searchText(DEGREE_2));
+        assertTrue ("Pick Degree screen has not appeared", solo.searchText(PICK_DEGREE_TITLE));
+        assertTrue (DEGREE_1 + " degree was not found", solo.searchText(DEGREE_1));
+        assertTrue (DEGREE_2 + " degree was not found", solo.searchText(DEGREE_2));
 
         solo.clickOnText(DEGREE_2);
         solo.assertCurrentActivity("Expected Degree Progress Activity", DegreeProgressActivity.class);

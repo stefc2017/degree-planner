@@ -840,6 +840,19 @@ public class DataAccessStub implements DataAccess {
         return failingGradeId;
     }
 
+    public int getTermTypeIdByName(String termType) {
+        int termTypeId = -1;
+
+        for(int i = 0; i < termTypes.size(); i++) {
+            if(termTypes.get(i).getSeason().equalsIgnoreCase(termType)){
+                termTypeId = termTypes.get(i).getId();
+                break;
+            }
+        }
+
+        return termTypeId;
+    }
+
     /*
      * Created by Tiffany Jiang on 2017-06-07
      *
