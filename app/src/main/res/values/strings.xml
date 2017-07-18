@@ -36,6 +36,7 @@
     <string name="error_no_year">Please enter a year</string>
     <string name="error_no_name">Please enter a name</string>
     <string name="error_no_credit_hours">Please enter credit hours</string>
+    <string name="error_invalid_credit_hours">Please enter valid credit hours</string>
     <string name="error_no_abbrev">Please enter the full abbreviation</string>
     <string name="move_plan_to">Move Course To</string>
     <string name="confirm">Confirm</string>
