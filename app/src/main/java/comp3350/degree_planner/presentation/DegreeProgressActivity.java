@@ -86,7 +86,7 @@ public class DegreeProgressActivity extends AppCompatActivity {
                 return view;
             }
         } );
-        TextView courseTakenTitle = new TextView( getApplicationContext() );
+        TextView courseTakenTitle = new TextView(this);
         courseTakenTitle.setText("Courses Taken");
         courseTakenList.addHeaderView( courseTakenTitle );
 
@@ -106,7 +106,7 @@ public class DegreeProgressActivity extends AppCompatActivity {
                 return view;
             }
         } );
-        TextView eligibleCourseTitle = new TextView( getApplicationContext() );
+        TextView eligibleCourseTitle = new TextView(this);
         eligibleCourseTitle.setText("Eligible Required Courses");
         eligibleReqCourseList.addHeaderView( eligibleCourseTitle );
 
