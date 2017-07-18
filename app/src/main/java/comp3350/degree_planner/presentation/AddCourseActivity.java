@@ -32,7 +32,11 @@ import comp3350.degree_planner.business.exceptions.StudentDoesNotExistException;
 import comp3350.degree_planner.business.exceptions.TermTypeDoesNotExistException;
 import comp3350.degree_planner.objects.Course;
 import comp3350.degree_planner.objects.ScienceCourse;
-import comp3350.degree_planner.persistence.hsqldb.DataAccessCoursePlanObject;
+import comp3350.degree_planner.persistence.hsqldb.DataAccessCourseOfferingsObject;
+import comp3350.degree_planner.persistence.hsqldb.DataAccessCoursePlansObject;
+import comp3350.degree_planner.persistence.hsqldb.DataAccessCoursesObject;
+import comp3350.degree_planner.persistence.hsqldb.DataAccessStudentsObject;
+import comp3350.degree_planner.persistence.hsqldb.DataAccessTermTypesObject;
 
 /**
  * Created by Penny He on 7/8/2017.
@@ -65,11 +69,11 @@ public class AddCourseActivity extends AppCompatActivity {
         degreeId = b.getInt("degreeId");
 
         accessCourses = new AccessCourses(Services.getDataAccess());
-        try {
-            accessCoursePlan = new AccessCoursePlan(new DataAccessCoursePlanObject());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+//        try {
+            accessCoursePlan = new AccessCoursePlan(Services.getDataAccessCoursePlans(), Services.getDataAccessStudents(), Services.getDataAccessTermTypes(), Services.getDataAccessCourses(), Services.getDataAccessCourseOfferings());
+//        } catch (SQLException e) {
+//            displayErrorMessage(e);
+//        }
         accessTermTypes = new AccessTermTypes(Services.getDataAccess());
         try {
             selectedRequiredCourse = accessCourses.getCourseById(courseId);

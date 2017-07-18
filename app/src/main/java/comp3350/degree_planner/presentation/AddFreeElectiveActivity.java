@@ -32,7 +32,11 @@ import comp3350.degree_planner.business.exceptions.StudentDoesNotExistException;
 import comp3350.degree_planner.business.exceptions.TermTypeDoesNotExistException;
 import comp3350.degree_planner.objects.Course;
 import comp3350.degree_planner.objects.UserDefinedCourse;
-import comp3350.degree_planner.persistence.hsqldb.DataAccessCoursePlanObject;
+import comp3350.degree_planner.persistence.hsqldb.DataAccessCourseOfferingsObject;
+import comp3350.degree_planner.persistence.hsqldb.DataAccessCoursePlansObject;
+import comp3350.degree_planner.persistence.hsqldb.DataAccessCoursesObject;
+import comp3350.degree_planner.persistence.hsqldb.DataAccessStudentsObject;
+import comp3350.degree_planner.persistence.hsqldb.DataAccessTermTypesObject;
 
 /**
  * Created by Penny He on 7/9/2017.
@@ -63,11 +67,11 @@ public class AddFreeElectiveActivity extends AppCompatActivity {
         courseId = b.getInt("courseId");
 
         accessCourses = new AccessCourses(Services.getDataAccess());
-        try {
-            accessCoursePlan = new AccessCoursePlan(new DataAccessCoursePlanObject());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+            accessCoursePlan = new AccessCoursePlan(Services.getDataAccessCoursePlans(), Services.getDataAccessStudents(), Services.getDataAccessTermTypes(), Services.getDataAccessCourses(), Services.getDataAccessCourseOfferings());
+//        } catch (Exception e) {
+//            displayErrorMessage(e);
+//        }
         accessTermTypes = new AccessTermTypes(Services.getDataAccess());
         try {
             selectedElective = accessCourses.getCourseById(courseId);

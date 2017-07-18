@@ -9,7 +9,6 @@ import java.util.List;
 
 import comp3350.degree_planner.application.Services;
 import comp3350.degree_planner.objects.Course;
-import comp3350.degree_planner.objects.CourseOffering;
 import comp3350.degree_planner.objects.CoursePlan;
 import comp3350.degree_planner.objects.Degree;
 import comp3350.degree_planner.objects.Department;
@@ -17,16 +16,15 @@ import comp3350.degree_planner.objects.ScienceCourse;
 import comp3350.degree_planner.objects.Student;
 import comp3350.degree_planner.objects.TermType;
 import comp3350.degree_planner.objects.UserDefinedCourse;
-import comp3350.degree_planner.persistence.DataAccess;
-import comp3350.degree_planner.persistence.DataAccessCoursePlan;
+import comp3350.degree_planner.persistence.DataAccessCoursePlans;
 
 /**
  * Created by tiffanyjiang on 2017-07-18.
  */
 
-public class DataAccessCoursePlanObject implements DataAccessCoursePlan {
+public class DataAccessCoursePlansObject implements DataAccessCoursePlans {
     private Statement st1, st2, st3;
-    private static Connection c1;
+    private Connection c1;
     private ResultSet rs2, rs3, rs4, rs5, rs6;
 
     private String dbName;
@@ -37,7 +35,7 @@ public class DataAccessCoursePlanObject implements DataAccessCoursePlan {
     private String result;
     private static String EOF = "  ";
 
-    public DataAccessCoursePlanObject() throws SQLException {
+    public DataAccessCoursePlansObject() throws SQLException {
         c1 = Services.getDataAccess().getDataAccessConnection();
 
         st1 = c1.createStatement();
@@ -52,69 +50,6 @@ public class DataAccessCoursePlanObject implements DataAccessCoursePlan {
     }
 
     //These next few methods perform checks (as stated respectively) for adding and modify course plans
-
-    public boolean courseOffered(int courseId, int termTypeId) throws SQLException {
-        boolean validTerm = false;
-
-        //For user-defined courses, let the user freely enter the the term and year
-        cmdString = "Select is_user_defined from Course where id = " + courseId;
-        rs4 = st2.executeQuery(cmdString);
-        while (rs4.next()) {
-            validTerm = rs4.getBoolean("is_user_defined");
-        }
-        rs4.close();
-
-        if (!validTerm) {
-            //Is the course historically offered in this term?
-            cmdString = "Select count(*) as courseOfferingCount from Course_Offering where course_id = " + courseId + " and term_type_id = " + termTypeId;
-            rs4 = st2.executeQuery(cmdString);
-            while (rs4.next()) {
-                validTerm = (rs4.getInt("courseOfferingCount") > 0);
-            }
-            rs4.close();
-        }
-
-        return validTerm;
-    }
-
-    public boolean isValidStudentId(int studentId) throws SQLException {
-        boolean studentExists = false;
-
-        cmdString = "Select count(*) as studentCount from Student where id = " + studentId;
-        rs4 = st2.executeQuery(cmdString);
-        while (rs4.next()) {
-            studentExists = (rs4.getInt("studentCount") > 0);
-        }
-        rs4.close();
-
-        return studentExists;
-    }
-
-    public boolean isValidCourseId(int courseId) throws SQLException {
-        boolean courseExists = false;
-
-        cmdString = "Select count(*) as courseCount from Course where id = " + courseId;
-        rs4 = st2.executeQuery(cmdString);
-        while (rs4.next()) {
-            courseExists = (rs4.getInt("courseCount") > 0);
-        }
-        rs4.close();
-
-        return courseExists;
-    }
-
-    public boolean isValidTermTypeId(int termTypeId) throws SQLException {
-        boolean termTypeExists = false;
-
-        cmdString = "Select count(*) as termTypeCount from Term_Type where id = " + termTypeId;
-        rs4 = st2.executeQuery(cmdString);
-        while (rs4.next()) {
-            termTypeExists = (rs4.getInt("termTypeCount") > 0);
-        }
-        rs4.close();
-
-        return termTypeExists;
-    }
 
     public boolean coursePlanExists(int courseId, int studentId, int termTypeId, int year) throws SQLException {
         boolean coursePlanExists = false;
@@ -384,17 +319,5 @@ public class DataAccessCoursePlanObject implements DataAccessCoursePlan {
         return department;
     }
 
-    public int getTermTypeIdByName(String termType) throws SQLException {
-        int termTypeId = -1;
 
-        cmdString = "Select * from Term_Type where Season = " + "'" + termType + "'";
-        rs2 = st1.executeQuery(cmdString);
-
-        while(rs2.next()) {
-            termTypeId = rs2.getInt("ID");
-        }
-        rs2.close();
-
-        return termTypeId;
-    }
 }
