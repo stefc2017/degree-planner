@@ -132,11 +132,11 @@ Incomplete Issues/Tasks:
 
 ## Iteration 3
 - Database file locations
-  - Local copy of the database is in degree-planner/database
+  - Local copy of the database is in degree-planner/database, and is the one used for integration tests
   - Original copy of the database is in degree-planner/app/src/main/assets
   
 Major Changes
 - Pick Degree User Story has been implemented
 - Acceptance Tests have been added
-- Integration tests have been added / updated
+- Integration tests have been added
 - Several Big User Stories have been scrapped, see the User Stories Document
