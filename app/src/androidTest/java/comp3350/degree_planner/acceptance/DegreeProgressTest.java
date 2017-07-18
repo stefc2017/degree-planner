@@ -44,7 +44,7 @@ public class DegreeProgressTest {
     @Test
     public void testPickCSMajorDegree() throws Exception {
 
-        //Navigate to Course Planning
+        // Navigate to View Degree Progress
         solo.unlockScreen();
         solo.waitForActivity("MainActivity");
         solo.clickOnButton(solo.getString(R.string.progress));
