@@ -136,6 +136,7 @@ Incomplete Issues/Tasks:
   - Original copy of the database is in degree-planner/app/src/main/assets
   
 Major Changes
+
 - Pick Degree User Story has been implemented
 - View Degree Progress User Story has been implemented
 - Move Courses has been Implemented
@@ -145,4 +146,5 @@ Major Changes
 - Several Big User Stories have been scrapped, see the User Stories Document
 
 Incomplete Issues/Tasks:
-- We tried separating out the DataAccess interface into different interfaces (see Branch issue-142 for partial work) but ran into some errors and couldn't get it complete in time - this may be completed after
+
+- We started separating out the DataAccess interface into different interfaces (see Branch issue-142 for partial work) but ran into some errors and couldn't get it complete in time
