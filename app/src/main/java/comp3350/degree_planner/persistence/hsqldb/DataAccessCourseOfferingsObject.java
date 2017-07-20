@@ -17,9 +17,6 @@ public class DataAccessCourseOfferingsObject implements DataAccessCourseOffering
     private Connection c1;
     private ResultSet rs2, rs3, rs4, rs5, rs6;
 
-    private String dbName;
-    private String dbType;
-
     private String cmdString;
     private int updateCount;
     private String result;

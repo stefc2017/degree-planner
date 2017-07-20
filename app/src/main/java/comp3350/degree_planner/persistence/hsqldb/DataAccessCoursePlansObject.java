@@ -10,13 +10,15 @@ import java.util.List;
 import comp3350.degree_planner.application.Services;
 import comp3350.degree_planner.objects.Course;
 import comp3350.degree_planner.objects.CoursePlan;
-import comp3350.degree_planner.objects.Degree;
 import comp3350.degree_planner.objects.Department;
 import comp3350.degree_planner.objects.ScienceCourse;
 import comp3350.degree_planner.objects.Student;
 import comp3350.degree_planner.objects.TermType;
 import comp3350.degree_planner.objects.UserDefinedCourse;
 import comp3350.degree_planner.persistence.DataAccessCoursePlans;
+import comp3350.degree_planner.persistence.DataAccessCourses;
+import comp3350.degree_planner.persistence.DataAccessDegrees;
+import comp3350.degree_planner.persistence.DataAccessDepartments;
 
 /**
  * Created by tiffanyjiang on 2017-07-18.
@@ -26,9 +28,6 @@ public class DataAccessCoursePlansObject implements DataAccessCoursePlans {
     private Statement st1, st2, st3;
     private Connection c1;
     private ResultSet rs2, rs3, rs4, rs5, rs6;
-
-    private String dbName;
-    private String dbType;
 
     private String cmdString;
     private int updateCount;
@@ -79,12 +78,13 @@ public class DataAccessCoursePlansObject implements DataAccessCoursePlans {
         Course course;
         Student student;
         TermType termType;
+        DataAccessCourses dataAccessCourses = Services.getDataAccessCourses();
 
         cmdString = "SELECT * FROM Course_Plan cp WHERE cp.course_id = " + courseId + " and cp.student_id = " + studentId + " and cp.term_type_id = " + termTypeId + " and cp.year = " + year;
         rs4 = st2.executeQuery(cmdString);
 
         while (rs4.next()) {
-            course = getCourseById(rs4.getInt("course_id"));
+            course = dataAccessCourses.getCourseById(rs4.getInt("course_id"));
             student = getStudentById(rs4.getInt("student_id"));
             termType = getTermTypeById(rs4.getInt("term_type_id"));
             cp = new CoursePlan(rs4.getInt("id"), course, student, termType, rs4.getInt("year"));
@@ -99,12 +99,13 @@ public class DataAccessCoursePlansObject implements DataAccessCoursePlans {
         Course course;
         Student student;
         TermType termType;
+        DataAccessCourses dataAccessCourses = Services.getDataAccessCourses();
 
         cmdString = "SELECT * FROM Course_Plan WHERE id = " + coursePlanId;
         rs4 = st2.executeQuery(cmdString);
 
         while (rs4.next()) {
-            course = getCourseById(rs4.getInt("course_id"));
+            course = dataAccessCourses.getCourseById(rs4.getInt("course_id"));
             student = getStudentById(rs4.getInt("student_id"));
             termType = getTermTypeById(rs4.getInt("term_type_id"));
             cp = new CoursePlan(rs4.getInt("id"), course, student, termType, rs4.getInt("year"));
@@ -117,13 +118,15 @@ public class DataAccessCoursePlansObject implements DataAccessCoursePlans {
     private Student getStudentById(int studentId) throws SQLException {
         Student student = null;
 
+        DataAccessDegrees dataAccessDegrees = Services.getDataAccessDegrees();
+
         cmdString = "Select * from Student where id = " + studentId;
         rs2 = st1.executeQuery(cmdString);
 
         while (rs2.next()) {
             student = new Student(rs2.getInt("id"), rs2.getInt("student_number"),
                     rs2.getString("name"), rs2.getString("email"), rs2.getString("password"),
-                    getDegreeById(rs2.getInt("degree_id")));
+                    dataAccessDegrees.getDegreeById(rs2.getInt("degree_id")));
         }
         rs2.close();
 
@@ -176,6 +179,8 @@ public class DataAccessCoursePlansObject implements DataAccessCoursePlans {
 
         Student student;
 
+        DataAccessDepartments dataAccessDepartments = Services.getDataAccessDepartments();
+
         cmdString = "select cp.ID, cp.YEAR, " +
                 "c.ID as COURSE_ID, c.NAME as COURSE_NAME, c.CREDIT_HOURS, " +
                 "c.COURSE_NUMBER, c.DESCRIPTION, c.DEPARTMENT_ID, " +
@@ -210,7 +215,7 @@ public class DataAccessCoursePlansObject implements DataAccessCoursePlans {
 
                 // Get Department information
                 courseDepartmentId = rs5.getInt("DEPARTMENT_ID");
-                department = getDepartmentById(courseDepartmentId);
+                department = dataAccessDepartments.getDepartmentById(courseDepartmentId);
 
                 course = new ScienceCourse(courseId, courseName, courseCreditHours,
                         department, courseNumber, courseDescription);
@@ -228,96 +233,4 @@ public class DataAccessCoursePlansObject implements DataAccessCoursePlans {
 
         return coursePlans;
     }
-
-
-    public Degree getDegreeById(int degreeId) throws SQLException {
-        Degree degree;
-        int id;
-        String name;
-        double creditHours, majorCreditHours, gpaRequired;
-
-        degree = null;
-        result = null;
-
-        cmdString = "Select * from Degree where ID = " + degreeId;
-        rs2 = st1.executeQuery(cmdString);
-
-        while (rs2.next()) {
-            id = Integer.parseInt(rs2.getString("ID"));
-            name = rs2.getString("NAME");
-            creditHours = Double.parseDouble(rs2.getString("CREDIT_HOURS"));
-            majorCreditHours = Double.parseDouble(rs2.getString("MAJOR_CREDIT_HOURS"));
-            gpaRequired = Double.parseDouble(rs2.getString("GPA_REQUIRED"));
-            degree = new Degree(id, name, creditHours, majorCreditHours, gpaRequired);
-        }
-
-        rs2.close();
-
-        return degree;
-    }
-
-    public Course getCourseById(int courseId) throws SQLException {
-        Course course;
-        int id;
-        String name;
-        double creditHours;
-        int courseNumber;
-        String description;
-        int departmentId;
-        String fullAbbreviation;
-        Boolean isUserDefined;
-        Department department;
-
-        course = null;
-        result = null;
-
-        cmdString = "Select * from Course where ID = " + courseId;
-        rs2 = st1.executeQuery(cmdString);
-
-        while (rs2.next()) {
-            id = Integer.parseInt(rs2.getString("ID"));
-            name = rs2.getString("NAME");
-            creditHours = Double.parseDouble(rs2.getString("CREDIT_HOURS"));
-            departmentId = rs2.getInt("DEPARTMENT_ID");
-            courseNumber = rs2.getInt("COURSE_NUMBER");
-            description = rs2.getString("DESCRIPTION");
-            fullAbbreviation = rs2.getString("FULL_ABBREVIATION");
-            isUserDefined = Boolean.parseBoolean(rs2.getString("IS_USER_DEFINED"));
-
-            if (isUserDefined) {
-                course = new UserDefinedCourse(id, name, creditHours, fullAbbreviation);
-            } else {
-                department = getDepartmentById(departmentId);
-                course = new ScienceCourse(id, name, creditHours, department, courseNumber, description);
-            }
-        }
-
-        rs2.close();
-
-        return course;
-    }
-
-    public Department getDepartmentById(int departmentId) throws SQLException {
-        Department department;
-        int id;
-        String name;
-        String abbreviation;
-
-        department = null;
-        result = null;
-
-        cmdString = "Select * from DEPARTMENT where ID = " + departmentId;
-        rs6 = st1.executeQuery(cmdString);
-
-        while (rs6.next()) {
-            id = rs6.getInt("ID");
-            name = rs6.getString("NAME");
-            abbreviation = rs6.getString("ABBREVIATION");
-            department = new Department(id, name, abbreviation);
-        }
-
-        return department;
-    }
-
-
 }

@@ -49,11 +49,11 @@ public interface DataAccess {
 
     Degree getDegreeByName(String degreeName) throws SQLException;
 
-    Course getCourseById(int courseId) throws SQLException;
+    Course getCourseById(int courseId) throws SQLException; //
 
-    Degree getDegreeById(int degreeId) throws SQLException;
+    Degree getDegreeById(int degreeId) throws SQLException; //
 
-    Department getDepartmentById(int departmentId) throws SQLException;
+    Department getDepartmentById(int departmentId) throws SQLException; //
 
     List<CourseResult> getCourseResultsByStudentId(int studentId) throws SQLException;
 

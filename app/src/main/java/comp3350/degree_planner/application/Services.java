@@ -6,11 +6,15 @@ import comp3350.degree_planner.persistence.DataAccess;
 import comp3350.degree_planner.persistence.DataAccessCourseOfferings;
 import comp3350.degree_planner.persistence.DataAccessCoursePlans;
 import comp3350.degree_planner.persistence.DataAccessCourses;
+import comp3350.degree_planner.persistence.DataAccessDegrees;
+import comp3350.degree_planner.persistence.DataAccessDepartments;
 import comp3350.degree_planner.persistence.DataAccessStudents;
 import comp3350.degree_planner.persistence.DataAccessTermTypes;
 import comp3350.degree_planner.persistence.hsqldb.DataAccessCourseOfferingsObject;
 import comp3350.degree_planner.persistence.hsqldb.DataAccessCoursePlansObject;
 import comp3350.degree_planner.persistence.hsqldb.DataAccessCoursesObject;
+import comp3350.degree_planner.persistence.hsqldb.DataAccessDegreesObject;
+import comp3350.degree_planner.persistence.hsqldb.DataAccessDepartmentsObject;
 import comp3350.degree_planner.persistence.hsqldb.DataAccessObject;
 import comp3350.degree_planner.persistence.hsqldb.DataAccessStudentsObject;
 import comp3350.degree_planner.persistence.hsqldb.DataAccessTermTypesObject;
@@ -33,6 +37,8 @@ public class Services {
     private static DataAccessTermTypes dataAccessTermTypes;
     private static DataAccessCourses dataAccessCourses;
     private static DataAccessCourseOfferings dataAccessCourseOfferings;
+    private static DataAccessDepartments dataAccessDepartments;
+    private static DataAccessDegrees dataAccessDegrees;
 
     //Default
     public static DataAccess createDataAccess(String dbName) throws Exception
@@ -48,33 +54,34 @@ public class Services {
             dataAccessTermTypes = new DataAccessTermTypesObject();
             dataAccessCourses = new DataAccessCoursesObject();
             dataAccessCourseOfferings = new DataAccessCourseOfferingsObject();
+            dataAccessDepartments = new DataAccessDepartmentsObject();
+            dataAccessDegrees = new DataAccessDegreesObject();
         }
         return dataAccessService;
     }
 
     //Alternative
-    public static DataAccess createDataAccess(final DataAccess alternateDataAccessService, final DataAccessCoursePlans alternateDataAccessCoursePlans, final DataAccessStudents alternateDataAccessStudents, final DataAccessTermTypes alternateDataAccessTermTypes, final DataAccessCourses alternateDataAccessCourses, final DataAccessCourseOfferings alternateDataAccessCourseOfferings)
+    public static DataAccess createDataAccess(final DataAccess alternateDataAccessService, final DataAccessCoursePlans alternateDataAccessCoursePlans, final DataAccessStudents alternateDataAccessStudents, final DataAccessTermTypes alternateDataAccessTermTypes, final DataAccessCourses alternateDataAccessCourses, final DataAccessCourseOfferings alternateDataAccessCourseOfferings, final DataAccessDepartments alternateDataAccessDepartments, final DataAccessDegrees alternateDataAccessDegrees) throws Exception
     {
         if (dataAccessService == null)
         {
             dataAccessService = alternateDataAccessService;
-            try {
-                dataAccessService.open(Main.getDBPathName());
 
-                dataAccessCoursePlans = alternateDataAccessCoursePlans;
-                dataAccessStudents = alternateDataAccessStudents;
-                dataAccessTermTypes = alternateDataAccessTermTypes;
-                dataAccessCourses = alternateDataAccessCourses;
-                dataAccessCourseOfferings = alternateDataAccessCourseOfferings;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            dataAccessService.open(Main.getDBPathName());
+
+            dataAccessCoursePlans = alternateDataAccessCoursePlans;
+            dataAccessStudents = alternateDataAccessStudents;
+            dataAccessTermTypes = alternateDataAccessTermTypes;
+            dataAccessCourses = alternateDataAccessCourses;
+            dataAccessCourseOfferings = alternateDataAccessCourseOfferings;
+            dataAccessDepartments = alternateDataAccessDepartments;
+            dataAccessDegrees = alternateDataAccessDegrees;
         }
         return dataAccessService;
     }
 
     //Injection
-    public static void setDataAccessService (final DataAccess newDataAccessService, final DataAccessCoursePlans newDataAccessCoursePlans, final DataAccessStudents newDataAccessStudents, final DataAccessTermTypes newDataAccessTermTypes, final DataAccessCourses newDataAccessCourses, final DataAccessCourseOfferings newDataAccessCourseOfferings) {
+    public static void setDataAccessService (final DataAccess newDataAccessService, final DataAccessCoursePlans newDataAccessCoursePlans, final DataAccessStudents newDataAccessStudents, final DataAccessTermTypes newDataAccessTermTypes, final DataAccessCourses newDataAccessCourses, final DataAccessCourseOfferings newDataAccessCourseOfferings, final DataAccessDepartments newDataAccessDepartments, final DataAccessDegrees newDataAccessDegrees) {
         dataAccessService = newDataAccessService;
 
         dataAccessCoursePlans = newDataAccessCoursePlans;
@@ -82,6 +89,8 @@ public class Services {
         dataAccessTermTypes = newDataAccessTermTypes;
         dataAccessCourses = newDataAccessCourses;
         dataAccessCourseOfferings = newDataAccessCourseOfferings;
+        dataAccessDepartments = newDataAccessDepartments;
+        dataAccessDegrees = newDataAccessDegrees;
     }
 
     public static DataAccess getDataAccess()
@@ -112,6 +121,14 @@ public class Services {
 
     public static DataAccessCourseOfferings getDataAccessCourseOfferings() {
         return dataAccessCourseOfferings;
+    }
+
+    public static DataAccessDepartments getDataAccessDepartments() {
+        return dataAccessDepartments;
+    }
+
+    public static DataAccessDegrees getDataAccessDegrees() {
+        return dataAccessDegrees;
     }
 
     public static void closeDataAccess()
